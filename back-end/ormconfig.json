@@ -1,0 +1,23 @@
+[{
+    "name": "default",
+    "driver": {
+        "type": "mysql",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "username": "root",
+        "password": "@57R0NGpassword",
+        "database": "ez_school"
+    },
+    "autoSchemaSync": "true",
+    "entities": [
+        "public/data/model/*.js",
+        "public/web/data/model/*.js"
+    ],
+    "migrations": [
+        "public/data/migration/*.js"
+    ],
+    "cli": {
+        "migrationsDir": "src/data/migration",
+        "entitiesDir": "src/data/model"
+    }
+}]
