@@ -1,7 +1,7 @@
 import { BroadcastEventBus } from '../../vue/broadcast/broadcast.event-bus';
 import { BroadcastEvent } from '../../vue/broadcast/broadcast.events';
-import { UsuarioInfoViewModel } from '../../view-model/usuario/usuario-info.viewmodel';
-import { UsuarioAutenticacaoViewModel } from '../../view-model/usuario/usuario-autenticacao.viewmodel';
+import { UsuarioInfoViewModel } from '../../factory/usuario/usuario-info.view-model';
+import { UsuarioAutenticacaoViewModel } from '../../factory/usuario/usuario-autenticacao.view-model';
 
 export class AutenticacaoService {
 

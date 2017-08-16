@@ -1,6 +1,11 @@
 import { Service } from "./service";
 import { UsuarioInfo } from "../model/usuario-info";
+import { Connection } from "typeorm";
 
-export interface UsuarioInfoService extends Service<UsuarioInfo> {
+export class UsuarioInfoService extends Service<UsuarioInfo> {
+
+    constructor(connection: Connection) {
+        super(connection, new UsuarioInfo());
+    }
 
 }

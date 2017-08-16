@@ -32,6 +32,6 @@
     "pug": "^2.0.0-rc.2",
     "reflect-metadata": "^0.1.10",
     "ts-simple-nameof": "0.0.1",
-    "typeorm": "0.1.0-alpha.31"
+    "typeorm": "0.1.0-alpha.32"
   }
 }

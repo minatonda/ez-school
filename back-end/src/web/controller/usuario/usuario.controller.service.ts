@@ -1,20 +1,19 @@
 import { Connection } from "typeorm";
 import { UsuarioService } from "../../../data/service/usuario.service";
-import { UsuarioAddExternalViewModelAdapter, UsuarioAddExternalViewModel } from "../../view-model/usuario/usuario-external-add.view-model";
+import { UsuarioViewModel } from "../../view-model/usuario/usuario.view-model";
+import { UsuarioViewModelAdapter } from "../../view-model/usuario/usuario-adapter";
 
 export class UsuarioControllerService {
 
     private usuarioService: UsuarioService;
-    private usuarioExternalViewModelAdapter: UsuarioAddExternalViewModelAdapter;
     constructor(connection: Connection) {
         this.usuarioService = new UsuarioService(connection);
-        this.usuarioExternalViewModelAdapter = new UsuarioAddExternalViewModelAdapter();
     }
 
-    public externalAdd = async(usuarioAddExternal: UsuarioAddExternalViewModel) => {
-        let model = this.usuarioExternalViewModelAdapter.getModel(usuarioAddExternal);
+    public externalAdd = async(usuarioAddExternal: UsuarioViewModel) => {
+        let model = UsuarioViewModelAdapter.getModel(usuarioAddExternal);
         model = await this.usuarioService.externalAdd(model);
-        return this.usuarioExternalViewModelAdapter.getViewModel(model);
+        return UsuarioViewModelAdapter.getViewModel(model);
     }
 
 }

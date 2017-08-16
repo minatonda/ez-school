@@ -1,4 +1,4 @@
 export class UsuarioAutenticacaoViewModel {
-    usuario: string;
+    nomeusuario: string;
     senha: string;
 }

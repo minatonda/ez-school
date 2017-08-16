@@ -16,35 +16,37 @@ export class Controller {
         //logger.error((error as BaseError).name);
         //logger.error((error as BaseError).message);
         switch ((error.constructor)) {
-        case (BaseError):
-            {
-                this._resolveBaseError(req, res, (error as BaseError));
-                break;
-            };
-        case (HttpRedirectError):
-            {
-                this._resolveHttpRedirectError(req, res, (error as HttpRedirectError));
-                break;
-            };
-        case (HttpRequestError):
-            {
-                this._resolveHttpRequestError(req, res, (error as HttpRequestError));
-                break;
-            };
-        default:
-            {
-                this._resolveDefaultError(req, res, error);
-                break;
-            }
+            case (BaseError):
+                {
+                    this._resolveBaseError(req, res, (error as BaseError));
+                    break;
+                };
+            case (HttpRedirectError):
+                {
+                    this._resolveHttpRedirectError(req, res, (error as HttpRedirectError));
+                    break;
+                };
+            case (HttpRequestError):
+                {
+                    this._resolveHttpRequestError(req, res, (error as HttpRequestError));
+                    break;
+                };
+            default:
+                {
+                    this._resolveDefaultError(req, res, error);
+                    break;
+                }
         }
     }
 
     private _resolveDefaultError(req: Request, res: Response, error: Error) {
-        res.redirect("/");
+        res.status(500);
+        res.render('error', { error: error });
     }
 
     private _resolveBaseError(req: Request, res: Response, error: BaseError) {
-        res.redirect("/");
+        res.status(500);
+        res.render('error', { error: error });
     }
 
     private _resolveHttpRedirectError(req: Request, res: Response, error: HttpRedirectError) {
@@ -55,17 +57,19 @@ export class Controller {
     private _resolveHttpRequestError(req: Request, res: Response, error: HttpRequestError) {
         //logger.error(error.url);
         switch (error.statusCode) {
-        case (404):
-            {
-                //res.status(error.statusCode).send('O recurso solicitado não foi encontrado.');
-                res.redirect("not-found");
-                break;
-            };
-        default:
-            {
-                res.redirect("/");
-                break;
-            };
+            case (404):
+                {
+                    //res.status(error.statusCode).send('O recurso solicitado não foi encontrado.');
+                    res.status(404);
+                    res.render('error', { error: error });
+                    break;
+                };
+            default:
+                {
+                    res.status(500);
+                    res.render('error', { error: error });
+                    break;
+                };
         }
     }
 

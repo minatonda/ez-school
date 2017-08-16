@@ -5,7 +5,7 @@ import { UsuarioControllerService } from "./usuario.controller.service";
 import { Controller } from "../controller";
 import { ControllerInterface } from "../controller.interface";
 import { ControllerRouteDefinition } from "../controller-route.definition";
-import { UsuarioExternalAddViewModel } from "../../view-model/usuario/usuario-external-add.view-model";
+import { UsuarioViewModel } from "../../view-model/usuario/usuario.view-model";
 
 export class UsuarioController extends Controller implements ControllerInterface {
 
@@ -46,7 +46,7 @@ export class UsuarioController extends Controller implements ControllerInterface
 
     public externalAdd = async(req: Request, res: Response) => {
         try {
-            let viewModel = req.body as UsuarioExternalAddViewModel;
+            let viewModel = req.body as UsuarioViewModel;
             let retorno = await this._usuarioControllerService.externalAdd(viewModel);
             res.send(retorno);
         }
@@ -57,7 +57,7 @@ export class UsuarioController extends Controller implements ControllerInterface
 
     public getRoutes(): Array < ControllerRouteDefinition > {
         return [
-            new ControllerRouteDefinition('/usuario/external/add', this.externalAdd, HttpMethod.POST)
+            new ControllerRouteDefinition('/usuario/external/add', this.externalAdd, HttpMethod.PUT)
         ];
     }
 
