@@ -1,0 +1,17 @@
+.table {
+    margin-bottom: 0;
+}
+
+.modal-dialog {
+    max-height: calc(100vh - 60px);
+}
+
+.modal-open {
+    .modal.show {
+        display: block;
+    }
+}
+
+.card-inverse {
+    color: rgba(255, 255, 255, 0.90);
+}

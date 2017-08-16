@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-xs-12 col-md-3">
+        <div class="row">
+            <div class="col-md-12 col-md-8 form-group">
+                <input class="form-control" type="text" placeholder="Nome Completo" v-model="model.nome">
+            </div>
+            <div class="col-md-12 form-group">
+                <input class="form-control" type="text" placeholder="Usuário" v-model="model.user">
+            </div>
+            <div class="col-md-12 col-md-8 form-group">
+                <input class="form-control" type="password" placeholder="Senha" v-model="model.password">
+            </div>
+            <div class="col-md-12 col-md-4 form-group">
+                <button class="btn btn-primary" v-on:click="autenticar()">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>

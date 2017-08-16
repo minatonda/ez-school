@@ -3,22 +3,22 @@ import { ShortViewModel } from "../short/short.viewmodel";
 import { Usuario } from "../../../data/model/usuario"; 
 import { UsuarioInfo } from "../../../data/model/usuario-info";
 
-export class UsuarioExternalAddViewModel {
+export class UsuarioAddExternalViewModel {
     nome: string;
     nomeusuario: string;
     senha: string;
 }
 
-export class UsuarioExternalViewModelAdapter implements ViewModelAdapterInterface < Usuario, UsuarioExternalAddViewModel > {
+export class UsuarioAddExternalViewModelAdapter implements ViewModelAdapterInterface < Usuario, UsuarioAddExternalViewModel > {
 
-    getViewModel(model: Usuario): UsuarioExternalAddViewModel {
-        let viewModel = new UsuarioExternalAddViewModel();
+    getViewModel(model: Usuario): UsuarioAddExternalViewModel {
+        let viewModel = new UsuarioAddExternalViewModel();
         viewModel.nome = model.usuarioInfo.nome;
         viewModel.nomeusuario = model.nomeusuario;
         viewModel.senha = model.senha;
         return viewModel;
     }
-    getModel(viewModel: UsuarioExternalAddViewModel): Usuario {
+    getModel(viewModel: UsuarioAddExternalViewModel): Usuario {
         let usuarioInfo = new UsuarioInfo();
         usuarioInfo.nome = viewModel.senha;
 
