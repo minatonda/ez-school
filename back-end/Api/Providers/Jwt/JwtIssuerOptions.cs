@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Models.AppSettings {
+namespace Api.Providers.Jwt {
 
     public class JwtIssuerOptions {
         /// <summary>

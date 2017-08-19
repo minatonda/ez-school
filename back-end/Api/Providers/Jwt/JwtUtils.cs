@@ -1,5 +1,4 @@
 using System;
-using Api.Models.AppSettings;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Utils {
-    public static class JwtUtils {
+namespace Api.Providers.Jwt {
+    public static class JwtProvider {
         public static void AddMvcWithPolicy (this IServiceCollection services) {
             services.AddMvc (config => {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder ()
@@ -24,6 +23,7 @@ namespace Api.Utils {
             services.AddAuthorization (options => {
                 options.AddPolicy ("UserApi", policy => policy.RequireClaim ("Auth", "WebApi"));
             });
+            
         }
 
         public static void AddJwtOptions (this IServiceCollection services, IConfiguration configuration, SymmetricSecurityKey signingKey) {

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Api.Models.AppSettings;
 using Api.Models.Identity;
-using Api.Utils;
+using Api.Providers.Jwt;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,12 +30,10 @@ namespace Api {
         public IConfigurationRoot Configuration { get; }
         //28 caracteres
         public const string SecretKey = "a1234567891012141516182025262b";
-        public readonly SymmetricSecurityKey SigningKey =
-            new SymmetricSecurityKey (Encoding.ASCII.GetBytes (SecretKey));
+        public readonly SymmetricSecurityKey SigningKey = new SymmetricSecurityKey (Encoding.ASCII.GetBytes (SecretKey));
 
         public void ConfigureServices (IServiceCollection services) {
             services.AddEntityFrameworkSqlServer ();
-
             //services.AddMvc();
             services.AddMvcWithPolicy ();
             services.AddJwtOptions (Configuration, SigningKey);
@@ -50,6 +47,7 @@ namespace Api {
             loggerFactory.AddConsole (Configuration.GetSection ("Logging"));
             loggerFactory.AddDebug ();
             app.UseRequestLocalizationFromBrazil ();
+            app.UseAuthentication ();
             app.UseMvc ();
         }
 
