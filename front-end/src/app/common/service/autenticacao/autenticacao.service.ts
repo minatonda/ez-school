@@ -1,15 +1,21 @@
 import { BroadcastEventBus } from '../../vue/broadcast/broadcast.event-bus';
 import { BroadcastEvent } from '../../vue/broadcast/broadcast.events';
-import { UsuarioInfoViewModel } from '../../factory/usuario/usuario-info.view-model';
-import { UsuarioAutenticacaoViewModel } from '../../factory/usuario/usuario-autenticacao.view-model';
+import { UsuarioFactory } from "../../factory/usuario/usuario.factory";
 
 export class AutenticacaoService {
 
-    private static usuarioInfo: UsuarioInfoViewModel;
+    private static usuarioInfo: Object;
 
-    public static autenticar(autenticao: UsuarioAutenticacaoViewModel) {
-        this.usuarioInfo = new UsuarioInfoViewModel();
-        BroadcastEventBus.$emit(BroadcastEvent.AUTENTICADO);
+    public static async autenticar(autenticao: Object) {
+        this.usuarioInfo = new Object();
+        let retorno = UsuarioFactory.autenticar();
+        try {
+            let retorno = await UsuarioFactory.autenticar();
+            BroadcastEventBus.$emit(BroadcastEvent.AUTENTICADO);
+        }
+        catch (error) {
+
+        }
     }
 
     public static desautenticar() {

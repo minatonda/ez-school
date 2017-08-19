@@ -1,0 +1,10 @@
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\bin\Debug\netcoreapp2.0\Api.deps.json
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\bin\Debug\netcoreapp2.0\Api.runtimeconfig.json
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\bin\Debug\netcoreapp2.0\Api.runtimeconfig.dev.json
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\bin\Debug\netcoreapp2.0\Api.dll
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\bin\Debug\netcoreapp2.0\Api.pdb
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.csproj.CoreCompileInputs.cache
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.AssemblyInfoInputs.cache
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.AssemblyInfo.cs
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.dll
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.pdb

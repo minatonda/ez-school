@@ -1,15 +1,14 @@
 import { Factory } from '../factory';
-import { UsuarioViewModel } from './usuario.view-model';
+import { Credentials } from './credentials';
 
 export class UsuarioFactory extends Factory {
 
-    public static add(viewmodel: UsuarioViewModel) {
-        return this.put(this.joinUrl('/usuario/external/add'), viewmodel);
+    public static async autenticar() {
+        let credentials = new Credentials();
+        credentials.email = 'someuser@somewhere.com';
+        credentials.password = '123456#User';
+        return await UsuarioFactory.post('/api/account', credentials);
     }
 
-    public static async externalAdd(viewmodel: UsuarioViewModel) {
-        let retorno = await this.put(this.joinUrl('/usuario/external/add'), viewmodel);
-        return retorno as UsuarioViewModel;
-    }
 
 }
