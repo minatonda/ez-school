@@ -8,3 +8,4 @@ E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api
 E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.AssemblyInfo.cs
 E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.dll
 E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\Api.pdb
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Api\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
