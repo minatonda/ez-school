@@ -4746,6 +4746,19 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
       }
     }
   },
@@ -12524,12 +12537,20 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "Domain >= 1.0.0",
       "Microsoft.AspNetCore.All >= 2.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 2.0.0",
+      "Microsoft.EntityFrameworkCore.InMemory >= 2.0.0",
+      "Microsoft.EntityFrameworkCore.Tools >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0"
     ]
   },
@@ -12562,7 +12583,11 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj": {
+              "projectPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -12584,6 +12609,14 @@
             "version": "2.0.0"
           },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
+            "target": "Package",
+            "version": "2.0.0"
+          },
+          "Microsoft.EntityFrameworkCore.InMemory": {
+            "target": "Package",
+            "version": "2.0.0"
+          },
+          "Microsoft.EntityFrameworkCore.Tools": {
             "target": "Package",
             "version": "2.0.0"
           }

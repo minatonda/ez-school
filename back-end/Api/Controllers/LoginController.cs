@@ -5,8 +5,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using Api.Models.Identity;
-using Api.Providers.Jwt;
+using Api.Data.ViewModels;
+using Api.Middlewares.Jwt;
+using Domain.Models;
+using Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,23 +20,27 @@ namespace Api.Controllers {
     public class LoginController : Controller {
         private readonly JwtIssuerOptions _jwtOptions;
         private readonly ILogger _logger;
-        public LoginController (ILoggerFactory loggerFactory, IOptions<JwtIssuerOptions> jwtOptions) {
-                _logger = loggerFactory.CreateLogger<LoginController> ();
-                _jwtOptions = jwtOptions.Value;
+        private UsuarioRepository _usuarioRepository;
+        public LoginController (ILoggerFactory loggerFactory, IOptions<JwtIssuerOptions> jwtOptions, UsuarioRepository usuarioRepository) {
+            _logger = loggerFactory.CreateLogger<LoginController> ();
+            _jwtOptions = jwtOptions.Value;
+            this._usuarioRepository = usuarioRepository;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ObjectResult> Post (User user) {
+        public async Task<ObjectResult> Post ([FromBody] UsuarioVM vm) {
+            var user = UsuarioAdapter.ToModel (vm, true);
+
             ClaimsIdentity identity = await GetClaimsIdentity (user);
 
             if (identity == null) {
-                _logger.LogInformation ($"Invalid email ({user.Email}) or password ({user.Password})");
+                _logger.LogInformation ($"Invalid email ({user.Username}) or password ({user.Password})");
                 return BadRequest ("Invalid credentials");
             }
 
             Claim[] claims = new Claim[4] {
-                new Claim (JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim (JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim (JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator ()),
                 new Claim (JwtRegisteredClaimNames.Iat, _jwtOptions.IssuedAt.ToUnixEpochDateToString (), ClaimValueTypes.Integer64),
                 identity.FindFirst ("Auth")
@@ -51,27 +57,23 @@ namespace Api.Controllers {
             var encodedJwt = new JwtSecurityTokenHandler ()
                 .WriteToken (jwt);
 
-            var response = new {
+            var response = new AutenticacaoVM () {
                 access_token = encodedJwt,
-                expires_seconds = (int) _jwtOptions.ValidFor.TotalSeconds,
-                expires_in = _jwtOptions.ValidFor.Minutes,
-                expires_create = _jwtOptions.NotBefore.ToString ("yyyy-MM-ddTHH:mm:ss.fff"),
-                expires_remove = _jwtOptions.Expiration.ToString ("yyyy-MM-ddTHH:mm:ss.fff"),
-                expires_remove0 = DateTimeOffset.Now.ToString (),
+                created = _jwtOptions.IssuedAt,
+                expires = _jwtOptions.Expiration,
                 time_zone = TimeZoneInfo.Local.StandardName
             };
 
             return Ok (response);
         }
-        private Task<ClaimsIdentity> GetClaimsIdentity (User user) {
-            if (user.Email == "fulviocanducci@hotmail.com" && user.Password == "123456") {
+        private Task<ClaimsIdentity> GetClaimsIdentity (Usuario user) {
+            if (this._usuarioRepository.Query (m => m.Username == user.Username && m.Password == m.Password).SingleOrDefault () != null)
                 return Task.FromResult (new ClaimsIdentity (
-                    new GenericIdentity (user.Email, "Token"),
+                    new GenericIdentity (user.Username, "Token"),
                     new [] {
                         new Claim ("Auth", "WebApi")
                     }
                 ));
-            }
             return Task.FromResult<ClaimsIdentity> (null);
         }
     }

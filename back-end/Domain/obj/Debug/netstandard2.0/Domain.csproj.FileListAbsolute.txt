@@ -1,0 +1,16 @@
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\obj\Debug\netstandard2.0\Domain.csproj.CoreCompileInputs.cache
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfoInputs.cache
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfo.cs
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\bin\Debug\netstandard2.0\Domain.deps.json
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\bin\Debug\netstandard2.0\Domain.dll
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\bin\Debug\netstandard2.0\Domain.pdb
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\obj\Debug\netstandard2.0\Domain.dll
+e:\01 - T-I\00 - DEV\01 - PRJ\hyper-fast\back-end\Domain\obj\Debug\netstandard2.0\Domain.pdb
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\bin\Debug\netstandard2.0\Domain.deps.json
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\bin\Debug\netstandard2.0\Domain.dll
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\bin\Debug\netstandard2.0\Domain.pdb
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\obj\Debug\netstandard2.0\Domain.csproj.CoreCompileInputs.cache
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfoInputs.cache
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\obj\Debug\netstandard2.0\Domain.AssemblyInfo.cs
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\obj\Debug\netstandard2.0\Domain.dll
+E:\01 - T-I\00 - DEV\01 - PRJ\ez-school\back-end\Domain\obj\Debug\netstandard2.0\Domain.pdb

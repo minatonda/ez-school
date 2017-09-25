@@ -47,3 +47,51 @@
         padding-bottom: #{$spacing} !important;
     }
 }
+
+@media screen and (min-width:map-get($grid-breakpoints, 'xs')) {
+    .p-hidden-xs-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'xs')) {
+    .p-hidden-xs-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'sm')) {
+    .p-hidden-sm-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'sm')) {
+    .p-hidden-sm-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'md')) {
+    .p-hidden-md-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'md')) {
+    .p-hidden-md-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'lg')) {
+    .p-hidden-lg-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'lg')) {
+    .p-hidden-lg-down {
+        display: none;
+    }
+}

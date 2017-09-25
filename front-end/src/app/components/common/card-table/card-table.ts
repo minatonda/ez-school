@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import axios, { AxiosResponse } from 'axios';
-import { CardTableColumn } from './types/card-table-column';
 import { prop } from 'vue-property-decorator/lib/vue-property-decorator';
+import { CardTableMenu } from './types/card-table-menu';
+import { CardTableColumn } from './types/card-table-column';
 import { FilterUtil } from '../../../common/util/filter.util';
+import { CardTableMenuEntry } from './types/card-table-menu-entry';
 
 @Component({
     template: require('./card-table.html')
@@ -11,14 +12,17 @@ import { FilterUtil } from '../../../common/util/filter.util';
 export class CardTableComponent extends Vue {
 
     @prop
-    private columns: Array < CardTableColumn > ;
+    private menu: CardTableMenu;
     @prop
-    private itens: Array < any > ;
+    private columns: Array<CardTableColumn>;
+    @prop
+    private itens: Array<any>;
 
     constructor() {
         super();
     }
 
+    /* COLUMN MANAGEMENT */
     public getColumns() {
         return this.columns;
     }
@@ -35,10 +39,36 @@ export class CardTableComponent extends Vue {
         }
         return column.value(item);
     }
+    /* COLUMN MANAGEMENT - END*/
 
     public getItens() {
         return this.itens;
     }
 
+    /* MENU MANAGEMENT */
+    public getMenuRow() {
+        return this.menu && this.menu.row;
+    }
+
+    public getMenuMain() {
+        return this.menu && this.menu.main;
+    }
+
+    public getMenuItemLabel(menuItem: CardTableMenuEntry, item: any) {
+        return menuItem.label(item);
+    }
+
+    public getMenuIconClass(menuItem: CardTableMenuEntry, item: any) {
+        return menuItem.iconClass(item);
+    }
+
+    public getMenuButtonClass(menuItem: CardTableMenuEntry, item: any) {
+        return menuItem.btnClass(item);
+    }
+
+    public triggerMenuMethod(menuItem: CardTableMenuEntry, item: any) {
+        menuItem.method(item);
+    }
+    /* MENU MANAGEMENT - END*/
 
 }

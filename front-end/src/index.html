@@ -12,9 +12,14 @@
 </head>
 
 <body>
-    <div id="app-main" class="container-fluid">
+    <div id="app-main" class="container-fluid" v-cloak>
         <navbar-component></navbar-component>
-        <router-view class="p-padding-top-10 p-padding-bottom-10" style="min-height: calc(100vh - 47px);">loading...</router-view>
+        <div class="row">
+            <div class="col-12">
+                <router-view class="p-padding-top-10 p-padding-bottom-10" style="min-height: calc(100vh - 47px);"></router-view>
+                <loader-compact-root-component :show="showLoader"></loader-compact-root-component>
+            </div>
+        </div>
     </div>
 
     <!-- build:js js/main.min.js -->

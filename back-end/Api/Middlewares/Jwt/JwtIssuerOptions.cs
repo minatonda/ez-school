@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Providers.Jwt {
+namespace Api.Middlewares.Jwt {
 
     public class JwtIssuerOptions {
         /// <summary>
@@ -78,7 +78,7 @@ namespace Api.Providers.Jwt {
         ///   Implementers MAY provide for some small leeway, usually no more than
         ///   a few minutes, to account for clock skew.  Its value MUST be a number
         ///   containing a NumericDate value.  Use of this claim is OPTIONAL.</remarks>
-        public DateTime Expiration => IssuedAt.Add (ValidFor);
+        public DateTime Expiration => IssuedAt.Add (TimeSpan.FromDays(1));
 
         /// <summary>
         /// "jti" (JWT ID) Claim (default ID is a GUID)

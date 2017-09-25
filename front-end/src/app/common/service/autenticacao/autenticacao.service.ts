@@ -1,30 +1,29 @@
 import { BroadcastEventBus } from '../../vue/broadcast/broadcast.event-bus';
 import { BroadcastEvent } from '../../vue/broadcast/broadcast.events';
-import { UsuarioFactory } from "../../factory/usuario/usuario.factory";
+import { UsuarioFactory } from '../../factory/usuario/usuario.factory';
+import { Usuario } from '../../factory/usuario/usuario';
+import { Autenticacao } from '../../factory/usuario/autenticacao';
 
 export class AutenticacaoService {
 
-    private static usuarioInfo: Object;
+    private static autenticacaoInfo: Autenticacao;
 
-    public static async autenticar(autenticao: Object) {
-        this.usuarioInfo = new Object();
-        let retorno = UsuarioFactory.autenticar();
-        try {
-            let retorno = await UsuarioFactory.autenticar();
-            BroadcastEventBus.$emit(BroadcastEvent.AUTENTICADO);
-        }
-        catch (error) {
-
-        }
+    public static autenticar(autenticao: Autenticacao) {
+        this.autenticacaoInfo = autenticao;
+        BroadcastEventBus.$emit(BroadcastEvent.AUTENTICADO);
     }
 
     public static desautenticar() {
-        this.usuarioInfo = undefined;
+        this.autenticacaoInfo = undefined;
         BroadcastEventBus.$emit(BroadcastEvent.NOT_AUTENTICADO);
     }
 
     public static isAutenticado() {
-        return this.usuarioInfo ? true : false;
+        return this.autenticacaoInfo ? true : false;
+    }
+
+    public static getToken() {
+        return this.autenticacaoInfo.access_token;
     }
 
 }

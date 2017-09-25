@@ -11,8 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Providers.Jwt {
-    public static class JwtProvider {
+namespace Api.Middlewares.Jwt {
+    public static class JwtMiddleware {
         public static void AddMvcWithPolicy (this IServiceCollection services) {
             services.AddMvc (config => {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder ()
@@ -24,7 +24,6 @@ namespace Api.Providers.Jwt {
             services.AddAuthorization (options => {
                 options.AddPolicy ("UserApi", policy => policy.RequireClaim ("Auth", "WebApi"));
             });
-
         }
 
         public static void AddJwtOptions (this IServiceCollection services, IConfiguration configuration, SymmetricSecurityKey signingKey, IHostingEnvironment environment) {
@@ -60,16 +59,16 @@ namespace Api.Providers.Jwt {
                     //o.Authority = jwtAppSettingOptions[nameof (JwtIssuerOptions.Audience)];
                     o.Audience = jwtAppSettingOptions[nameof (JwtIssuerOptions.Audience)];
                     o.Events = new JwtBearerEvents () {
-                        OnAuthenticationFailed = c => {
-                            c.NoResult ();
-                            c.Response.StatusCode = 500;
-                            c.Response.ContentType = "text/plain";
-                            if (environment.IsDevelopment ()) {
-                                // Debug only, in production do not share exceptions with the remote host.
-                                return c.Response.WriteAsync (c.Exception.ToString ());
-                            }
-                            return c.Response.WriteAsync ("An error occurred processing your authentication.");
-                        }
+                        // OnAuthenticationFailed = c => {
+                        //     c.NoResult ();
+                        //     c.Response.StatusCode = 500;
+                        //     c.Response.ContentType = "text/plain";
+                        //     if (environment.IsDevelopment ()) {
+                        //         // Debug only, in production do not share exceptions with the remote host.
+                        //         return c.Response.WriteAsync (c.Exception.ToString ());
+                        //     }
+                        //     return c.Response.WriteAsync ("An error occurred processing your authentication.");
+                        // }
                     };
                 });
 

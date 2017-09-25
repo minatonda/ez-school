@@ -1,22 +1,37 @@
-import { VueRouter } from 'vue-router/types/router';
 import { RedirectError } from '../../modules/error/redirect.error';
 import { AutenticacaoService } from '../../service/autenticacao/autenticacao.service';
-import { RoutePath } from './router.config';
+import { BaseError } from '../../modules/error/base.error';
+import { RoutePath } from './route-path';
+import { RoutePathType } from './route-path-type';
+import { ROUTER_OPTIONS, ROUTES_CONFIG_BASE } from './router.constants';
+import VueRouter from 'vue-router';
+import { BroadcastEventBus } from '../broadcast/broadcast.event-bus';
+import { BroadcastEvent } from '../broadcast/broadcast.events';
 
 export class RouterManager {
 
     private static router: VueRouter;
 
-    public static configureRouter(router: VueRouter) {
-        RouterManager.router = router;
+    public static generateRouter() {
+        RouterManager.router = new VueRouter(ROUTER_OPTIONS);
         RouterManager.router.beforeEach(RouterManager.beforeEach);
+        return RouterManager.router;
     }
 
     private static beforeEach(to, from, next) {
         try {
-            RouterManager.resolveRoute(to, from, next);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            if (RouterManager.isPermitido(to.path)) {
+                next();
+                BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
+            }
+            else {
+                throw new BaseError('Acesso Negado', 'Você não possui privilégios para acessar este recurso');
+            }
         }
         catch (error) {
+            next(false);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
             switch ((error.constructor)) {
                 case (RedirectError):
                     {
@@ -32,23 +47,31 @@ export class RouterManager {
         }
     }
 
-    private static resolveRoute(to, from, next) {
+    private static isPermitido(path) {
         switch (AutenticacaoService.isAutenticado()) {
             case (true):
                 {
-                    if (RouterManager.isRoutePermitidoWhenAutenticado(to.path)) {
-                        next();
-                    }
-                    break;
+                    return RouterManager.isRoutePermitidoWhenAutenticado(path);
                 }
             case (false):
                 {
-                    if (RouterManager.isRoutePermitidoWhenNotAutenticado(to.path)) {
-                        next();
-                    }
-                    break;
+                    return RouterManager.isRoutePermitidoWhenNotAutenticado(path);
                 }
         }
+    }
+
+    private static isVisivelParaUsuario(path) {
+        let invisibleRoutes = [RoutePath.USUARIO_AUTENTICACAO];
+        return invisibleRoutes.indexOf(path) === -1;
+    }
+
+    public static needParameter(path: string) {
+        let routeConfig = this.getRouteConfig(path);
+        return routeConfig.type === RoutePathType.upd || routeConfig.type === RoutePathType.ext;
+    }
+
+    public static getRouteConfig(path: string) {
+        return ROUTES_CONFIG_BASE.find(x => x.path === path || x.name === path);
     }
 
     private static isRoutePermitidoWhenAutenticado(path) {
@@ -79,8 +102,17 @@ export class RouterManager {
         }
     }
 
-    public static redirectRoute(path: string) {
-        RouterManager.router.push(path);
+    public static redirectRoute(path: string, params?: any) {
+        if (params) {
+            RouterManager.router.push({ name: path, params: params });
+        }
+        else {
+            RouterManager.router.push({ path: path });
+        }
+    }
+
+    public static redirectRoutePrevious() {
+        RouterManager.router.back();
     }
 
 }

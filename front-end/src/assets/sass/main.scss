@@ -1,8 +1,7 @@
 @import 'bases/bases.scss';
-@import 'third.scss';
-@import 'adjusts/adjusts.scss';
-@import 'modifications/modifications.scss';
-@import 'features/features.scss';
 
-@import '../../app/components/home/home.scss';
+@import 'third/third.scss';
+@import 'adjusts/adjusts.scss';
+
 @import '../../app/components/common/card-table/card-table.scss';
+@import '../../app/components/common/loader-compact/loader-compact.scss';

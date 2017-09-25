@@ -1,0 +1,170 @@
+.multiselect__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.multiselect__input,
+.multiselect__single {
+    background: transparent;
+    padding: 0;
+    @include form-control-size($textfield-font-size, $textfield-height, $textfield-line-height, $textfield-padding-x, $textfield-padding-y);
+}
+
+.multiselect__tags {
+    @include form-control-size($textfield-font-size, $textfield-height, $textfield-line-height, $textfield-padding-x, $textfield-padding-y);
+    @include transition-standard(border-color, box-shadow);
+
+    background-clip: padding-box;
+    background-color: transparent;
+    background-image: none;
+    border-color: $textfield-border-color;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0 0 $textfield-border-width;
+    box-shadow: none;
+    color: $textfield-color;
+    display: block;
+    width: 100%;
+
+    min-height: auto;
+    padding: 0;
+
+    @include hover {
+        border-color: $textfield-border-color-hover;
+        box-shadow: inset 0 ($textfield-border-width-hover * -1) 0 ($textfield-border-width * -1) $textfield-border-color-hover;
+    }
+
+    &::-ms-expand {
+        background-color: transparent;
+        border: 0;
+    }
+
+    &::placeholder {
+        color: $textfield-hint-color;
+        opacity: 1;
+    }
+
+    &:disabled,
+    &[readonly] {
+        border-style: dotted;
+        color: $textfield-color-disabled;
+        opacity: 1;
+
+        @include hover {
+            border-color: $textfield-border-color;
+            box-shadow: none;
+        }
+
+        &:focus {
+            border-color: $textfield-border-color;
+            box-shadow: none;
+        }
+    }
+
+    &:focus {
+        border-color: $textfield-border-color-focus;
+        box-shadow: inset 0 ($textfield-border-width-focus * -1) 0 ($textfield-border-width * -1) $textfield-border-color-focus;
+        outline: 0;
+    }
+
+    &:invalid:required {
+        outline: 0;
+    }
+}
+
+.multiselect--active {
+    .multiselect__tags {
+        border-color: $textfield-border-color-focus;
+        box-shadow: inset 0 ($textfield-border-width-focus * -1) 0 ($textfield-border-width * -1) $textfield-border-color-focus;
+        outline: 0;
+    }
+}
+
+.multiselect__option {
+    @include transition-standard(background-color, color);
+
+    background-color: $expansion-panel-bg;
+    border: 0;
+    box-shadow: map-get($expansion-panel-elevation-shadow, shadow);
+    color: $expansion-panel-color;
+    display: block;
+    font-size: $expansion-panel-font-size;
+    line-height: $expansion-panel-line-height;
+    min-height: $expansion-panel-height;
+    padding: $expansion-panel-padding-y $expansion-panel-padding-x;
+    position: relative;
+
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include active-focus-hover {
+        color: $expansion-panel-color;
+        text-decoration: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        background-color: $expansion-panel-bg;
+        color: $expansion-panel-color-disabled;
+    }
+
+    &:first-child {
+        @include border-top-radius($expansion-panel-border-radius);
+    }
+
+    &:last-child {
+        @include border-bottom-radius($expansion-panel-border-radius);
+    }
+
+    &.active {
+        background-color: $expansion-panel-bg-active;
+        color: $expansion-panel-color;
+    }
+
+    &.multiselect__option--highlight {
+        background-color: $expansion-panel-bg-active;
+        color: $expansion-panel-color;
+    }
+}
+
+//novo
+.light-theme {
+
+    .multiselect__input,
+    .multiselect__single {
+        color: white;
+    }
+
+    .multiselect__tags {
+        color: $textfield-color;
+        border-color: $material-color-grey-300;
+
+        @include hover {
+            border-color: $light-theme-3;
+            box-shadow: inset 0 ($textfield-border-width-hover * -1) 0 ($textfield-border-width * -1) $light-theme-3;
+        }
+
+        &:focus {
+            border-color: $light-theme-3;
+            box-shadow: inset 0 ($textfield-border-width-focus * -1) 0 ($textfield-border-width * -1) $light-theme-1;
+            outline: 0;
+        }
+    }
+
+    .multiselect--active {
+        .multiselect__tags {
+            border-color: $light-theme-3;
+            box-shadow: inset 0 ($textfield-border-width-focus * -1) 0 ($textfield-border-width * -1) $light-theme-3;
+            outline: 0;
+        }
+    }
+
+    .multiselect__input::placeholder {
+        color: $material-color-grey-300;
+    }
+    
+}

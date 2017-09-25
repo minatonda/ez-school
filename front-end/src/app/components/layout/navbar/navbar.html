@@ -1,12 +1,18 @@
 <div class="row" v-if="isAutenticado()">
-    <nav class="navbar navbar-light bg-light w-100">
-        <a class="navbar-brand" href="#">
-          <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-          Ez-School
-        </a>
-        <div class="form-inline">
-            <input class="form-control mr-sm-2 hidden-sm-down" type="text" placeholder="Buscar" aria-label="Buscar">
-            <button class="btn btn-primary my-2 my-sm-0" type="submit"><i class="fa fa-bars"></i></button>
+    <nav class="navbar navbar-light bg-primary w-100">
+        <div class="row form-inline w-100">
+            <div class="col-12 col-md-7 align-self-stretch p-hidden-md-down">
+                <a class="navbar-brand" href="#">
+                    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <span style="color:white;">Ez-school</span>
+                </a>
+            </div>
+            <div class="col-9 col-md-4 align-self-stretch">
+                <multiselect class="mr-sm-2 hidden-sm-down light-theme" style="display: inline-block;width: 100%;vertical-align: middle;" @input="aoSelecionarRota" placeholder="Buscar" :options="getRotas()" :multiple="false" :reset-after="true" selectLabel="" :custom-label="getRotasLabel"></multiselect>
+            </div>
+            <div class="col-3 col-md-1 d-flex align-self-stretch justify-content-end">
+                <button class="btn btn-primary h-100" type="submit"><i class="fa fa-bars"></i></button>
+            </div>
         </div>
     </nav>
 </div>

@@ -30,6 +30,7 @@ and also iPads specifically.
 
     td {
         /* Behave  like a "row" */
+        height: auto !important;
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;

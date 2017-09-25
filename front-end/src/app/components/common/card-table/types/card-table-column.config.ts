@@ -1,5 +1,5 @@
 export interface CardTableColumnConfig {
 
-    moeda ? : boolean;
+    moeda?: boolean;
 
 }
