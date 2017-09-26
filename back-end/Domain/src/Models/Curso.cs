@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Models.Interface;
 
 namespace Domain.Models {
-    public class Instituicao : IBaseModel {
-        public Instituicao () {
+    public class Curso : IBaseModel {
+
+        public Curso () {
 
         }
 
@@ -13,6 +14,8 @@ namespace Domain.Models {
         [DatabaseGeneratedAttribute (DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
         public string Nome { get; set; }
+        public string Descricao { get; set; }
         public bool Ativo { get; set; } = true;
+
     }
 }

@@ -26,7 +26,6 @@ namespace Api.Controllers {
             _jwtOptions = jwtOptions.Value;
             this._usuarioRepository = usuarioRepository;
         }
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<ObjectResult> Post ([FromBody] UsuarioVM vm) {

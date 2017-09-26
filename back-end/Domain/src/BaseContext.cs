@@ -13,6 +13,8 @@ namespace Domain {
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Curso> Cursos { get; set; }
+        public DbSet<Instituicao> Instituicoes { get; set; }
+        public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
 
     }
 }
