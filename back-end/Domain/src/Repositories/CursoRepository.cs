@@ -20,6 +20,7 @@ namespace Domain.Repositories {
         }
         public Curso Update (Curso model) {
             this.db.Cursos.Find (model.ID).Nome = model.Nome;
+            this.db.Cursos.Find (model.ID).Descricao = model.Descricao;
             this.db.Cursos.Update (this.db.Cursos.Find (model.ID));
             this.db.SaveChanges ();
             return model;

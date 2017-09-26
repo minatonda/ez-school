@@ -7,6 +7,14 @@ export enum RoutePath {
     USUARIO = '/usuario',
     USUARIO_ADD = '/usuario/add',
     USUARIO_UPD = '/usuario/upd',
-    USUARIO_ADD_EXTERNAL = '/usuario/cadastro'
+    USUARIO_ADD_EXTERNAL = '/usuario/cadastro',
+
+    CURSO = '/curso',
+    CURSO_ADD = '/curso/add',
+    CURSO_UPD = '/curso/upd',
+
+    MATERIA = '/materia',
+    MATERIA_ADD = '/materia/add',
+    MATERIA_UPD = '/materia/upd'
 
 }

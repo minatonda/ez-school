@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { Curso } from '../../common/factory/curso/curso';
-import { CursoFactory } from '../../common/factory/curso/curso.factory';
+import { Materia } from '../../common/factory/materia/materia';
+import { MateriaFactory } from '../../common/factory/materia/materia.factory';
 import { CardTableMenu } from '../common/card-table/types/card-table-menu';
 import { CardTableMenuEntry } from '../common/card-table/types/card-table-menu-entry';
 import { CardTableColumn } from '../common/card-table/types/card-table-column';
@@ -14,14 +14,14 @@ import { Notify } from '../../common/modules/notify/notify';
 import { prop } from 'vue-property-decorator/lib/vue-property-decorator';
 
 @Component({
-    template: require('./curso.html')
+    template: require('./materia.html')
 })
-export class CursoComponent extends Vue {
+export class MateriaComponent extends Vue {
 
     @prop()
     alias: string;
     
-    lista: Array<Curso> = [];
+    lista: Array<Materia> = [];
 
     constructor() {
         super();
@@ -30,7 +30,7 @@ export class CursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await CursoFactory.all();
+            this.lista = await MateriaFactory.all();
         }
         catch (e) {
 
@@ -42,8 +42,8 @@ export class CursoComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: Curso) => item.nome, () => 'Nome'),
-            new CardTableColumn((item: Curso) => item.descricao, () => 'Descrição')
+            new CardTableColumn((item: Materia) => item.nome, () => 'Nome'),
+            new CardTableColumn((item: Materia) => item.descricao, () => 'Descrição')
         ];
     }
 
@@ -55,7 +55,7 @@ export class CursoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RoutePath.CURSO_UPD, item),
+                (item) => RouterManager.redirectRoute(RoutePath.MATERIA_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -73,7 +73,7 @@ export class CursoComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            CursoFactory.del(item.id);
+            MateriaFactory.del(item.id);
         }
         catch (e) {
 

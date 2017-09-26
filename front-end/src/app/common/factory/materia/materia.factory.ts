@@ -1,14 +1,14 @@
 import { Factory } from '../factory';
-import { Curso } from './curso';
+import { Materia } from './materia';
 import { Notify, NOTIFY_TYPE, MESSAGES } from '../../modules/notify/notify';
 
-export class CursoFactory extends Factory {
+export class MateriaFactory extends Factory {
 
-    private static title = 'Curso';
+    private static title = 'Materia';
 
-    public static async add(model: Curso, notify?: boolean) {
+    public static async add(model: Materia, notify?: boolean) {
         try {
-            let result = await this.put('/api/curso/add', model) as Curso;
+            let result = await this.put('/api/materia/add', model) as Materia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -18,9 +18,9 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async upd(model: Curso, notify?: boolean) {
+    public static async upd(model: Materia, notify?: boolean) {
         try {
-            let result = await this.post('/api/curso/upd', model) as Curso;
+            let result = await this.post('/api/materia/upd', model) as Materia;
             Notify.notify(MESSAGES.REGISTRO_UPD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -32,7 +32,7 @@ export class CursoFactory extends Factory {
 
     public static async del(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/curso/del/' + id);
+            let result = await this.delete('/api/materia/del/' + id);
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -44,7 +44,7 @@ export class CursoFactory extends Factory {
 
     public static async dtl(id: number, notify?: boolean) {
         try {
-            let result = await this.get('/api/curso/dtl/' + id) as Curso;
+            let result = await this.get('/api/materia/dtl/' + id) as Materia;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -56,7 +56,7 @@ export class CursoFactory extends Factory {
 
     public static async all(notify?: boolean) {
         try {
-            let result = await this.get('/api/curso') as Array<Curso>;
+            let result = await this.get('/api/materia') as Array<Materia>;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
