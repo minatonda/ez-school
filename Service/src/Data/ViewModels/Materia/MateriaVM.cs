@@ -1,0 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Domain.Models.Interface;
+
+namespace Service.Data.ViewModels {
+    public class MateriaVM : ShortVM {
+
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+
+    }
+}

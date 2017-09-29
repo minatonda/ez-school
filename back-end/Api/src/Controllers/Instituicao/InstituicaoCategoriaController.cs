@@ -2,43 +2,51 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Data.Service;
 using Api.Data.ViewModels;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers {
-    [Route ("api/instituicao-categoria")]
-    public class InstituicaoCategoriaController : Controller {
+namespace Api.Controllers
+{
+    [Route("api/instituicao-categoria")]
+    public class InstituicaoCategoriaCategoriaController : Controller
+    {
 
-        private InstituicaoRepository _instituicaoCategoriaRepository;
-        public InstituicaoCategoriaController (InstituicaoRepository instituicaoCategoriaRepository) {
-            this._instituicaoCategoriaRepository = instituicaoCategoriaRepository;
+        private InstituicaoCategoriaService _InstituicaoCategoriaCategoriaRepository;
+        public InstituicaoCategoriaCategoriaController(InstituicaoCategoriaRepository InstituicaoCategoriaRepository)
+        {
+            this._InstituicaoCategoriaCategoriaRepository = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
         }
         [HttpGet]
-        public List<InstituicaoVM> Get () {
-            return this._instituicaoCategoriaRepository.GetAll (true).Select (x => InstituicaoAdapter.ToViewModel (x, true)).ToList ();
+        public List<InstituicaoCategoriaVM> Get()
+        {
+            return this._InstituicaoCategoriaCategoriaRepository.GetAll();
         }
-        [HttpGet ("sht/{id}")]
-        public List<ShortVM> GetShort () {
-            return this._instituicaoCategoriaRepository.GetAll (true).Select (x => InstituicaoAdapter.ToViewModelShort (x)).ToList ();
+        [HttpGet("sht")]
+        public List<ShortVM> GetShort()
+        {
+            return this._InstituicaoCategoriaCategoriaRepository.GetAllShort();
         }
-        [HttpGet ("dtl/{id}")]
-        public InstituicaoVM GetDetail (long id) {
-            return InstituicaoAdapter.ToViewModel (this._instituicaoCategoriaRepository.Get (id), true);
+        [HttpGet("{id}")]
+        public InstituicaoCategoriaVM GetDetail(long id)
+        {
+            return this.GetDetail(id);
         }
-        [HttpPut ("add")]
-        public InstituicaoVM Put ([FromBody] InstituicaoVM viewModel) {
-            var model = InstituicaoAdapter.ToModel (viewModel, true);
-            return InstituicaoAdapter.ToViewModel (this._instituicaoCategoriaRepository.Add (model), true);
+        [HttpPut("add")]
+        public InstituicaoCategoriaVM Put([FromBody] InstituicaoCategoriaVM viewModel)
+        {
+            return this._InstituicaoCategoriaCategoriaRepository.Add(viewModel);
         }
-        [HttpPost ("upd")]
-        public InstituicaoVM Post ([FromBody] InstituicaoVM viewModel) {
-            var model = InstituicaoAdapter.ToModel (viewModel, true);
-            return InstituicaoAdapter.ToViewModel (this._instituicaoCategoriaRepository.Update (model), true);
+        [HttpPost("upd")]
+        public InstituicaoCategoriaVM Post([FromBody] InstituicaoCategoriaVM viewModel)
+        {
+           return this._InstituicaoCategoriaCategoriaRepository.Update(viewModel);
         }
-        [HttpDelete ("del/{id}")]
-        public void Delete (long id) {
-            this._instituicaoCategoriaRepository.Delete (id);
+        [HttpDelete("del")]
+        public void Delete([FromQuery] long id)
+        {
+            this._InstituicaoCategoriaCategoriaRepository.Delete(id);
         }
     }
 }

@@ -4,18 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Models.Interface;
 
-namespace Domain.Models {
-    public class CursoGrade : IBaseModel {
+namespace Domain.Models
+{
+    public class Curso : IBaseModel
+    {
 
-        public CursoGrade () {
+        public Curso()
+        {
 
         }
 
         [Key]
-        [DatabaseGeneratedAttribute (DatabaseGeneratedOption.Identity)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        public Curso Curso { get; set; }
-        public List<Materia> Materias { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
         public bool Ativo { get; set; } = true;
 
     }

@@ -32,7 +32,7 @@ export class MateriaFactory extends Factory {
 
     public static async del(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/materia/del/' + id);
+            let result = await this.delete('/api/materiadel', { params: { id: id } });
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -44,7 +44,7 @@ export class MateriaFactory extends Factory {
 
     public static async dtl(id: number, notify?: boolean) {
         try {
-            let result = await this.get('/api/materia/dtl/' + id) as Materia;
+            let result = await this.get(`/api/materia/${id}`) as Materia;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

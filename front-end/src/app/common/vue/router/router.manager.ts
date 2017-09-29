@@ -60,9 +60,9 @@ export class RouterManager {
         }
     }
 
-    private static isVisivelParaUsuario(path) {
-        let invisibleRoutes = [RoutePath.USUARIO_AUTENTICACAO];
-        return invisibleRoutes.indexOf(path) === -1;
+    public static isSelectable(path) {
+        let routeConfig = this.getRouteConfig(path);
+        return routeConfig.type !== RoutePathType.nsel;
     }
 
     public static needParameter(path: string) {

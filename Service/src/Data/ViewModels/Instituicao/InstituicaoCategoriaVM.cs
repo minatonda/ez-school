@@ -1,21 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Domain.Models.Interface;
 
-namespace Domain.Models {
-    public class Curso : IBaseModel {
-
-        public Curso () {
-
-        }
-
-        [Key]
-        [DatabaseGeneratedAttribute (DatabaseGeneratedOption.Identity)]
+namespace Service.Data.ViewModels {
+    public class InstituicaoCategoriaVM : ShortVM {
         public long ID { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public bool Ativo { get; set; } = true;
 
     }
 }

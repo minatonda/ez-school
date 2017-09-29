@@ -1,0 +1,36 @@
+<div class="row justify-content-end form-group">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <div class="row">
+                    <div class="col-8">
+                        <legend>Grades</legend>
+                    </div>
+                    <div class="col-4 d-flex align-content-center justify-content-end">
+                        <button class="btn btn-primary" v-on:click="showModalGrade()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-1">
+                <div class="row">
+                    <div class="col-12">
+                        <card-table-component v-bind:columns="getColumnsGrade()" v-bind:itens="getItensGrade()" v-bind:menu="getMenuGrade()"></card-table-component>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <b-modal ref="modalGrade" size="lg" hide-footer title="Lista de Matérias">
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <multiselect @input="selectMateria" placeholder="Materia" :options="getMaterias()" :multiple="false" selectLabel="" :reset-after="true"
+                    label="label"></multiselect>
+            </div>
+            <div class="col-12 col-md-9" ref="modalGradeTableMaterias">
+                <card-table-component v-bind:columns="getColumnsMateria()" v-bind:itens="getItensMateria()" v-bind:menu="getMenuMateria()"></card-table-component>
+            </div>
+        </div>
+    </b-modal>
+</div>

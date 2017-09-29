@@ -16,6 +16,5 @@ namespace Domain.Models {
         public string Nome { get; set; }
         public string CNPJ { get; set; }
         public bool Ativo { get; set; } = true;
-        public List<InstituicaoCategoria> Categorias { get; set; }
     }
 }

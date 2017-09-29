@@ -6,40 +6,62 @@ using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Repositories {
-    public class ProfessorRepository : IRepository<Professor> {
+namespace Domain.Repositories
+{
+    public class ProfessorRepository : IRepository<Professor>
+    {
         private BaseContext db;
+        private UsuarioRepository usuarioRepository;
 
-        public ProfessorRepository (BaseContext db) {
+        public ProfessorRepository(BaseContext db, UsuarioRepository usuarioRepository)
+        {
             this.db = db;
+            this.usuarioRepository = usuarioRepository;
         }
-        public Professor Add (Professor model) {
-            if (model.Usuario != null) {
-                this.db.Attach (model.Usuario);
+        public Professor Add(Professor model)
+        {
+            if (model.UsuarioInfo != null)
+            {
+                this.db.Attach(model.UsuarioInfo);
             }
             this.db.Professores.Add(model);
-            this.db.SaveChanges ();
+            this.db.SaveChanges();
             return model;
         }
-        public Professor Update (Professor model) {
-            if (model.Usuario != null) {
-                this.db.Attach (model.Usuario);
-                this.db.Professores.Find (model.ID).ID = model.Usuario.ID;
-                this.db.Professores.Find (model.ID).Usuario = model.Usuario;
+        public Professor AddByRG(Professor model, string rg)
+        {
+            var usuario = this.usuarioRepository.GetInfoByRG(rg);
+            if (usuario != null)
+            {
+                model.UsuarioInfo = usuario;
             }
-            this.db.Professores.Update (this.db.Professores.Find (model.ID));
-            this.db.SaveChanges ();
+            this.db.Professores.Add(model);
+            this.db.SaveChanges();
             return model;
         }
-        public void Delete (long ID) {
-            this.db.Professores.Find (ID).Ativo = false;
-            this.db.Professores.Update (this.db.Professores.Find (ID));
-            this.db.SaveChanges ();
+        public Professor Update(Professor model)
+        {
+            if (model.UsuarioInfo != null)
+            {
+                this.db.Attach(model.UsuarioInfo);
+                this.db.Professores.Find(model.ID).ID = model.UsuarioInfo.ID;
+                this.db.Professores.Find(model.ID).UsuarioInfo = model.UsuarioInfo;
+            }
+            this.db.Professores.Update(this.db.Professores.Find(model.ID));
+            this.db.SaveChanges();
+            return model;
         }
-        public Professor Get (long ID) => this.db.Professores.Find (ID);
-        public List<Professor> GetAll (bool? ativo) => this.db.Professores.Where (x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList ();
-        public IEnumerable<Professor> Query (Expression<Func<Professor, bool>> predicate, params Expression<Func<Professor, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Professor, object>>, IQueryable<Professor>> (db.Professores, (current, expression) => current.Include (expression)).Where (predicate.Compile ());
+        public void Delete(long ID)
+        {
+            this.db.Professores.Find(ID).Ativo = false;
+            this.db.Professores.Update(this.db.Professores.Find(ID));
+            this.db.SaveChanges();
+        }
+        public Professor Get(long ID) => this.db.Professores.Find(ID);
+        public List<Professor> GetAll(bool? ativo) => this.db.Professores.Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
+        public IEnumerable<Professor> Query(Expression<Func<Professor, bool>> predicate, params Expression<Func<Professor, object>>[] includeExpressions)
+        {
+            return includeExpressions.Aggregate<Expression<Func<Professor, object>>, IQueryable<Professor>>(db.Professores, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
     }

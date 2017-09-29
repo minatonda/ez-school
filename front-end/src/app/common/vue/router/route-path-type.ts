@@ -3,5 +3,6 @@ export enum RoutePathType {
     upd = 'upd',
     ext = 'ext',
     list = 'list',
-    otr = 'otr'
+    otr = 'otr',
+    nsel = 'nsel'
 }

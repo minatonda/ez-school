@@ -45,7 +45,7 @@ export class UsuarioFactory extends Factory {
 
     public static async del(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/usuario/del/' + id);
+            let result = await this.delete('/api/usuariodel', { params: { id: id } });
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -57,7 +57,7 @@ export class UsuarioFactory extends Factory {
 
     public static async dtl(id: string, notify?: boolean) {
         try {
-            let result = await this.get('/api/usuario/dtl/' + id) as Usuario;
+            let result = await this.get(`/api/usuario/${id}`) as Usuario;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

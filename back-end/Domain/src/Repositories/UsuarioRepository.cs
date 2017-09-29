@@ -56,7 +56,9 @@ namespace Domain.Repositories
         }
 
         public Usuario Get(string ID) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.ID == ID);
+        public Usuario GetByRG(string rg) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.RG == rg);
         public UsuarioInfo GetInfo(string ID) => this.db.UsuariosInfo.Find(ID);
+        public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
         public List<Usuario> GetAll(bool? ativo) => this.db.Usuarios.Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
 
         public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions)

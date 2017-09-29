@@ -11,7 +11,7 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class UsuarioAdapter {
 
-        public static UsuarioInfoVM ToUsuarioInfoViewModel (UsuarioInfo model, bool deep) {
+        public static UsuarioInfoVM ToViewModel (UsuarioInfo model, bool deep) {
             var vm = new UsuarioInfoVM ();
             vm.ID = model.ID;
             vm.Nome = model.Nome;
@@ -21,7 +21,7 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static UsuarioInfo ToUsuarioInfoModel (UsuarioInfoVM vm, bool deep) {
+        public static UsuarioInfo ToModel (UsuarioInfoVM vm, bool deep) {
             var model = new UsuarioInfo ();
             model.ID = vm.ID;
             model.Nome = vm.Nome;
@@ -37,7 +37,7 @@ namespace Api.Data.ViewModels {
             vm.Username = model.Username;
             vm.Password = model.Password;
             if (model.UsuarioInfo != null && deep) {
-                vm.UsuarioInfo = UsuarioAdapter.ToUsuarioInfoViewModel (model.UsuarioInfo, false);
+                vm.UsuarioInfo = UsuarioAdapter.ToViewModel (model.UsuarioInfo, false);
             }
             return vm;
         }
@@ -48,7 +48,7 @@ namespace Api.Data.ViewModels {
             model.Username = vm.Username;
             model.Password = vm.Password;
             if (vm.UsuarioInfo != null && deep) {
-                model.UsuarioInfo = UsuarioAdapter.ToUsuarioInfoModel (vm.UsuarioInfo, false);
+                model.UsuarioInfo = UsuarioAdapter.ToModel (vm.UsuarioInfo, false);
             }
             return model;
         }
