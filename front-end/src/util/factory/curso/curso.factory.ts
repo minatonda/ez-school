@@ -94,7 +94,7 @@ export class CursoFactory extends Factory {
 
     public static async addGradeMaterias(id: number, idGrade: number, model: Materia, notify?: boolean) {
         try {
-            let result = await this.put(`/api/curso/${id}/grades/${idGrade}/materias/add`, model) as Curso;
+            let result = await this.put(`/api/curso/${id}/grades/${idGrade}/materias/add`, model) as Materia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

@@ -13,9 +13,12 @@ namespace Api.Data.Service
     public class InstituicaoService
     {
         private InstituicaoRepository _instituicaoRepository;
-        public InstituicaoService(InstituicaoRepository instituicaoRepository)
+        private CursoRepository _cursoRespository;
+        public InstituicaoService(InstituicaoRepository instituicaoRepository, CursoRepository cursoRespository)
         {
             this._instituicaoRepository = instituicaoRepository;
+            this._cursoRespository = cursoRespository;
+
         }
         public List<InstituicaoVM> GetAll()
         {
@@ -55,6 +58,32 @@ namespace Api.Data.Service
         {
             this._instituicaoRepository.DeleteCategoria(id, idCategoria);
         }
+
+        public List<InstituicaoCursoVM> GetCursos(long id)
+        {
+            var listInstituicaoCurso = this._instituicaoRepository.GetCursos(id);
+            var listInstituicaoCursoVM = new List<InstituicaoCursoVM>();
+            foreach (var cursoCategoria in listInstituicaoCurso)
+            {
+                listInstituicaoCursoVM.Add(InstituicaoAdapter.ToViewModel(cursoCategoria, this._cursoRespository.GetGradeMaterias(cursoCategoria.Curso.ID, cursoCategoria.CursoGrade.ID), false));
+            }
+            return listInstituicaoCursoVM;
+        }
+
+        public InstituicaoCursoVM GetCurso(long id, long idCurso)
+        {
+            var instituicaoCurso = this._instituicaoRepository.GetCurso(id, idCurso);
+            return InstituicaoAdapter.ToViewModel(instituicaoCurso, this._cursoRespository.GetGradeMaterias(instituicaoCurso.Curso.ID, instituicaoCurso.CursoGrade.ID), false);
+        }
+        public void AddCurso(long id, InstituicaoCursoVM instituicaoCurso)
+        {
+            this._instituicaoRepository.AddCurso(id, instituicaoCurso.Curso.ID, instituicaoCurso.CursoGrade.ID);
+        }
+        public void DeleteCurso(long id, long idCurso)
+        {
+            this._instituicaoRepository.DeleteCurso(id, idCurso);
+        }
+
 
     }
 }

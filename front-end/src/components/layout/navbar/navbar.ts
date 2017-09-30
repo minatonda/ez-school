@@ -30,7 +30,7 @@ export class NavbarComponent extends Vue {
     }
 
     public getRotas() {
-        return RouterManager.getRouteConfigs().filter(r => !RouterManager.needParameter(r.path) && RouterManager.isSelectable(r.path));
+        return RouterManager.getRouteConfigsMenu();
     }
 
     public getRotasLabel(route: RouterConfig) {

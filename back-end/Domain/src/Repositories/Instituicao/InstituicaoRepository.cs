@@ -60,6 +60,25 @@ namespace Domain.Repositories
             this.db.SaveChanges();
         }
 
+        public InstituicaoCurso GetCurso(long ID,long IDCurso) => this.db.InstituicaoCursos.Include(i => i.Instituicao).Include(i => i.Curso).Include(i => i.CursoGrade).SingleOrDefault(x => x.Instituicao.ID == ID && x.Curso.ID==IDCurso);
+        public List<InstituicaoCurso> GetCursos(long ID) => this.db.InstituicaoCursos.Include(i => i.Instituicao).Include(i => i.Curso).Where(x => x.Instituicao.ID == ID).ToList();
+        public void AddCurso(long ID, long IDCurso, long IDCursoGrade)
+        {
+            this.db.InstituicaoCursos.Add(new InstituicaoCurso()
+            {
+                Instituicao = this.Get(ID),
+                Curso = this.db.Cursos.Find(IDCurso),
+                CursoGrade = this.db.CursoGrades.Find(IDCursoGrade),
+                DataInicio = DateTime.Now,
+            });
+            this.db.SaveChanges();
+        }
+        public void DeleteCurso(long ID, long IDCurso)
+        {
+            this.db.InstituicaoCursos.Remove(this.db.InstituicaoCursos.Include(i => i.Instituicao).Include(i => i.Curso).SingleOrDefault(x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso));
+            this.db.SaveChanges();
+        }
+
     }
 
 }

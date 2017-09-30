@@ -5,14 +5,12 @@ using Domain.Models.Interface;
 namespace Domain.Models {
     public class InstituicaoCurso : IBaseModel {
 
-        public InstituicaoCurso (Instituicao instituicao, Curso curso, CursoGrade cursoGrade) {
-            this.Instituicao = instituicao;
-            this.Curso = curso;
-            this.CursoGrade = cursoGrade;
+        public InstituicaoCurso () {
+
         }
 
         [Key]
-        public string ID { get; set; }
+        public long ID { get; set; }
         public Instituicao Instituicao { get; set; }
         public Curso Curso { get; set; }
         public CursoGrade CursoGrade { get; set; }

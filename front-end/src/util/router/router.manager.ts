@@ -60,22 +60,16 @@ export class RouterManager {
         }
     }
 
-    public static isSelectable(path) {
-        let routeConfig = this.getRouteConfig(path);
-        return routeConfig.type !== RouterPathType.nsel;
-    }
-
-    public static needParameter(path: string) {
-        let routeConfig = this.getRouteConfig(path);
-        return routeConfig.type === RouterPathType.upd || routeConfig.type === RouterPathType.ext;
-    }
-
     public static getRouteConfig(path: string) {
         return this.config.find(x => x.path === path || x.name === path);
     }
 
     public static getRouteConfigs() {
         return this.config;
+    }
+
+    public static getRouteConfigsMenu() {
+        return this.config.filter(x => x.menu);
     }
 
     private static isRoutePermitidoWhenAutenticado(path) {

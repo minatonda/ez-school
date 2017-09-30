@@ -14,9 +14,9 @@ namespace Api.Controllers
     {
 
         private InstituicaoService _instituicaoRepository;
-        public InstituicaoController(InstituicaoRepository instituicaoRepository)
+        public InstituicaoController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository)
         {
-            this._instituicaoRepository = new InstituicaoService(instituicaoRepository);
+            this._instituicaoRepository = new InstituicaoService(instituicaoRepository, cursoRepository);
         }
         [HttpGet]
         public List<InstituicaoVM> Get()
@@ -63,6 +63,27 @@ namespace Api.Controllers
         public void DeleteCategorias(long id, [FromQuery] long idCategoria)
         {
             this._instituicaoRepository.DeleteCategoria(id, idCategoria);
+        }
+
+        [HttpGet("{id}/cursos")]
+        public List<InstituicaoCursoVM> GetCursos(long id)
+        {
+            return this._instituicaoRepository.GetCursos(id);
+        }
+        [HttpGet("{id}/cursos/{idCurso}")]
+        public InstituicaoCursoVM GetCurso(long id, long idCurso)
+        {
+            return this._instituicaoRepository.GetCurso(id, idCurso);
+        }
+        [HttpGet("{id}/cursos/add")]
+        public void AddCategorias(long id, [FromBody] InstituicaoCursoVM viewModel)
+        {
+            this._instituicaoRepository.AddCurso(id, viewModel);
+        }
+        [HttpGet("{id}/cursos/del")]
+        public void DeleteCurso(long id, [FromQuery] long idCategoria)
+        {
+            this._instituicaoRepository.DeleteCurso(id, idCategoria);
         }
     }
 }

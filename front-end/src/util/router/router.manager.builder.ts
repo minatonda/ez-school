@@ -12,7 +12,7 @@ export class RouterManagerBuilder {
         let routes: Array<RouteConfig> = [];
         for (let route of listRouteBase) {
             routes.push({
-                path: this.buildRouterPath(route.path as RouterPath, route.type),
+                path: route.path,
                 component: route.component,
                 alias: route.alias,
                 name: route.name,
@@ -20,18 +20,5 @@ export class RouterManagerBuilder {
             });
         }
         return routes;
-    }
-    private static buildRouterPath(path: RouterPath, pathType: RouterPathType) {
-        if (pathType === RouterPathType.upd) {
-            return path + '/:id';
-        }
-        if (pathType === RouterPathType.ext) {
-            let arrayPath = path.split('/');
-            arrayPath.splice(2, 0, ':id');
-            return arrayPath.join('/');
-        }
-        else {
-            return path;
-        }
     }
 }

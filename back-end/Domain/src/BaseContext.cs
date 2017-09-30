@@ -19,6 +19,7 @@ namespace Domain
         public DbSet<CursoGrade> CursoGrades { get; set; }
         public DbSet<CursoGradeMateria> CursoGradeMaterias { get; set; }
         public DbSet<Instituicao> Instituicoes { get; set; }
+        public DbSet<InstituicaoCurso> InstituicaoCursos { get; set; }
         public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoInstituicaoCategoria> InstituicaoInstituicaoCategorias { get; set; }
 

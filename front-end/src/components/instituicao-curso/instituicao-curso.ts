@@ -4,18 +4,18 @@ import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcas
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
 import { RouterManager } from '../../util/router/router.manager';
 import { RouterPath } from '../../util/router/router.path';
+import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso.factory';
 import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
-import { Instituicao } from '../../util/factory/instituicao/instituicao';
 
 @Component({
-    template: require('./instituicao.html')
+    template: require('./instituicao-curso.html')
 })
-export class InstituicaoComponent extends Vue {
+export class InstituicaoCursoComponent extends Vue {
 
     @Prop()
     alias: string;
 
-    lista: Array<Instituicao> = [];
+    lista: Array<InstituicaoCurso> = [];
 
     constructor() {
         super();
@@ -24,7 +24,7 @@ export class InstituicaoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.all();
+            this.lista = await InstituicaoFactory.getCursos(1);
         }
         catch (e) {
 
@@ -36,8 +36,8 @@ export class InstituicaoComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: Instituicao) => item.nome, () => 'Nome'),
-            new CardTableColumn((item: Instituicao) => item.cnpj, () => 'CNPJ')
+            new CardTableColumn((item: InstituicaoCurso) => item.curso.nome, () => 'Nome'),
+            new CardTableColumn((item: InstituicaoCurso) => item.dataFim, () => 'Início')
         ];
     }
 
