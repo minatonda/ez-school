@@ -1,26 +1,26 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models;
 using Domain.Models.Interface;
+using System.Linq;
+using System.Linq.Expressions;
 
-namespace Domain.Models
+namespace Domain.Dto
 {
-    public class InstituicaoCursoOcorrenciaMateria : IBaseModel
+    public class InstituicaoCursoOcorrenciaMateriaDto
     {
 
-        public InstituicaoCursoOcorrenciaMateria()
+        public InstituicaoCursoOcorrenciaMateriaDto()
         {
 
         }
 
-        [Key]
         public long ID { get; set; }
-        public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
         public Materia Materia { get; set; }
         public Professor Professor { get; set; }
-        public bool Ativo { get; set; } = true;
-
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
-
     }
 }

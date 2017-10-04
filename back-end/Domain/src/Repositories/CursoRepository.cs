@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Domain;
+using Domain.Dto;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,57 +44,44 @@ namespace Domain.Repositories
             return includeExpressions.Aggregate<Expression<Func<Curso, object>>, IQueryable<Curso>>(db.Cursos, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
-        public List<CursoGrade> GetGrades(long ID) => this.db.CursoGrades.Include(i => i.Curso).Where(x => x.Curso.ID == ID).ToList();
-        public CursoGrade AddGrade(long ID, CursoGrade model, List<Materia> materias)
+        public CursoGradeDto GetGrade(long ID, long IDCursoGrade)
         {
-            if (model.Curso != null)
+            return new CursoGradeDto(this.db.CursoGradeMaterias.Include(i => i.CursoGrade).ThenInclude(i => i.Curso).Include(i => i.Materia).Where(x => x.CursoGrade.Curso.ID == ID && x.CursoGrade.ID == IDCursoGrade).ToList());
+        }
+        public List<CursoGradeDto> GetGrades(long ID)
+        {
+            var listCursoGrade = new List<CursoGradeDto>();
+            foreach (var item in this.db.CursoGradeMaterias.Include(i => i.CursoGrade).ThenInclude(i => i.Curso).Include(i => i.Materia).Where(x => x.CursoGrade.Curso.ID == ID).GroupBy(x => x.CursoGrade.ID))
             {
-                this.db.Attach(model.Curso);
+                listCursoGrade.Add(new CursoGradeDto(item.ToList()));
             }
-            else
+            return listCursoGrade;
+        }
+        public CursoGradeDto AddGrade(long ID, CursoGradeDto model)
+        {
+            var curso = this.db.Cursos.Find(ID);
+            var cursoGrade = new CursoGrade()
             {
-                model.Curso = this.Get(ID);
-            }
-            this.db.CursoGrades.Add(model);
-            foreach (var materia in materias)
+                Curso = curso,
+                Descricao = model.Descricao,
+                DataCriacao = model.DataCriacao
+            };
+            foreach (var materia in model.Materias)
             {
                 this.db.Attach(materia);
                 this.db.CursoGradeMaterias.Add(new CursoGradeMateria()
                 {
-                    CursoGrade = model,
+                    CursoGrade = cursoGrade,
                     Materia = materia
                 });
             }
             this.db.SaveChanges();
             return model;
         }
-        public void DeleteGrade(long ID, long IDGrade)
+        public void DeleteGrade(long ID, long IDCursoGrade)
         {
-            this.db.CursoGrades.Include(i => i.Curso).SingleOrDefault(x => x.ID == IDGrade && x.Curso.ID == ID).Ativo = false;
+            this.db.RemoveRange(this.db.CursoGradeMaterias.Include(i => i.CursoGrade).ThenInclude(i => i.Curso).Where(x => x.CursoGrade.Curso.ID == ID && x.CursoGrade.ID == IDCursoGrade).ToList());
             this.db.SaveChanges();
-        }
-        public CursoGrade GetGrade(long ID, long IDGrade)
-        {
-            return this.GetGrades(ID).SingleOrDefault(x => x.ID == IDGrade);
-        }
-        public void AddGradeMateria(long ID, long IDGrade, Materia model)
-        {
-            this.db.Attach(model);
-            this.db.CursoGradeMaterias.Add(new CursoGradeMateria()
-            {
-                CursoGrade = this.GetGrade(ID, IDGrade),
-                Materia = model
-            });
-            this.db.SaveChanges();
-        }
-        public void DeleteGradeMateria(long ID, long IDGrade, long IDMateria)
-        {
-            this.db.CursoGradeMaterias.Remove(this.db.CursoGradeMaterias.Include(i => i.CursoGrade).Include(i => i.Materia).SingleOrDefault(x => x.CursoGrade.ID == IDGrade && x.Materia.ID == IDMateria));
-            this.db.SaveChanges();
-        }
-        public List<Materia> GetGradeMaterias(long ID, long IDGrade)
-        {
-            return this.db.CursoGradeMaterias.Include(i => i.CursoGrade).Include(i => i.Materia).Where(x => x.CursoGrade.ID == IDGrade).Select(x => x.Materia).ToList();
         }
 
     }

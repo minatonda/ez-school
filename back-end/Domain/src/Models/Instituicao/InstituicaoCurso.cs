@@ -2,10 +2,13 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Domain.Models.Interface;
 
-namespace Domain.Models {
-    public class InstituicaoCurso : IBaseModel {
+namespace Domain.Models
+{
+    public class InstituicaoCurso : IBaseModel
+    {
 
-        public InstituicaoCurso () {
+        public InstituicaoCurso()
+        {
 
         }
 

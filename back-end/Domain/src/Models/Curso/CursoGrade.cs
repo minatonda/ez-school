@@ -6,7 +6,7 @@ using Domain.Models.Interface;
 
 namespace Domain.Models
 {
-    public class CursoGrade : IBaseModel
+    public class CursoGrade
     {
 
         public CursoGrade()
@@ -16,8 +16,9 @@ namespace Domain.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
+        public string Descricao { get; set; }
         public Curso Curso { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? DataCriacao { get; set; }
 
     }
 }

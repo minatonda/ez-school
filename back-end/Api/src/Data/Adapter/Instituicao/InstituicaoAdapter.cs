@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Dto;
 using Domain.Models;
-using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
@@ -44,26 +44,46 @@ namespace Api.Data.ViewModels
             return model;
         }
 
-        public static InstituicaoCursoVM ToViewModel(InstituicaoCurso model, List<Materia> materias, bool deep)
+        public static InstituicaoCursoVM ToViewModel(InstituicaoCursoDto model, bool deep)
         {
             var vm = new InstituicaoCursoVM();
             vm.ID = model.ID;
             vm.Curso = CursoAdapter.ToViewModel(model.Curso, false);
-            vm.Instituicao = InstituicaoAdapter.ToViewModel(model.Instituicao, false);
-            vm.CursoGrade = CursoAdapter.ToViewModel(model.CursoGrade, materias, false);
+            vm.CursoGrade = CursoAdapter.ToViewModel(model.CursoGrade, false);
             vm.Label = model.Curso.Nome;
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
             return vm;
         }
 
-        public static InstituicaoCurso ToModel(InstituicaoCursoVM vm, bool deep)
+        public static InstituicaoCursoDto ToModel(InstituicaoCursoVM vm, bool deep)
         {
-            var model = new InstituicaoCurso();
+            var model = new InstituicaoCursoDto();
             model.ID = vm.ID;
             model.Curso = CursoAdapter.ToModel(vm.Curso, false);
-            model.Instituicao = InstituicaoAdapter.ToModel(vm.Instituicao, false);
             model.CursoGrade = CursoAdapter.ToModel(vm.CursoGrade, false);
+            model.DataInicio = vm.DataInicio;
+            model.DataExpiracao = vm.DataExpiracao;
+            return model;
+        }
+
+        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrenciaDto model, bool deep)
+        {
+            var vm = new InstituicaoCursoOcorrenciaVM();
+            vm.ID = model.ID;
+            vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, false);
+            vm.Alunos = model.Alunos.Select(x => AlunoAdapter.ToViewModel(x, false)).ToList();
+            vm.DataInicio = model.DataInicio;
+            vm.DataExpiracao = model.DataExpiracao;
+            return vm;
+        }
+
+        public static InstituicaoCursoOcorrenciaDto ToModel(InstituicaoCursoOcorrenciaVM vm, bool deep)
+        {
+            var model = new InstituicaoCursoOcorrenciaDto();
+            model.ID = vm.ID;
+            model.Coordenador = ProfessorAdapter.ToModel(vm.Coordenador, false);
+            model.Alunos = vm.Alunos.Select(x => AlunoAdapter.ToModel(x, false)).ToList();
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
             return model;

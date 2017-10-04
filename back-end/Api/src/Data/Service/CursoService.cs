@@ -43,45 +43,22 @@ namespace Api.Data.Service
         {
             this._cursoRepository.Delete(id);
         }
+        
         public List<CursoGradeVM> GetGrades(long id)
         {
-            var retorno = new List<CursoGradeVM>();
-            var grades = this._cursoRepository.GetGrades(id);
-            foreach (var grade in grades)
-            {
-                retorno.Add(
-                    CursoAdapter.ToViewModel(grade, this._cursoRepository.GetGradeMaterias(id, grade.ID), false)
-                );
-            }
-            return retorno;
+            return this._cursoRepository.GetGrades(id).Select(x => CursoAdapter.ToViewModel(x, true)).ToList();
         }
         public CursoGradeVM GetGradeDetail(long id, long idGrade)
         {
-            var grade = this._cursoRepository.GetGrade(id, idGrade);
-            return CursoAdapter.ToViewModel(grade, this._cursoRepository.GetGradeMaterias(id, grade.ID), false);
+            return CursoAdapter.ToViewModel(this._cursoRepository.GetGrade(id, idGrade), true);
         }
         public CursoGradeVM AddGrades(long id, CursoGradeVM model)
         {
-            var grade = CursoAdapter.ToModel(model, true);
-            var materias = model.Materias.Select(x => MateriaAdapter.ToModel(x, false)).ToList();
-            this._cursoRepository.AddGrade(id, grade, materias);
-            return CursoAdapter.ToViewModel(grade, this._cursoRepository.GetGradeMaterias(id, grade.ID), true);
+            return CursoAdapter.ToViewModel(this._cursoRepository.AddGrade(id, CursoAdapter.ToModel(model, true)), true);
         }
         public void DeleteGrades(long id, long idGrade)
         {
             this._cursoRepository.DeleteGrade(id, idGrade);
-        }
-        public List<MateriaVM> GetGradeMaterias(long id, long idGrade)
-        {
-            return this._cursoRepository.GetGradeMaterias(id, idGrade).Select(x => MateriaAdapter.ToViewModel(x, true)).ToList();
-        }
-        public void AddGradeMaterias(long id, long idGrade, MateriaVM model)
-        {
-            this._cursoRepository.AddGradeMateria(id, idGrade, MateriaAdapter.ToModel(model, true));
-        }
-        public void DeleteGradeMaterias(long id, long idGrade, long idMateria)
-        {
-            this._cursoRepository.DeleteGradeMateria(id, idGrade, idMateria);
         }
 
     }

@@ -4,8 +4,8 @@ import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcas
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
 import { RouterManager } from '../../util/router/router.manager';
 import { RouterPath } from '../../util/router/router.path';
-import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso.factory';
 import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
+import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso';
 
 @Component({
     template: require('./instituicao-curso.html')
@@ -24,7 +24,7 @@ export class InstituicaoCursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.getCursos(1);
+            this.lista = await InstituicaoFactory.getCursos(parseInt(this.$route.params.idCurso));
         }
         catch (e) {
 
@@ -56,13 +56,13 @@ export class InstituicaoCursoComponent extends Vue {
             ),
             new CardTableMenuEntry(
                 (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-                (item) => 'Gerenciar Cursos',
+                (item) => 'Gerenciar Ocorrências',
                 (item) => ['fa', 'fa-book'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
                 (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-                (item) => 'Gerenciar Pessoas',
+                (item) => 'Atualizar',
                 (item) => ['fa', 'fa-user'],
                 (item) => ['btn-primary']
             ),

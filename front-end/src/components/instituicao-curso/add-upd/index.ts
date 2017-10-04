@@ -1,1 +1,1 @@
-export * from './instituicao-add-upd';
+export * from './instituicao-curso-add-upd';

@@ -1,1 +1,1 @@
-export * from './instituicao';
+export * from './instituicao-curso';

@@ -3,7 +3,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoCurso } from '../../../util/factory/instituicao/instituicao-curso.factory';
+import { InstituicaoCurso } from '../../../util/factory/instituicao/instituicao-curso';
 import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
 
 @Component({
@@ -30,7 +30,7 @@ export class InstituicaoCursoAddUpdComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                //this.model = await InstituicaoFactory.dtl(parseInt(this.$route.params.id), true);
+                // this.model = await InstituicaoFactory.dtl(parseInt(this.$route.params.id), true);
             }
         }
         catch (e) {
@@ -50,7 +50,7 @@ export class InstituicaoCursoAddUpdComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    //await InstituicaoFactory.upd(this.model, true);
+                    // await InstituicaoFactory.upd(this.model, true);
                     break;
                 }
             }

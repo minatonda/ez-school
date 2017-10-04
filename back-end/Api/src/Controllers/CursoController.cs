@@ -51,10 +51,10 @@ namespace Api.Controllers
         {
             return this._cursoService.GetGrades(id);
         }
-        [HttpGet("{id}/grades/{idGrade}")]
-        public CursoGradeVM GetGradeDetail(long id, long idGrade)
+        [HttpGet("{id}/grades/{descricao}")]
+        public CursoGradeVM GetGradeDetail(long id, long idCursoGrade)
         {
-            return this._cursoService.GetGradeDetail(id, idGrade);
+            return this._cursoService.GetGradeDetail(id, idCursoGrade);
         }
         [HttpPut("{id}/grades/add")]
         public CursoGradeVM AddGrades(long id, [FromBody] CursoGradeVM model)
@@ -62,27 +62,10 @@ namespace Api.Controllers
             return this._cursoService.AddGrades(id, model);
         }
         [HttpDelete("{id}/grades/del")]
-        public void DeleteGrades(long id, [FromQuery]long idGrade)
+        public void DeleteGrades(long id, [FromQuery]long idCursoGrade)
         {
-            this._cursoService.DeleteGrades(id, idGrade);
+            this._cursoService.DeleteGrades(id, idCursoGrade);
         }
-
-        [HttpGet("{id}/grades/{idGrade}/materias")]
-        public List<MateriaVM> GetGradeMaterias(long id, long idGrade)
-        {
-            return this._cursoService.GetGradeMaterias(id, idGrade);
-        }
-        [HttpPut("{id}/grades/{idGrade}/materias/add")]
-        public void AddGradeMaterias(long id, long idGrade, [FromBody] MateriaVM model)
-        {
-            this._cursoService.AddGradeMaterias(id, idGrade, model);
-        }
-        [HttpDelete("{id}/grades/{idGrade}/materias/del")]
-        public void DeleteGradeMaterias(long id, long idGrade, [FromQuery]long idMateria)
-        {
-            this._cursoService.DeleteGradeMaterias(id, idGrade, idMateria);
-        }
-
 
     }
 }

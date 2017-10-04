@@ -55,17 +55,17 @@ export class InstituicaoComponent extends Vue {
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
+                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO, { idInstituicao: item.id }),
                 (item) => 'Gerenciar Cursos',
                 (item) => ['fa', 'fa-book'],
                 (item) => ['btn-primary']
             ),
-            new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-                (item) => 'Gerenciar Pessoas',
-                (item) => ['fa', 'fa-user'],
-                (item) => ['btn-primary']
-            ),
+            // new CardTableMenuEntry(
+            //     (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
+            //     (item) => 'Gerenciar Pessoas',
+            //     (item) => ['fa', 'fa-user'],
+            //     (item) => ['btn-primary']
+            // ),
             new CardTableMenuEntry(
                 (item) => this.remove(item),
                 (item) => 'Remover',

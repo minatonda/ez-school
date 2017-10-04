@@ -15,8 +15,10 @@ namespace Api.Data.ViewModels
         {
             this.Materias = new List<MateriaVM>();
         }
-        public long ID { get; set; }
+
         public List<MateriaVM> Materias { get; set; }
+        public string Descricao { get; set; }
+        public DateTime? DataCriacao { get; set; }
 
     }
 }

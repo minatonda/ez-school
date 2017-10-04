@@ -11,6 +11,8 @@ import { InstituicaoAddUpdComponent } from '../../components/instituicao/add-upd
 import { InstituicaoCategoriaComponent } from '../../components/instituicao-categoria/instituicao-categoria';
 import { InstituicaoCategoriaAddUpdComponent } from '../../components/instituicao-categoria/add-upd/instituicao-categoria-add-upd';
 import { RouterConfig, RouterPathType, RouterPath } from '../router/router.path';
+import { InstituicaoCursoComponent } from '../../components/instituicao-curso/instituicao-curso';
+import { InstituicaoCursoAddUpdComponent } from '../../components/instituicao-curso/add-upd/instituicao-curso-add-upd';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
@@ -34,6 +36,10 @@ export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
 
     { menu: true, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CATEGORIA, name: RouterPath.INSTITUICAO_CATEGORIA, component: InstituicaoCategoriaComponent, alias: 'Instituição - Categorias' },
     { menu: true, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CATEGORIA_ADD, name: RouterPath.INSTITUICAO_CATEGORIA_ADD, component: InstituicaoCategoriaAddUpdComponent, alias: 'Instituição Categoria - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CATEGORIA_UPD, name: RouterPath.INSTITUICAO_CATEGORIA_UPD, component: InstituicaoCategoriaAddUpdComponent, alias: 'Instituição Categoria - Atualizar' }
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CATEGORIA_UPD, name: RouterPath.INSTITUICAO_CATEGORIA_UPD, component: InstituicaoCategoriaAddUpdComponent, alias: 'Instituição Categoria - Atualizar' },
+
+    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO, name: RouterPath.INSTITUICAO_CURSO, component: InstituicaoCursoComponent, alias: 'Instituição - Categorias' },
+    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_ADD, name: RouterPath.INSTITUICAO_CURSO_ADD, component: InstituicaoCursoAddUpdComponent, alias: 'Instituição Categoria - Adicionar' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_UPD, name: RouterPath.INSTITUICAO_CURSO_UPD, component: InstituicaoCursoAddUpdComponent, alias: 'Instituição Categoria - Atualizar' }
 
 ];

@@ -61,27 +61,38 @@ namespace Api.Data.Service
 
         public List<InstituicaoCursoVM> GetCursos(long id)
         {
-            var listInstituicaoCurso = this._instituicaoRepository.GetCursos(id);
-            var listInstituicaoCursoVM = new List<InstituicaoCursoVM>();
-            foreach (var cursoCategoria in listInstituicaoCurso)
-            {
-                listInstituicaoCursoVM.Add(InstituicaoAdapter.ToViewModel(cursoCategoria, this._cursoRespository.GetGradeMaterias(cursoCategoria.Curso.ID, cursoCategoria.CursoGrade.ID), false));
-            }
-            return listInstituicaoCursoVM;
+            return this._instituicaoRepository.GetCursos(id).Select(x => InstituicaoAdapter.ToViewModel(x, false)).ToList();
         }
 
         public InstituicaoCursoVM GetCurso(long id, long idCurso)
         {
-            var instituicaoCurso = this._instituicaoRepository.GetCurso(id, idCurso);
-            return InstituicaoAdapter.ToViewModel(instituicaoCurso, this._cursoRespository.GetGradeMaterias(instituicaoCurso.Curso.ID, instituicaoCurso.CursoGrade.ID), false);
+            return InstituicaoAdapter.ToViewModel(this._instituicaoRepository.GetCurso(id, idCurso), false);
         }
         public void AddCurso(long id, InstituicaoCursoVM instituicaoCurso)
         {
-            this._instituicaoRepository.AddCurso(id, instituicaoCurso.Curso.ID, instituicaoCurso.CursoGrade.ID);
+            this._instituicaoRepository.AddCurso(id, InstituicaoAdapter.ToModel(instituicaoCurso, true));
         }
         public void DeleteCurso(long id, long idCurso)
         {
             this._instituicaoRepository.DeleteCurso(id, idCurso);
+        }
+
+
+        public List<InstituicaoCursoOcorrenciaVM> GetCursoOcorrencias(long id, long idCurso)
+        {
+            return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso).Select(x => InstituicaoAdapter.ToViewModel(x, false)).ToList();
+        }
+        public InstituicaoCursoOcorrenciaVM GetCursoOcorrencia(long id, long idCurso, long idOcorrencia)
+        {
+            return InstituicaoAdapter.ToViewModel(this._instituicaoRepository.GetCursoOcorrencia(id, idCurso, idOcorrencia), false);
+        }
+        public void AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrenciaVM instituicaoCurso)
+        {
+            this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, InstituicaoAdapter.ToModel(instituicaoCurso, true));
+        }
+        public void DeleteCursoOcorrencia(long id, long idCurso, long idOcorrencia)
+        {
+            this._instituicaoRepository.DeleteCursoOcorrencia(id, idCurso, idOcorrencia);
         }
 
 

@@ -2385,11 +2385,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj",
+      "projectUniqueName": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj",
+      "projectPath": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\mtwnd\\.nuget\\packages\\",
-      "outputPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\obj\\",
+      "outputPath": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

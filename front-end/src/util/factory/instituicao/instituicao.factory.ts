@@ -1,7 +1,7 @@
 import { Factory } from '../factory';
 import { Instituicao } from './instituicao';
 import { Notify, MESSAGES, NOTIFY_TYPE } from '../../notify/notify';
-import { InstituicaoCurso } from './instituicao-curso.factory';
+import { InstituicaoCurso } from './instituicao-curso';
 
 export class InstituicaoFactory extends Factory {
 

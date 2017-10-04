@@ -4,9 +4,8 @@ using Domain.Models.Interface;
 
 namespace Domain.Models {
     public class InstituicaoCursoOcorrenciaMateriaNota : IBaseModel {
-        public InstituicaoCursoOcorrenciaMateriaNota (InstituicaoAluno instituicaoAluno, InstituicaoCursoOcorrenciaMateria instituicaoCursoOcorrenciaMateria) {
-            this.InstituicaoAluno = instituicaoAluno;
-            this.InstituicaoCursoOcorrenciaMateria = instituicaoCursoOcorrenciaMateria;
+        public InstituicaoCursoOcorrenciaMateriaNota () {
+
         }
 
         [Key]
@@ -14,7 +13,7 @@ namespace Domain.Models {
         public string Descricao { get; set; }
         public int Valor { get; set; }
         public DateTime DataLancamento { get; set; }
-        public InstituicaoAluno InstituicaoAluno { get; set; }
+        public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
         public InstituicaoCursoOcorrenciaMateria InstituicaoCursoOcorrenciaMateria { get; set; }
         public bool Ativo { get; set; } = true;
 
