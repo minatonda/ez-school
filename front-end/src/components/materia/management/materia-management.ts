@@ -1,37 +1,36 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
-import { RouterManager } from '../../../util/router/router.manager';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
-import { Usuario } from '../../../util/factory/usuario/usuario';
-import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
+import { RouterManager } from '../../../util/router/router.manager';
+import { MateriaFactory } from '../../../util/factory/materia/materia.factory';
+import { Materia } from '../../../util/factory/materia/materia';
 
 @Component({
-    template: require('./usuario-add-upd.html')
+    template: require('./materia-management.html')
 })
-export class UsuarioAddUpdComponent extends Vue {
+export class MateriaManagementComponent extends Vue {
 
     @Prop()
     alias: string;
     @Prop()
     operation: RouterPathType;
 
-    model: Usuario = new Usuario();
+    model: Materia = new Materia();
 
     constructor() {
         super();
     }
 
     created() {
-        this.model.usuarioInfo = new UsuarioInfo();
+
     }
     
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await UsuarioFactory.dtl(this.$route.params.id, true);
+                this.model = await MateriaFactory.dtl(parseInt(this.$route.params.id), true);
             }
         }
         catch (e) {
@@ -47,11 +46,11 @@ export class UsuarioAddUpdComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
                 case (RouterPathType.add): {
-                    await UsuarioFactory.add(this.model, true);
+                    await MateriaFactory.add(this.model, true);
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await UsuarioFactory.upd(this.model, true);
+                    await MateriaFactory.upd(this.model, true);
                     break;
                 }
             }

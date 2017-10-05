@@ -46,25 +46,48 @@ namespace Api.Data.ViewModels
         public static CursoGradeVM ToViewModel(CursoGradeDto model, bool deep)
         {
             var viewModel = new CursoGradeVM();
-
+            viewModel.ID = model.ID;
             viewModel.Label = model.Descricao;
+
             viewModel.Descricao = model.Descricao;
             viewModel.DataCriacao = model.DataCriacao;
             foreach (var item in model.Materias)
             {
-                viewModel.Materias.Add(MateriaAdapter.ToViewModel(item, false));
+                viewModel.Materias.Add(CursoAdapter.ToViewModel(item, false));
             }
             return viewModel;
         }
         public static CursoGradeDto ToModel(CursoGradeVM viewModel, bool deep)
         {
             var model = new CursoGradeDto();
+            model.ID = viewModel.ID;
             model.Descricao = viewModel.Descricao;
             model.DataCriacao = viewModel.DataCriacao;
             foreach (var item in viewModel.Materias)
             {
-                model.Materias.Add(MateriaAdapter.ToModel(item, false));
+                model.Materias.Add(CursoAdapter.ToModel(item, false));
             }
+            return model;
+        }
+
+        public static CursoGradeMateriaVM ToViewModel(CursoGradeMateriaDto model, bool deep)
+        {
+            var viewModel = new CursoGradeMateriaVM();
+
+            viewModel.ID = model.ID;
+            viewModel.Label = model.Descricao;
+            
+            viewModel.Descricao = model.Descricao;
+            viewModel.Materia = MateriaAdapter.ToViewModel(model.Materia, true);
+
+            return viewModel;
+        }
+        public static CursoGradeMateriaDto ToModel(CursoGradeMateriaVM viewModel, bool deep)
+        {
+            var model = new CursoGradeMateriaDto();
+            model.ID = viewModel.ID;
+            model.Descricao = viewModel.Descricao;
+            model.Materia = MateriaAdapter.ToModel(viewModel.Materia,true);
             return model;
         }
 

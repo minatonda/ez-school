@@ -18,6 +18,7 @@ namespace Domain.Models
         public long ID { get; set; }
         public CursoGrade CursoGrade { get; set; }
         public Materia Materia { get; set; }
+        public string Descricao { get; set; }
 
     }
 }

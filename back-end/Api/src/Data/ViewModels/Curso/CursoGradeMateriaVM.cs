@@ -9,16 +9,15 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
-    public class CursoGradeVM : ShortVM
+    public class CursoGradeMateriaVM : ShortVM
     {
-        public CursoGradeVM()
+        public CursoGradeMateriaVM()
         {
-            this.Materias = new List<CursoGradeMateriaVM>();
+
         }
 
-        public List<CursoGradeMateriaVM> Materias { get; set; }
         public string Descricao { get; set; }
-        public DateTime? DataCriacao { get; set; }
+        public MateriaVM Materia { get; set; }
 
     }
 }

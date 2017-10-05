@@ -12561,11 +12561,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\Api.csproj",
+      "projectUniqueName": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\Api.csproj",
       "projectName": "Api",
-      "projectPath": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\Api.csproj",
+      "projectPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\Api.csproj",
       "packagesPath": "C:\\Users\\mtwnd\\.nuget\\packages\\",
-      "outputPath": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\obj\\",
+      "outputPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12584,8 +12584,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj": {
-              "projectPath": "E:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj"
+            "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj": {
+              "projectPath": "e:\\01 - T-I\\00 - DEV\\01 - PRJ\\ez-school\\back-end\\Domain\\Domain.csproj"
             }
           }
         }

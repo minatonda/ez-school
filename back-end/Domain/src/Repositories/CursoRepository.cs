@@ -72,7 +72,8 @@ namespace Domain.Repositories
                 this.db.CursoGradeMaterias.Add(new CursoGradeMateria()
                 {
                     CursoGrade = cursoGrade,
-                    Materia = materia
+                    Materia = materia.Materia,
+                    Descricao = materia.Descricao
                 });
             }
             this.db.SaveChanges();

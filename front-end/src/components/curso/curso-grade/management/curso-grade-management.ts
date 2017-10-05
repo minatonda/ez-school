@@ -6,16 +6,24 @@ import { CursoFactory } from '../../../../util/factory/curso/curso.factory';
 import { Curso } from '../../../../util/factory/curso/curso';
 import { CursoGrade } from '../../../../util/factory/curso/curso-grade';
 import { Materia } from '../../../../util/factory/materia/materia';
+import { CursoGradeMateria } from '../../../../util/factory/curso/curso-grade-materia';
 
 @Component({
-    template: require('./curso-grade-mng.html')
+    template: require('./curso-grade-management.html')
 })
-export class CursoGradeMngComponent extends Vue {
+export class CursoGradeManagementComponent extends Vue {
 
     @Prop()
     curso: Curso = new Curso();
-    model: CursoGrade = null;
+
+    model: CursoGrade = undefined;
+
+
     materias: Array<Materia> = new Array<Materia>();
+    cursoGradeMateria: CursoGradeMateria = new CursoGradeMateria();
+
+    action: string = 'list';
+    tab: string = 'list';
 
     constructor() {
         super();
@@ -23,6 +31,37 @@ export class CursoGradeMngComponent extends Vue {
 
     created() {
 
+    }
+
+    public setAction(action) {
+        this.action = action;
+    }
+    public isAction(action) {
+        return this.action === action;
+    }
+
+    public setTab(tab) {
+        this.tab = tab;
+    }
+    public isTab(tab) {
+        return this.tab === tab;
+    }
+
+    public enableAdd() {
+        this.model = new CursoGrade();
+        this.setAction('add');
+        this.setTab('add');
+    }
+    public enableUpd(model) {
+        this.model = model;
+        this.setAction('upd');
+        this.setTab('upd');
+    }
+
+    public disableActions() {
+        this.model = undefined;
+        this.setAction(undefined);
+        this.setTab('list');
     }
 
     async mounted() {
@@ -42,10 +81,10 @@ export class CursoGradeMngComponent extends Vue {
         return this.materias;
     }
 
-
     public getColumnsGrade() {
         return [
             new CardTableColumn((item: CursoGrade) => item.id, () => 'ID'),
+            new CardTableColumn((item: CursoGrade) => item.descricao, () => 'Descrição'),
         ];
     }
 
@@ -57,7 +96,7 @@ export class CursoGradeMngComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => this.showModalGrade(item),
+                (item) => this.enableUpd(item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -69,7 +108,8 @@ export class CursoGradeMngComponent extends Vue {
 
     public getColumnsMateria() {
         return [
-            new CardTableColumn((item: Materia) => item.nome, () => 'Nome'),
+            new CardTableColumn((item: CursoGradeMateria) => item.materia.nome, () => 'Materia'),
+            new CardTableColumn((item: CursoGradeMateria) => item.descricao, () => 'Descrição'),
         ];
     }
 
@@ -90,41 +130,14 @@ export class CursoGradeMngComponent extends Vue {
         return menu;
     }
 
-    public showModalGrade(grade) {
-        this.model = grade;
-        (this.$refs.modalGrade as any).show();
+    public async addMateria(materia: CursoGradeMateria) {
+        this.model.materias.push(materia);
+        this.$forceUpdate();
     }
 
-    public hideModalGrade() {
-        (this.$refs.modalGrade as any).hide();
-    }
-
-    public async selectMateria(materia: Materia) {
-        try {
-            if (this.model) {
-                await CursoFactory.addGradeMaterias(this.curso.id, this.model.id, materia, true);
-                this.model.materias.push(materia);
-            }
-            else {
-                let grade = new CursoGrade();
-                grade.materias.push(materia);
-                this.model = await CursoFactory.addGrade(this.curso.id, grade, true);
-                this.curso.grades.push(this.model);
-            }
-            this.$forceUpdate();
-        } catch (error) {
-
-        }
-    }
-
-    public async removeMateria(materia: Materia) {
-        try {
-            await CursoFactory.removeGradeMaterias(this.curso.id, this.model.id, materia.id, true);
-            this.model.materias.splice(this.model.materias.indexOf(materia), 1);
-            this.$forceUpdate();
-        } catch (error) {
-
-        }
+    public async removeMateria(materia: CursoGradeMateria) {
+        this.model.materias.splice(this.model.materias.indexOf(materia), 1);
+        this.$forceUpdate();
     }
 
 

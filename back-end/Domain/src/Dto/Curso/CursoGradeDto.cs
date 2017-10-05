@@ -17,7 +17,7 @@ namespace Domain.Dto
             this.ID = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().ID;
             this.Descricao = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().Descricao;
             this.DataCriacao = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().DataCriacao;
-            this.Materias = CursoGradeMaterias.Select(x => x.Materia).ToList();
+            this.Materias = CursoGradeMaterias.Select(x => new CursoGradeMateriaDto(x)).ToList();
         }
 
         public CursoGradeDto()
@@ -27,7 +27,7 @@ namespace Domain.Dto
 
         public long ID { get; set; }
         public string Descricao { get; set; }
-        public List<Materia> Materias { get; set; }
+        public List<CursoGradeMateriaDto> Materias { get; set; }
         public DateTime? DataCriacao { get; set; }
 
     }

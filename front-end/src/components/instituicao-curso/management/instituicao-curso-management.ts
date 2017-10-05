@@ -3,20 +3,20 @@ import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { RouterManager } from '../../../util/router/router.manager';
+import { InstituicaoCurso } from '../../../util/factory/instituicao/instituicao-curso';
 import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
-import { Instituicao } from '../../../util/factory/instituicao/instituicao';
 
 @Component({
-    template: require('./instituicao-add-upd.html')
+    template: require('./instituicao-curso-management.html')
 })
-export class InstituicaoAddUpdComponent extends Vue {
+export class InstituicaoCursoManagementComponent extends Vue {
 
     @Prop()
     alias: string;
     @Prop()
     operation: RouterPathType;
 
-    model: Instituicao = new Instituicao();
+    model: InstituicaoCurso = new InstituicaoCurso();
 
     constructor() {
         super();
@@ -25,12 +25,12 @@ export class InstituicaoAddUpdComponent extends Vue {
     created() {
 
     }
-    
+
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.dtl(parseInt(this.$route.params.id), true);
+                // this.model = await InstituicaoFactory.dtl(parseInt(this.$route.params.id), true);
             }
         }
         catch (e) {
@@ -46,11 +46,11 @@ export class InstituicaoAddUpdComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
                 case (RouterPathType.add): {
-                    await InstituicaoFactory.add(this.model, true);
+                    await InstituicaoFactory.addCurso(1, this.model, true);
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await InstituicaoFactory.upd(this.model, true);
+                    // await InstituicaoFactory.upd(this.model, true);
                     break;
                 }
             }

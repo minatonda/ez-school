@@ -2,21 +2,21 @@ import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { InstituicaoCategoriaFactory } from '../../../util/factory/instituicao-categoria/instituicao-categoria.factory';
 import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoCategoria } from '../../../util/factory/instituicao-categoria/instituicao-categoria';
+import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
+import { Instituicao } from '../../../util/factory/instituicao/instituicao';
 
 @Component({
-    template: require('./instituicao-categoria-add-upd.html')
+    template: require('./instituicao-management.html')
 })
-export class InstituicaoCategoriaAddUpdComponent extends Vue {
+export class InstituicaoManagementComponent extends Vue {
 
     @Prop()
     alias: string;
     @Prop()
     operation: RouterPathType;
 
-    model: InstituicaoCategoria = new InstituicaoCategoria();
+    model: Instituicao = new Instituicao();
 
     constructor() {
         super();
@@ -30,7 +30,7 @@ export class InstituicaoCategoriaAddUpdComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoCategoriaFactory.dtl(parseInt(this.$route.params.id), true);
+                this.model = await InstituicaoFactory.dtl(parseInt(this.$route.params.id), true);
             }
         }
         catch (e) {
@@ -46,11 +46,11 @@ export class InstituicaoCategoriaAddUpdComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
                 case (RouterPathType.add): {
-                    await InstituicaoCategoriaFactory.add(this.model, true);
+                    await InstituicaoFactory.add(this.model, true);
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await InstituicaoCategoriaFactory.upd(this.model, true);
+                    await InstituicaoFactory.upd(this.model, true);
                     break;
                 }
             }
