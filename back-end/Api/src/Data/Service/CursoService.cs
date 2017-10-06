@@ -56,6 +56,10 @@ namespace Api.Data.Service
         {
             return CursoAdapter.ToViewModel(this._cursoRepository.AddGrade(id, CursoAdapter.ToModel(model, true)), true);
         }
+        public CursoGradeVM UpdateGrades(long id, CursoGradeVM model)
+        {
+            return CursoAdapter.ToViewModel(this._cursoRepository.UpdateGrade(id, CursoAdapter.ToModel(model, true)), true);
+        }
         public void DeleteGrades(long id, long idGrade)
         {
             this._cursoRepository.DeleteGrade(id, idGrade);

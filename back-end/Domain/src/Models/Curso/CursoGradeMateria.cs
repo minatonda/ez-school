@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Dto;
 using Domain.Models.Interface;
 
 namespace Domain.Models
@@ -9,6 +10,13 @@ namespace Domain.Models
     public class CursoGradeMateria
     {
 
+        public CursoGradeMateria(CursoGrade cursoGrade, CursoGradeMateriaDto cursoGradeMateria)
+        {
+            this.ID = cursoGradeMateria.ID;
+            this.Materia = cursoGradeMateria.Materia;
+            this.Descricao = cursoGradeMateria.Descricao;
+            this.CursoGrade = cursoGrade;
+        }
         public CursoGradeMateria()
         {
         }

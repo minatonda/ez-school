@@ -22,7 +22,7 @@ namespace Domain.Dto
 
         public CursoGradeDto()
         {
-
+            this.Materias = new List<CursoGradeMateriaDto>();
         }
 
         public long ID { get; set; }

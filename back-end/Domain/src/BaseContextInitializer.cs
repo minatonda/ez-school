@@ -113,7 +113,23 @@ namespace Domain {
                     },
                     new CursoGradeMateria () {
                         CursoGrade = cursoGrades[0],
-                            Materia = materias[4]
+                            Materia = materias[4],
+                            Descricao = "Orientação a Objetos"
+                    },
+                    new CursoGradeMateria () {
+                        CursoGrade = cursoGrades[0],
+                            Materia = materias[4],
+                            Descricao = "Java"
+                    },
+                    new CursoGradeMateria () {
+                        CursoGrade = cursoGrades[0],
+                            Materia = materias[4],
+                            Descricao = "C#"
+                    },
+                    new CursoGradeMateria () {
+                        CursoGrade = cursoGrades[0],
+                            Materia = materias[4],
+                            Descricao = "Javascript"
                     },
                     new CursoGradeMateria () {
                         CursoGrade = cursoGrades[0],

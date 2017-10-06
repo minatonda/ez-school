@@ -5,9 +5,14 @@ $theme-colors: (
       lighter: $material-color-grey-700
     ),
     secondary: (
-      color:   $material-color-indigo-400,
-      darker:  $material-color-indigo-500,
-      lighter: $material-color-indigo-300
+      color:   $material-color-grey-500,
+      darker:  $material-color-grey-600,
+      lighter: $material-color-grey-400
+    ),
+    thirdy: (
+      color:   $material-color-grey-200,
+      darker:  $material-color-grey-300,
+      lighter: $material-color-grey-100
     ),
     danger: (
       color:   $material-color-red-500,

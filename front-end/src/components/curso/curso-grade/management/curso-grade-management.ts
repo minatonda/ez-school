@@ -140,5 +140,18 @@ export class CursoGradeManagementComponent extends Vue {
         this.$forceUpdate();
     }
 
+    public async save() {
+        switch(this.action){
+            case('add'):{
+                CursoFactory.addGrade(1, this.model);
+                break;
+            }
+            case('upd'):{
+                CursoFactory.updGrade(1, this.model);
+                break;
+            }
+        }
+
+    }
 
 }

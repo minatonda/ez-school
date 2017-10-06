@@ -61,6 +61,11 @@ namespace Api.Controllers
         {
             return this._cursoService.AddGrades(id, model);
         }
+        [HttpPost("{id}/grades/upd")]
+        public CursoGradeVM UpdGrades(long id, [FromBody] CursoGradeVM model)
+        {
+            return this._cursoService.UpdateGrades(id, model);
+        }
         [HttpDelete("{id}/grades/del")]
         public void DeleteGrades(long id, [FromQuery]long idCursoGrade)
         {
