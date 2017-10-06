@@ -64,6 +64,10 @@ export class CursoComponent extends Vue {
         return menu;
     }
 
+    public doNew(){
+        RouterManager.redirectRoute(RouterPath.CURSO_ADD);
+    }
+
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);

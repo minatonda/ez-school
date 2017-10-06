@@ -63,6 +63,10 @@ export class InstituicaoCategoriaComponent extends Vue {
         return menu;
     }
 
+    public doNew(){
+        RouterManager.redirectRoute(RouterPath.INSTITUICAO_CATEGORIA_ADD);
+    }
+
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);

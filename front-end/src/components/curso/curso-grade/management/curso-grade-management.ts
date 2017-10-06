@@ -18,7 +18,7 @@ export class CursoGradeManagementComponent extends Vue {
 
     model: CursoGrade = undefined;
 
-
+    grades:Array<CursoGrade> = new Array<CursoGrade>();
     materias: Array<Materia> = new Array<Materia>();
     cursoGradeMateria: CursoGradeMateria = new CursoGradeMateria();
 
@@ -67,7 +67,7 @@ export class CursoGradeManagementComponent extends Vue {
     async mounted() {
         try {
             this.materias = await MateriaFactory.all();
-            this.curso.grades = await CursoFactory.getGrades(this.curso.id);
+            this.grades = await CursoFactory.getGrades(this.curso.id);
         }
         catch (e) {
 
@@ -89,7 +89,7 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public getItensGrade() {
-        return this.curso.grades;
+        return this.grades;
     }
 
     public getMenuGrade() {

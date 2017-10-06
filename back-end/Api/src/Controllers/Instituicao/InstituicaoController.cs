@@ -65,25 +65,30 @@ namespace Api.Controllers
             this._instituicaoRepository.DeleteCategoria(id, idCategoria);
         }
 
-        [HttpGet("{id}/cursos")]
-        public List<InstituicaoCursoVM> GetCursos(long id)
+        [HttpPut("{id}/cursos/add")]
+        public void AddCurso(long id, [FromBody] InstituicaoCursoVM viewModel)
         {
-            return this._instituicaoRepository.GetCursos(id);
+            this._instituicaoRepository.AddCurso(id, viewModel);
+        }
+        [HttpPost("{id}/cursos/renew")]
+        public void RenewCurso(long id, [FromBody] InstituicaoCursoVM viewModel)
+        {
+            this._instituicaoRepository.RenewCurso(id, viewModel);
+        }
+        [HttpDelete("{id}/cursos/del")]
+        public void DeleteCurso(long id, [FromQuery] long idCategoria)
+        {
+            this._instituicaoRepository.DisableCurso(id, idCategoria);
         }
         [HttpGet("{id}/cursos/{idCurso}")]
         public InstituicaoCursoVM GetCurso(long id, long idCurso)
         {
             return this._instituicaoRepository.GetCurso(id, idCurso);
         }
-        [HttpGet("{id}/cursos/add")]
-        public void AddCurso(long id, [FromBody] InstituicaoCursoVM viewModel)
+        [HttpGet("{id}/cursos")]
+        public List<InstituicaoCursoVM> GetCursos(long id)
         {
-            this._instituicaoRepository.AddCurso(id, viewModel);
-        }
-        [HttpGet("{id}/cursos/del")]
-        public void DeleteCurso(long id, [FromQuery] long idCategoria)
-        {
-            this._instituicaoRepository.DeleteCurso(id, idCategoria);
+            return this._instituicaoRepository.GetCursos(id);
         }
 
         [HttpGet("{id}/cursos/{idCurso}/ocorrencias")]
@@ -97,12 +102,12 @@ namespace Api.Controllers
             return this._instituicaoRepository.GetCursoOcorrencia(id, idCurso, idOcorrencia);
         }
         [HttpGet("{id}/cursos/{idCurso}/ocorrencias/add")]
-        public void AddCurso(long id, long idCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel)
+        public void AddCursoOcorrencia(long id, long idCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel)
         {
             this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, viewModel);
         }
         [HttpGet("{id}/cursos/{idCurso}/ocorrencias/del")]
-        public void DeleteCurso(long id, long idCurso, [FromQuery] long idOcorrencia)
+        public void DeleteCursoOcorrencia(long id, long idCurso, [FromQuery] long idOcorrencia)
         {
             this._instituicaoRepository.DeleteCursoOcorrencia(id, idCurso, idOcorrencia);
         }

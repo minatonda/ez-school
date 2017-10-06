@@ -81,17 +81,32 @@ namespace Domain.Repositories {
             }
             return listInstituicaoCursoDto;
         }
-        public void AddCurso (long ID, InstituicaoCursoDto Model) {
+        public void AddCurso (long ID, InstituicaoCursoDto model) {
+            if (this.db.InstituicaoCursos.SingleOrDefault (x => x.Curso.ID == model.Curso.ID && x.Instituicao.ID == ID && x.DataExpiracao != null && x.Ativo) != null) {
+                throw new Exception ("O Curso já existe, as operações permitidas são renovar e desativar.");
+            } else {
+                this.db.InstituicaoCursos.Add (new InstituicaoCurso () {
+                    Instituicao = this.Get (ID),
+                        Curso = this.db.Cursos.Find (model.Curso.ID),
+                        CursoGrade = this.db.CursoGrades.Find (model.CursoGrade.ID),
+                        DataInicio = DateTime.Now
+                });
+                this.db.SaveChanges ();
+            }
+        }
+        public void RenewCurso (long ID, InstituicaoCursoDto model) {
+            this.db.InstituicaoCursos.SingleOrDefault (x => x.Curso.ID == model.Curso.ID && x.Instituicao.ID == ID && x.DataExpiracao == null && x.Ativo).DataExpiracao = DateTime.Now;
             this.db.InstituicaoCursos.Add (new InstituicaoCurso () {
                 Instituicao = this.Get (ID),
-                    Curso = this.db.Cursos.Find (Model.Curso.ID),
-                    CursoGrade = this.db.CursoGrades.Find (Model.CursoGrade.ID),
+                    Curso = this.db.Cursos.Find (model.Curso.ID),
+                    CursoGrade = this.db.CursoGrades.Find (model.CursoGrade.ID),
                     DataInicio = DateTime.Now
             });
             this.db.SaveChanges ();
         }
         public void DisableCurso (long ID, long IDCurso) {
-            this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null).Ativo = false;
+            this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null && x.Ativo).Ativo = false;
+            this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null && x.Ativo).DataExpiracao = DateTime.Now;
             this.db.SaveChanges ();
         }
 

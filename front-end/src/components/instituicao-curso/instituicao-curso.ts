@@ -24,7 +24,7 @@ export class InstituicaoCursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.getCursos(parseInt(this.$route.params.idCurso));
+            this.lista = await InstituicaoFactory.getCursos(parseInt(this.$route.params.idInstituicao));
         }
         catch (e) {
 
@@ -55,18 +55,6 @@ export class InstituicaoCursoComponent extends Vue {
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-                (item) => 'Gerenciar Ocorrências',
-                (item) => ['fa', 'fa-book'],
-                (item) => ['btn-primary']
-            ),
-            new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-                (item) => 'Atualizar',
-                (item) => ['fa', 'fa-user'],
-                (item) => ['btn-primary']
-            ),
-            new CardTableMenuEntry(
                 (item) => this.remove(item),
                 (item) => 'Remover',
                 (item) => ['fa', 'fa-times'],
@@ -74,6 +62,10 @@ export class InstituicaoCursoComponent extends Vue {
             )
         ];
         return menu;
+    }
+
+    public doNew() {
+        RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_ADD, { idInstituicao: parseInt(this.$route.params.idInstituicao) });
     }
 
     public remove(item) {

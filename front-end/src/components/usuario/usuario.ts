@@ -64,6 +64,10 @@ export class UsuarioComponent extends Vue {
         return menu;
     }
 
+    public doNew() {
+        RouterManager.redirectRoute(RouterPath.USUARIO_ADD);
+    }
+
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);

@@ -64,6 +64,10 @@ export class MateriaComponent extends Vue {
         return menu;
     }
 
+    public doNew(){
+        RouterManager.redirectRoute(RouterPath.MATERIA_ADD);
+    }
+
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
