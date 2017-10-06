@@ -41,7 +41,7 @@ namespace Api.Data.Service
         }
         public void Delete(long id)
         {
-            this._instituicaoCategoriaRepository.Delete(id);
+            this._instituicaoCategoriaRepository.Disable(id);
         }
 
     }

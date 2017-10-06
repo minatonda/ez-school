@@ -41,7 +41,7 @@ namespace Api.Data.Service
         }
         public void Delete(long id)
         {
-            this._cursoRepository.Delete(id);
+            this._cursoRepository.Disable(id);
         }
         
         public List<CursoGradeVM> GetGrades(long id)

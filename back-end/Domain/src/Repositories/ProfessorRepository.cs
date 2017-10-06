@@ -51,7 +51,7 @@ namespace Domain.Repositories
             this.db.SaveChanges();
             return model;
         }
-        public void Delete(long ID)
+        public void Disable(long ID)
         {
             this.db.Professores.Find(ID).Ativo = false;
             this.db.Professores.Update(this.db.Professores.Find(ID));

@@ -30,7 +30,7 @@ namespace Domain.Repositories
             this.db.SaveChanges();
             return model;
         }
-        public void Delete(long ID)
+        public void Disable(long ID)
         {
             this.db.Materias.Find(ID).Ativo = false;
             this.db.Materias.Update(this.db.Materias.Find(ID));

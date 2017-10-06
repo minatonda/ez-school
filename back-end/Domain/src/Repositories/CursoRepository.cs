@@ -26,7 +26,7 @@ namespace Domain.Repositories {
             this.db.SaveChanges ();
             return model;
         }
-        public void Delete (long ID) {
+        public void Disable (long ID) {
             this.db.Cursos.Find (ID).Ativo = false;
             this.db.Cursos.Update (this.db.Cursos.Find (ID));
             this.db.SaveChanges ();

@@ -44,7 +44,7 @@ namespace Api.Data.Service
         }
         public void Delete(long id)
         {
-            this._instituicaoRepository.Delete(id);
+            this._instituicaoRepository.Disable(id);
         }
         public List<InstituicaoCategoriaVM> GetCategorias(long id)
         {
@@ -74,7 +74,7 @@ namespace Api.Data.Service
         }
         public void DeleteCurso(long id, long idCurso)
         {
-            this._instituicaoRepository.DeleteCurso(id, idCurso);
+            this._instituicaoRepository.DisableCurso(id, idCurso);
         }
 
 

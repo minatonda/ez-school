@@ -52,7 +52,7 @@ namespace Domain.Repositories
             this.db.SaveChanges();
             return model;
         }
-        public void Delete(long ID)
+        public void Disable(long ID)
         {
             this.db.Alunos.Find(ID).Ativo = false;
             this.db.Alunos.Update(this.db.Alunos.Find(ID));

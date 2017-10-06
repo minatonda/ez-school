@@ -41,7 +41,7 @@ namespace Api.Data.Service
         }
         public void Delete(string id)
         {
-            this._usuarioRepository.Delete(id);
+            this._usuarioRepository.Disable(id);
         }
 
     }

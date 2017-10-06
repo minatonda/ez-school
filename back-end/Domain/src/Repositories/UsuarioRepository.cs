@@ -47,7 +47,7 @@ namespace Domain.Repositories
             return model;
         }
 
-        public void Delete(string ID)
+        public void Disable(string ID)
         {
             this.db.Usuarios.Find(ID).Ativo = false;
 
@@ -66,7 +66,7 @@ namespace Domain.Repositories
             return includeExpressions.Aggregate<Expression<Func<Usuario, object>>, IQueryable<Usuario>>(db.Usuarios, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
-        public void Delete(long ID)
+        public void Disable(long ID)
         {
             throw new NotImplementedException();
         }

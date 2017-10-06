@@ -38,7 +38,7 @@ namespace Api.Controllers {
         }
         [HttpDelete ("del")]
         public void Delete ([FromQuery] long id) {
-            this._professorRepository.Delete (id);
+            this._professorRepository.Disable (id);
         }
     }
 }

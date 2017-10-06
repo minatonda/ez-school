@@ -28,7 +28,7 @@ namespace Domain.Repositories {
             this.db.SaveChanges ();
             return model;
         }
-        public void Delete (long ID) {
+        public void Disable (long ID) {
             this.db.Instituicoes.Find (ID).Ativo = false;
             this.db.Instituicoes.Update (this.db.Instituicoes.Find (ID));
             this.db.SaveChanges ();
@@ -90,7 +90,7 @@ namespace Domain.Repositories {
             });
             this.db.SaveChanges ();
         }
-        public void DeleteCurso (long ID, long IDCurso) {
+        public void DisableCurso (long ID, long IDCurso) {
             this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null).Ativo = false;
             this.db.SaveChanges ();
         }

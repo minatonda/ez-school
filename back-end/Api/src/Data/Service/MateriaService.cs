@@ -43,7 +43,7 @@ namespace Api.Data.Service
         }
         public void Delete(long id)
         {
-            this._materiaRepository.Delete(id);
+            this._materiaRepository.Disable(id);
         }
 
     }

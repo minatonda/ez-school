@@ -38,7 +38,7 @@ namespace Api.Controllers {
         }
         [HttpDelete ("del")]
         public void Delete ([FromQuery] long id) {
-            this._alunoRepository.Delete (id);
+            this._alunoRepository.Disable (id);
         }
     }
 }
