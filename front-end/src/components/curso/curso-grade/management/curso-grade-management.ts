@@ -13,12 +13,12 @@ import { CursoGradeMateria } from '../../../../util/factory/curso/curso-grade-ma
 })
 export class CursoGradeManagementComponent extends Vue {
 
-    @Prop()
+    @Prop({ type: Curso, default: null })
     curso: Curso = new Curso();
 
     model: CursoGrade = undefined;
 
-    grades:Array<CursoGrade> = new Array<CursoGrade>();
+    grades: Array<CursoGrade> = new Array<CursoGrade>();
     materias: Array<Materia> = new Array<Materia>();
     cursoGradeMateria: CursoGradeMateria = new CursoGradeMateria();
 
@@ -131,8 +131,10 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public async addMateria(materia: CursoGradeMateria) {
-        this.model.materias.push(materia);
-        this.$forceUpdate();
+        if (materia.materia) {
+            this.model.materias.push(materia);
+            this.$forceUpdate();
+        }
     }
 
     public async removeMateria(materia: CursoGradeMateria) {
@@ -141,12 +143,12 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public async save() {
-        switch(this.action){
-            case('add'):{
+        switch (this.action) {
+            case ('add'): {
                 CursoFactory.addGrade(1, this.model);
                 break;
             }
-            case('upd'):{
+            case ('upd'): {
                 CursoFactory.updGrade(1, this.model);
                 break;
             }

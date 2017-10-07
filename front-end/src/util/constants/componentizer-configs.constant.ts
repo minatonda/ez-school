@@ -4,10 +4,12 @@ import { CardTableComponent } from '../../components/common/card-table/card-tabl
 import { ComponentizerConfig } from '../componentizer/componentizer.config';
 import { CursoGradeManagementComponent } from '../../components/curso/curso-grade/management/curso-grade-management';
 import Multiselect from 'vue-multiselect';
+import { SelectorComponent } from '../../components/common/selector/selector';
 
 export const COMPONENTIZER_CONFIGS_GLOBAL: Array<ComponentizerConfig> = [
     { alias: 'loader-compact-component', component: LoaderCompactComponent },
     { alias: 'card-table-component', component: CardTableComponent },
     { alias: 'curso-grade-management-component', component: CursoGradeManagementComponent },
-    { alias: 'multiselect', component: Multiselect }
+    { alias: 'multiselect', component: Multiselect },
+    { alias: 'selector', component: SelectorComponent },
 ];

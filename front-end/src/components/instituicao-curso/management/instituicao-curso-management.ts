@@ -21,7 +21,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
 
     model: InstituicaoCurso = new InstituicaoCurso();
 
-    curso: Curso = new Curso();
+    clearCursoGrade = false;
 
     cursos: Array<Curso> = new Array<Curso>();
     cursoGrades: Array<CursoGrade> = new Array<CursoGrade>();
@@ -59,15 +59,14 @@ export class InstituicaoCursoManagementComponent extends Vue {
         return this.cursoGrades;
     }
 
-    @Watch('curso', {
-        deep: true,
-        immediate: true
-    })
-    public async onCursoChanged() {
-        if (this.curso) {
-            this.model.curso = this.curso;
-            this.model.cursoGrade = null;
-            this.cursoGrades = await CursoFactory.getGrades(this.curso.id);
+    public async onCursoChanged(curso) {
+        this.clearCursoGrade = true;
+        setImmediate(() => { this.clearCursoGrade = false; });
+        if (curso) {
+            this.cursoGrades = await CursoFactory.getGrades(curso.id);
+        }
+        else {
+            this.cursoGrades = [];
         }
     }
 

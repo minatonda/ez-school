@@ -14,7 +14,7 @@ export class CursoComponent extends Vue {
 
     @Prop()
     alias: string;
-    
+
     lista: Array<Curso> = [];
 
     constructor() {
@@ -64,7 +64,7 @@ export class CursoComponent extends Vue {
         return menu;
     }
 
-    public doNew(){
+    public doNew() {
         RouterManager.redirectRoute(RouterPath.CURSO_ADD);
     }
 

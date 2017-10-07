@@ -13,7 +13,7 @@ export class InstituicaoCategoriaComponent extends Vue {
 
     @Prop()
     alias: string;
-    
+
     lista: Array<InstituicaoCategoria> = [];
 
     constructor() {
@@ -63,7 +63,7 @@ export class InstituicaoCategoriaComponent extends Vue {
         return menu;
     }
 
-    public doNew(){
+    public doNew() {
         RouterManager.redirectRoute(RouterPath.INSTITUICAO_CATEGORIA_ADD);
     }
 

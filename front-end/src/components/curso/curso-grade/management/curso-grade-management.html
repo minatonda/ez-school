@@ -41,8 +41,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-md-5 form-group">
-                        <multiselect v-model="cursoGradeMateria.materia" placeholder="Materia" :options="getMaterias()" :multiple="false" selectLabel=""
-                            label="label"></multiselect>
+                        <selector v-model="cursoGradeMateria.materia" v-bind:itens="getMaterias()" placeholder="Materia" label="label"></selector>
                     </div>
                     <div class="col-12 col-md-5 form-group">
                         <input class="form-control" v-model="cursoGradeMateria.descricao">

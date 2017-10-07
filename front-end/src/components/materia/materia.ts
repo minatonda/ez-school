@@ -64,7 +64,7 @@ export class MateriaComponent extends Vue {
         return menu;
     }
 
-    public doNew(){
+    public doNew() {
         RouterManager.redirectRoute(RouterPath.MATERIA_ADD);
     }
 
