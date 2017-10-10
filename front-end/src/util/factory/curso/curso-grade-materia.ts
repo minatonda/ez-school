@@ -1,7 +1,7 @@
 import { Materia } from '../materia/materia';
 
 export class CursoGradeMateria {
-    id: number;
+    id?: string;
     descricao: string;
     materia: Materia;
 }

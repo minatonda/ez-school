@@ -20,7 +20,7 @@ namespace Api.Controllers
             return this._materiaService.GetAll();
         }
         [HttpGet("sht/{id}")]
-        public List<ShortVM> GetShort()
+        public List<SelectVM> GetShort()
         {
             return this._materiaService.GetAllShort();
         }

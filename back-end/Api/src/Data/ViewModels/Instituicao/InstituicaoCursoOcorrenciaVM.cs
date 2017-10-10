@@ -9,7 +9,7 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
-    public class InstituicaoCursoOcorrenciaVM : ShortVM
+    public class InstituicaoCursoOcorrenciaVM : SelectVM
     {
         public ProfessorVM Coordenador { get; set; }
         public List<AlunoVM> Alunos { get; set; }

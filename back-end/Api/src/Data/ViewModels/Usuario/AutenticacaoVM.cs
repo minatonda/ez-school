@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class AutenticacaoVM : ShortVM {
+    public class AutenticacaoVM : SelectVM {
 
         public string access_token { get; set; }
         public DateTime created { get; set; }

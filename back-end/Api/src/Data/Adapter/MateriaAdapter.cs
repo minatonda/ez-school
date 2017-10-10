@@ -13,7 +13,7 @@ namespace Api.Data.ViewModels {
 
         public static MateriaVM ToViewModel (Materia model, bool deep) {
             var vm = new MateriaVM ();
-            vm.ID = model.ID;
+            vm.ID = model.ID.ToString ();
             vm.Label = model.Nome;
 
             vm.Nome = model.Nome;
@@ -22,16 +22,18 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static ShortVM ToViewModelShort (Materia model) {
-            var vm = new ShortVM ();
-            vm.ID = model.ID;
+        public static SelectVM ToViewModelShort (Materia model) {
+            var vm = new SelectVM ();
+            vm.ID = model.ID.ToString ();
             vm.Label = model.Nome;
             return vm;
         }
 
         public static Materia ToModel (MateriaVM vm, bool deep) {
             var model = new Materia ();
-            model.ID = vm.ID;
+            if (vm.ID != null) {
+                model.ID = long.Parse (vm.ID);
+            }
 
             model.Nome = vm.Nome;
             vm.Descricao = model.Descricao;

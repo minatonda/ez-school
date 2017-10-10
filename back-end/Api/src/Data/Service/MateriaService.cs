@@ -23,7 +23,7 @@ namespace Api.Data.Service
         {
             return this._materiaRepository.GetAll(true).Select(x => MateriaAdapter.ToViewModel(x, true)).ToList();
         }
-        public List<ShortVM> GetAllShort()
+        public List<SelectVM> GetAllShort()
         {
             return this._materiaRepository.GetAll(true).Select(x => MateriaAdapter.ToViewModelShort(x)).ToList();
         }

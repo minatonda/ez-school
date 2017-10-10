@@ -1,5 +1,5 @@
 export class InstituicaoCategoria {
-    id: number;
+    id?: string;
     nome: string;
     descricao: string;
 }

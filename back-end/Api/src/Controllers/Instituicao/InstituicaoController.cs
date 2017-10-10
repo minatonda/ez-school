@@ -24,7 +24,7 @@ namespace Api.Controllers
             return this._instituicaoRepository.GetAll();
         }
         [HttpGet("sht")]
-        public List<ShortVM> GetShort()
+        public List<SelectVM> GetShort()
         {
             return this._instituicaoRepository.GetAllShort();
         }

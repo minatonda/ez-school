@@ -1,5 +1,5 @@
 export class UsuarioInfo {
-    id: string;
+    id?: string;
     nome: string;
     dataNascimento: string;
     rg: string;

@@ -9,7 +9,7 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
-    public class CursoGradeMateriaVM : ShortVM
+    public class CursoGradeMateriaVM : SelectVM
     {
         public CursoGradeMateriaVM()
         {

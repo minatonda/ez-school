@@ -13,15 +13,15 @@ namespace Api.Data.ViewModels {
 
         public static AlunoVM ToViewModel (Aluno model, bool deep) {
             var vm = new AlunoVM ();
-            vm.ID = model.ID;
+            vm.ID = model.ID.ToString();
             vm.Label = model.UsuarioInfo.Nome;
 
             return vm;
         }
 
-        public static ShortVM ToViewModelShort (Aluno model) {
-            var vm = new ShortVM ();
-            //vm.ID = model.ID;
+        public static SelectVM ToViewModelShort (Aluno model) {
+            var vm = new SelectVM ();
+            vm.ID = model.ID;
             vm.Label = model.UsuarioInfo.Nome;
             return vm;
         }

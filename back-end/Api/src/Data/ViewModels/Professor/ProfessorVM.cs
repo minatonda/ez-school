@@ -7,12 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.Interface;
 
-namespace Api.Data.ViewModels {
-    public class ShortVM {
-
-        public long ID { get; set; }
-        public string Label { get; set; }
+namespace Api.Data.ViewModels
+{
+    public class ProfessorVM : SelectVM
+    {
+        
+        public UsuarioInfoVM UsuarioInfo { get; set; }
 
     }
-    
 }

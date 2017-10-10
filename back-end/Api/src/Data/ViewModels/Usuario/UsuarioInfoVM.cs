@@ -9,9 +9,9 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
-    public class UsuarioInfoVM : ShortVM
+    public class UsuarioInfoVM : SelectVM
     {
-        public string ID { get; set; }
+        
         public string Nome { get; set; }
         public DateTime? DataNascimento { get; set; }
         public string RG { get; set; }

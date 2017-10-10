@@ -5,7 +5,7 @@ export class CursoGrade {
     constructor() {
         this.materias = new Array<CursoGradeMateria>();
     }
-    id: number;
+    id?: string;
     descricao: string;
     materias: Array<CursoGradeMateria>;
 }

@@ -21,7 +21,7 @@ namespace Api.Controllers
             return this._cursoService.GetAll();
         }
         [HttpGet("sht")]
-        public List<ShortVM> GetShort()
+        public List<SelectVM> GetShort()
         {
             return this._cursoService.GetAllShort();
         }

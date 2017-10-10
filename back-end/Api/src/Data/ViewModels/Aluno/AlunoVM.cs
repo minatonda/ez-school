@@ -9,9 +9,9 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels
 {
-    public class AlunoVM : ShortVM
+    public class AlunoVM : SelectVM
     {
-        public string ID { get; set; }
+
         public UsuarioInfoVM UsuarioInfo { get; set; }
         
     }

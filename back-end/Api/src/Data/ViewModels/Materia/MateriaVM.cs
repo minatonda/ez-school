@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class MateriaVM : ShortVM {
+    public class MateriaVM : SelectVM {
 
         public string Nome { get; set; }
         public string Descricao { get; set; }

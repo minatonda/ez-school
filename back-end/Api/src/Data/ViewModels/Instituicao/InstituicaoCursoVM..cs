@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCursoVM : ShortVM {
+    public class InstituicaoCursoVM : SelectVM {
         public CursoVM Curso { get; set; }
         public CursoGradeVM CursoGrade { get; set; }
 

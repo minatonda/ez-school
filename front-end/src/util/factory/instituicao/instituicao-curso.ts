@@ -3,7 +3,7 @@ import { Curso } from '../curso/curso';
 import { CursoGrade } from '../curso/curso-grade';
 
 export class InstituicaoCurso {
-    id: number;
+    id?: string;
     curso: Curso;
     cursoGrade: CursoGrade;
     dataInicio: Date;

@@ -53,8 +53,8 @@ namespace Api.Data.ViewModels {
             return model;
         }
         
-        public static ShortVM ToViewModelShort (Usuario model) {
-            var vm = new ShortVM ();
+        public static SelectVM ToViewModelShort (Usuario model) {
+            var vm = new SelectVM ();
             vm.Label = model.Username;
             return vm;
         }

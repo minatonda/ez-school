@@ -19,7 +19,7 @@ namespace Api.Controllers {
             return this._professorRepository.GetAll (true).Select (x => ProfessorAdapter.ToViewModel (x, true)).ToList ();
         }
         [HttpGet ("sht")]
-        public List<ShortVM> GetShort () {
+        public List<SelectVM> GetShort () {
             return this._professorRepository.GetAll (true).Select (x => ProfessorAdapter.ToViewModelShort (x)).ToList ();
         }
         [HttpGet ("{id}")]

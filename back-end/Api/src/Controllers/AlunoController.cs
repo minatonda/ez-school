@@ -19,7 +19,7 @@ namespace Api.Controllers {
             return this._alunoRepository.GetAll (true).Select (x => AlunoAdapter.ToViewModel (x, true)).ToList ();
         }
         [HttpGet ("sht")]
-        public List<ShortVM> GetShort () {
+        public List<SelectVM> GetShort () {
             return this._alunoRepository.GetAll (true).Select (x => AlunoAdapter.ToViewModelShort (x)).ToList ();
         }
         [HttpGet ("{id}")]

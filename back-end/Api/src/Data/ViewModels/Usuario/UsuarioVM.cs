@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class UsuarioVM : ShortVM {
-        public string ID { get; set; }
+    public class UsuarioVM : SelectVM {
+        
         public string Username { get; set; }
         public string Password { get; set; }
         public UsuarioInfoVM UsuarioInfo { get; set; }

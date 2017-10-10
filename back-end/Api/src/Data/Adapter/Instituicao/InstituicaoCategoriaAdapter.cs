@@ -13,7 +13,7 @@ namespace Api.Data.ViewModels {
 
         public static InstituicaoCategoriaVM ToViewModel (InstituicaoCategoria model, bool deep) {
             var vm = new InstituicaoCategoriaVM ();
-            vm.ID = model.ID;
+            vm.ID = model.ID.ToString();
             vm.Label = model.Nome;
 
             vm.Nome = model.Nome;
@@ -22,16 +22,18 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static ShortVM ToViewModelShort (InstituicaoCategoria model) {
-            var vm = new ShortVM ();
-            vm.ID = model.ID;
+        public static SelectVM ToViewModelShort (InstituicaoCategoria model) {
+            var vm = new SelectVM ();
+            vm.ID = model.ID.ToString();
             vm.Label = model.Nome;
             return vm;
         }
 
         public static InstituicaoCategoria ToModel (InstituicaoCategoriaVM vm, bool deep) {
             var model = new InstituicaoCategoria ();
-            model.ID = vm.ID;
+                        if (vm.ID != null) {
+                model.ID = long.Parse (vm.ID);
+            }
 
             model.Nome = vm.Nome;
             model.Descricao = vm.Descricao;

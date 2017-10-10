@@ -19,9 +19,9 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static ShortVM ToViewModelShort (Professor model) {
-            var vm = new ShortVM ();
-            //vm.ID = model.ID;
+        public static SelectVM ToViewModelShort (Professor model) {
+            var vm = new SelectVM ();
+            vm.ID = model.ID;
             vm.Label = model.UsuarioInfo.Nome;
             return vm;
         }

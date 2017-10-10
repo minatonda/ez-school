@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCategoriaVM : ShortVM {
-        public long ID { get; set; }
+    public class InstituicaoCategoriaVM : SelectVM {
+
         public string Nome { get; set; }
         public string Descricao { get; set; }
 
