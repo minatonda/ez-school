@@ -23,10 +23,6 @@ namespace Api.Data.Service
         {
             return this._materiaRepository.GetAll(true).Select(x => MateriaAdapter.ToViewModel(x, true)).ToList();
         }
-        public List<SelectVM> GetAllShort()
-        {
-            return this._materiaRepository.GetAll(true).Select(x => MateriaAdapter.ToViewModelShort(x)).ToList();
-        }
         public MateriaVM GetDetail(long id)
         {
             return MateriaAdapter.ToViewModel(this._materiaRepository.Get(id), true);

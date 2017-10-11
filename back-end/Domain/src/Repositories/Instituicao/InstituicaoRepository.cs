@@ -55,7 +55,7 @@ namespace Domain.Repositories {
         }
 
         public InstituicaoCursoDto GetCurso (long ID, long IDCurso) {
-            var model = this.db.InstituicaoCursos.Include (i => i.Curso).Include (i => i.Instituicao).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso);
+            var model = this.db.InstituicaoCursos.Include (i => i.Curso).Include (i => i.Instituicao).Include (i => i.CursoGrade).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso);
             var cursoGrade = this.cursoRepository.GetGrade (IDCurso, model.CursoGrade.ID);
             return new InstituicaoCursoDto () {
                 ID = model.ID,
@@ -66,7 +66,7 @@ namespace Domain.Repositories {
             };
         }
         public List<InstituicaoCursoDto> GetCursos (long ID) {
-            var listInstituicaoCurso = this.db.InstituicaoCursos.Include (i => i.Curso).Include (i => i.Instituicao).Where (x => x.Instituicao.ID == ID).ToList ();
+            var listInstituicaoCurso = this.db.InstituicaoCursos.Include (i => i.Curso).Include (i => i.Instituicao).Include (i => i.CursoGrade).Where (x => x.Instituicao.ID == ID && x.DataExpiracao == null && x.Ativo).ToList ();
             var listInstituicaoCursoDto = new List<InstituicaoCursoDto> ();
 
             foreach (var instituicaoCurso in listInstituicaoCurso) {
@@ -105,8 +105,9 @@ namespace Domain.Repositories {
             this.db.SaveChanges ();
         }
         public void DisableCurso (long ID, long IDCurso) {
-            this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null && x.Ativo).Ativo = false;
-            this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null && x.Ativo).DataExpiracao = DateTime.Now;
+            var instituicaoCurso = this.db.InstituicaoCursos.Include (i => i.Instituicao).Include (i => i.Curso).SingleOrDefault (x => x.Instituicao.ID == ID && x.Curso.ID == IDCurso && x.DataExpiracao == null && x.Ativo);
+            instituicaoCurso.Ativo = false;
+            instituicaoCurso.DataExpiracao = DateTime.Now;
             this.db.SaveChanges ();
         }
 

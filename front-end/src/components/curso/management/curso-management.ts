@@ -38,7 +38,7 @@ export class CursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
                 this.materias = await MateriaFactory.all();
-                this.model = await CursoFactory.dtl(parseInt(this.$route.params.id), true);
+                this.model = await CursoFactory.dtl(this.$route.params.id, true);
                 this.model.grades = await CursoFactory.getGrades(this.model.id);
             }
         }
@@ -49,7 +49,7 @@ export class CursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
-    
+
     async save() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);

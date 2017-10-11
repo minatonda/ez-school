@@ -3,23 +3,23 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoCurso } from '../../../util/factory/instituicao/instituicao-curso';
+import { InstituicaoCursoOcorrencia } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia';
 import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
 import { Curso } from '../../../util/factory/curso/curso';
 import { CursoGrade } from '../../../util/factory/curso/curso-grade';
 import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 
 @Component({
-    template: require('./instituicao-curso-management.html')
+    template: require('./instituicao-curso-ocorrencia-management.html')
 })
-export class InstituicaoCursoManagementComponent extends Vue {
+export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
 
     @Prop()
     alias: string;
     @Prop()
     operation: RouterPathType;
 
-    model: InstituicaoCurso = new InstituicaoCurso();
+    model: InstituicaoCursoOcorrencia = new InstituicaoCursoOcorrencia();
 
     clearCursoGrade = false;
 

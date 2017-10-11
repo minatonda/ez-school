@@ -5,17 +5,17 @@ import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/ca
 import { RouterManager } from '../../util/router/router.manager';
 import { RouterPath } from '../../util/router/router.path';
 import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
-import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso';
+import { InstituicaoCursoOcorrencia } from '../../util/factory/instituicao/instituicao-curso-ocorrencia';
 
 @Component({
-    template: require('./instituicao-curso.html')
+    template: require('./instituicao-curso-ocorrencia.html')
 })
-export class InstituicaoCursoComponent extends Vue {
+export class InstituicaoCursoOcorrenciaComponent extends Vue {
 
     @Prop()
     alias: string;
 
-    lista: Array<InstituicaoCurso> = [];
+    lista: Array<InstituicaoCursoOcorrencia> = [];
 
     constructor() {
         super();
@@ -36,8 +36,8 @@ export class InstituicaoCursoComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: InstituicaoCurso) => item.curso.nome, () => 'Nome'),
-            new CardTableColumn((item: InstituicaoCurso) => item.dataFim, () => 'Início')
+            new CardTableColumn((item: InstituicaoCursoOcorrencia) => item.curso.nome, () => 'Nome'),
+            new CardTableColumn((item: InstituicaoCursoOcorrencia) => item.dataFim, () => 'Início')
         ];
     }
 

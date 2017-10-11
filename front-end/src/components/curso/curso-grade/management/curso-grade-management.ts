@@ -145,11 +145,11 @@ export class CursoGradeManagementComponent extends Vue {
     public async save() {
         switch (this.action) {
             case ('add'): {
-                CursoFactory.addGrade(1, this.model);
+                CursoFactory.addGrade(this.curso.id, this.model);
                 break;
             }
             case ('upd'): {
-                CursoFactory.updGrade(1, this.model);
+                CursoFactory.updGrade(this.curso.id, this.model);
                 break;
             }
         }

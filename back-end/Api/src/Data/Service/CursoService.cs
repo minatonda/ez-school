@@ -21,10 +21,6 @@ namespace Api.Data.Service
         {
             return this._cursoRepository.GetAll(true).Select(x => CursoAdapter.ToViewModel(x, true)).ToList();
         }
-        public List<SelectVM> GetAllShort()
-        {
-            return this._cursoRepository.GetAll(true).Select(x => CursoAdapter.ToViewModelShort(x)).ToList();
-        }
         public CursoVM GetDetail(long id)
         {
             return CursoAdapter.ToViewModel(this._cursoRepository.Get(id), true);

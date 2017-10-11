@@ -19,11 +19,6 @@ namespace Api.Controllers
         {
             return this._materiaService.GetAll();
         }
-        [HttpGet("sht/{id}")]
-        public List<SelectVM> GetShort()
-        {
-            return this._materiaService.GetAllShort();
-        }
         [HttpGet("{id}")]
         public MateriaVM GetDetail(long id)
         {

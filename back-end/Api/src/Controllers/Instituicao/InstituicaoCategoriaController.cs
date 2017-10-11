@@ -23,11 +23,6 @@ namespace Api.Controllers
         {
             return this._InstituicaoCategoriaCategoriaRepository.GetAll();
         }
-        [HttpGet("sht")]
-        public List<SelectVM> GetShort()
-        {
-            return this._InstituicaoCategoriaCategoriaRepository.GetAllShort();
-        }
         [HttpGet("{id}")]
         public InstituicaoCategoriaVM GetDetail(long id)
         {

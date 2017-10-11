@@ -43,7 +43,7 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async dtl(id: number, notify?: boolean) {
+    public static async dtl(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/instituicao/${id}`) as Instituicao;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -67,7 +67,7 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async getCursos(id: number, notify?: boolean) {
+    public static async getCursos(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/instituicao/${id}/cursos`) as Array<InstituicaoCurso>;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -79,9 +79,33 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async addCurso(id: number, model: InstituicaoCurso, notify?: boolean) {
+    public static async getCursoDtl(id: string, idCurso: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/cursos/${idCurso}`) as InstituicaoCurso;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async addCurso(id: string, model: InstituicaoCurso, notify?: boolean) {
         try {
             let result = await this.put(`/api/instituicao/${id}/cursos/add`, model) as InstituicaoCurso;
+            Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_ADD_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async renewCurso(id: string, model: InstituicaoCurso, notify?: boolean) {
+        try {
+            let result = await this.post(`/api/instituicao/${id}/cursos/renew`, model) as InstituicaoCurso;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

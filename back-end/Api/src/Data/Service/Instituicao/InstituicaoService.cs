@@ -35,9 +35,6 @@ namespace Api.Data.Service {
         public List<InstituicaoVM> GetAll () {
             return this._instituicaoRepository.GetAll (true).Select (x => InstituicaoAdapter.ToViewModel (x, true)).ToList ();
         }
-        public List<SelectVM> GetAllShort () {
-            return this._instituicaoRepository.GetAll (true).Select (x => InstituicaoAdapter.ToViewModelShort (x)).ToList ();
-        }
 
         public void AddCategoria (long id, InstituicaoCategoriaVM viewModel) {
             this._instituicaoRepository.AddCategoria (id, InstituicaoCategoriaAdapter.ToModel (viewModel, false));

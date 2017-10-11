@@ -19,11 +19,6 @@ namespace Api.Controllers
         {
             return this._usuarioRepository.GetAll();
         }
-        [HttpGet("sht")]
-        public List<SelectVM> GetShort()
-        {
-            return this._usuarioRepository.GetAllShort();
-        }
         [HttpGet("{id}")]
         public UsuarioVM GetDetail(string id)
         {

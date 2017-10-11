@@ -44,7 +44,7 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async dtl(id: number, notify?: boolean) {
+    public static async dtl(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/curso/${id}`) as Curso;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -68,7 +68,7 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async getGrades(id: number, notify?: boolean) {
+    public static async getGrades(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/curso/${id}/grades`) as Array<CursoGrade>;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -80,7 +80,7 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async addGrade(id: number, model: CursoGrade, notify?: boolean) {
+    public static async addGrade(id: string, model: CursoGrade, notify?: boolean) {
         try {
             let result = await this.put(`/api/curso/${id}/grades/add`, model) as CursoGrade;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -92,7 +92,7 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async updGrade(id: number, model: CursoGrade, notify?: boolean) {
+    public static async updGrade(id: string, model: CursoGrade, notify?: boolean) {
         try {
             let result = await this.post(`/api/curso/${id}/grades/upd`, model) as CursoGrade;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);

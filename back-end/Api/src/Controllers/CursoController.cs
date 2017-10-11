@@ -20,11 +20,6 @@ namespace Api.Controllers
         {
             return this._cursoService.GetAll();
         }
-        [HttpGet("sht")]
-        public List<SelectVM> GetShort()
-        {
-            return this._cursoService.GetAllShort();
-        }
         [HttpGet("{id}")]
         public CursoVM GetDetail(long id)
         {

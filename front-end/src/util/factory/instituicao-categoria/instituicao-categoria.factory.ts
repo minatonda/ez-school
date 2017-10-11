@@ -42,7 +42,7 @@ export class InstituicaoCategoriaFactory extends Factory {
         }
     }
 
-    public static async dtl(id: number, notify?: boolean) {
+    public static async dtl(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/instituicao-categoria/${id}`) as InstituicaoCategoria;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);

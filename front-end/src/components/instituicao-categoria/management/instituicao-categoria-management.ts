@@ -25,12 +25,12 @@ export class InstituicaoCategoriaManagementComponent extends Vue {
     created() {
 
     }
-    
+
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoCategoriaFactory.dtl(parseInt(this.$route.params.id), true);
+                this.model = await InstituicaoCategoriaFactory.dtl(this.$route.params.id, true);
             }
         }
         catch (e) {
