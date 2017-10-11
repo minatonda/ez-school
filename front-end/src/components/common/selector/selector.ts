@@ -130,6 +130,9 @@ export class SelectorComponent extends Vue {
     }
 
     public highlight(label, query) {
+        if (!label || !query) {
+            return label;
+        }
         let labelPrepared = this.prepareCompare(label);
         let queryPrepared = this.prepareCompare(query);
 
@@ -143,14 +146,14 @@ export class SelectorComponent extends Vue {
     }
 
     public prepareCompare(str) {
-        if (str === undefined) {
+        if (!str) {
             return '';
         }
         return this.removeAccents(str).toLowerCase().trim();
     }
 
     public removeAccents(str) {
-        if (str === undefined) {
+        if (!str) {
             return '';
         }
         if (str) {
