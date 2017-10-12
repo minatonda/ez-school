@@ -13,8 +13,9 @@ namespace Api.Data.ViewModels {
 
         public static AlunoVM ToViewModel (Aluno model, bool deep) {
             var vm = new AlunoVM ();
-            vm.ID = model.ID.ToString();
+            vm.ID = model.ID.ToString ();
             vm.Label = model.UsuarioInfo.Nome;
+            vm.UsuarioInfo = UsuarioAdapter.ToViewModel (model.UsuarioInfo, false);
 
             return vm;
         }
@@ -27,8 +28,9 @@ namespace Api.Data.ViewModels {
         }
 
         public static Aluno ToModel (AlunoVM vm, bool deep) {
-            var model = new Aluno (UsuarioAdapter.ToModel(vm.UsuarioInfo,false));
+            var model = new Aluno ();
             model.ID = vm.ID;
+            model.UsuarioInfo = UsuarioAdapter.ToModel (vm.UsuarioInfo, false);
             return model;
         }
 

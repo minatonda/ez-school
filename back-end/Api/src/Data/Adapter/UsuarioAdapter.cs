@@ -15,6 +15,7 @@ namespace Api.Data.ViewModels {
             var vm = new UsuarioInfoVM ();
             vm.ID = model.ID;
             vm.Nome = model.Nome;
+            vm.Label = model.Nome;
             vm.CPF = model.CPF;
             vm.RG = model.RG;
             vm.DataNascimento = model.DataNascimento;
@@ -52,7 +53,7 @@ namespace Api.Data.ViewModels {
             }
             return model;
         }
-        
+
         public static SelectVM ToViewModelShort (Usuario model) {
             var vm = new SelectVM ();
             vm.Label = model.Username;

@@ -4,6 +4,8 @@ using Domain.Models.Interface;
 
 namespace Domain.Models {
     public class Aluno : IBaseModel {
+
+        public Aluno () { }
         public Aluno (UsuarioInfo usuarioInfo) {
             this.ID = usuarioInfo.ID;
             this.UsuarioInfo = usuarioInfo;

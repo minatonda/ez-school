@@ -2,39 +2,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Data.Service;
 using Api.Data.ViewModels;
 using Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers {
-    [Route ("api/aluno")]
-    public class AlunoController : Controller {
+namespace Api.Controllers
+{
+    [Route("api/aluno")]
+    public class AlunoController : Controller
+    {
 
-        private AlunoRepository _alunoRepository;
-        public AlunoController (AlunoRepository alunoRepository) {
-            this._alunoRepository = alunoRepository;
+        private AlunoService _alunoService;
+        public AlunoController(AlunoRepository alunoRepository)
+        {
+            this._alunoService = new AlunoService(alunoRepository);
         }
         [HttpGet]
-        public List<AlunoVM> Get () {
-            return this._alunoRepository.GetAll (true).Select (x => AlunoAdapter.ToViewModel (x, true)).ToList ();
+        public List<AlunoVM> Get()
+        {
+            return this._alunoService.GetAll();
         }
-        [HttpGet ("{id}")]
-        public AlunoVM GetDetail (long id) {
-            return AlunoAdapter.ToViewModel (this._alunoRepository.Get (id), true);
+        [HttpGet("{id}")]
+        public AlunoVM GetDetail(string id)
+        {
+            return this._alunoService.GetDetail(id);
         }
-        [HttpPut ("add")]
-        public AlunoVM Put ([FromBody] AlunoVM viewModel) {
-            var model = AlunoAdapter.ToModel (viewModel, true);
-            return AlunoAdapter.ToViewModel (this._alunoRepository.Add (model), true);
+        [HttpPut("add")]
+        public AlunoVM Put([FromBody] AlunoVM viewModel)
+        {
+            return this._alunoService.Add(viewModel);
         }
-        [HttpPost ("upd")]
-        public AlunoVM Post ([FromBody] AlunoVM viewModel) {
-            var model = AlunoAdapter.ToModel (viewModel, true);
-            return AlunoAdapter.ToViewModel (this._alunoRepository.Update (model), true);
+        [HttpPost("upd")]
+        public AlunoVM Post([FromBody] AlunoVM viewModel)
+        {
+            return this._alunoService.Update(viewModel);
         }
-        [HttpDelete ("del")]
-        public void Delete ([FromQuery] long id) {
-            this._alunoRepository.Disable (id);
+        [HttpDelete("del")]
+        public void Delete([FromQuery] long id)
+        {
+            this._alunoService.Disable(id);
         }
     }
 }

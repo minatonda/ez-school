@@ -11,6 +11,10 @@ export enum RouterPath {
     USUARIO_UPD = '/usuario/upd/:id',
     USUARIO_ADD_EXTERNAL = '/usuario/cadastro',
 
+    ALUNO = '/aluno',
+    ALUNO_ADD = '/aluno/add',
+    ALUNO_UPD = '/aluno/upd/:id',
+
     CURSO = '/curso',
     CURSO_ADD = '/curso/add',
     CURSO_UPD = '/curso/:id/upd',
