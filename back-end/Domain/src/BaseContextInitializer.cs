@@ -26,6 +26,12 @@ namespace Domain {
             var listInstituicoes = getBaseInstituicoes ();
             context.Instituicoes.AddRange (listInstituicoes);
 
+            var listAlunos = getBaseAlunos(listUsuario);
+            context.Alunos.AddRange(listAlunos);
+
+            var listProfessores = getBaseProfessores(listUsuario);
+            context.Professores.AddRange(listProfessores);
+
             context.SaveChanges ();
         }
 
@@ -142,22 +148,65 @@ namespace Domain {
             };
         }
         public static Usuario[] getBaseUsuarios () {
-            var usuario = new Usuario () {
+            var carvalho = new Usuario () {
                 Username = "dev",
                 Password = "dev",
-                Email = "dev@hiperfast.com"
+                Email = "dev@ezschool.com"
             };
-            var usuarioInfo = new UsuarioInfo () {
-                ID = usuario.ID,
+            var carvalhoInfo = new UsuarioInfo () {
+                ID = carvalho.ID,
                 Nome = "Matheus Carvalho",
                 DataNascimento = DateTime.ParseExact ("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 CPF = "42187917835",
                 RG = "421920816"
             };
-            usuario.UsuarioInfo = usuarioInfo;
-            return new Usuario[] {
-                usuario
+            carvalho.UsuarioInfo = carvalhoInfo;
+
+            var marcal = new Usuario () {
+                Username = "qa",
+                Password = "qa",
+                Email = "qa@ezschool.com"
             };
+            var marcalInfo = new UsuarioInfo () {
+                ID = marcal.ID,
+                Nome = "Matheus Marçal",
+                DataNascimento = DateTime.ParseExact ("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                CPF = "42187917835",
+                RG = "421920816"
+            };
+            marcal.UsuarioInfo = marcalInfo;
+            return new Usuario[] {
+                carvalho,
+                marcal
+            };
+        }
+
+        public static Aluno[] getBaseAlunos(Usuario[] usuarios){
+            var alunos = new List<Aluno>();
+
+            foreach(var usuario in usuarios){
+                var aluno = new Aluno();
+                aluno.ID = usuario.ID;
+                aluno.UsuarioInfo = usuario.UsuarioInfo;
+                alunos.Add(aluno);
+            }
+
+            return alunos.ToArray();
+
+        }
+
+         public static Professor[] getBaseProfessores(Usuario[] usuarios){
+            var professores = new List<Professor>();
+
+            foreach(var usuario in usuarios){
+                var professor = new Professor();
+                professor.ID = usuario.ID;
+                professor.UsuarioInfo = usuario.UsuarioInfo;
+                professores.Add(professor);
+            }
+
+            return professores.ToArray();
+
         }
 
     }

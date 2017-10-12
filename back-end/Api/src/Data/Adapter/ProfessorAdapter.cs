@@ -15,6 +15,7 @@ namespace Api.Data.ViewModels {
             var vm = new ProfessorVM ();
             vm.ID = model.ID;
             vm.Label = model.UsuarioInfo.Nome;
+            vm.UsuarioInfo = UsuarioAdapter.ToViewModel (model.UsuarioInfo, false);
 
             return vm;
         }
