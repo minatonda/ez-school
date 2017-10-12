@@ -18,9 +18,9 @@ export class InstituicaoCategoriaFactory extends Factory {
         }
     }
 
-    public static async upd(model: InstituicaoCategoria, notify?: boolean) {
+    public static async update(model: InstituicaoCategoria, notify?: boolean) {
         try {
-            let result = await this.post('/api/instituicao-categoria/upd', model) as InstituicaoCategoria;
+            let result = await this.post('/api/instituicao-categoria/update', model) as InstituicaoCategoria;
             Notify.notify(MESSAGES.REGISTRO_UPD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -30,9 +30,9 @@ export class InstituicaoCategoriaFactory extends Factory {
         }
     }
 
-    public static async del(id: string, notify?: boolean) {
+    public static async disable(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/instituicao-categoriadel', { params: { id: id } });
+            let result = await this.delete('/api/instituicao-categoria/disable', { params: { id: id } });
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -42,7 +42,7 @@ export class InstituicaoCategoriaFactory extends Factory {
         }
     }
 
-    public static async dtl(id: string, notify?: boolean) {
+    public static async detail(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/instituicao-categoria/${id}`) as InstituicaoCategoria;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);

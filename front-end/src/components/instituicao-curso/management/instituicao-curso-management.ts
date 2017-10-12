@@ -39,7 +39,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             this.cursos = await CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.getCursoDtl(this.$route.params.id, this.$route.params.idInstituicao, true);
+                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }
         }
         catch (e) {
@@ -63,7 +63,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
         this.clearCursoGrade = true;
         setImmediate(() => { this.clearCursoGrade = false; });
         if (curso) {
-            this.cursoGrades = await CursoFactory.getGrades(curso.id);
+            this.cursoGrades = await CursoFactory.allGrade(curso.id);
         }
         else {
             this.cursoGrades = [];

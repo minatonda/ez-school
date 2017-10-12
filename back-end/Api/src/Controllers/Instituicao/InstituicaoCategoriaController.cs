@@ -19,29 +19,29 @@ namespace Api.Controllers
             this._InstituicaoCategoriaCategoriaService = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
         }
         [HttpGet]
-        public List<InstituicaoCategoriaVM> Get()
+        public List<InstituicaoCategoriaVM> All()
         {
-            return this._InstituicaoCategoriaCategoriaService.GetAll();
+            return this._InstituicaoCategoriaCategoriaService.All();
         }
         [HttpGet("{id}")]
-        public InstituicaoCategoriaVM GetDetail(long id)
+        public InstituicaoCategoriaVM Detail(long id)
         {
-            return this.GetDetail(id);
+            return this.Detail(id);
         }
         [HttpPut("add")]
-        public InstituicaoCategoriaVM Put([FromBody] InstituicaoCategoriaVM viewModel)
+        public InstituicaoCategoriaVM Add([FromBody] InstituicaoCategoriaVM viewModel)
         {
             return this._InstituicaoCategoriaCategoriaService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public InstituicaoCategoriaVM Post([FromBody] InstituicaoCategoriaVM viewModel)
+        [HttpPost("update")]
+        public InstituicaoCategoriaVM Update([FromBody] InstituicaoCategoriaVM viewModel)
         {
            return this._InstituicaoCategoriaCategoriaService.Update(viewModel);
         }
-        [HttpDelete("del")]
-        public void Delete([FromQuery] long id)
+        [HttpDelete("disable")]
+        public void Disable([FromQuery] long id)
         {
-            this._InstituicaoCategoriaCategoriaService.Delete(id);
+            this._InstituicaoCategoriaCategoriaService.Disable(id);
         }
     }
 }

@@ -19,90 +19,90 @@ namespace Api.Controllers
             this._instituicaoService = new InstituicaoService(instituicaoRepository, cursoRepository);
         }
         [HttpGet]
-        public List<InstituicaoVM> Get()
+        public List<InstituicaoVM> All()
         {
-            return this._instituicaoService.GetAll();
+            return this._instituicaoService.All();
         }
         [HttpGet("{id}")]
-        public InstituicaoVM GetDetail(long id)
+        public InstituicaoVM Detail(long id)
         {
-            return this._instituicaoService.GetDetail(id);
+            return this._instituicaoService.Detail(id);
         }
         [HttpPut("add")]
-        public InstituicaoVM Put([FromBody] InstituicaoVM viewModel)
+        public InstituicaoVM Add([FromBody] InstituicaoVM viewModel)
         {
             return this._instituicaoService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public InstituicaoVM Post([FromBody] InstituicaoVM viewModel)
+        [HttpPost("update")]
+        public InstituicaoVM Update([FromBody] InstituicaoVM viewModel)
         {
             return this._instituicaoService.Update(viewModel);
         }
-        [HttpDelete("del")]
-        public void Delete([FromQuery]long id)
+        [HttpDelete("disable")]
+        public void Disable([FromQuery]long id)
         {
-            this._instituicaoService.Delete(id);
+            this._instituicaoService.Disable(id);
         }
 
-        [HttpGet("{id}/categorias")]
-        public List<InstituicaoCategoriaVM> GetCategorias(long id)
+        [HttpGet("{id}/categoria")]
+        public List<InstituicaoCategoriaVM> AllCategoria(long id)
         {
-            return this._instituicaoService.GetCategorias(id);
+            return this._instituicaoService.AllCategoria(id);
         }
-        [HttpGet("{id}/categorias/add")]
-        public void AddCategorias(long id, [FromBody] InstituicaoCategoriaVM viewModel)
+        [HttpGet("{id}/categoria/add")]
+        public void AddCategoria(long id, [FromBody] InstituicaoCategoriaVM viewModel)
         {
             this._instituicaoService.AddCategoria(id, viewModel);
         }
-        [HttpGet("{id}/categorias/del")]
-        public void DeleteCategorias(long id, [FromQuery] long idCategoria)
+        [HttpDelete("{id}/categoria/del")]
+        public void DeleteCategoria(long id, [FromQuery] long idCategoria)
         {
             this._instituicaoService.DeleteCategoria(id, idCategoria);
         }
 
-        [HttpPut("{id}/cursos/add")]
+        [HttpPut("{id}/curso/add")]
         public void AddCurso(long id, [FromBody] InstituicaoCursoVM viewModel)
         {
             this._instituicaoService.AddCurso(id, viewModel);
         }
-        [HttpPost("{id}/cursos/renew")]
+        [HttpPost("{id}/curso/renew")]
         public void RenewCurso(long id, [FromBody] InstituicaoCursoVM viewModel)
         {
             this._instituicaoService.RenewCurso(id, viewModel);
         }
-        [HttpDelete("{id}/cursos/del")]
-        public void DeleteCurso(long id, [FromQuery] long idCategoria)
+        [HttpDelete("{id}/cursos/disable")]
+        public void DisableCurso(long id, [FromQuery] long idCategoria)
         {
             this._instituicaoService.DisableCurso(id, idCategoria);
         }
-        [HttpGet("{id}/cursos/{idCurso}")]
-        public InstituicaoCursoVM GetCurso(long id, long idCurso)
+        [HttpGet("{id}/curso/{idCurso}")]
+        public InstituicaoCursoVM DetailCurso(long id, long idCurso)
         {
-            return this._instituicaoService.GetCurso(id, idCurso);
+            return this._instituicaoService.DetailCurso(id, idCurso);
         }
-        [HttpGet("{id}/cursos")]
-        public List<InstituicaoCursoVM> GetCursos(long id)
+        [HttpGet("{id}/curso")]
+        public List<InstituicaoCursoVM> AllCurso(long id)
         {
-            return this._instituicaoService.GetCursos(id);
+            return this._instituicaoService.AllCurso(id);
         }
 
-        [HttpGet("{id}/cursos/{idCurso}/ocorrencias")]
-        public List<InstituicaoCursoOcorrenciaVM> GetCursoOcorrencias(long id, long idCurso)
+        [HttpGet("{id}/curso/{idCurso}/ocorrencia")]
+        public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia(long id, long idCurso)
         {
-            return this._instituicaoService.GetCursoOcorrencias(id, idCurso);
+            return this._instituicaoService.AllCursoOcorrencia(id, idCurso);
         }
-        [HttpGet("{id}/cursos/{idCurso}/ocorrencias/{idOcorrencia}")]
-        public InstituicaoCursoOcorrenciaVM GetCursoOcorrencia(long id, long idCurso, long idOcorrencia)
+        [HttpGet("{id}/curso/{idCurso}/ocorrencia/{idOcorrencia}")]
+        public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia(long id, long idCurso, long idOcorrencia)
         {
-            return this._instituicaoService.GetCursoOcorrencia(id, idCurso, idOcorrencia);
+            return this._instituicaoService.DetailCursoOcorrencia(id, idCurso, idOcorrencia);
         }
-        [HttpGet("{id}/cursos/{idCurso}/ocorrencias/add")]
+        [HttpGet("{id}/curso/{idCurso}/ocorrencia/add")]
         public void AddCursoOcorrencia(long id, long idCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel)
         {
             this._instituicaoService.AddCursoOcorrencia(id, idCurso, viewModel);
         }
-        [HttpGet("{id}/cursos/{idCurso}/ocorrencias/del")]
-        public void DeleteCursoOcorrencia(long id, long idCurso, [FromQuery] long idOcorrencia)
+        [HttpGet("{id}/curso/{idCurso}/ocorrencia/disable")]
+        public void DisableCursoOcorrencia(long id, long idCurso, [FromQuery] long idOcorrencia)
         {
             this._instituicaoService.DeleteCursoOcorrencia(id, idCurso, idOcorrencia);
         }

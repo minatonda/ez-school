@@ -71,7 +71,7 @@ export class ProfessorComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            ProfessorFactory.del(item.id);
+            ProfessorFactory.disable(item.id);
         }
         catch (e) {
 

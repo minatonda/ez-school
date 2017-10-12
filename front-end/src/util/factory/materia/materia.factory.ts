@@ -18,9 +18,9 @@ export class MateriaFactory extends Factory {
         }
     }
 
-    public static async upd(model: Materia, notify?: boolean) {
+    public static async update(model: Materia, notify?: boolean) {
         try {
-            let result = await this.post('/api/materia/upd', model) as Materia;
+            let result = await this.post('/api/materia/update', model) as Materia;
             Notify.notify(MESSAGES.REGISTRO_UPD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -30,9 +30,9 @@ export class MateriaFactory extends Factory {
         }
     }
 
-    public static async del(id: string, notify?: boolean) {
+    public static async disable(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/materiadel', { params: { id: id } });
+            let result = await this.delete('/api/materia/disable', { params: { id: id } });
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -42,7 +42,7 @@ export class MateriaFactory extends Factory {
         }
     }
 
-    public static async dtl(id: string, notify?: boolean) {
+    public static async detail(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/materia/${id}`) as Materia;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);

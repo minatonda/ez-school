@@ -36,7 +36,7 @@ export class AlunoManagementComponent extends Vue {
             let usuarios = await UsuarioFactory.all();
             this.usuarioInfos = usuarios.map(x => x.usuarioInfo);
             if (this.operation === RouterPathType.upd) {
-                this.model = await AlunoFactory.dtl(this.$route.params.id, true);
+                this.model = await AlunoFactory.detail(this.$route.params.id, true);
             }
         }
         catch (e) {
@@ -56,7 +56,7 @@ export class AlunoManagementComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await AlunoFactory.upd(this.model, true);
+                    await AlunoFactory.update(this.model, true);
                     break;
                 }
             }

@@ -19,27 +19,27 @@ namespace Api.Controllers
             this._alunoService = new AlunoService(alunoRepository);
         }
         [HttpGet]
-        public List<AlunoVM> Get()
+        public List<AlunoVM> All()
         {
-            return this._alunoService.GetAll();
+            return this._alunoService.All();
         }
         [HttpGet("{id}")]
-        public AlunoVM GetDetail(string id)
+        public AlunoVM Detail(string id)
         {
-            return this._alunoService.GetDetail(id);
+            return this._alunoService.Detail(id);
         }
         [HttpPut("add")]
-        public AlunoVM Put([FromBody] AlunoVM viewModel)
+        public AlunoVM Add([FromBody] AlunoVM viewModel)
         {
             return this._alunoService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public AlunoVM Post([FromBody] AlunoVM viewModel)
+        [HttpPost("update")]
+        public AlunoVM Update([FromBody] AlunoVM viewModel)
         {
             return this._alunoService.Update(viewModel);
         }
-        [HttpDelete("del")]
-        public void Delete([FromQuery] long id)
+        [HttpDelete("disable")]
+        public void Disable([FromQuery] long id)
         {
             this._alunoService.Disable(id);
         }

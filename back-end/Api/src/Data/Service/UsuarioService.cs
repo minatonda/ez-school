@@ -17,11 +17,11 @@ namespace Api.Data.Service
         {
             this._usuarioRepository = usuarioRepository;
         }
-        public List<UsuarioVM> GetAll()
+        public List<UsuarioVM> All()
         {
             return this._usuarioRepository.GetAll(true).Select(x => UsuarioAdapter.ToViewModel(x, true)).ToList();
         }
-        public UsuarioVM GetDetail(string id)
+        public UsuarioVM Detail(string id)
         {
             return UsuarioAdapter.ToViewModel(this._usuarioRepository.Get(id), true);
         }
@@ -35,7 +35,7 @@ namespace Api.Data.Service
             var model = UsuarioAdapter.ToModel(viewModel, true);
             return UsuarioAdapter.ToViewModel(this._usuarioRepository.Update(model), true);
         }
-        public void Delete(string id)
+        public void Disable(string id)
         {
             this._usuarioRepository.Disable(id);
         }

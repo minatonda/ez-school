@@ -16,23 +16,23 @@ namespace Api.Controllers {
             this._professorService = new ProfessorService(professorRepository);
         }
         [HttpGet]
-        public List<ProfessorVM> Get () {
-            return this._professorService.GetAll();
+        public List<ProfessorVM> All () {
+            return this._professorService.All();
         }
         [HttpGet ("{id}")]
-        public ProfessorVM GetDetail (string id) {
-            return this._professorService.GetDetail (id);
+        public ProfessorVM Detail (string id) {
+            return this._professorService.Detail (id);
         }
         [HttpPut ("add")]
-        public ProfessorVM Put ([FromBody] ProfessorVM viewModel) {
+        public ProfessorVM Add ([FromBody] ProfessorVM viewModel) {
             return this._professorService.Add(viewModel);
         }
-        [HttpPost ("upd")]
-        public ProfessorVM Post ([FromBody] ProfessorVM viewModel) {
+        [HttpPost ("update")]
+        public ProfessorVM Update ([FromBody] ProfessorVM viewModel) {
              return this._professorService.Update(viewModel);
         }
-        [HttpDelete ("del")]
-        public void Delete ([FromQuery] long id) {
+        [HttpDelete ("disable")]
+        public void Disable ([FromQuery] long id) {
             this._professorService.Disable (id);
         }
     }

@@ -67,7 +67,7 @@ export class CursoGradeManagementComponent extends Vue {
     async mounted() {
         try {
             this.materias = await MateriaFactory.all();
-            this.grades = await CursoFactory.getGrades(this.curso.id);
+            this.grades = await CursoFactory.allGrade(this.curso.id);
         }
         catch (e) {
 
@@ -149,7 +149,7 @@ export class CursoGradeManagementComponent extends Vue {
                 break;
             }
             case ('upd'): {
-                CursoFactory.updGrade(this.curso.id, this.model);
+                CursoFactory.updateGrade(this.curso.id, this.model);
                 break;
             }
         }

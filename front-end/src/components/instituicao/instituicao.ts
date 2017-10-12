@@ -79,7 +79,7 @@ export class InstituicaoComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.del(item.id);
+            InstituicaoFactory.disable(item.id);
         }
         catch (e) {
 

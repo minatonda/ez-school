@@ -71,7 +71,7 @@ export class AlunoComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            AlunoFactory.del(item.id);
+            AlunoFactory.disable(item.id);
         }
         catch (e) {
 

@@ -17,11 +17,11 @@ namespace Api.Data.Service
         {
             this._instituicaoCategoriaRepository = instituicaoCategoriaRepository;
         }
-        public List<InstituicaoCategoriaVM> GetAll()
+        public List<InstituicaoCategoriaVM> All()
         {
             return this._instituicaoCategoriaRepository.GetAll(true).Select(x => InstituicaoCategoriaAdapter.ToViewModel(x, true)).ToList();
         }
-        public InstituicaoCategoriaVM GetDetail(long id)
+        public InstituicaoCategoriaVM Detail(long id)
         {
             return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Get(id), true);
         }
@@ -35,7 +35,7 @@ namespace Api.Data.Service
             var model = InstituicaoCategoriaAdapter.ToModel(viewModel, true);
             return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Update(model), true);
         }
-        public void Delete(long id)
+        public void Disable(long id)
         {
             this._instituicaoCategoriaRepository.Disable(id);
         }

@@ -19,11 +19,11 @@ namespace Api.Data.Service
         {
             this._alunoRepository = alunoRepository;
         }
-        public List<AlunoVM> GetAll()
+        public List<AlunoVM> All()
         {
             return this._alunoRepository.GetAll(true).Select(x => AlunoAdapter.ToViewModel(x, true)).ToList();
         }
-        public AlunoVM GetDetail(string id)
+        public AlunoVM Detail(string id)
         {
             return AlunoAdapter.ToViewModel(this._alunoRepository.Get(id), true);
         }

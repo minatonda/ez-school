@@ -15,29 +15,29 @@ namespace Api.Controllers
             this.usuarioService = new UsuarioService(usuarioRepository);
         }
         [HttpGet]
-        public List<UsuarioVM> Get()
+        public List<UsuarioVM> All()
         {
-            return this.usuarioService.GetAll();
+            return this.usuarioService.All();
         }
         [HttpGet("{id}")]
-        public UsuarioVM GetDetail(string id)
+        public UsuarioVM Detail(string id)
         {
-            return this.usuarioService.GetDetail(id);
+            return this.usuarioService.Detail(id);
         }
         [HttpPut("add")]
-        public UsuarioVM Put([FromBody] UsuarioVM viewModel)
+        public UsuarioVM Add([FromBody] UsuarioVM viewModel)
         {
             return this.usuarioService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public UsuarioVM Post([FromBody] UsuarioVM viewModel)
+        [HttpPost("update")]
+        public UsuarioVM Update([FromBody] UsuarioVM viewModel)
         {
             return this.usuarioService.Update(viewModel);
         }
-        [HttpDelete("del")]
-        public void Delete(string id)
+        [HttpDelete("disable")]
+        public void Disable(string id)
         {
-            this.usuarioService.Delete(id);
+            this.usuarioService.Disable(id);
         }
     }
 }

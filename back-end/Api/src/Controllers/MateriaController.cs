@@ -15,27 +15,27 @@ namespace Api.Controllers
             this._materiaService = new MateriaService(materiaRepository);
         }
         [HttpGet]
-        public List<MateriaVM> Get()
+        public List<MateriaVM> All()
         {
-            return this._materiaService.GetAll();
+            return this._materiaService.All();
         }
         [HttpGet("{id}")]
-        public MateriaVM GetDetail(long id)
+        public MateriaVM Detail(long id)
         {
-            return this._materiaService.GetDetail(id);
+            return this._materiaService.Detail(id);
         }
         [HttpPut("add")]
-        public MateriaVM Put([FromBody] MateriaVM viewModel)
+        public MateriaVM Add([FromBody] MateriaVM viewModel)
         {
             return this._materiaService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public MateriaVM Post([FromBody] MateriaVM viewModel)
+        [HttpPost("update")]
+        public MateriaVM Update([FromBody] MateriaVM viewModel)
         {
             return this._materiaService.Update(viewModel);
         }
-        [HttpDelete("del/{id}")]
-        public void Delete(long id)
+        [HttpDelete("disable/{id}")]
+        public void Disable(long id)
         {
             this._materiaService.Delete(id);
         }

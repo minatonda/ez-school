@@ -26,13 +26,13 @@ namespace Api.Data.Service {
             var model = InstituicaoAdapter.ToModel (viewModel, true);
             return InstituicaoAdapter.ToViewModel (this._instituicaoRepository.Update (model), true);
         }
-        public void Delete (long id) {
+        public void Disable (long id) {
             this._instituicaoRepository.Disable (id);
         }
-        public InstituicaoVM GetDetail (long id) {
+        public InstituicaoVM Detail (long id) {
             return InstituicaoAdapter.ToViewModel (this._instituicaoRepository.Get (id), true);
         }
-        public List<InstituicaoVM> GetAll () {
+        public List<InstituicaoVM> All () {
             return this._instituicaoRepository.GetAll (true).Select (x => InstituicaoAdapter.ToViewModel (x, true)).ToList ();
         }
 
@@ -42,7 +42,7 @@ namespace Api.Data.Service {
         public void DeleteCategoria (long id, long idCategoria) {
             this._instituicaoRepository.DeleteCategoria (id, idCategoria);
         }
-        public List<InstituicaoCategoriaVM> GetCategorias (long id) {
+        public List<InstituicaoCategoriaVM> AllCategoria (long id) {
             return this._instituicaoRepository.GetCategorias (id).Select (x => InstituicaoCategoriaAdapter.ToViewModel (x, false)).ToList ();
         }
 
@@ -55,10 +55,10 @@ namespace Api.Data.Service {
         public void DisableCurso (long id, long idCurso) {
             this._instituicaoRepository.DisableCurso (id, idCurso);
         }
-        public InstituicaoCursoVM GetCurso (long id, long idCurso) {
+        public InstituicaoCursoVM DetailCurso (long id, long idCurso) {
             return InstituicaoAdapter.ToViewModel (this._instituicaoRepository.GetCurso (id, idCurso), false);
         }
-        public List<InstituicaoCursoVM> GetCursos (long id) {
+        public List<InstituicaoCursoVM> AllCurso (long id) {
             return this._instituicaoRepository.GetCursos (id).Select (x => InstituicaoAdapter.ToViewModel (x, false)).ToList ();
         }
 
@@ -68,10 +68,10 @@ namespace Api.Data.Service {
         public void DeleteCursoOcorrencia (long id, long idCurso, long idOcorrencia) {
             this._instituicaoRepository.DeleteCursoOcorrencia (id, idCurso, idOcorrencia);
         }
-        public InstituicaoCursoOcorrenciaVM GetCursoOcorrencia (long id, long idCurso, long idOcorrencia) {
+        public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia (long id, long idCurso, long idOcorrencia) {
             return InstituicaoAdapter.ToViewModel (this._instituicaoRepository.GetCursoOcorrencia (id, idCurso, idOcorrencia), false);
         }
-        public List<InstituicaoCursoOcorrenciaVM> GetCursoOcorrencias (long id, long idCurso) {
+        public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia (long id, long idCurso) {
             return this._instituicaoRepository.GetCursoOcorrencias (id, idCurso).Select (x => InstituicaoAdapter.ToViewModel (x, false)).ToList ();
         }
 

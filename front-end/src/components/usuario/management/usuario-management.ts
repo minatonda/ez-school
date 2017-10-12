@@ -31,7 +31,7 @@ export class UsuarioManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await UsuarioFactory.dtl(this.$route.params.id, true);
+                this.model = await UsuarioFactory.detail(this.$route.params.id, true);
             }
         }
         catch (e) {
@@ -51,7 +51,7 @@ export class UsuarioManagementComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await UsuarioFactory.upd(this.model, true);
+                    await UsuarioFactory.update(this.model, true);
                     break;
                 }
             }

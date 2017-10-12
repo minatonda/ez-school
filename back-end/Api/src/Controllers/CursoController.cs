@@ -16,55 +16,55 @@ namespace Api.Controllers
             this._cursoService = new CursoService(cursoRepository);
         }
         [HttpGet]
-        public List<CursoVM> Get()
+        public List<CursoVM> All()
         {
-            return this._cursoService.GetAll();
+            return this._cursoService.All();
         }
         [HttpGet("{id}")]
-        public CursoVM GetDetail(long id)
+        public CursoVM Detail(long id)
         {
-            return this._cursoService.GetDetail(id);
+            return this._cursoService.Detail(id);
         }
         [HttpPut("add")]
-        public CursoVM Put([FromBody] CursoVM viewModel)
+        public CursoVM Add([FromBody] CursoVM viewModel)
         {
             return this._cursoService.Add(viewModel);
         }
-        [HttpPost("upd")]
-        public CursoVM Post([FromBody] CursoVM viewModel)
+        [HttpPost("update")]
+        public CursoVM Update([FromBody] CursoVM viewModel)
         {
             return this._cursoService.Update(viewModel);
         }
-        [HttpDelete("del")]
-        public void Delete([FromQuery] long id)
+        [HttpDelete("disable")]
+        public void Disable([FromQuery] long id)
         {
-            this._cursoService.Delete(id);
+            this._cursoService.Disable(id);
         }
 
-        [HttpGet("{id}/grades")]
-        public List<CursoGradeVM> GetGrades(long id)
+        [HttpGet("{id}/grade")]
+        public List<CursoGradeVM> AllGrade(long id)
         {
-            return this._cursoService.GetGrades(id);
+            return this._cursoService.AllGrade(id);
         }
-        [HttpGet("{id}/grades/{descricao}")]
-        public CursoGradeVM GetGradeDetail(long id, long idCursoGrade)
+        [HttpGet("{id}/grade/{descricao}")]
+        public CursoGradeVM DetailGrade(long id, long idCursoGrade)
         {
-            return this._cursoService.GetGradeDetail(id, idCursoGrade);
+            return this._cursoService.DetailGrade(id, idCursoGrade);
         }
-        [HttpPut("{id}/grades/add")]
-        public CursoGradeVM AddGrades(long id, [FromBody] CursoGradeVM model)
+        [HttpPut("{id}/grade/add")]
+        public CursoGradeVM AddGrade(long id, [FromBody] CursoGradeVM model)
         {
-            return this._cursoService.AddGrades(id, model);
+            return this._cursoService.AddGrade(id, model);
         }
-        [HttpPost("{id}/grades/upd")]
-        public CursoGradeVM UpdGrades(long id, [FromBody] CursoGradeVM model)
+        [HttpPost("{id}/grade/update")]
+        public CursoGradeVM UpdateGrade(long id, [FromBody] CursoGradeVM model)
         {
-            return this._cursoService.UpdateGrades(id, model);
+            return this._cursoService.UpdateGrade(id, model);
         }
-        [HttpDelete("{id}/grades/del")]
-        public void DeleteGrades(long id, [FromQuery]long idCursoGrade)
+        [HttpDelete("{id}/grade/disable")]
+        public void DisableGrade(long id, [FromQuery]long idCursoGrade)
         {
-            this._cursoService.DeleteGrades(id, idCursoGrade);
+            this._cursoService.DeleteGrade(id, idCursoGrade);
         }
 
     }

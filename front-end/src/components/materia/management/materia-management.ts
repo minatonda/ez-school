@@ -30,7 +30,7 @@ export class MateriaManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await MateriaFactory.dtl(this.$route.params.id, true);
+                this.model = await MateriaFactory.detail(this.$route.params.id, true);
             }
         }
         catch (e) {
@@ -50,7 +50,7 @@ export class MateriaManagementComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await MateriaFactory.upd(this.model, true);
+                    await MateriaFactory.update(this.model, true);
                     break;
                 }
             }

@@ -24,7 +24,7 @@ export class InstituicaoCursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.getCursos(this.$route.params.idInstituicao);
+            this.lista = await InstituicaoFactory.allCurso(this.$route.params.idInstituicao);
         }
         catch (e) {
 
@@ -71,7 +71,7 @@ export class InstituicaoCursoComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.del(item.id);
+            InstituicaoFactory.disable(item.id);
         }
         catch (e) {
 

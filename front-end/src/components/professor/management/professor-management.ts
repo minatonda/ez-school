@@ -36,7 +36,7 @@ export class ProfessorManagementComponent extends Vue {
             let usuarios = await UsuarioFactory.all();
             this.usuarioInfos = usuarios.map(x => x.usuarioInfo);
             if (this.operation === RouterPathType.upd) {
-                this.model = await ProfessorFactory.dtl(this.$route.params.id, true);
+                this.model = await ProfessorFactory.detail(this.$route.params.id, true);
             }
         }
         catch (e) {
@@ -56,7 +56,7 @@ export class ProfessorManagementComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await ProfessorFactory.upd(this.model, true);
+                    await ProfessorFactory.update(this.model, true);
                     break;
                 }
             }

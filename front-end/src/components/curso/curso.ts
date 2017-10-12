@@ -71,7 +71,7 @@ export class CursoComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            CursoFactory.del(item.id);
+            CursoFactory.disable(item.id);
         }
         catch (e) {
 

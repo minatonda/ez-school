@@ -30,7 +30,7 @@ export class InstituicaoManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.dtl(this.$route.params.id, true);
+                this.model = await InstituicaoFactory.detail(this.$route.params.id, true);
             }
         }
         catch (e) {
@@ -50,7 +50,7 @@ export class InstituicaoManagementComponent extends Vue {
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await InstituicaoFactory.upd(this.model, true);
+                    await InstituicaoFactory.update(this.model, true);
                     break;
                 }
             }

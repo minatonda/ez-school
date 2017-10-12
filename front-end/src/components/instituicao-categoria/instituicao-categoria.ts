@@ -70,7 +70,7 @@ export class InstituicaoCategoriaComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoCategoriaFactory.del(item.id);
+            InstituicaoCategoriaFactory.disable(item.id);
         }
         catch (e) {
 

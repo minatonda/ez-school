@@ -20,9 +20,9 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async upd(model: Curso, notify?: boolean) {
+    public static async update(model: Curso, notify?: boolean) {
         try {
-            let result = await this.post('/api/curso/upd', model) as Curso;
+            let result = await this.post('/api/curso/update', model) as Curso;
             Notify.notify(MESSAGES.REGISTRO_UPD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -32,9 +32,9 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async del(id: string, notify?: boolean) {
+    public static async disable(id: string, notify?: boolean) {
         try {
-            let result = await this.delete('/api/curso/del', { params: { id: id } });
+            let result = await this.delete('/api/curso/disable', { params: { id: id } });
             Notify.notify(MESSAGES.REGISTRO_DEL, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -44,7 +44,7 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async dtl(id: string, notify?: boolean) {
+    public static async detail(id: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/curso/${id}`) as Curso;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -68,9 +68,9 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async getGrades(id: string, notify?: boolean) {
+    public static async allGrade(id: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/curso/${id}/grades`) as Array<CursoGrade>;
+            let result = await this.get(`/api/curso/${id}/grade`) as Array<CursoGrade>;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -92,9 +92,9 @@ export class CursoFactory extends Factory {
         }
     }
 
-    public static async updGrade(id: string, model: CursoGrade, notify?: boolean) {
+    public static async updateGrade(id: string, model: CursoGrade, notify?: boolean) {
         try {
-            let result = await this.post(`/api/curso/${id}/grades/upd`, model) as CursoGrade;
+            let result = await this.post(`/api/curso/${id}/grade/update`, model) as CursoGrade;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

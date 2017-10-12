@@ -19,11 +19,11 @@ namespace Api.Data.Service
         {
             this._professorRepository = professorRepository;
         }
-        public List<ProfessorVM> GetAll()
+        public List<ProfessorVM> All()
         {
             return this._professorRepository.GetAll(true).Select(x => ProfessorAdapter.ToViewModel(x, true)).ToList();
         }
-        public ProfessorVM GetDetail(string id)
+        public ProfessorVM Detail(string id)
         {
             return ProfessorAdapter.ToViewModel(this._professorRepository.Get(id), true);
         }
