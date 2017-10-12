@@ -23,7 +23,7 @@ namespace Api.Data.Service
         {
             return this._professorRepository.GetAll(true).Select(x => ProfessorAdapter.ToViewModel(x, true)).ToList();
         }
-        public ProfessorVM GetDetail(long id)
+        public ProfessorVM GetDetail(string id)
         {
             return ProfessorAdapter.ToViewModel(this._professorRepository.Get(id), true);
         }
@@ -37,7 +37,7 @@ namespace Api.Data.Service
             var model = ProfessorAdapter.ToModel(viewModel, true);
             return ProfessorAdapter.ToViewModel(this._professorRepository.Update(model), true);
         }
-        public void Delete(long id)
+        public void Disable(long id)
         {
             this._professorRepository.Disable(id);
         }

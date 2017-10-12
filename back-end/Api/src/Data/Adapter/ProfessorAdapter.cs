@@ -27,8 +27,9 @@ namespace Api.Data.ViewModels {
         }
 
         public static Professor ToModel (ProfessorVM vm, bool deep) {
-            var model = new Professor (UsuarioAdapter.ToModel(vm.UsuarioInfo,false));
+            var model = new Professor ();
             model.ID = vm.ID;
+            model.UsuarioInfo = UsuarioAdapter.ToModel (vm.UsuarioInfo, false);
             return model;
         }
 

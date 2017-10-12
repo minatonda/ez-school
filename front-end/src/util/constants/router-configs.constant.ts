@@ -15,6 +15,8 @@ import { InstituicaoCursoComponent } from '../../components/instituicao-curso/in
 import { InstituicaoCursoManagementComponent } from '../../components/instituicao-curso/management/instituicao-curso-management';
 import { AlunoManagementComponent } from '../../components/aluno/management/aluno-management';
 import { AlunoComponent } from '../../components/aluno/aluno';
+import { ProfessorComponent } from '../../components/professor/professor';
+import { ProfessorManagementComponent } from '../../components/professor/management/professor-management';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
@@ -27,6 +29,10 @@ export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.list, path: RouterPath.ALUNO, name: RouterPath.ALUNO, component: AlunoComponent, alias: 'Alunos' },
     { menu: true, type: RouterPathType.add, path: RouterPath.ALUNO_ADD, name: RouterPath.ALUNO_ADD, component: AlunoManagementComponent, alias: 'Aluno - Adicionar' },
     { menu: false, type: RouterPathType.upd, path: RouterPath.ALUNO_UPD, name: RouterPath.ALUNO_UPD, component: AlunoManagementComponent, alias: 'Aluno - Atualizar' },
+
+    { menu: true, type: RouterPathType.list, path: RouterPath.PROFESSOR, name: RouterPath.PROFESSOR, component: ProfessorComponent, alias: 'Professores' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.PROFESSOR_ADD, name: RouterPath.PROFESSOR_ADD, component: ProfessorManagementComponent, alias: 'Professor - Adicionar' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.PROFESSOR_UPD, name: RouterPath.PROFESSOR_UPD, component: ProfessorManagementComponent, alias: 'Professor - Atualizar' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.CURSO, name: RouterPath.CURSO, component: CursoComponent, alias: 'Cursos' },
     { menu: true, type: RouterPathType.add, path: RouterPath.CURSO_ADD, name: RouterPath.CURSO_ADD, component: CursoManagementComponent, alias: 'Curso - Adicionar' },
