@@ -13,15 +13,15 @@ namespace Api.Controllers
     public class InstituicaoCategoriaCategoriaController : Controller
     {
 
-        private InstituicaoCategoriaService _InstituicaoCategoriaCategoriaRepository;
+        private InstituicaoCategoriaService _InstituicaoCategoriaCategoriaService;
         public InstituicaoCategoriaCategoriaController(InstituicaoCategoriaRepository InstituicaoCategoriaRepository)
         {
-            this._InstituicaoCategoriaCategoriaRepository = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
+            this._InstituicaoCategoriaCategoriaService = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
         }
         [HttpGet]
         public List<InstituicaoCategoriaVM> Get()
         {
-            return this._InstituicaoCategoriaCategoriaRepository.GetAll();
+            return this._InstituicaoCategoriaCategoriaService.GetAll();
         }
         [HttpGet("{id}")]
         public InstituicaoCategoriaVM GetDetail(long id)
@@ -31,17 +31,17 @@ namespace Api.Controllers
         [HttpPut("add")]
         public InstituicaoCategoriaVM Put([FromBody] InstituicaoCategoriaVM viewModel)
         {
-            return this._InstituicaoCategoriaCategoriaRepository.Add(viewModel);
+            return this._InstituicaoCategoriaCategoriaService.Add(viewModel);
         }
         [HttpPost("upd")]
         public InstituicaoCategoriaVM Post([FromBody] InstituicaoCategoriaVM viewModel)
         {
-           return this._InstituicaoCategoriaCategoriaRepository.Update(viewModel);
+           return this._InstituicaoCategoriaCategoriaService.Update(viewModel);
         }
         [HttpDelete("del")]
         public void Delete([FromQuery] long id)
         {
-            this._InstituicaoCategoriaCategoriaRepository.Delete(id);
+            this._InstituicaoCategoriaCategoriaService.Delete(id);
         }
     }
 }

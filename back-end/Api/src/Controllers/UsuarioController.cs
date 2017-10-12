@@ -9,35 +9,35 @@ namespace Api.Controllers
     [Route("api/usuario")]
     public class UsuarioController : Controller
     {
-        private UsuarioService _usuarioRepository;
+        private UsuarioService usuarioService;
         public UsuarioController(UsuarioRepository usuarioRepository)
         {
-            this._usuarioRepository = new UsuarioService(usuarioRepository);
+            this.usuarioService = new UsuarioService(usuarioRepository);
         }
         [HttpGet]
         public List<UsuarioVM> Get()
         {
-            return this._usuarioRepository.GetAll();
+            return this.usuarioService.GetAll();
         }
         [HttpGet("{id}")]
         public UsuarioVM GetDetail(string id)
         {
-            return this._usuarioRepository.GetDetail(id);
+            return this.usuarioService.GetDetail(id);
         }
         [HttpPut("add")]
         public UsuarioVM Put([FromBody] UsuarioVM viewModel)
         {
-            return this._usuarioRepository.Add(viewModel);
+            return this.usuarioService.Add(viewModel);
         }
         [HttpPost("upd")]
         public UsuarioVM Post([FromBody] UsuarioVM viewModel)
         {
-            return this._usuarioRepository.Update(viewModel);
+            return this.usuarioService.Update(viewModel);
         }
         [HttpDelete("del")]
         public void Delete(string id)
         {
-            this._usuarioRepository.Delete(id);
+            this.usuarioService.Delete(id);
         }
     }
 }

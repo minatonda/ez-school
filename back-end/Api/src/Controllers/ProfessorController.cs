@@ -11,29 +11,29 @@ namespace Api.Controllers {
     [Route ("api/professor")]
     public class ProfessorController : Controller {
 
-        private ProfessorService _professorRepository;
+        private ProfessorService _professorService;
         public ProfessorController (ProfessorRepository professorRepository) {
-            this._professorRepository = new ProfessorService(professorRepository);
+            this._professorService = new ProfessorService(professorRepository);
         }
         [HttpGet]
         public List<ProfessorVM> Get () {
-            return this._professorRepository.GetAll();
+            return this._professorService.GetAll();
         }
         [HttpGet ("{id}")]
         public ProfessorVM GetDetail (string id) {
-            return this._professorRepository.GetDetail (id);
+            return this._professorService.GetDetail (id);
         }
         [HttpPut ("add")]
         public ProfessorVM Put ([FromBody] ProfessorVM viewModel) {
-            return this._professorRepository.Add(viewModel);
+            return this._professorService.Add(viewModel);
         }
         [HttpPost ("upd")]
         public ProfessorVM Post ([FromBody] ProfessorVM viewModel) {
-             return this._professorRepository.Update(viewModel);
+             return this._professorService.Update(viewModel);
         }
         [HttpDelete ("del")]
         public void Delete ([FromQuery] long id) {
-            this._professorRepository.Disable (id);
+            this._professorService.Disable (id);
         }
     }
 }
