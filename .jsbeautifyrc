@@ -1,0 +1,14 @@
+{
+    "indent_size": 4,
+    "indent_level": 1,
+    "brace_style": "end-expand,preserve-inline",
+    "break_chained_methods": false,
+    "jslint_happy": false,
+    "space_after_anon_function": true,
+    "keep_function_indentation": true,
+    "preserve_newlines": true,
+    "wrap_line_length": 0,
+    "wrap_attributes": "force-expand-multiline",
+    "wrap_attributes_indent_size": 99999999999999999,
+    "indent_handlebars": true
+}

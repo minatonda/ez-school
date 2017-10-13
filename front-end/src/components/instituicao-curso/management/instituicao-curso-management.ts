@@ -26,8 +26,8 @@ export class InstituicaoCursoManagementComponent extends Vue {
 
     clearCursoGrade = false;
 
-    cursos: Array<Curso> = new Array<Curso>();
-    cursoGrades: Array<CursoGrade> = new Array<CursoGrade>();
+    cursos: Array < Curso > = new Array < Curso > ();
+    cursoGrades: Array < CursoGrade > = new Array < CursoGrade > ();
 
     instituicaoCursoPeriodo: InstituicaoCursoPeriodo = new InstituicaoCursoPeriodo();
     instituicaoButtons = [
@@ -89,7 +89,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
     }
 
     public addPeriodo(periodo: InstituicaoCursoPeriodo) {
-        this.model.periodos.push(periodo);
+        this.model.periodos.push(Object.assign({}, periodo));
     }
     public removePeriodo(item: InstituicaoCursoPeriodo) {
         this.model.periodos.splice(this.model.periodos.indexOf(item), 1);
@@ -110,14 +110,16 @@ export class InstituicaoCursoManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
-                case (RouterPathType.add): {
-                    await InstituicaoFactory.addCurso(this.$route.params.idInstituicao, this.model, true);
-                    break;
-                }
-                case (RouterPathType.upd): {
-                    await InstituicaoFactory.renewCurso(this.$route.params.idInstituicao, this.model, true);
-                    break;
-                }
+                case (RouterPathType.add):
+                    {
+                        await InstituicaoFactory.addCurso(this.$route.params.idInstituicao, this.model, true);
+                        break;
+                    }
+                case (RouterPathType.upd):
+                    {
+                        await InstituicaoFactory.renewCurso(this.$route.params.idInstituicao, this.model, true);
+                        break;
+                    }
             }
         }
         catch (e) {
