@@ -2,13 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Domain.Models.Interface;
 
-namespace Domain.Models
-{
-    public class InstituicaoCursoOcorrenciaMateria : IBaseModel
-    {
+namespace Domain.Models {
+    public class InstituicaoCursoOcorrenciaMateria : IBaseModel {
 
-        public InstituicaoCursoOcorrenciaMateria()
-        {
+        public InstituicaoCursoOcorrenciaMateria () {
 
         }
 
@@ -17,10 +14,11 @@ namespace Domain.Models
         public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
         public Materia Materia { get; set; }
         public Professor Professor { get; set; }
-        public bool Ativo { get; set; } = true;
-
+        public InstituicaoCursoPeriodo Periodo { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
+
+        public bool Ativo { get; set; } = true;
 
     }
 }

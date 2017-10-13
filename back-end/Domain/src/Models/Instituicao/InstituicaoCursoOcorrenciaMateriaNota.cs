@@ -15,6 +15,7 @@ namespace Domain.Models {
         public DateTime DataLancamento { get; set; }
         public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
         public InstituicaoCursoOcorrenciaMateria InstituicaoCursoOcorrenciaMateria { get; set; }
+        
         public bool Ativo { get; set; } = true;
 
     }

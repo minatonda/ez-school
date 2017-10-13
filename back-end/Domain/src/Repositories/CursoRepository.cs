@@ -38,45 +38,43 @@ namespace Domain.Repositories {
         }
 
         public CursoGradeDto GetGrade (long ID, long IDCursoGrade) {
-            return new CursoGradeDto (this.db.CursoGradeMaterias.Include (i => i.CursoGrade).ThenInclude (i => i.Curso).Include (i => i.Materia).Where (x => x.CursoGrade.Curso.ID == ID && x.CursoGrade.ID == IDCursoGrade).ToList ());
+            var cursoGradeMaterias = this.db.CursoGradeMaterias.Include (i => i.CursoGrade).ThenInclude (i => i.Curso).Include (i => i.Materia).Where (x => x.CursoGrade.Curso.ID == ID && x.CursoGrade.ID == IDCursoGrade).ToList ();
+            return new CursoGradeDto (cursoGradeMaterias.Select (x => x.CursoGrade).First (), cursoGradeMaterias);
         }
         public List<CursoGradeDto> GetGrades (long ID) {
-            var listCursoGrade = new List<CursoGradeDto> ();
-            foreach (var item in this.db.CursoGradeMaterias.Include (i => i.CursoGrade).ThenInclude (i => i.Curso).Include (i => i.Materia).Where (x => x.CursoGrade.Curso.ID == ID).GroupBy (x => x.CursoGrade.ID)) {
-                listCursoGrade.Add (new CursoGradeDto (item.ToList ()));
-            }
-            return listCursoGrade;
+            var cursoGradeMaterias = this.db.CursoGradeMaterias.Include (i => i.CursoGrade).ThenInclude (i => i.Curso).Include (i => i.Materia).Where (x => x.CursoGrade.Curso.ID == ID).GroupBy (x => x.CursoGrade.ID).ToList ();
+            return cursoGradeMaterias.Select (x => new CursoGradeDto (x.ToList ().Select (y => y.CursoGrade).First (), x.ToList ())).ToList ();
         }
         public CursoGradeDto AddGrade (long ID, CursoGradeDto model) {
             var curso = this.db.Cursos.Find (ID);
             var cursoGrade = new CursoGrade (model, curso);
-            this.db.CursoGrades.Add (cursoGrade);
-            this.db.CursoGradeMaterias.AddRange (model.Materias.Select (x => new CursoGradeMateria () {
+            var cursoGradeMateria = model.Materias.Select (x => new CursoGradeMateria () {
                 ID = x.ID,
                     CursoGrade = cursoGrade,
                     Descricao = x.Descricao,
                     Materia = this.db.Materias.Find (x.Materia.ID)
-            }).ToList ());
+            });
+            this.db.CursoGrades.Add (cursoGrade);
+            this.db.CursoGradeMaterias.AddRange (cursoGradeMateria);
             this.db.SaveChanges ();
             return model;
         }
         public CursoGradeDto UpdateGrade (long ID, CursoGradeDto model) {
+
             var curso = this.db.Cursos.Find (ID);
             var cursoGrade = new CursoGrade (model, curso);
-            this.db.CursoGrades.Attach (cursoGrade);
-
-            var listMaterias = this.db.CursoGradeMaterias.Where (x => x.CursoGrade.ID == cursoGrade.ID).ToList ();
-
-            var listMateriasRemove = listMaterias.Where (x => !model.Materias.Select (y => y.ID).Contains (x.ID)).ToList ();
-            var listMateriasAdd = model.Materias.Where (x => !listMaterias.Select (y => y.ID).Contains (x.ID)).Select (x => new CursoGradeMateria () {
+            var materias = this.db.CursoGradeMaterias.Where (x => x.CursoGrade.ID == cursoGrade.ID).ToList ();
+            var materiasRemove = materias.Where (x => !model.Materias.Select (y => y.ID).Contains (x.ID)).ToList ();
+            var materiasAdd = model.Materias.Where (x => !materias.Select (y => y.ID).Contains (x.ID)).Select (x => new CursoGradeMateria () {
                 ID = x.ID,
                     CursoGrade = cursoGrade,
                     Descricao = x.Descricao,
                     Materia = this.db.Materias.Find (x.Materia.ID)
             }).ToList ();
 
-            this.db.CursoGradeMaterias.AddRange (listMateriasAdd);
-            this.db.CursoGradeMaterias.RemoveRange (listMateriasRemove);
+            this.db.CursoGrades.Attach (cursoGrade);
+            this.db.CursoGradeMaterias.AddRange (materiasAdd);
+            this.db.CursoGradeMaterias.RemoveRange (materiasRemove);
 
             this.db.SaveChanges ();
             return model;

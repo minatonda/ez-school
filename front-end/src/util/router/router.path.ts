@@ -37,7 +37,11 @@ export enum RouterPath {
 
     INSTITUICAO_CURSO = '/instituicao/:idInstituicao/curso',
     INSTITUICAO_CURSO_ADD = '/instituicao/:idInstituicao/curso/add',
-    INSTITUICAO_CURSO_UPD = '/instituicao/:idInstituicao/curso/:id/upd'
+    INSTITUICAO_CURSO_UPD = '/instituicao/:idInstituicao/curso/:id/upd',
+
+    INSTITUICAO_CURSO_OCORRENCIA = '/instituicao/:idInstituicao/curso/:idCurso/ocorrencia',
+    INSTITUICAO_CURSO_OCORRENCIA_ADD = '/instituicao/:idInstituicao/curso/:idCurso/ocorrencia/add',
+    INSTITUICAO_CURSO_OCORRENCIA_UPD = '/instituicao/:idInstituicao/curso/:idCurso/ocorrencia/:id/upd'
 
 }
 

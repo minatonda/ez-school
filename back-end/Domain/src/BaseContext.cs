@@ -1,12 +1,9 @@
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain
-{
-    public class BaseContext : DbContext
-    {
-        public BaseContext(DbContextOptions<BaseContext> options) : base(options)
-        {
+namespace Domain {
+    public class BaseContext : DbContext {
+        public BaseContext (DbContextOptions<BaseContext> options) : base (options) {
 
         }
 
@@ -25,6 +22,7 @@ namespace Domain
         public DbSet<InstituicaoCursoOcorrenciaMateria> InstituicaoCursoOcorrenciaMaterias { get; set; }
         public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoInstituicaoCategoria> InstituicaoInstituicaoCategorias { get; set; }
+        public DbSet<InstituicaoCursoPeriodo> InstituicaoCursoPeriodos { get; set; }
 
     }
 }

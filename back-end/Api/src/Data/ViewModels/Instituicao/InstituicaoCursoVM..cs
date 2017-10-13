@@ -11,6 +11,7 @@ namespace Api.Data.ViewModels {
     public class InstituicaoCursoVM : SelectVM {
         public CursoVM Curso { get; set; }
         public CursoGradeVM CursoGrade { get; set; }
+        public List<InstituicaoCursoPeriodoVM> Periodos { get; set; }
 
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }

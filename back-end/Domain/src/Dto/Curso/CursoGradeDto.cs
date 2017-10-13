@@ -2,27 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Models;
-using Domain.Models.Interface;
 using System.Linq;
 using System.Linq.Expressions;
+using Domain.Models;
+using Domain.Models.Interface;
 
-namespace Domain.Dto
-{
-    public class CursoGradeDto
-    {
 
-        public CursoGradeDto(List<CursoGradeMateria> CursoGradeMaterias)
-        {
-            this.ID = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().ID;
-            this.Descricao = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().Descricao;
-            this.DataCriacao = CursoGradeMaterias.Select(x => x.CursoGrade).FirstOrDefault().DataCriacao;
-            this.Materias = CursoGradeMaterias.Select(x => new CursoGradeMateriaDto(x)).ToList();
+namespace Domain.Dto {
+    public class CursoGradeDto {
+
+        public CursoGradeDto (CursoGrade cursoGrade, List<CursoGradeMateria> cursoGradeMaterias) {
+            this.ID = cursoGrade.ID;
+            this.Descricao = cursoGrade.Descricao;
+            this.DataCriacao = cursoGrade.DataCriacao;
+
+            if (cursoGradeMaterias != null) {
+                this.Materias = cursoGradeMaterias.Select (x => new CursoGradeMateriaDto (x)).ToList ();
+            }
         }
 
-        public CursoGradeDto()
-        {
-            this.Materias = new List<CursoGradeMateriaDto>();
+        public CursoGradeDto () {
+            this.Materias = new List<CursoGradeMateriaDto> ();
         }
 
         public long ID { get; set; }

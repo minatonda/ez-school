@@ -140,7 +140,7 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async addCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCurso, notify?: boolean) {
+    public static async addCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCursoOcorrencia, notify?: boolean) {
         try {
             let result = await this.put(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia/add`, model) as InstituicaoCursoOcorrencia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -152,7 +152,7 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async updateCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCurso, notify?: boolean) {
+    public static async updateCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCursoOcorrencia, notify?: boolean) {
         try {
             let result = await this.post(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia/update`, model) as InstituicaoCursoOcorrencia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
@@ -164,7 +164,7 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async disableCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCurso, notify?: boolean) {
+    public static async disableCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCursoOcorrencia, notify?: boolean) {
         try {
             let result = await this.post(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia/disable`, model) as InstituicaoCursoOcorrencia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);

@@ -1,19 +1,72 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <legend>{{alias}}</legend>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-12 col-md-4 form-group">
-                <selector v-model="model.curso" v-bind:itens="getCursos()" placeholder="Curso" label="label" v-on:change="onCursoChanged"></selector>
+                <div class="card mnh-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>{{alias}}</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <label class="control-label">Curso</label>
+                                <selector v-model="model.curso" v-bind:itens="cursos" placeholder="Curso" label="label" v-on:change="onCursoChanged"></selector>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label class="control-label">Grade</label>
+                                <selector v-model="model.cursoGrade" v-bind:itens="cursoGrades" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
+                            </div>
+                            <div class="col-12 form-group">
+                                <label class="control-label">Data de Início</label>
+                                <input class="form-control" type="date" v-model="model.dataInicio" placeholder="Data de Início">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-12 col-md-4 form-group">
-                <selector v-model="model.cursoGrade" v-bind:itens="getCursoGrades()" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
-            </div>
-            <div class="col-12 col-md-4 form-group">
-                <input class="form-control" type="date" v-model="model.dataInicio" placeholder="Data de Início">
+            <div class="col-12 col-md-8 form-group">
+                <div class="card mnh-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Períodos</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-2 form-group">
+                                <label class="control-label">Início</label>
+                                <input class="form-control" type="text" v-model="instituicaoCursoPeriodo.inicio" placeholder="Início hh:mm">
+                            </div>
+                            <div class="col-12 col-md-2 form-group">
+                                <label class="control-label">Fim</label>
+                                <input class="form-control" type="text" v-model="instituicaoCursoPeriodo.fim" placeholder="Fim hh:mm">
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label class="control-label invisible">Ocupar</label>
+                                <div class="btn-group d-flex" data-toggle="buttons">
+                                    <label class="btn btn-primary w-100" v-for="button in instituicaoButtons" v-bind:class="{'active':instituicaoCursoPeriodo[button.key]}">
+                                        <input type="checkbox" v-model="instituicaoCursoPeriodo[button.key]">{{button.label}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2 form-group">
+                                <label class="control-label invisible">Ocupar</label>
+                                <button class="btn btn-primary btn-block" v-on:click="addPeriodo(instituicaoCursoPeriodo)">
+                                    <i class="fa fa-plus"></i>
+                                    <span>Adicionar</span>
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <hr></hr>
+                            </div>
+                            <div class="col-12 form-group">
+                                <card-table-component v-bind:columns="getTablePeriodo().columns" v-bind:itens="getTablePeriodo().itens" v-bind:menu="getTablePeriodo().menu"></card-table-component>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

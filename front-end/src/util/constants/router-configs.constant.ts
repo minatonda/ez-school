@@ -17,6 +17,8 @@ import { AlunoManagementComponent } from '../../components/aluno/management/alun
 import { AlunoComponent } from '../../components/aluno/aluno';
 import { ProfessorComponent } from '../../components/professor/professor';
 import { ProfessorManagementComponent } from '../../components/professor/management/professor-management';
+import { InstituicaoCursoOcorrenciaComponent } from '../../components/instituicao-curso-ocorrencia/instituicao-curso-ocorrencia';
+import { InstituicaoCursoOcorrenciaManagementComponent } from '../../components/instituicao-curso-ocorrencia/management/instituicao-curso-ocorrencia-management';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
@@ -52,6 +54,10 @@ export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
 
     { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO, name: RouterPath.INSTITUICAO_CURSO, component: InstituicaoCursoComponent, alias: 'Instituição - Cursos' },
     { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_ADD, name: RouterPath.INSTITUICAO_CURSO_ADD, component: InstituicaoCursoManagementComponent, alias: 'Instituição Cursos - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_UPD, name: RouterPath.INSTITUICAO_CURSO_UPD, component: InstituicaoCursoManagementComponent, alias: 'Instituição Cursos - Atualizar' }
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_UPD, name: RouterPath.INSTITUICAO_CURSO_UPD, component: InstituicaoCursoManagementComponent, alias: 'Instituição Cursos - Atualizar' },
+
+    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, component: InstituicaoCursoOcorrenciaComponent, alias: 'Instituição - Curso - Ocorrencia' },
+    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Instituição Curso - Ocorrência - Adicionar' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Instituição Curso - Ocorrência- Atualizar' }
 
 ];

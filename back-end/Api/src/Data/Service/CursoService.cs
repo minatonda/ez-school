@@ -42,19 +42,19 @@ namespace Api.Data.Service
         
         public List<CursoGradeVM> AllGrade(long id)
         {
-            return this._cursoRepository.GetGrades(id).Select(x => CursoAdapter.ToViewModel(x, true)).ToList();
+            return this._cursoRepository.GetGrades(id).Select(x => CursoGradeAdapter.ToViewModel(x, true)).ToList();
         }
         public CursoGradeVM DetailGrade(long id, long idGrade)
         {
-            return CursoAdapter.ToViewModel(this._cursoRepository.GetGrade(id, idGrade), true);
+            return CursoGradeAdapter.ToViewModel(this._cursoRepository.GetGrade(id, idGrade), true);
         }
         public CursoGradeVM AddGrade(long id, CursoGradeVM model)
         {
-            return CursoAdapter.ToViewModel(this._cursoRepository.AddGrade(id, CursoAdapter.ToModel(model, true)), true);
+            return CursoGradeAdapter.ToViewModel(this._cursoRepository.AddGrade(id, CursoGradeAdapter.ToModel(model, true)), true);
         }
         public CursoGradeVM UpdateGrade(long id, CursoGradeVM model)
         {
-            return CursoAdapter.ToViewModel(this._cursoRepository.UpdateGrade(id, CursoAdapter.ToModel(model, true)), true);
+            return CursoGradeAdapter.ToViewModel(this._cursoRepository.UpdateGrade(id, CursoGradeAdapter.ToModel(model, true)), true);
         }
         public void DeleteGrade(long id, long idGrade)
         {
