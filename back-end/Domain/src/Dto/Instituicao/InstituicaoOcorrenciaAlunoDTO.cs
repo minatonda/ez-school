@@ -9,18 +9,18 @@ using System.Linq.Expressions;
 
 namespace Domain.Dto
 {
-    public class InstituicaoCursoOcorrenciaMateriaDto
+    public class InstituicaoCursoOcorrenciaAlunoDto
     {
 
-        public InstituicaoCursoOcorrenciaMateriaDto()
+        public InstituicaoCursoOcorrenciaAlunoDto()
         {
 
         }
 
         public long ID { get; set; }
-        public Materia Materia { get; set; }
-        public Professor Professor { get; set; }
+        public Aluno Aluno { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
+
     }
 }

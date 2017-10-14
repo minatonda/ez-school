@@ -6,6 +6,7 @@ import { RouterManager } from '../../util/router/router.manager';
 import { RouterPath } from '../../util/router/router.path';
 import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
 import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso';
+import * as moment from 'moment';
 
 @Component({
     template: require('./instituicao-curso.html')
@@ -15,7 +16,7 @@ export class InstituicaoCursoComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array<InstituicaoCurso> = [];
+    lista: Array < InstituicaoCurso > = [];
 
     constructor() {
         super();
@@ -24,7 +25,7 @@ export class InstituicaoCursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.allCurso(this.$route.params.idInstituicao);
+            this.lista = await InstituicaoFactory.allCurso(this.$route.params.id);
         }
         catch (e) {
 
@@ -49,16 +50,24 @@ export class InstituicaoCursoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_UPD, { id: item.id, idInstituicao: this.$route.params.idInstituicao }),
+                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_UPD, {
+                    id: this.$route.params.id,
+                    idCurso: item.curso.id,
+                    dataInicio: moment(item.dataInicio).format('DD-MM-YYYY')
+                }),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => this.remove(item),
-                (item) => 'Remover',
-                (item) => ['fa', 'fa-times'],
-                (item) => ['btn-danger']
+                (item: InstituicaoCurso) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_OCORRENCIA, {
+                    id: this.$route.params.id,
+                    idCurso: item.curso.id,
+                    dataInicio: moment(item.dataInicio).format('DD-MM-YYYY')
+                }),
+                (item) => 'Gerenciar Ocorrências',
+                (item) => ['fa', 'fa-edit'],
+                (item) => ['btn-primary']
             )
         ];
         return menu;

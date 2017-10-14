@@ -16,7 +16,7 @@ namespace Api.Data.ViewModels {
 
             vm.ID = model.ID.ToString ();
             vm.Coordenador = ProfessorAdapter.ToViewModel (model.Coordenador, false);
-            vm.Alunos = model.Alunos.Select (x => AlunoAdapter.ToViewModel (x, false)).ToList ();
+            //vm.Alunos = model.Alunos.Select (x => AlunoAdapter.ToViewModel (x, false)).ToList ();
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
             
@@ -30,7 +30,7 @@ namespace Api.Data.ViewModels {
             }
 
             model.Coordenador = ProfessorAdapter.ToModel (vm.Coordenador, false);
-            model.Alunos = vm.Alunos.Select (x => AlunoAdapter.ToModel (x, false)).ToList ();
+            //model.Alunos = vm.Alunos.Select (x => AlunoAdapter.ToModel (x, false)).ToList ();
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
 

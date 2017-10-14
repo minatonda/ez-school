@@ -5,11 +5,11 @@
         "js": {
             //"type": ["javascript", "json", "typescript", "csharp"],
             //"filename": [".jshintrc", ".jsbeautifyrc"],
-            "ext": ["js", "json", "ts", "cs"]
+            "ext": ["js", "json", "ts"]
             // ^^ to set extensions to be beautified using the javascript beautifier
         },
-        "css": ["css", "scss"]
-        //"html": ["htm", "html"]
+        "css": ["css", "scss"],
+        "html": ["htm", "html"]
         // ^^ providing just an array sets the VS Code file type
     }
 }

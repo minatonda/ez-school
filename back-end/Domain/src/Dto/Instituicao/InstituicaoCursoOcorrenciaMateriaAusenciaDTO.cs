@@ -18,7 +18,7 @@ namespace Domain.Dto
         }
 
         public long ID { get; set; }
-        public InstituicaoCursoOcorrenciaMateriaDto InstituicaoCursoOcorrenciaMateria { get; set; }
+        //public InstituicaoCursoOcorrenciaMateriaDto InstituicaoCursoOcorrenciaMateria { get; set; }
         public Aluno Aluno { get; set; }
         public Professor Professor { get; set; }
         public DateTime Data { get; set; }

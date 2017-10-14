@@ -15,7 +15,7 @@ export class InstituicaoComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array<Instituicao> = [];
+    lista: Array < Instituicao > = [];
 
     constructor() {
         super();
@@ -55,7 +55,7 @@ export class InstituicaoComponent extends Vue {
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO, { idInstituicao: item.id }),
+                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO, { id: item.id }),
                 (item) => 'Gerenciar Cursos',
                 (item) => ['fa', 'fa-book'],
                 (item) => ['btn-primary']

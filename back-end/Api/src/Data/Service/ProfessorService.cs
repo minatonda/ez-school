@@ -8,37 +8,29 @@ using Domain.Models.Interface;
 using Domain.Repositories;
 using Api.Data.ViewModels;
 
-namespace Api.Data.Service
-{
-    public class ProfessorService
-    {
+namespace Api.Data.Service {
+    public class ProfessorService {
 
         private ProfessorRepository _professorRepository;
 
-        public ProfessorService(ProfessorRepository professorRepository)
-        {
+        public ProfessorService(ProfessorRepository professorRepository) {
             this._professorRepository = professorRepository;
         }
-        public List<ProfessorVM> All()
-        {
+        public List < ProfessorVM > All() {
             return this._professorRepository.GetAll(true).Select(x => ProfessorAdapter.ToViewModel(x, true)).ToList();
         }
-        public ProfessorVM Detail(string id)
-        {
+        public ProfessorVM Detail(string id) {
             return ProfessorAdapter.ToViewModel(this._professorRepository.Get(id), true);
         }
-        public ProfessorVM Add(ProfessorVM viewModel)
-        {
+        public ProfessorVM Add(ProfessorVM viewModel) {
             var model = ProfessorAdapter.ToModel(viewModel, true);
             return ProfessorAdapter.ToViewModel(this._professorRepository.Add(model), true);
         }
-        public ProfessorVM Update(ProfessorVM viewModel)
-        {
+        public ProfessorVM Update(ProfessorVM viewModel) {
             var model = ProfessorAdapter.ToModel(viewModel, true);
             return ProfessorAdapter.ToViewModel(this._professorRepository.Update(model), true);
         }
-        public void Disable(long id)
-        {
+        public void Disable(long id) {
             this._professorRepository.Disable(id);
         }
 

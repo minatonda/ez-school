@@ -8,6 +8,8 @@ import { InstituicaoFactory } from '../../../util/factory/instituicao/instituica
 import { Curso } from '../../../util/factory/curso/curso';
 import { CursoGrade } from '../../../util/factory/curso/curso-grade';
 import { CursoFactory } from '../../../util/factory/curso/curso.factory';
+import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
+import { Professor } from '../../../util/factory/professor/professor';
 
 @Component({
     template: require('./instituicao-curso-ocorrencia-management.html')
@@ -20,11 +22,8 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     operation: RouterPathType;
 
     model: InstituicaoCursoOcorrencia = new InstituicaoCursoOcorrencia();
-
-    clearCursoGrade = false;
-
-    cursos: Array<Curso> = new Array<Curso>();
-    cursoGrades: Array<CursoGrade> = new Array<CursoGrade>();
+    professores: Array < Professor > = new Array < Professor > ();
+    periodos: Array < InstituicaoCursoPeriodo > = new Array < InstituicaoCursoPeriodo > ();
 
     constructor() {
         super();
@@ -37,7 +36,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.cursos = await CursoFactory.all();
+            this.periodos = await InstituicaoFactory.allPeriodos(this.$route.params.idInstituicao, this.$route.params.idCurso, this.$route.params.dataInicio);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }
@@ -50,38 +49,20 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         }
     }
 
-
-    public getCursos() {
-        return this.cursos;
-    }
-
-    public getCursoGrades() {
-        return this.cursoGrades;
-    }
-
-    public async onCursoChanged(curso) {
-        this.clearCursoGrade = true;
-        setImmediate(() => { this.clearCursoGrade = false; });
-        if (curso) {
-            this.cursoGrades = await CursoFactory.allGrade(curso.id);
-        }
-        else {
-            this.cursoGrades = [];
-        }
-    }
-
     async save() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
-                case (RouterPathType.add): {
-                    await InstituicaoFactory.addCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idCurso, this.model, true);
-                    break;
-                }
-                case (RouterPathType.upd): {
-                    await InstituicaoFactory.updateCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idCurso, this.model, true);
-                    break;
-                }
+                case (RouterPathType.add):
+                    {
+                        await InstituicaoFactory.addCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idCurso, this.$route.params.dataInicio, this.model, true);
+                        break;
+                    }
+                case (RouterPathType.upd):
+                    {
+                        // await InstituicaoFactory.updateCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idCurso, this.$route.params.dataInicio, this.model, true);
+                        break;
+                    }
             }
         }
         catch (e) {

@@ -7,13 +7,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4 form-group">
-                <selector v-model="model.curso" v-bind:itens="getCursos()" placeholder="Curso" label="label" v-on:change="onCursoChanged"></selector>
-            </div>
-            <div class="col-12 col-md-4 form-group">
-                <selector v-model="model.cursoGrade" v-bind:itens="getCursoGrades()" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
-            </div>
-            <div class="col-12 col-md-4 form-group">
-                <input class="form-control" type="date" v-model="model.dataInicio" placeholder="Data de Início">
+                <label class="control-label">Periodo</label>
+                <selector v-model="model.periodo" v-bind:itens="periodos" placeholder="Periodo" label="label"></selector>
             </div>
         </div>
         <div class="row">

@@ -53,7 +53,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             this.cursos = await CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
+                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio, true);
             }
         }
         catch (e) {
@@ -112,12 +112,12 @@ export class InstituicaoCursoManagementComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await InstituicaoFactory.addCurso(this.$route.params.idInstituicao, this.model, true);
+                        await InstituicaoFactory.addCurso(this.$route.params.id, this.model, true);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await InstituicaoFactory.renewCurso(this.$route.params.idInstituicao, this.model, true);
+                        await InstituicaoFactory.renewCurso(this.$route.params.id, this.model, true);
                         break;
                     }
             }
