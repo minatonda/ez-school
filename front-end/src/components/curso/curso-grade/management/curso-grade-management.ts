@@ -8,6 +8,14 @@ import { CursoGrade } from '../../../../util/factory/curso/curso-grade';
 import { Materia } from '../../../../util/factory/materia/materia';
 import { CursoGradeMateria } from '../../../../util/factory/curso/curso-grade-materia';
 
+interface UI {
+    grades: Array < CursoGrade > ;
+    materias: Array < Materia > ;
+    cursoGradeMateria: CursoGradeMateria;
+    action: string;
+    tab: string;
+}
+
 @Component({
     template: require('./curso-grade-management.html')
 })
@@ -18,12 +26,15 @@ export class CursoGradeManagementComponent extends Vue {
 
     model: CursoGrade = undefined;
 
-    grades: Array<CursoGrade> = new Array<CursoGrade>();
-    materias: Array<Materia> = new Array<Materia>();
-    cursoGradeMateria: CursoGradeMateria = new CursoGradeMateria();
+    ui: UI = {
+        grades: undefined,
+        materias: undefined,
+        cursoGradeMateria: new CursoGradeMateria(),
+        action: 'list',
+        tab: 'list'
+    };
 
-    action: string = 'list';
-    tab: string = 'list';
+
 
     constructor() {
         super();
@@ -34,17 +45,17 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public setAction(action) {
-        this.action = action;
+        this.ui.action = action;
     }
     public isAction(action) {
-        return this.action === action;
+        return this.ui.action === action;
     }
 
     public setTab(tab) {
-        this.tab = tab;
+        this.ui.tab = tab;
     }
     public isTab(tab) {
-        return this.tab === tab;
+        return this.ui.tab === tab;
     }
 
     public enableAdd() {
@@ -66,8 +77,8 @@ export class CursoGradeManagementComponent extends Vue {
 
     async mounted() {
         try {
-            this.materias = await MateriaFactory.all();
-            this.grades = await CursoFactory.allGrade(this.curso.id);
+            this.ui.materias = await MateriaFactory.all();
+            this.ui.grades = await CursoFactory.allGrade(this.curso.id);
         }
         catch (e) {
 
@@ -75,10 +86,6 @@ export class CursoGradeManagementComponent extends Vue {
         finally {
 
         }
-    }
-
-    public getMaterias() {
-        return this.materias;
     }
 
     public getColumnsGrade() {
@@ -89,7 +96,7 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public getItensGrade() {
-        return this.grades;
+        return this.ui.grades;
     }
 
     public getMenuGrade() {
@@ -143,15 +150,17 @@ export class CursoGradeManagementComponent extends Vue {
     }
 
     public async save() {
-        switch (this.action) {
-            case ('add'): {
-                CursoFactory.addGrade(this.curso.id, this.model);
-                break;
-            }
-            case ('upd'): {
-                CursoFactory.updateGrade(this.curso.id, this.model);
-                break;
-            }
+        switch (this.ui.action) {
+            case ('add'):
+                {
+                    CursoFactory.addGrade(this.curso.id, this.model);
+                    break;
+                }
+            case ('upd'):
+                {
+                    CursoFactory.updateGrade(this.curso.id, this.model);
+                    break;
+                }
         }
 
     }

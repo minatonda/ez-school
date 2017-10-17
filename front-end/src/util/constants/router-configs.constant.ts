@@ -13,51 +13,42 @@ import { InstituicaoCategoriaManagementComponent } from '../../components/instit
 import { RouterConfig, RouterPathType, RouterPath } from '../router/router.path';
 import { InstituicaoCursoComponent } from '../../components/instituicao-curso/instituicao-curso';
 import { InstituicaoCursoManagementComponent } from '../../components/instituicao-curso/management/instituicao-curso-management';
-import { AlunoManagementComponent } from '../../components/aluno/management/aluno-management';
-import { AlunoComponent } from '../../components/aluno/aluno';
-import { ProfessorComponent } from '../../components/professor/professor';
-import { ProfessorManagementComponent } from '../../components/professor/management/professor-management';
 import { InstituicaoCursoOcorrenciaComponent } from '../../components/instituicao-curso-ocorrencia/instituicao-curso-ocorrencia';
 import { InstituicaoCursoOcorrenciaManagementComponent } from '../../components/instituicao-curso-ocorrencia/management/instituicao-curso-ocorrencia-management';
+import { UsuarioAlunoComponent } from '../../components/usuario/aluno/usuario-aluno';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.USUARIO, name: RouterPath.USUARIO, component: UsuarioComponent, alias: 'Usuários' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.USUARIO_ADD, name: RouterPath.USUARIO_ADD, component: UsuarioManagementComponent, alias: 'Usuário - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.USUARIO_UPD, name: RouterPath.USUARIO_UPD, component: UsuarioManagementComponent, alias: 'Usuário - Atualizar' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.USUARIO_ADD, name: RouterPath.USUARIO_ADD, component: UsuarioManagementComponent, alias: 'Usuário' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.USUARIO_UPD, name: RouterPath.USUARIO_UPD, component: UsuarioManagementComponent, alias: 'Usuário' },
+    { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_ALUNO, name: RouterPath.USUARIO_ALUNO, component: UsuarioAlunoComponent, alias: 'Aluno' },
+    { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_PROFESSOR, name: RouterPath.USUARIO_PROFESSOR, component: UsuarioAlunoComponent, alias: 'Professor' },
     { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_AUTENTICACAO, name: RouterPath.USUARIO_AUTENTICACAO, component: UsuarioAutenticacaoComponent, alias: 'Autenticação' },
 
-    { menu: true, type: RouterPathType.list, path: RouterPath.ALUNO, name: RouterPath.ALUNO, component: AlunoComponent, alias: 'Alunos' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.ALUNO_ADD, name: RouterPath.ALUNO_ADD, component: AlunoManagementComponent, alias: 'Aluno - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.ALUNO_UPD, name: RouterPath.ALUNO_UPD, component: AlunoManagementComponent, alias: 'Aluno - Atualizar' },
-
-    { menu: true, type: RouterPathType.list, path: RouterPath.PROFESSOR, name: RouterPath.PROFESSOR, component: ProfessorComponent, alias: 'Professores' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.PROFESSOR_ADD, name: RouterPath.PROFESSOR_ADD, component: ProfessorManagementComponent, alias: 'Professor - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.PROFESSOR_UPD, name: RouterPath.PROFESSOR_UPD, component: ProfessorManagementComponent, alias: 'Professor - Atualizar' },
-
     { menu: true, type: RouterPathType.list, path: RouterPath.CURSO, name: RouterPath.CURSO, component: CursoComponent, alias: 'Cursos' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.CURSO_ADD, name: RouterPath.CURSO_ADD, component: CursoManagementComponent, alias: 'Curso - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.CURSO_UPD, name: RouterPath.CURSO_UPD, component: CursoManagementComponent, alias: 'Curso - Atualizar' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.CURSO_ADD, name: RouterPath.CURSO_ADD, component: CursoManagementComponent, alias: 'Curso' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.CURSO_UPD, name: RouterPath.CURSO_UPD, component: CursoManagementComponent, alias: 'Curso' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.MATERIA, name: RouterPath.MATERIA, component: MateriaComponent, alias: 'Materias' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.MATERIA_ADD, name: RouterPath.MATERIA_ADD, component: MateriaManagementComponent, alias: 'Materia - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.MATERIA_UPD, name: RouterPath.MATERIA_UPD, component: MateriaManagementComponent, alias: 'Materia - Atualizar' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.MATERIA_ADD, name: RouterPath.MATERIA_ADD, component: MateriaManagementComponent, alias: 'Materia' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.MATERIA_UPD, name: RouterPath.MATERIA_UPD, component: MateriaManagementComponent, alias: 'Materia' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.INSTITUICAO, name: RouterPath.INSTITUICAO, component: InstituicaoComponent, alias: 'Instituições' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.INSTITUICAO_ADD, name: RouterPath.INSTITUICAO_ADD, component: InstituicaoManagementComponent, alias: 'Instituição - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_UPD, name: RouterPath.INSTITUICAO_UPD, component: InstituicaoManagementComponent, alias: 'Instituição - Atualizar' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.INSTITUICAO_ADD, name: RouterPath.INSTITUICAO_ADD, component: InstituicaoManagementComponent, alias: 'Instituição' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_UPD, name: RouterPath.INSTITUICAO_UPD, component: InstituicaoManagementComponent, alias: 'Instituição' },
 
-    { menu: true, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CATEGORIA, name: RouterPath.INSTITUICAO_CATEGORIA, component: InstituicaoCategoriaComponent, alias: 'Instituição - Categorias' },
-    { menu: true, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CATEGORIA_ADD, name: RouterPath.INSTITUICAO_CATEGORIA_ADD, component: InstituicaoCategoriaManagementComponent, alias: 'Instituição Categoria - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CATEGORIA_UPD, name: RouterPath.INSTITUICAO_CATEGORIA_UPD, component: InstituicaoCategoriaManagementComponent, alias: 'Instituição Categoria - Atualizar' },
+    { menu: true, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CATEGORIA, name: RouterPath.INSTITUICAO_CATEGORIA, component: InstituicaoCategoriaComponent, alias: 'Categorias' },
+    { menu: true, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CATEGORIA_ADD, name: RouterPath.INSTITUICAO_CATEGORIA_ADD, component: InstituicaoCategoriaManagementComponent, alias: 'Categoria' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CATEGORIA_UPD, name: RouterPath.INSTITUICAO_CATEGORIA_UPD, component: InstituicaoCategoriaManagementComponent, alias: 'Categoria' },
 
-    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO, name: RouterPath.INSTITUICAO_CURSO, component: InstituicaoCursoComponent, alias: 'Instituição - Cursos' },
-    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_ADD, name: RouterPath.INSTITUICAO_CURSO_ADD, component: InstituicaoCursoManagementComponent, alias: 'Instituição Cursos - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_UPD, name: RouterPath.INSTITUICAO_CURSO_UPD, component: InstituicaoCursoManagementComponent, alias: 'Instituição Cursos - Atualizar' },
+    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO, name: RouterPath.INSTITUICAO_CURSO, component: InstituicaoCursoComponent, alias: 'Cursos por Instituição' },
+    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_ADD, name: RouterPath.INSTITUICAO_CURSO_ADD, component: InstituicaoCursoManagementComponent, alias: 'Curso por Instituição' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_UPD, name: RouterPath.INSTITUICAO_CURSO_UPD, component: InstituicaoCursoManagementComponent, alias: 'Curso por Instituição' },
 
-    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, component: InstituicaoCursoOcorrenciaComponent, alias: 'Instituição - Curso - Ocorrencia' },
-    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Instituição Curso - Ocorrência - Adicionar' },
-    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Instituição Curso - Ocorrência- Atualizar' }
+    { menu: false, type: RouterPathType.list, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA, component: InstituicaoCursoOcorrenciaComponent, alias: 'Ocorrência de Cursos' },
+    { menu: false, type: RouterPathType.add, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_ADD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Ocorrência de Curso' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Ocorrência de Curso' }
 
 ];

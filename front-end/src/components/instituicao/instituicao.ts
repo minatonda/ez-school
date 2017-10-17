@@ -7,6 +7,10 @@ import { RouterPath } from '../../util/router/router.path';
 import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
 import { Instituicao } from '../../util/factory/instituicao/instituicao';
 
+interface UI {
+    lista: Array < Instituicao > ;
+}
+
 @Component({
     template: require('./instituicao.html')
 })
@@ -15,7 +19,9 @@ export class InstituicaoComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array < Instituicao > = [];
+    ui: UI = {
+        lista: undefined
+    };
 
     constructor() {
         super();
@@ -24,7 +30,7 @@ export class InstituicaoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.all();
+            this.ui.lista = await InstituicaoFactory.all();
         }
         catch (e) {
 
@@ -42,7 +48,7 @@ export class InstituicaoComponent extends Vue {
     }
 
     public getItens() {
-        return this.lista;
+        return this.ui.lista;
     }
 
     public getMenu() {

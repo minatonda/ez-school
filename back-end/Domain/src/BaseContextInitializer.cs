@@ -1,42 +1,48 @@
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using Domain.Models;
-    using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-    namespace Domain {
-        public static class BaseContextInitializer {
-            public static void Initialize (BaseContext context) {
-                var listUsuario = getBaseUsuarios ();
-                context.Usuarios.AddRange (listUsuario);
+namespace Domain {
+    public static class BaseContextInitializer {
+        public static void Initialize(BaseContext context) {
+            var listUsuario = getBaseUsuarios();
+            context.Usuarios.AddRange(listUsuario);
 
-                var listCurso = getBaseCursos ();
-                context.Cursos.AddRange (listCurso);
+            var listCurso = getBaseCursos();
+            context.Cursos.AddRange(listCurso);
 
-                var listMateria = getBaseMaterias ();
-                context.Materias.AddRange (listMateria);
+            var listMateria = getBaseMaterias();
+            context.Materias.AddRange(listMateria);
 
-                var listCursoGrade = getBaseCursoGrades (listCurso);
-                context.CursoGrades.AddRange (listCursoGrade);
+            var listCursoGrade = getBaseCursoGrades(listCurso);
+            context.CursoGrades.AddRange(listCursoGrade);
 
-                var listCursoGradeMateria = getBaseCursoGradeMaterias (listCursoGrade, listMateria);
-                context.CursoGradeMaterias.AddRange (listCursoGradeMateria);
+            var listCursoGradeMateria = getBaseCursoGradeMaterias(listCursoGrade, listMateria);
+            context.CursoGradeMaterias.AddRange(listCursoGradeMateria);
 
-                var listInstituicoes = getBaseInstituicoes ();
-                context.Instituicoes.AddRange (listInstituicoes);
+            var listInstituicoes = getBaseInstituicoes();
+            context.Instituicoes.AddRange(listInstituicoes);
 
-                var listAlunos = getBaseAlunos(listUsuario);
-                context.Alunos.AddRange(listAlunos);
+            var listAlunos = getBaseAlunos(listUsuario);
+            context.Alunos.AddRange(listAlunos);
 
-                var listProfessores = getBaseProfessores(listUsuario);
-                context.Professores.AddRange(listProfessores);
+            var listProfessores = getBaseProfessores(listUsuario);
+            context.Professores.AddRange(listProfessores);
 
-                context.SaveChanges ();
-            }
+            var listInstituicaoCurso = getBaseInstituicaoCursos(listCursoGrade, listInstituicoes);
+            context.InstituicaoCursos.AddRange(listInstituicaoCurso);
 
-            public static Instituicao[] getBaseInstituicoes () {
-                return new Instituicao[] {
+            var listInstituicaoCursoPeriodo = getBaseInstituicaoCursoPeriodos(listInstituicaoCurso);
+            context.InstituicaoCursoPeriodos.AddRange(listInstituicaoCursoPeriodo);
+
+            context.SaveChanges();
+        }
+
+        public static Instituicao[] getBaseInstituicoes() {
+            return new Instituicao[] {
                     new Instituicao () {
                             Nome = "ESCOLA TÉCNICA PROFESSOR EVERALDO PASSOS - ETEP",
                                 CNPJ = "4211213321321"
@@ -46,9 +52,9 @@
                                 CNPJ = "4211213321321"
                         },
                 };
-            }
-            public static Materia[] getBaseMaterias () {
-                return new Materia[] {
+        }
+        public static Materia[] getBaseMaterias() {
+            return new Materia[] {
                     new Materia () {
                             Nome = "Português Fundamental",
                                 Descricao = "Língua Portuguêsa"
@@ -74,9 +80,9 @@
                                 Descricao = "Sistemas Operacionais"
                         },
                 };
-            }
-            public static Curso[] getBaseCursos () {
-                return new Curso[] {
+        }
+        public static Curso[] getBaseCursos() {
+            return new Curso[] {
                     new Curso () {
                             Nome = "Técnologia em Análise e Desenvolvimento de Sistemas",
                                 Descricao = "Técnologia em Análise e Desenvolvimento de Sistemas"
@@ -94,10 +100,10 @@
                                 Descricao = "Ensino Médio"
                         }
                 };
-            }
+        }
 
-            public static CursoGrade[] getBaseCursoGrades (Curso[] cursos) {
-                return new CursoGrade[] {
+        public static CursoGrade[] getBaseCursoGrades(Curso[] cursos) {
+            return new CursoGrade[] {
                     new CursoGrade () {
                             Curso = cursos[0],
                                 DataCriacao = DateTime.Now,
@@ -109,10 +115,10 @@
                                 Descricao = "ETEP Faculdades"
                         }
                 };
-            }
+        }
 
-            public static CursoGradeMateria[] getBaseCursoGradeMaterias (CursoGrade[] cursoGrades, Materia[] materias) {
-                return new CursoGradeMateria[] {
+        public static CursoGradeMateria[] getBaseCursoGradeMaterias(CursoGrade[] cursoGrades, Materia[] materias) {
+            return new CursoGradeMateria[] {
                     new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[2]
@@ -146,68 +152,108 @@
                                 Materia = materias[2]
                         },
                 };
-            }
-            public static Usuario[] getBaseUsuarios () {
-                var carvalho = new Usuario () {
-                    Username = "dev",
-                    Password = "dev",
-                    Email = "dev@ezschool.com"
-                };
-                var carvalhoInfo = new UsuarioInfo () {
-                    ID = carvalho.ID,
-                    Nome = "Matheus Carvalho",
-                    DataNascimento = DateTime.ParseExact ("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
-                    CPF = "42187917835",
-                    RG = "421920816"
-                };
-                carvalho.UsuarioInfo = carvalhoInfo;
+        }
+        public static Usuario[] getBaseUsuarios() {
+            var carvalho = new Usuario() {
+                Username = "dev",
+                Password = "dev",
+                Email = "dev@ezschool.com"
+            };
+            var carvalhoInfo = new UsuarioInfo() {
+                ID = carvalho.ID,
+                Nome = "Matheus Carvalho",
+                DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                CPF = "42187917835",
+                RG = "421920816"
+            };
+            carvalho.UsuarioInfo = carvalhoInfo;
 
-                var marcal = new Usuario () {
-                    Username = "qa",
-                    Password = "qa",
-                    Email = "qa@ezschool.com"
-                };
-                var marcalInfo = new UsuarioInfo () {
-                    ID = marcal.ID,
-                    Nome = "Matheus Marçal",
-                    DataNascimento = DateTime.ParseExact ("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
-                    CPF = "42187917835",
-                    RG = "421920816"
-                };
-                marcal.UsuarioInfo = marcalInfo;
-                return new Usuario[] {
+            var marcal = new Usuario() {
+                Username = "qa",
+                Password = "qa",
+                Email = "qa@ezschool.com"
+            };
+            var marcalInfo = new UsuarioInfo() {
+                ID = marcal.ID,
+                Nome = "Matheus Marçal",
+                DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                CPF = "42187917835",
+                RG = "421920816"
+            };
+            marcal.UsuarioInfo = marcalInfo;
+            return new Usuario[] {
                     carvalho,
                     marcal
                 };
+        }
+
+        public static Aluno[] getBaseAlunos(Usuario[] usuarios) {
+            var alunos = new List<Aluno>();
+
+            foreach (var usuario in usuarios) {
+                var aluno = new Aluno();
+                aluno.ID = usuario.ID;
+                aluno.UsuarioInfo = usuario.UsuarioInfo;
+                alunos.Add(aluno);
             }
 
-            public static Aluno[] getBaseAlunos(Usuario[] usuarios){
-                var alunos = new List<Aluno>();
-
-                foreach(var usuario in usuarios){
-                    var aluno = new Aluno();
-                    aluno.ID = usuario.ID;
-                    aluno.UsuarioInfo = usuario.UsuarioInfo;
-                    alunos.Add(aluno);
-                }
-
-                return alunos.ToArray();
-
-            }
-
-            public static Professor[] getBaseProfessores(Usuario[] usuarios){
-                var professores = new List<Professor>();
-
-                foreach(var usuario in usuarios){
-                    var professor = new Professor();
-                    professor.ID = usuario.ID;
-                    professor.UsuarioInfo = usuario.UsuarioInfo;
-                    professores.Add(professor);
-                }
-
-                return professores.ToArray();
-
-            }
+            return alunos.ToArray();
 
         }
+
+        public static Professor[] getBaseProfessores(Usuario[] usuarios) {
+            var professores = new List<Professor>();
+
+            foreach (var usuario in usuarios) {
+                var professor = new Professor();
+                professor.ID = usuario.ID;
+                professor.UsuarioInfo = usuario.UsuarioInfo;
+                professores.Add(professor);
+            }
+
+            return professores.ToArray();
+
+        }
+
+        public static InstituicaoCurso[] getBaseInstituicaoCursos(CursoGrade[] cursoGrades, Instituicao[] instituicoes) {
+            return new InstituicaoCurso[]{
+                new InstituicaoCurso(){
+                    Curso = cursoGrades[0].Curso,
+                    CursoGrade = cursoGrades[0],
+                    DataInicio=DateTime.Now,
+                    Instituicao = instituicoes[0],
+                }
+            };
+        }
+
+        public static InstituicaoCursoPeriodo[] getBaseInstituicaoCursoPeriodos(InstituicaoCurso[] instituicaoCursos) {
+            return new InstituicaoCursoPeriodo[]{
+                new InstituicaoCursoPeriodo(){
+                    InstituicaoCurso=instituicaoCursos[0],
+                    Inicio="08:00",
+                    Fim="11:40",
+                    Dom=true,
+                    Sab=true,
+                    Sex=true,
+                    Qui=true,
+                    Qua=true,
+                    Ter=true,
+                    Seg=true
+                },
+                new InstituicaoCursoPeriodo(){
+                    InstituicaoCurso=instituicaoCursos[0],
+                    Inicio="13:00",
+                    Fim="18:40",
+                    Dom=true,
+                    Sab=true,
+                    Sex=true,
+                    Qui=true,
+                    Qua=true,
+                    Ter=true,
+                    Seg=true
+                }
+            };
+        }
+
     }
+}

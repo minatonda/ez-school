@@ -22,9 +22,7 @@ export class CursoManagementComponent extends Vue {
     operation: RouterPathType;
 
     model: Curso = new Curso();
-    grade: CursoGrade = null;
-    materias: Array<Materia> = new Array<Materia>();
-
+    
     constructor() {
         super();
     }
@@ -37,7 +35,6 @@ export class CursoManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.materias = await MateriaFactory.all();
                 this.model = await CursoFactory.detail(this.$route.params.id, true);
                 this.model.grades = await CursoFactory.allGrade(this.model.id);
             }
@@ -54,15 +51,17 @@ export class CursoManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
-                case (RouterPathType.add): {
-                    let result = await CursoFactory.add(this.model, true);
-                    RouterManager.redirectRoute(RouterPath.CURSO_UPD, result);
-                    break;
-                }
-                case (RouterPathType.upd): {
-                    await CursoFactory.update(this.model, true);
-                    break;
-                }
+                case (RouterPathType.add):
+                    {
+                        let result = await CursoFactory.add(this.model, true);
+                        RouterManager.redirectRoute(RouterPath.CURSO_UPD, result);
+                        break;
+                    }
+                case (RouterPathType.upd):
+                    {
+                        await CursoFactory.update(this.model, true);
+                        break;
+                    }
             }
         }
         catch (e) {

@@ -41,13 +41,13 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-md-5 form-group">
-                        <selector v-model="cursoGradeMateria.materia" v-bind:itens="getMaterias()" placeholder="Materia" label="label"></selector>
+                        <selector v-model="ui.cursoGradeMateria.materia" v-bind:itens="ui.materias" placeholder="Materia" label="label"></selector>
                     </div>
                     <div class="col-12 col-md-5 form-group">
-                        <input class="form-control" v-model="cursoGradeMateria.descricao">
+                        <input class="form-control" v-model="ui.cursoGradeMateria.descricao">
                     </div>
                     <div class="col-12 col-md-2 form-group">
-                        <button class="btn btn-primary" v-on:click="addMateria(cursoGradeMateria)">Add Materia</button>
+                        <button class="btn btn-primary" v-on:click="addMateria(ui.cursoGradeMateria)">Add Materia</button>
                     </div>
                 </div>
                 <div class="row">

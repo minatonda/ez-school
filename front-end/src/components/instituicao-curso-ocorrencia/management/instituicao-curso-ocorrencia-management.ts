@@ -11,6 +11,12 @@ import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
 import { Professor } from '../../../util/factory/professor/professor';
 
+interface UI {
+    periodo: InstituicaoCursoPeriodo;
+    professores: Array < Professor > ;
+    periodos: Array < InstituicaoCursoPeriodo > ;
+}
+
 @Component({
     template: require('./instituicao-curso-ocorrencia-management.html')
 })
@@ -21,9 +27,16 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     @Prop()
     operation: RouterPathType;
 
+    ui: UI = {
+        periodo: undefined,
+        professores: undefined,
+        periodos: undefined
+    };
+
+
+
     model: InstituicaoCursoOcorrencia = new InstituicaoCursoOcorrencia();
-    professores: Array < Professor > = new Array < Professor > ();
-    periodos: Array < InstituicaoCursoPeriodo > = new Array < InstituicaoCursoPeriodo > ();
+
 
     constructor() {
         super();
@@ -36,7 +49,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.periodos = await InstituicaoFactory.allPeriodos(this.$route.params.idInstituicao, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.periodos = await InstituicaoFactory.allPeriodos(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }

@@ -7,6 +7,10 @@ import { RouterPath } from '../../util/router/router.path';
 import { MateriaFactory } from '../../util/factory/materia/materia.factory';
 import { Materia } from '../../util/factory/materia/materia';
 
+interface UI {
+    lista: Array < Materia > ;
+}
+
 @Component({
     template: require('./materia.html')
 })
@@ -15,7 +19,9 @@ export class MateriaComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array<Materia> = [];
+    ui: UI = {
+        lista: undefined
+    };
 
     constructor() {
         super();
@@ -24,7 +30,7 @@ export class MateriaComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await MateriaFactory.all();
+            this.ui.lista = await MateriaFactory.all();
         }
         catch (e) {
 
@@ -42,7 +48,7 @@ export class MateriaComponent extends Vue {
     }
 
     public getItens() {
-        return this.lista;
+        return this.ui.lista;
     }
 
     public getMenu() {

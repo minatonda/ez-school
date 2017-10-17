@@ -8,6 +8,10 @@ import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.f
 import { InstituicaoCursoOcorrencia } from '../../util/factory/instituicao/instituicao-curso-ocorrencia';
 import * as moment from 'moment';
 
+interface UI {
+    lista: Array < InstituicaoCursoOcorrencia > ;
+}
+
 @Component({
     template: require('./instituicao-curso-ocorrencia.html')
 })
@@ -16,7 +20,9 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array < InstituicaoCursoOcorrencia > = [];
+    ui: UI = {
+        lista: undefined
+    };
 
     constructor() {
         super();
@@ -25,7 +31,7 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
         }
         catch (e) {
 
@@ -43,7 +49,7 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     }
 
     public getItens() {
-        return this.lista;
+        return this.ui.lista;
     }
 
     public getMenu() {

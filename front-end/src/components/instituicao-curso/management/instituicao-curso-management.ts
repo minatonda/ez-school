@@ -12,6 +12,13 @@ import { CardTableColumn, CardTableMenuEntry, CardTableMenu } from '../../common
 import { InstituicaoCursoOcorrencia } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
 
+interface UI {
+    cursos: Array < Curso > ;
+    cursoGrades: Array < CursoGrade > ;
+    instituicaoCursoPeriodo: InstituicaoCursoPeriodo;
+    instituicaoButtons: Array < any > ;
+}
+
 @Component({
     template: require('./instituicao-curso-management.html')
 })
@@ -26,19 +33,20 @@ export class InstituicaoCursoManagementComponent extends Vue {
 
     clearCursoGrade = false;
 
-    cursos: Array < Curso > = new Array < Curso > ();
-    cursoGrades: Array < CursoGrade > = new Array < CursoGrade > ();
-
-    instituicaoCursoPeriodo: InstituicaoCursoPeriodo = new InstituicaoCursoPeriodo();
-    instituicaoButtons = [
-        { label: 'Seg', key: 'seg' },
-        { label: 'Ter', key: 'ter' },
-        { label: 'Qua', key: 'qua' },
-        { label: 'Qui', key: 'qui' },
-        { label: 'Sex', key: 'sex' },
-        { label: 'Sab', key: 'sab' },
-        { label: 'Dom', key: 'dom' },
-    ];
+    ui: UI = {
+        cursos: undefined,
+        cursoGrades: undefined,
+        instituicaoCursoPeriodo: new InstituicaoCursoPeriodo(),
+        instituicaoButtons: [
+            { label: 'Seg', key: 'seg' },
+            { label: 'Ter', key: 'ter' },
+            { label: 'Qua', key: 'qua' },
+            { label: 'Qui', key: 'qui' },
+            { label: 'Sex', key: 'sex' },
+            { label: 'Sab', key: 'sab' },
+            { label: 'Dom', key: 'dom' },
+        ]
+    };
 
     constructor() {
         super();
@@ -51,7 +59,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.cursos = await CursoFactory.all();
+            this.ui.cursos = await CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
                 this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio, true);
             }
@@ -78,7 +86,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
             new CardTableColumn((item: InstituicaoCursoPeriodo) => item.inicio, () => 'Início'),
             new CardTableColumn((item: InstituicaoCursoPeriodo) => item.fim, () => 'Fim'),
             new CardTableColumn((item: InstituicaoCursoPeriodo) => {
-                return this.instituicaoButtons.map((button) => {
+                return this.ui.instituicaoButtons.map((button) => {
                     if (item[button.key]) {
                         return `<span class="badge badge-primary mx-2">${button.label}</span>`;
                     }
@@ -99,10 +107,10 @@ export class InstituicaoCursoManagementComponent extends Vue {
         this.clearCursoGrade = true;
         setImmediate(() => { this.clearCursoGrade = false; });
         if (curso) {
-            this.cursoGrades = await CursoFactory.allGrade(curso.id);
+            this.ui.cursoGrades = await CursoFactory.allGrade(curso.id);
         }
         else {
-            this.cursoGrades = [];
+            this.ui.cursoGrades = [];
         }
     }
 

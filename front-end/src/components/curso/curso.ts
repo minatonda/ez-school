@@ -7,6 +7,10 @@ import { RouterPath } from '../../util/router/router.path';
 import { Curso } from '../../util/factory/curso/curso';
 import { CursoFactory } from '../../util/factory/curso/curso.factory';
 
+interface UI {
+    lista: Array < Curso > ;
+}
+
 @Component({
     template: require('./curso.html')
 })
@@ -15,7 +19,9 @@ export class CursoComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array<Curso> = [];
+    ui: UI = {
+        lista: undefined
+    };
 
     constructor() {
         super();
@@ -24,7 +30,7 @@ export class CursoComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await CursoFactory.all();
+            this.ui.lista = await CursoFactory.all();
         }
         catch (e) {
 
@@ -42,7 +48,7 @@ export class CursoComponent extends Vue {
     }
 
     public getItens() {
-        return this.lista;
+        return this.ui.lista;
     }
 
     public getMenu() {

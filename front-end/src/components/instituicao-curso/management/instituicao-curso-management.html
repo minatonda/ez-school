@@ -12,11 +12,11 @@
                         <div class="row">
                             <div class="col-12 form-group">
                                 <label class="control-label">Curso</label>
-                                <selector v-model="model.curso" v-bind:itens="cursos" placeholder="Curso" label="label" v-on:change="onCursoChanged"></selector>
+                                <selector v-model="model.curso" v-bind:itens="ui.cursos" placeholder="Curso" label="label" v-on:change="onCursoChanged"></selector>
                             </div>
                             <div class="col-12 form-group">
                                 <label class="control-label">Grade</label>
-                                <selector v-model="model.cursoGrade" v-bind:itens="cursoGrades" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
+                                <selector v-model="model.cursoGrade" v-bind:itens="ui.cursoGrades" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
                             </div>
                             <div class="col-12 form-group">
                                 <label class="control-label">Data de Início</label>
@@ -37,23 +37,23 @@
                         <div class="row">
                             <div class="col-12 col-md-6 form-group">
                                 <label class="control-label">Início</label>
-                                <input class="form-control" type="text" v-model="instituicaoCursoPeriodo.inicio" placeholder="Início hh:mm">
+                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.inicio" placeholder="Início hh:mm">
                             </div>
                             <div class="col-12 col-md-6 form-group">
                                 <label class="control-label">Fim</label>
-                                <input class="form-control" type="text" v-model="instituicaoCursoPeriodo.fim" placeholder="Fim hh:mm">
+                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.fim" placeholder="Fim hh:mm">
                             </div>
                             <div class="col-12 col-md-9 form-group">
                                 <label class="control-label invisible">Ocupar</label>
                                 <div class="btn-group d-flex" data-toggle="buttons">
-                                    <label class="btn btn-primary w-100" v-for="button in instituicaoButtons" v-bind:class="{'active':instituicaoCursoPeriodo[button.key]}">
-                                        <input type="checkbox" v-model="instituicaoCursoPeriodo[button.key]">{{button.label}}
+                                    <label class="btn btn-primary w-100" v-for="button in ui.instituicaoButtons" v-bind:class="{'active':ui.instituicaoCursoPeriodo[button.key]}">
+                                        <input type="checkbox" v-model="ui.instituicaoCursoPeriodo[button.key]">{{button.label}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label invisible">Ocupar</label>
-                                <button class="btn btn-primary btn-block" v-on:click="addPeriodo(instituicaoCursoPeriodo)">
+                                <button class="btn btn-primary btn-block" v-on:click="addPeriodo(ui.instituicaoCursoPeriodo)">
                                     <i class="fa fa-plus"></i>
                                     <span>Adicionar</span>
                                 </button>

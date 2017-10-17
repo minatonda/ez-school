@@ -7,6 +7,10 @@ import { RouterPath } from '../../util/router/router.path';
 import { UsuarioFactory } from '../../util/factory/usuario/usuario.factory';
 import { Usuario } from '../../util/factory/usuario/usuario';
 
+interface UI {
+    lista: Array < Usuario > ;
+}
+
 @Component({
     template: require('./usuario.html')
 })
@@ -15,7 +19,9 @@ export class UsuarioComponent extends Vue {
     @Prop()
     alias: string;
 
-    lista: Array<Usuario> = [];
+    ui: UI = {
+        lista: undefined
+    };
 
     constructor() {
         super();
@@ -24,7 +30,7 @@ export class UsuarioComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.lista = await UsuarioFactory.all();
+            this.ui.lista = await UsuarioFactory.all();
         }
         catch (e) {
 
@@ -42,7 +48,7 @@ export class UsuarioComponent extends Vue {
     }
 
     public getItens() {
-        return this.lista;
+        return this.ui.lista;
     }
 
     public getMenu() {
@@ -51,6 +57,18 @@ export class UsuarioComponent extends Vue {
             new CardTableMenuEntry(
                 (item) => RouterManager.redirectRoute(RouterPath.USUARIO_UPD, item),
                 (item) => 'Atualizar',
+                (item) => ['fa', 'fa-edit'],
+                (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item) => RouterManager.redirectRoute(RouterPath.USUARIO_ALUNO, item),
+                (item) => 'Aluno',
+                (item) => ['fa', 'fa-edit'],
+                (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item) => RouterManager.redirectRoute(RouterPath.USUARIO_PROFESSOR, item),
+                (item) => 'Professor',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),

@@ -10,9 +10,9 @@ import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
 import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
 
 @Component({
-    template: require('./aluno-management.html')
+    template: require('./usuario-aluno.html')
 })
-export class AlunoManagementComponent extends Vue {
+export class UsuarioAlunoComponent extends Vue {
 
     @Prop()
     alias: string;
@@ -20,8 +20,6 @@ export class AlunoManagementComponent extends Vue {
     operation: RouterPathType;
 
     model: Aluno = new Aluno();
-    usuarioInfos: Array<UsuarioInfo> = new Array<UsuarioInfo>();
-
     constructor() {
         super();
     }
@@ -33,14 +31,17 @@ export class AlunoManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            let usuarios = await UsuarioFactory.all();
-            this.usuarioInfos = usuarios.map(x => x.usuarioInfo);
-            if (this.operation === RouterPathType.upd) {
-                this.model = await AlunoFactory.detail(this.$route.params.id, true);
-            }
+            this.model = await AlunoFactory.detail(this.$route.params.id);
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            try {
+                let usuario = await UsuarioFactory.detail(this.$route.params.id);
+                this.model = new Aluno();
+                this.model.usuarioInfo = usuario.usuarioInfo;
+            }
+            catch (e2) {
+                RouterManager.redirectRoutePrevious();
+            }
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -51,14 +52,16 @@ export class AlunoManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
-                case (RouterPathType.add): {
-                    await AlunoFactory.add(this.model, true);
-                    break;
-                }
-                case (RouterPathType.upd): {
-                    await AlunoFactory.update(this.model, true);
-                    break;
-                }
+                case (RouterPathType.add):
+                    {
+                        await AlunoFactory.add(this.model, true);
+                        break;
+                    }
+                case (RouterPathType.upd):
+                    {
+                        await AlunoFactory.update(this.model, true);
+                        break;
+                    }
             }
         }
         catch (e) {

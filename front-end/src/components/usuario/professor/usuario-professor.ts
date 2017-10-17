@@ -10,9 +10,9 @@ import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
 import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
 
 @Component({
-    template: require('./professor-management.html')
+    template: require('./usuario-professor.html')
 })
-export class ProfessorManagementComponent extends Vue {
+export class UsuarioProfessorComponent extends Vue {
 
     @Prop()
     alias: string;
@@ -20,8 +20,6 @@ export class ProfessorManagementComponent extends Vue {
     operation: RouterPathType;
 
     model: Professor = new Professor();
-    usuarioInfos: Array<UsuarioInfo> = new Array<UsuarioInfo>();
-
     constructor() {
         super();
     }
@@ -33,14 +31,17 @@ export class ProfessorManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            let usuarios = await UsuarioFactory.all();
-            this.usuarioInfos = usuarios.map(x => x.usuarioInfo);
-            if (this.operation === RouterPathType.upd) {
-                this.model = await ProfessorFactory.detail(this.$route.params.id, true);
-            }
+            this.model = await ProfessorFactory.detail(this.$route.params.id);
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            try {
+                let usuario = await UsuarioFactory.detail(this.$route.params.id);
+                this.model = new Professor();
+                this.model.usuarioInfo = usuario.usuarioInfo;
+            }
+            catch (e2) {
+                RouterManager.redirectRoutePrevious();
+            }
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -51,14 +52,16 @@ export class ProfessorManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
-                case (RouterPathType.add): {
-                    await ProfessorFactory.add(this.model, true);
-                    break;
-                }
-                case (RouterPathType.upd): {
-                    await ProfessorFactory.update(this.model, true);
-                    break;
-                }
+                case (RouterPathType.add):
+                    {
+                        await ProfessorFactory.add(this.model, true);
+                        break;
+                    }
+                case (RouterPathType.upd):
+                    {
+                        await ProfessorFactory.update(this.model, true);
+                        break;
+                    }
             }
         }
         catch (e) {
