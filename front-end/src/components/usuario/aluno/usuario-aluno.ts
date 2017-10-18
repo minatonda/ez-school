@@ -3,7 +3,6 @@ import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { RouterManager } from '../../../util/router/router.manager';
-import { AlunoFactory } from '../../../util/factory/aluno/aluno.factory';
 import { Aluno } from '../../../util/factory/aluno/aluno';
 import { Usuario } from '../../../util/factory/usuario/usuario';
 import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
@@ -31,17 +30,10 @@ export class UsuarioAlunoComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.model = await AlunoFactory.detail(this.$route.params.id);
+            this.model = await UsuarioFactory.detailAluno(this.$route.params.id);
         }
         catch (e) {
-            try {
-                let usuario = await UsuarioFactory.detail(this.$route.params.id);
-                this.model = new Aluno();
-                this.model.usuarioInfo = usuario.usuarioInfo;
-            }
-            catch (e2) {
-                RouterManager.redirectRoutePrevious();
-            }
+            RouterManager.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -51,18 +43,7 @@ export class UsuarioAlunoComponent extends Vue {
     async save() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            switch (this.operation) {
-                case (RouterPathType.add):
-                    {
-                        await AlunoFactory.add(this.model, true);
-                        break;
-                    }
-                case (RouterPathType.upd):
-                    {
-                        await AlunoFactory.update(this.model, true);
-                        break;
-                    }
-            }
+            UsuarioFactory.updateAluno(this.$route.params.id, this.model, true);
         }
         catch (e) {
 

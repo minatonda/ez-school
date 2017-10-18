@@ -59,7 +59,6 @@ namespace Api {
             services.AddTransient<CursoRepository, CursoRepository> ();
             services.AddTransient<MateriaRepository, MateriaRepository> ();
             services.AddTransient<ProfessorRepository, ProfessorRepository> ();
-            services.AddTransient<AlunoRepository, AlunoRepository> ();
             services.AddTransient<InstituicaoRepository, InstituicaoRepository> ();
             services.AddTransient<InstituicaoCategoriaRepository, InstituicaoCategoriaRepository> ();
             services.AddTransient<UsuarioRepository, UsuarioRepository> ();

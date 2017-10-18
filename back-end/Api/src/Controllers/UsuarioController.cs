@@ -39,5 +39,16 @@ namespace Api.Controllers
         {
             this.usuarioService.Disable(id);
         }
+        [HttpGet("{id}/aluno")]
+        public AlunoVM DetailAluno(string id)
+        {
+            return this.usuarioService.DetailAluno(id);
+        }
+        [HttpPost("{id}/aluno/update")]
+        public AlunoVM UpdateAluno([FromBody] AlunoVM viewModel)
+        {
+            return this.usuarioService.UpdateAluno(viewModel);
+        }
+
     }
 }
