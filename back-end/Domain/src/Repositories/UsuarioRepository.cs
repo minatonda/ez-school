@@ -21,9 +21,12 @@ namespace Domain.Repositories
         {
             model.UsuarioInfo.ID = model.ID;
             this.db.UsuariosInfo.Add(model.UsuarioInfo);
-            this.db.SaveChanges();
 
-            this.db.Attach(model.UsuarioInfo);
+            var aluno = new Aluno();
+            aluno.ID = model.ID;
+            aluno.UsuarioInfo = model.UsuarioInfo;
+            this.db.Alunos.Add(aluno);
+
             this.db.Usuarios.Add(model);
             this.db.SaveChanges();
             return model;
@@ -60,6 +63,16 @@ namespace Domain.Repositories
         public UsuarioInfo GetInfo(string ID) => this.db.UsuariosInfo.Find(ID);
         public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
         public List<Usuario> GetAll(bool? ativo) => this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
+        public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+
+        public Aluno UpdateAluno(Aluno model)
+        {
+            var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
+
+            this.db.Alunos.Update(aluno);
+            return aluno;
+        }
+
 
         public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions)
         {

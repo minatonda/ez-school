@@ -31,6 +31,13 @@ namespace Api.Data.Service {
         public void Disable(string id) {
             this._usuarioRepository.Disable(id);
         }
+        public AlunoVM DetailAluno(string id) {
+            return AlunoAdapter.ToViewModel(this._usuarioRepository.GetAluno(id), true);
+        }
+        public AlunoVM UpdateAluno(AlunoVM viewModel) {
+            var model = AlunoAdapter.ToModel(viewModel, true);
+            return AlunoAdapter.ToViewModel(this._usuarioRepository.UpdateAluno(model), true);
+        }
 
     }
 }
