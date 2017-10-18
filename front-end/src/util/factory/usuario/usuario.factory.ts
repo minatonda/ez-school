@@ -2,7 +2,7 @@ import { Factory } from '../factory';
 import { Autenticacao } from './autenticacao';
 import { Usuario } from './usuario';
 import { Notify, MESSAGES, NOTIFY_TYPE } from '../../notify/notify';
-import { Aluno } from '../aluno/aluno';
+import { Aluno } from './aluno';
 
 export class UsuarioFactory extends Factory {
 

@@ -3,7 +3,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import { RouterPathType } from '../../../util/router/router.path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { RouterManager } from '../../../util/router/router.manager';
-import { Aluno } from '../../../util/factory/aluno/aluno';
+import { Aluno } from '../../../util/factory/usuario/aluno';
 import { Usuario } from '../../../util/factory/usuario/usuario';
 import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
 import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
@@ -43,7 +43,7 @@ export class UsuarioAlunoComponent extends Vue {
     async save() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            UsuarioFactory.updateAluno(this.$route.params.id, this.model, true);
+            await UsuarioFactory.updateAluno(this.$route.params.id, this.model, true);
         }
         catch (e) {
 
