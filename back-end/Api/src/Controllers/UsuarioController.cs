@@ -49,6 +49,16 @@ namespace Api.Controllers
         {
             return this.usuarioService.UpdateAluno(viewModel);
         }
+        [HttpGet("{id}/professor")]
+        public ProfessorVM DetailProfessor(string id)
+        {
+            return this.usuarioService.DetailProfessor(id);
+        }
+        [HttpPost("{id}/professor/update")]
+        public ProfessorVM UpdateProfessor([FromBody] ProfessorVM viewModel)
+        {
+            return this.usuarioService.UpdateProfessor(viewModel);
+        }
 
     }
 }

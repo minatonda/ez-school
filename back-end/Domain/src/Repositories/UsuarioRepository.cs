@@ -27,6 +27,11 @@ namespace Domain.Repositories
             aluno.UsuarioInfo = model.UsuarioInfo;
             this.db.Alunos.Add(aluno);
 
+            var professor = new Professor();
+            professor.ID = model.ID;
+            aluno.UsuarioInfo = model.UsuarioInfo;
+            this.db.Professores.Add(professor);
+
             this.db.Usuarios.Add(model);
             this.db.SaveChanges();
             return model;
@@ -71,6 +76,16 @@ namespace Domain.Repositories
 
             this.db.Alunos.Update(aluno);
             return aluno;
+        }
+
+        public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+
+        public Professor UpdateProfessor(Professor model)
+        {
+            var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
+
+            this.db.Professores.Update(professor);
+            return professor;
         }
 
 

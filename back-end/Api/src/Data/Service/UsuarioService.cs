@@ -38,6 +38,13 @@ namespace Api.Data.Service {
             var model = AlunoAdapter.ToModel(viewModel, true);
             return AlunoAdapter.ToViewModel(this._usuarioRepository.UpdateAluno(model), true);
         }
+        public ProfessorVM DetailProfessor(string id) {
+            return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), true);
+        }
+        public ProfessorVM UpdateProfessor(ProfessorVM viewModel) {
+            var model = ProfessorAdapter.ToModel(viewModel, true);
+            return ProfessorAdapter.ToViewModel(this._usuarioRepository.UpdateProfessor(model), true);
+        }
 
     }
 }

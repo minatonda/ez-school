@@ -9,7 +9,7 @@ import { Curso } from '../../../util/factory/curso/curso';
 import { CursoGrade } from '../../../util/factory/curso/curso-grade';
 import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
-import { Professor } from '../../../util/factory/professor/professor';
+import { Professor } from '../../../util/factory/usuario/professor';
 
 interface UI {
     periodo: InstituicaoCursoPeriodo;
