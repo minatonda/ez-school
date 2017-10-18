@@ -7,10 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.Interface;
 
-namespace Api.Data.ViewModels
-{
-    public class InstituicaoCursoOcorrenciaVM : SelectVM
-    {
+namespace Api.Data.ViewModels {
+    public class InstituicaoCursoOcorrenciaVM : SelectVM {
+        public InstituicaoCursoOcorrenciaVM() {
+            this.Alunos = new List<AlunoVM>();
+        }
+
         public ProfessorVM Coordenador { get; set; }
         public List<AlunoVM> Alunos { get; set; }
         public DateTime? DataInicio { get; set; }

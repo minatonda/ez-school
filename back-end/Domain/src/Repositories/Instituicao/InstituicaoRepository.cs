@@ -59,7 +59,8 @@ namespace Domain.Repositories {
             if (model != null) {
                 var materias = this.db.CursoGradeMaterias.Include(i => i.Materia).Include(i => i.CursoGrade).Where(x => x.CursoGrade.ID == model.CursoGrade.ID).ToList();
                 var periodos = this.db.InstituicaoCursoPeriodos.Include(i => i.InstituicaoCurso).Where(x => x.InstituicaoCurso.ID == model.ID).ToList();
-                return new InstituicaoCursoDto(model, periodos, materias);
+                var turmas = this.db.InstituicaoCursoTurmas.Include(i => i.InstituicaoCurso).Where(x => x.InstituicaoCurso.ID == model.ID).ToList();
+                return new InstituicaoCursoDto(model, periodos, turmas, materias);
             } else {
                 throw new Exception("Registro não encontrado");
             }
@@ -67,7 +68,7 @@ namespace Domain.Repositories {
         public List<InstituicaoCursoDto> GetCursos(long ID) {
             var listInstituicaoCurso = this.db.InstituicaoCursos.Include(i => i.Curso).Include(i => i.Instituicao).Include(i => i.CursoGrade).Where(x => x.Instituicao.ID == ID && !x.DataExpiracao.HasValue && x.Ativo).ToList();
             var listInstituicaoCursoDto = new List<InstituicaoCursoDto>();
-            return listInstituicaoCurso.Select(x => new InstituicaoCursoDto(x, null, null)).ToList();
+            return listInstituicaoCurso.Select(x => new InstituicaoCursoDto(x, null, null, null)).ToList();
         }
         public void AddCurso(long ID, InstituicaoCursoDto model) {
             if (this.db.InstituicaoCursos.Include(i => i.Curso).Include(i => i.Instituicao).SingleOrDefault(x => x.Curso.ID == model.Curso.ID && x.Instituicao.ID == ID && x.DataExpiracao != null && x.Ativo) != null) {
@@ -90,6 +91,12 @@ namespace Domain.Repositories {
                     Sex = x.Sex,
                     Sab = x.Sab,
                     Dom = x.Dom
+                }));
+                this.db.InstituicaoCursoTurmas.AddRange(model.Turmas.Select(x => new InstituicaoCursoTurma() {
+                    InstituicaoCurso = instituicaoCurso,
+                    Nome = x.Nome,
+                    Descricao = x.Descricao,
+                    DataInicio = x.DataInicio
                 }));
                 this.db.InstituicaoCursos.Add(instituicaoCurso);
                 this.db.SaveChanges();
