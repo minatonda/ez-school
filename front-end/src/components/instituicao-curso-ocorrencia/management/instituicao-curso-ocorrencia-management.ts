@@ -49,7 +49,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.ui.periodos = await InstituicaoFactory.allPeriodos(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.periodos = await InstituicaoFactory.allPeriodo(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }

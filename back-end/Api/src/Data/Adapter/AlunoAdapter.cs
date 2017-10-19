@@ -20,13 +20,6 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static SelectVM ToViewModelShort (Aluno model) {
-            var vm = new SelectVM ();
-            vm.ID = model.ID;
-            vm.Label = model.UsuarioInfo.Nome;
-            return vm;
-        }
-
         public static Aluno ToModel (AlunoVM vm, bool deep) {
             var model = new Aluno ();
             model.ID = vm.ID;
