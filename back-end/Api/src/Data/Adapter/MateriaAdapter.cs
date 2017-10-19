@@ -35,8 +35,8 @@ namespace Api.Data.ViewModels {
                 model.ID = long.Parse (vm.ID);
             }
 
-            vm.Nome = model.Nome;
-            vm.Descricao = model.Descricao;
+            model.Nome = vm.Nome;
+            model.Descricao = vm.Descricao;
 
             return model;
         }
