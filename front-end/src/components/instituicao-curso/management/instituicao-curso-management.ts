@@ -11,11 +11,13 @@ import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 import { CardTableColumn, CardTableMenuEntry, CardTableMenu } from '../../common/card-table/card-table.types';
 import { InstituicaoCursoOcorrencia } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
+import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/instituicao-curso-turma';
 
 interface UI {
     cursos: Array < Curso > ;
     cursoGrades: Array < CursoGrade > ;
     instituicaoCursoPeriodo: InstituicaoCursoPeriodo;
+    instituicaoCursoTurma: InstituicaoCursoTurma;
     instituicaoButtons: Array < any > ;
 }
 
@@ -37,6 +39,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
         cursos: undefined,
         cursoGrades: undefined,
         instituicaoCursoPeriodo: new InstituicaoCursoPeriodo(),
+        instituicaoCursoTurma: new InstituicaoCursoTurma(),
         instituicaoButtons: [
             { label: 'Seg', key: 'seg' },
             { label: 'Ter', key: 'ter' },
@@ -95,12 +98,34 @@ export class InstituicaoCursoManagementComponent extends Vue {
         ];
         return { itens: this.model.periodos, columns: columns, menu: menu };
     }
-
     public addPeriodo(periodo: InstituicaoCursoPeriodo) {
         this.model.periodos.push(Object.assign({}, periodo));
     }
     public removePeriodo(item: InstituicaoCursoPeriodo) {
         this.model.periodos.splice(this.model.periodos.indexOf(item), 1);
+    }
+
+    public getTableTurma() {
+        let menu = new CardTableMenu();
+        menu.row = [
+            new CardTableMenuEntry(
+                (item) => this.removeTurma(item),
+                (item) => 'Remover',
+                (item) => ['fa', 'fa-times'],
+                (item) => ['btn-danger']
+            )
+        ];
+        let columns = [
+            new CardTableColumn((item: InstituicaoCursoTurma) => item.nome, () => 'Nome'),
+            new CardTableColumn((item: InstituicaoCursoTurma) => item.descricao, () => 'Descrição')
+        ];
+        return { itens: this.model.turmas, columns: columns, menu: menu };
+    }
+    public addTurma(item: InstituicaoCursoTurma) {
+        this.model.turmas.push(Object.assign({}, item));
+    }
+    public removeTurma(item: InstituicaoCursoTurma) {
+        this.model.turmas.splice(this.model.turmas.indexOf(item), 1);
     }
 
     public async onCursoChanged(curso) {
