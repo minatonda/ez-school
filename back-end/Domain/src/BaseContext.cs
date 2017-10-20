@@ -25,6 +25,7 @@ namespace Domain {
         public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoInstituicaoCategoria> InstituicaoInstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoPeriodo> InstituicaoCursoPeriodos { get; set; }
+        public DbSet<CategoriaProfissional> CategoriaProfissionais { get; set; }
         public DbSet<InstituicaoCursoTurma> InstituicaoCursoTurmas { get; set; }
 
     }
