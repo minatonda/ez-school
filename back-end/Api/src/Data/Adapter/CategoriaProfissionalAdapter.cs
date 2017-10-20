@@ -29,7 +29,7 @@ namespace Api.Data.ViewModels {
             }
 
             model.Nome = vm.Nome;
-            vm.Descricao = model.Descricao;
+            model.Descricao = vm.Descricao;
 
             return model;
         }
