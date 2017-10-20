@@ -20,17 +20,11 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static SelectVM ToViewModelShort (Professor model) {
-            var vm = new SelectVM ();
-            vm.ID = model.ID;
-            vm.Label = model.UsuarioInfo.Nome;
-            return vm;
-        }
-
         public static Professor ToModel (ProfessorVM vm, bool deep) {
             var model = new Professor ();
             model.ID = vm.ID;
             model.UsuarioInfo = UsuarioAdapter.ToModel (vm.UsuarioInfo, false);
+            
             return model;
         }
 
