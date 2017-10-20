@@ -79,6 +79,10 @@ namespace Api.Data.Service {
             return this.DetailCurso(id, idCurso, dataInicio).Periodos;
         }
 
+        public List<InstituicaoCursoTurmaVM> AllTurma(long id, long idCurso, string dataInicio) {
+            return this.DetailCurso(id, idCurso, dataInicio).Turmas;
+        }
+
         public void AddCursoOcorrencia(long id, long idCurso, string dataInicio, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
             var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
             this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _dataInicio, InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true));

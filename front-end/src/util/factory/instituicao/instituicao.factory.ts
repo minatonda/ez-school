@@ -4,6 +4,7 @@ import { Notify, MESSAGES, NOTIFY_TYPE } from '../../notify/notify';
 import { InstituicaoCurso } from './instituicao-curso';
 import { InstituicaoCursoOcorrencia } from './instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from './instituicao-curso-periodo';
+import { InstituicaoCursoTurma } from './instituicao-curso-turma';
 
 export class InstituicaoFactory extends Factory {
 
@@ -117,9 +118,21 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async allPeriodos(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+    public static async allPeriodo(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
         try {
             let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/periodo`) as Array < InstituicaoCursoPeriodo > ;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async allTurma(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/turma`) as Array < InstituicaoCursoTurma > ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

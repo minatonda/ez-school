@@ -10,21 +10,25 @@ using Domain.Models.Interface;
 namespace Domain.Dto {
     public class InstituicaoCursoDto {
 
-        public InstituicaoCursoDto () {
-            this.Periodos = new List<InstituicaoCursoPeriodoDto> ();
+        public InstituicaoCursoDto() {
+            this.Periodos = new List<InstituicaoCursoPeriodoDto>();
+            this.Turmas = new List<InstituicaoCursoTurmaDto>();
         }
 
-        public InstituicaoCursoDto (InstituicaoCurso instituicaoCurso, List<InstituicaoCursoPeriodo> periodos, List<CursoGradeMateria> cursoGradeMaterias) {
+        public InstituicaoCursoDto(InstituicaoCurso instituicaoCurso, List<InstituicaoCursoPeriodo> periodos, List<InstituicaoCursoTurma> turmas, List<CursoGradeMateria> cursoGradeMaterias) {
             this.ID = instituicaoCurso.ID;
             this.DataInicio = instituicaoCurso.DataInicio;
             this.DataExpiracao = instituicaoCurso.DataExpiracao;
             this.Curso = instituicaoCurso.Curso;
 
             if (instituicaoCurso.CursoGrade != null && cursoGradeMaterias != null) {
-                this.CursoGrade = new CursoGradeDto (instituicaoCurso.CursoGrade, cursoGradeMaterias);
+                this.CursoGrade = new CursoGradeDto(instituicaoCurso.CursoGrade, cursoGradeMaterias);
             }
             if (periodos != null) {
-                this.Periodos = periodos.Select (x => new InstituicaoCursoPeriodoDto (x)).ToList ();
+                this.Periodos = periodos.Select(x => new InstituicaoCursoPeriodoDto(x)).ToList();
+            }
+            if (turmas != null) {
+                this.Turmas = turmas.Select(x => new InstituicaoCursoTurmaDto(x)).ToList();
             }
         }
 
@@ -32,6 +36,7 @@ namespace Domain.Dto {
         public Curso Curso { get; set; }
         public CursoGradeDto CursoGrade { get; set; }
         public List<InstituicaoCursoPeriodoDto> Periodos { get; set; }
+        public List<InstituicaoCursoTurmaDto> Turmas { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
 

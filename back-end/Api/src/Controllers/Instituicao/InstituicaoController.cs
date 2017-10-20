@@ -81,6 +81,11 @@ namespace Api.Controllers {
             return this._instituicaoService.AllPeriodo(id, idCurso, dataInicio);
         }
 
+        [HttpGet("{id}/curso/{idCurso}/{dataInicio}/turma")]
+        public List<InstituicaoCursoTurmaVM> AllTurma(long id, long idCurso, string dataInicio) {
+            return this._instituicaoService.AllTurma(id, idCurso, dataInicio);
+        }
+
         [HttpGet("{id}/curso")]
         public List<InstituicaoCursoVM> AllCurso(long id) {
             return this._instituicaoService.AllCurso(id);

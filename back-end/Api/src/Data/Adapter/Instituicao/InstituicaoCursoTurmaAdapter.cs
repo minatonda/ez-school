@@ -5,32 +5,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Dto;
 using Domain.Models;
-using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class MateriaAdapter {
+    public class InstituicaoCursoTurmaAdapter {
 
-        public static MateriaVM ToViewModel (Materia model, bool deep) {
-            var vm = new MateriaVM ();
+        public static InstituicaoCursoTurmaVM ToViewModel (InstituicaoCursoTurmaDto model, bool deep) {
+            var vm = new InstituicaoCursoTurmaVM ();
+
             vm.ID = model.ID.ToString ();
-            vm.Label = model.Nome;
-
             vm.Nome = model.Nome;
             vm.Descricao = model.Descricao;
 
             return vm;
         }
 
-        public static SelectVM ToViewModelShort (Materia model) {
-            var vm = new SelectVM ();
-            vm.ID = model.ID.ToString ();
-            vm.Label = model.Nome;
-            return vm;
-        }
-
-        public static Materia ToModel (MateriaVM vm, bool deep) {
-            var model = new Materia ();
+        public static InstituicaoCursoTurmaDto ToModel (InstituicaoCursoTurmaVM vm, bool deep) {
+            var model = new InstituicaoCursoTurmaDto ();
             if (vm.ID != null) {
                 model.ID = long.Parse (vm.ID);
             }
