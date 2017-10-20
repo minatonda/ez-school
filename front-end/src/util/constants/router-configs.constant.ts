@@ -17,6 +17,7 @@ import { InstituicaoCursoOcorrenciaComponent } from '../../components/instituica
 import { InstituicaoCursoOcorrenciaManagementComponent } from '../../components/instituicao-curso-ocorrencia/management/instituicao-curso-ocorrencia-management';
 import { UsuarioAlunoComponent } from '../../components/usuario/aluno/usuario-aluno';
 import { CategoriaProfissionalComponent } from '../../components/categoria-profissional/categoria-profissional';
+import { CategoriaProfissionalManagementComponent } from '../../components/categoria-profissional/management/categoria-profissional-management';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
@@ -53,7 +54,7 @@ export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: false, type: RouterPathType.upd, path: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, name: RouterPath.INSTITUICAO_CURSO_OCORRENCIA_UPD, component: InstituicaoCursoOcorrenciaManagementComponent, alias: 'Ocorrência de Curso' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.CATEGORIA_PROFISSIONAL, name: RouterPath.CATEGORIA_PROFISSIONAL, component: CategoriaProfissionalComponent, alias: 'Categoria Profissionais' },
-    // { menu: true, type: RouterPathType.add, path: RouterPath.CATEGORIA_PROFISSIONAL_ADD, name: RouterPath.CATEGORIA_PROFISSIONAL_ADD, component: CategoriaProfissionalManagementComponent, alias: 'CategoriaProfissional' },
-    // { menu: false, type: RouterPathType.upd, path: RouterPath.CATEGORIA_PROFISSIONAL_UPD, name: RouterPath.CATEGORIA_PROFISSIONAL_UPD, component: CategoriaProfissionalManagementComponent, alias: 'CategoriaProfissional' }
+    { menu: true, type: RouterPathType.add, path: RouterPath.CATEGORIA_PROFISSIONAL_ADD, name: RouterPath.CATEGORIA_PROFISSIONAL_ADD, component: CategoriaProfissionalManagementComponent, alias: 'CategoriaProfissional' },
+    { menu: false, type: RouterPathType.upd, path: RouterPath.CATEGORIA_PROFISSIONAL_UPD, name: RouterPath.CATEGORIA_PROFISSIONAL_UPD, component: CategoriaProfissionalManagementComponent, alias: 'CategoriaProfissional' }
 
 ];
