@@ -5,13 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Dto;
 using Domain.Models;
 
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoPeriodoAdapter {
 
-        public static InstituicaoCursoPeriodoVM ToViewModel (InstituicaoCursoPeriodoDto model, bool deep) {
+        public static InstituicaoCursoPeriodoVM ToViewModel (InstituicaoCursoPeriodo model, bool deep) {
             var vm = new InstituicaoCursoPeriodoVM ();
 
             vm.ID = model.ID.ToString ();
@@ -30,8 +29,8 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static InstituicaoCursoPeriodoDto ToModel (InstituicaoCursoPeriodoVM vm, bool deep) {
-            var model = new InstituicaoCursoPeriodoDto ();
+        public static InstituicaoCursoPeriodo ToModel (InstituicaoCursoPeriodoVM vm, bool deep) {
+            var model = new InstituicaoCursoPeriodo ();
             if (vm.ID != null) {
                 model.ID = long.Parse (vm.ID);
             }

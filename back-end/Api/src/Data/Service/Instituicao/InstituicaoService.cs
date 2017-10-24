@@ -42,24 +42,18 @@ namespace Api.Data.Service {
             return this._instituicaoRepository.GetAll(true).Select(x => InstituicaoAdapter.ToViewModel(x, true)).ToList();
         }
 
-        public void AddCategoria(long id, InstituicaoCategoriaVM viewModel) {
-            this._instituicaoRepository.AddCategoria(id, InstituicaoCategoriaAdapter.ToModel(viewModel, false));
-        }
-
-        public void DeleteCategoria(long id, long idCategoria) {
-            this._instituicaoRepository.DeleteCategoria(id, idCategoria);
-        }
-
-        public List<InstituicaoCategoriaVM> AllCategoria(long id) {
-            return this._instituicaoRepository.GetCategorias(id).Select(x => InstituicaoCategoriaAdapter.ToViewModel(x, false)).ToList();
-        }
-
         public void AddCurso(long id, InstituicaoCursoVM instituicaoCurso) {
-            this._instituicaoRepository.AddCurso(id, InstituicaoCursoAdapter.ToModel(instituicaoCurso, true));
+            var model = InstituicaoCursoAdapter.ToModel(instituicaoCurso, true);
+            var periodos = InstituicaoCursoAdapter.InstituicaoCursoPeriodoFromVM(instituicaoCurso);
+            var turmas = InstituicaoCursoAdapter.InstituicaoCursoTurmaFromVM(instituicaoCurso);
+            this._instituicaoRepository.AddCurso(id, model, periodos, turmas);
         }
 
         public void RenewCurso(long id, InstituicaoCursoVM instituicaoCurso) {
-            this._instituicaoRepository.RenewCurso(id, InstituicaoCursoAdapter.ToModel(instituicaoCurso, true));
+            var model = InstituicaoCursoAdapter.ToModel(instituicaoCurso, true);
+            var periodos = InstituicaoCursoAdapter.InstituicaoCursoPeriodoFromVM(instituicaoCurso);
+            var turmas = InstituicaoCursoAdapter.InstituicaoCursoTurmaFromVM(instituicaoCurso);
+            this._instituicaoRepository.RenewCurso(id, model, periodos, turmas);
         }
 
         public void DisableCurso(long id, long idCurso) {
@@ -68,11 +62,13 @@ namespace Api.Data.Service {
 
         public InstituicaoCursoVM DetailCurso(long id, long idCurso, string dataInicio) {
             var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            return InstituicaoCursoAdapter.ToViewModel(this._instituicaoRepository.GetCurso(id, idCurso, _dataInicio), false);
+            var _turmas = this._instituicaoRepository.GetCursoTurmas(id, idCurso, _dataInicio);
+            var _periodos = this._instituicaoRepository.GetCursoPeriodos(id, idCurso, _dataInicio);
+            return InstituicaoCursoAdapter.ToViewModel(this._instituicaoRepository.GetCurso(id, idCurso, _dataInicio), _periodos, _turmas, false);
         }
 
         public List<InstituicaoCursoVM> AllCurso(long id) {
-            return this._instituicaoRepository.GetCursos(id).Select(x => InstituicaoCursoAdapter.ToViewModel(x, false)).ToList();
+            return this._instituicaoRepository.GetCursos(id).Select(x => InstituicaoCursoAdapter.ToViewModel(x, null, null, false)).ToList();
         }
 
         public List<InstituicaoCursoPeriodoVM> AllPeriodo(long id, long idCurso, string dataInicio) {
@@ -85,23 +81,20 @@ namespace Api.Data.Service {
 
         public void AddCursoOcorrencia(long id, long idCurso, string dataInicio, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
             var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _dataInicio, InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true));
+            var _model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true);
+            //this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _dataInicio, _model);
         }
 
-        // public void DeleteCursoOcorrencia(long id, long idCurso, long idOcorrencia) {
-        //     this._instituicaoRepository.DeleteCursoOcorrencia(id, idCurso, idOcorrencia);
+        // public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia(long id, long idCurso, string dataInicio, string dataInicioOcorrencia) {
+        //     var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //     var _dataInicioOcorrencia = DateTime.ParseExact(dataInicioOcorrencia, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //     return InstituicaoCursoOcorrenciaAdapter.ToViewModel(this._instituicaoRepository.GetCursoOcorrencia(id, idCurso, _dataInicio, _dataInicioOcorrencia), false);
         // }
 
-        public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia(long id, long idCurso, string dataInicio, string dataInicioOcorrencia) {
-            var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            var _dataInicioOcorrencia = DateTime.ParseExact(dataInicioOcorrencia, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            return InstituicaoCursoOcorrenciaAdapter.ToViewModel(this._instituicaoRepository.GetCursoOcorrencia(id, idCurso, _dataInicio, _dataInicioOcorrencia), false);
-        }
-
-        public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia(long id, long idCurso, string dataInicio) {
-            var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso, _dataInicio).Select(x => InstituicaoCursoOcorrenciaAdapter.ToViewModel(x, false)).ToList();
-        }
+        // public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia(long id, long idCurso, string dataInicio) {
+        //     var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        //     return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso, _dataInicio).Select(x => InstituicaoCursoOcorrenciaAdapter.ToViewModel(x, false)).ToList();
+        // }
 
     }
 }

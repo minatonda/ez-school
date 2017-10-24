@@ -5,14 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Dto;
 using Domain.Models;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
     public class CursoGradeMateriaAdapter {
     
-        public static CursoGradeMateriaVM ToViewModel (CursoGradeMateriaDto model, bool deep) {
+        public static CursoGradeMateriaVM ToViewModel (CursoGradeMateria model, bool deep) {
             var vm = new CursoGradeMateriaVM ();
 
             vm.ID = model.ID.ToString ();
@@ -23,12 +22,11 @@ namespace Api.Data.ViewModels {
 
             return vm;
         }
-        public static CursoGradeMateriaDto ToModel (CursoGradeMateriaVM vm, bool deep) {
-            var model = new CursoGradeMateriaDto ();
+        public static CursoGradeMateria ToModel (CursoGradeMateriaVM vm, bool deep) {
+            var model = new CursoGradeMateria ();
             if (vm.ID != null) {
                 model.ID = long.Parse (vm.ID);
             }
-            model.ID = long.Parse (vm.ID);
             model.Descricao = vm.Descricao;
             model.Materia = MateriaAdapter.ToModel (vm.Materia, true);
             return model;
