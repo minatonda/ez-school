@@ -14,7 +14,7 @@ namespace Api.Data.Service {
         public CursoService(CursoRepository cursoRepository) {
             this._cursoRepository = cursoRepository;
         }
-        public List < CursoVM > All() {
+        public List<CursoVM> All() {
             return this._cursoRepository.GetAll(true).Select(x => CursoAdapter.ToViewModel(x, true)).ToList();
         }
         public CursoVM Detail(long id) {
@@ -32,17 +32,24 @@ namespace Api.Data.Service {
             this._cursoRepository.Disable(id);
         }
 
-        public List < CursoGradeVM > AllGrade(long id) {
-            return this._cursoRepository.GetGrades(id).Select(x => CursoGradeAdapter.ToViewModel(x, true)).ToList();
+        public List<CursoGradeVM> AllGrade(long id) {
+            return this._cursoRepository.GetGrades(id).Select(x => CursoGradeAdapter.ToViewModel(x, this._cursoRepository.GetGradeMaterias(id, x.ID), true)).ToList();
         }
         public CursoGradeVM DetailGrade(long id, long idGrade) {
-            return CursoGradeAdapter.ToViewModel(this._cursoRepository.GetGrade(id, idGrade), true);
+            var materias = this._cursoRepository.GetGradeMaterias(id, idGrade);
+            return CursoGradeAdapter.ToViewModel(this._cursoRepository.GetGrade(id, idGrade), materias, true);
         }
         public CursoGradeVM AddGrade(long id, CursoGradeVM model) {
-            return CursoGradeAdapter.ToViewModel(this._cursoRepository.AddGrade(id, CursoGradeAdapter.ToModel(model, true)), true);
+            var materias = model.Materias.Select(x => CursoGradeMateriaAdapter.ToModel(x, true)).ToList();
+            var cursoGrade = CursoGradeAdapter.ToModel(model, true);
+            this._cursoRepository.AddGrade(id, cursoGrade, materias);
+            return CursoGradeAdapter.ToViewModel(cursoGrade, this._cursoRepository.GetGradeMaterias(id, cursoGrade.ID), true);
         }
         public CursoGradeVM UpdateGrade(long id, CursoGradeVM model) {
-            return CursoGradeAdapter.ToViewModel(this._cursoRepository.UpdateGrade(id, CursoGradeAdapter.ToModel(model, true)), true);
+            var materias = model.Materias.Select(x => CursoGradeMateriaAdapter.ToModel(x, true)).ToList();
+            var cursoGrade = CursoGradeAdapter.ToModel(model, true);
+            this._cursoRepository.AddGrade(id, cursoGrade, materias);
+            return CursoGradeAdapter.ToViewModel(cursoGrade, this._cursoRepository.GetGradeMaterias(id, cursoGrade.ID), true);
         }
         public void DeleteGrade(long id, long idGrade) {
             this._cursoRepository.DeleteGrade(id, idGrade);

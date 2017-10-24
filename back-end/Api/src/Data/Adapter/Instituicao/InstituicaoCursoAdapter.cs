@@ -5,13 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Dto;
 using Domain.Models;
 
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoAdapter {
 
-        public static InstituicaoCursoVM ToViewModel(InstituicaoCursoDto model, bool deep) {
+        public static InstituicaoCursoVM ToViewModel(InstituicaoCurso model, List<InstituicaoCursoPeriodo> instituicaoCursoPeriodos, List<InstituicaoCursoTurma> instituicaoCursoTurmas, bool deep) {
             var vm = new InstituicaoCursoVM();
             vm.ID = model.ID.ToString();
 
@@ -23,41 +22,45 @@ namespace Api.Data.ViewModels {
                 vm.Curso = CursoAdapter.ToViewModel(model.Curso, false);
             }
             if (model.CursoGrade != null) {
-                vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, false);
+                vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, null, false);
             }
-            if (model.Periodos != null) {
-                vm.Periodos = model.Periodos.Select(x => InstituicaoCursoPeriodoAdapter.ToViewModel(x, false)).ToList();
+
+            if (instituicaoCursoTurmas != null) {
+                vm.Turmas = instituicaoCursoTurmas.Select(x => InstituicaoCursoTurmaAdapter.ToViewModel(x, true)).ToList();
             }
-            if (model.Turmas != null) {
-                vm.Turmas = model.Turmas.Select(x => InstituicaoCursoTurmaAdapter.ToViewModel(x, false)).ToList();
+
+            if (instituicaoCursoPeriodos != null) {
+                vm.Periodos = instituicaoCursoPeriodos.Select(x => InstituicaoCursoPeriodoAdapter.ToViewModel(x, true)).ToList();
             }
 
             return vm;
         }
 
-        public static InstituicaoCursoDto ToModel(InstituicaoCursoVM vm, bool deep) {
-            var model = new InstituicaoCursoDto();
+        public static InstituicaoCurso ToModel(InstituicaoCursoVM vm, bool deep) {
+            var model = new InstituicaoCurso();
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
             }
-
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
 
             if (vm.Curso != null) {
                 model.Curso = CursoAdapter.ToModel(vm.Curso, false);
             }
+
             if (vm.CursoGrade != null) {
                 model.CursoGrade = CursoGradeAdapter.ToModel(vm.CursoGrade, false);
             }
-            if (vm.Periodos != null) {
-                model.Periodos = vm.Periodos.Select(x => InstituicaoCursoPeriodoAdapter.ToModel(x, false)).ToList();
-            }
-            if (vm.Turmas != null) {
-                model.Turmas = vm.Turmas.Select(x => InstituicaoCursoTurmaAdapter.ToModel(x, false)).ToList();
-            }
-
+            
             return model;
+        }
+
+        public static List<InstituicaoCursoPeriodo> InstituicaoCursoPeriodoFromVM(InstituicaoCursoVM vm) {
+            return vm.Periodos.Select(x => InstituicaoCursoPeriodoAdapter.ToModel(x, true)).ToList();
+        }
+
+        public static List<InstituicaoCursoTurma> InstituicaoCursoTurmaFromVM(InstituicaoCursoVM vm) {
+            return vm.Turmas.Select(x => InstituicaoCursoTurmaAdapter.ToModel(x, true)).ToList();
         }
 
     }
