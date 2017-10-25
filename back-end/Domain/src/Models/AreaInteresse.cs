@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Models.Interface;
+
+namespace Domain.Models
+{
+    public class AreaInteresse
+    {
+        public AreaInteresse()
+        {
+
+        }
+
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public long ID { get; set; }
+        public Aluno Aluno { get; set; }
+        public CategoriaProfissional CategoriaProfissional { get; set; }
+        public string Descricao { get; set; }
+    }
+}

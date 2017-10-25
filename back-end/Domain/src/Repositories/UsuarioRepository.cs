@@ -103,6 +103,14 @@ namespace Domain.Repositories
         {
             throw new NotImplementedException();
         }
+        public List<AreaInteresse> AddAlunoCategoriaProfissional(string ID, List<AreaInteresse> AreaInteresses ) {
+
+            var aluno = this.db.Alunos.Find(ID);
+            AreaInteresses.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(ID));
+            AreaInteresses.ForEach(x => x.Aluno = aluno);
+            this.db.AreaInteresse.AddRange(AreaInteresses);
+            return AreaInteresses;
+        }
     }
 
 }

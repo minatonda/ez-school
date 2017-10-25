@@ -13,6 +13,7 @@ namespace Api.Data.ViewModels
     {
 
         public UsuarioInfoVM UsuarioInfo { get; set; }
+        public List<CategoriaProfissionalVM> CategoriaProfissional { get; set; }
         
     }
 }

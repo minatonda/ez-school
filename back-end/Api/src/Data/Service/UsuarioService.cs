@@ -14,7 +14,7 @@ namespace Api.Data.Service {
         public UsuarioService(UsuarioRepository usuarioRepository) {
             this._usuarioRepository = usuarioRepository;
         }
-        public List < UsuarioVM > All() {
+        public List<UsuarioVM> All() {
             return this._usuarioRepository.GetAll(true).Select(x => UsuarioAdapter.ToViewModel(x, true)).ToList();
         }
         public UsuarioVM Detail(string id) {
@@ -36,7 +36,9 @@ namespace Api.Data.Service {
         }
         public AlunoVM UpdateAluno(AlunoVM viewModel) {
             var model = AlunoAdapter.ToModel(viewModel, true);
-            return AlunoAdapter.ToViewModel(this._usuarioRepository.UpdateAluno(model), true);
+            this._usuarioRepository.UpdateAluno(model);
+            this._usuarioRepository.AddAlunoCategoriaProfissional(model.ID, viewModel.CategoriaProfissional.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
+            return AlunoAdapter.ToViewModel(model, true);
         }
         public ProfessorVM DetailProfessor(string id) {
             return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), true);
@@ -45,6 +47,5 @@ namespace Api.Data.Service {
             var model = ProfessorAdapter.ToModel(viewModel, true);
             return ProfessorAdapter.ToViewModel(this._usuarioRepository.UpdateProfessor(model), true);
         }
-
     }
 }
