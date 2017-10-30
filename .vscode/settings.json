@@ -11,5 +11,6 @@
         "css": ["css", "scss"],
         "html": ["htm", "html"]
         // ^^ providing just an array sets the VS Code file type
-    }
+    },
+    "keyboard.dispatch": "keyCode"
 }
