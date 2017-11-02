@@ -74,6 +74,14 @@ namespace Domain.Repositories {
              .Include(i => i.InstituicaoCurso)
              .Where(x => x.InstituicaoCurso.ID == curso.ID).ToList();
         }
+
+        public List<CursoGradeMateria> GetCursoGradeMaterias(long id, long idCurso, DateTime? dataInicio) {
+            var curso = this.GetCurso(id, idCurso, dataInicio);
+            return this.db.CursoGradeMaterias
+             .Include(i => i.CursoGrade)
+             .Include(i => i.Materia)
+             .Where(x => x.CursoGrade.ID == curso.CursoGrade.ID).ToList();
+        }
         public List<InstituicaoCurso> GetCursos(long id) {
             return this.db.InstituicaoCursos.Include(i => i.Curso).Include(i => i.Instituicao).Include(i => i.CursoGrade).Where(x => x.Instituicao.ID == id && !x.DataExpiracao.HasValue && x.Ativo).ToList();
         }
@@ -104,6 +112,38 @@ namespace Domain.Repositories {
             instituicaoCurso.Ativo = false;
             instituicaoCurso.DataExpiracao = DateTime.Now;
             this.db.SaveChanges();
+        }
+
+        public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia instituicaoCursoOcorrencia, List<InstituicaoCursoOcorrenciaAluno> alunos, List<InstituicaoCursoOcorrenciaProfessor> professores) {
+            var instituicaoCurso = this.db.InstituicaoCursos.Include(i => i.Instituicao).Include(i => i.Curso).SingleOrDefault(x => x.Instituicao.ID == id && x.Curso.ID == idCurso && x.DataExpiracao == null && x.Ativo);
+            instituicaoCursoOcorrencia.InstituicaoCurso = instituicaoCurso;
+
+            alunos.ForEach(x => x.Aluno = this.db.Alunos.Find(x.Aluno.ID));
+            alunos.ForEach(x => x.Periodo = this.db.InstituicaoCursoPeriodos.Find(x.Periodo.ID));
+            alunos.ForEach(x => x.Turma = this.db.InstituicaoCursoTurmas.Find(x.Turma.ID));
+            alunos.ForEach(x => x.InstituicaoCursoOcorrencia = instituicaoCursoOcorrencia);
+            this.db.InstituicaoCursoOcorrenciaAlunos.AddRange(alunos);
+
+            professores.ForEach(x => x.Professor = this.db.Professores.Find(x.Professor.ID));
+            professores.ForEach(x => x.Periodo = this.db.InstituicaoCursoPeriodos.Find(x.Periodo.ID));
+            professores.ForEach(x => x.Turma = this.db.InstituicaoCursoTurmas.Find(x.Turma.ID));
+            professores.ForEach(x => x.InstituicaoCursoOcorrencia = instituicaoCursoOcorrencia);
+            this.db.InstituicaoCursoOcorrenciaProfessores.AddRange(professores);
+
+            this.db.SaveChanges();
+
+            return instituicaoCursoOcorrencia;
+        }
+
+        public List<InstituicaoCursoOcorrencia> GetCursoOcorrencias(long id, long idCurso, DateTime? dataInicio) {
+            var where = this.db.InstituicaoCursoOcorrencias
+            .Include(i => i.InstituicaoCurso)
+            .Where(x => x.InstituicaoCurso.ID == this.GetCurso(id, idCurso, dataInicio).ID);
+            if (dataInicio.HasValue) {
+                return where.Where(x => x.DataInicio.Value.Date.Equals(dataInicio.Value.Date)).ToList();
+            } else {
+                return where.ToList();
+            }
         }
 
         public InstituicaoCursoOcorrencia GetCursoOcorrencia(long id, long idCurso, DateTime? dataInicio, DateTime? dataInicioOcorrencia) {

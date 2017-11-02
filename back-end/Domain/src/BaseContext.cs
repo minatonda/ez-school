@@ -17,11 +17,11 @@ namespace Domain {
         public DbSet<CursoGradeMateria> CursoGradeMaterias { get; set; }
         public DbSet<Instituicao> Instituicoes { get; set; }
         public DbSet<InstituicaoCurso> InstituicaoCursos { get; set; }
+        public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoOcorrencia> InstituicaoCursoOcorrencias { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaProfessor> InstituicaoCursoOcorrenciaProfessores { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaCoordenador> InstituicaoCursoOcorrenciaCoordenadores { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaAluno> InstituicaoCursoOcorrenciaAlunos { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaProfessor> InstituicaoCursoOcorrenciaProfessores { get; set; }
-        public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoInstituicaoCategoria> InstituicaoInstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoPeriodo> InstituicaoCursoPeriodos { get; set; }
         public DbSet<CategoriaProfissional> CategoriaProfissionais { get; set; }

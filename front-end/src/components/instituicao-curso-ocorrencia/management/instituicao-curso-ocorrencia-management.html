@@ -7,12 +7,13 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="card w-100">
+                <div class="card w-100" v-for="periodo in ui.periodos">
+                    <div class="card-header" v-html="periodo.label"></div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-4 form-group">
-                                <label class="control-label">Periodo</label>
-                                <selector v-model="ui.periodo" v-bind:itens="ui.periodos" placeholder="Periodo" label="label"></selector>
+                        <div class="card w-100" v-for="periodo in ui.periodos">
+                            <div class="card-header" v-html="periodo.label"></div>
+                            <div class="card-body">
+
                             </div>
                         </div>
                     </div>

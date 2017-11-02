@@ -10,11 +10,13 @@ import { CursoGrade } from '../../../util/factory/curso/curso-grade';
 import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
 import { Professor } from '../../../util/factory/usuario/professor';
+import { CursoGradeMateria } from '../../../util/factory/curso/curso-grade-materia';
 
 interface UI {
     periodo: InstituicaoCursoPeriodo;
     professores: Array < Professor > ;
     periodos: Array < InstituicaoCursoPeriodo > ;
+    cursoGradeMaterias: Array < CursoGradeMateria > ;
 }
 
 @Component({
@@ -30,7 +32,8 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     ui: UI = {
         periodo: undefined,
         professores: undefined,
-        periodos: undefined
+        periodos: undefined,
+        cursoGradeMaterias: undefined
     };
 
 
@@ -50,6 +53,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             this.ui.periodos = await InstituicaoFactory.allPeriodo(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.cursoGradeMaterias = await InstituicaoFactory.allCursoGradeMaterias(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }
