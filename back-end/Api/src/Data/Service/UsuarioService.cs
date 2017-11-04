@@ -32,13 +32,14 @@ namespace Api.Data.Service {
             this._usuarioRepository.Disable(id);
         }
         public AlunoVM DetailAluno(string id) {
-            return AlunoAdapter.ToViewModel(this._usuarioRepository.GetAluno(id), true);
+            var areainteresses = this._usuarioRepository.GetAlunoAreaInteresse(id);
+            return AlunoAdapter.ToViewModel(this._usuarioRepository.GetAluno(id), areainteresses, true);
         }
         public AlunoVM UpdateAluno(AlunoVM viewModel) {
             var model = AlunoAdapter.ToModel(viewModel, true);
-            this._usuarioRepository.UpdateAluno(model);
-            this._usuarioRepository.AddAlunoCategoriaProfissional(model.ID, viewModel.CategoriaProfissional.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
-            return AlunoAdapter.ToViewModel(model, true);
+            this._usuarioRepository.UpdateAluno(model, viewModel.CategoriaProfissionais.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
+            var areainteresse = this._usuarioRepository.GetAlunoAreaInteresse(null);
+            return AlunoAdapter.ToViewModel(model, areainteresse, true);
         }
         public ProfessorVM DetailProfessor(string id) {
             return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), true);

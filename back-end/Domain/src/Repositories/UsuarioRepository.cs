@@ -69,14 +69,31 @@ namespace Domain.Repositories
         public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
         public List<Usuario> GetAll(bool? ativo) => this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
         public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+        public List<AreaInteresse> GetAlunoAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Aluno).Include(x => x.CategoriaProfissional).Where(x => x.Aluno.ID == ID).ToList();
 
-        public Aluno UpdateAluno(Aluno model)
+        public Aluno UpdateAluno(Aluno model, List<AreaInteresse> AreaInteresses)
         {
             var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
 
+            var areaInteresse = this.GetAlunoAreaInteresse(model.ID);
+
+            var areaInteressesRemove = areaInteresse.Where(x => !AreaInteresses.Select(y => y.ID).Contains(x.ID)).ToList();
+            
+            var areaInteressesAdd = AreaInteresses.Where(x => !areaInteresse.Select(y => y.ID).Contains(x.ID)).ToList();
+            areaInteressesAdd.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(x.CategoriaProfissional.ID));
+            areaInteressesAdd.ForEach(x => x.Aluno = model);
+
+            this.db.AreaInteresse.AddRange(areaInteressesAdd);
+            this.db.AreaInteresse.RemoveRange(areaInteressesRemove);
+
             this.db.Alunos.Update(aluno);
+            this.db.SaveChanges();
             return aluno;
         }
+
+        //public List<CategoriaProfissional> GetCategoriaProfissional(long ID) {
+        //    return this.db.CategoriaProfissionais.Include(i => i.ID).Include(i => i.Materia).Where(x => x.CursoGrade.ID == IDCursoGrade && x.CursoGrade.Curso.ID == ID).ToList();
+        //}
 
         public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
 
@@ -102,14 +119,6 @@ namespace Domain.Repositories
         public Usuario Get(long ID)
         {
             throw new NotImplementedException();
-        }
-        public List<AreaInteresse> AddAlunoCategoriaProfissional(string ID, List<AreaInteresse> AreaInteresses ) {
-
-            var aluno = this.db.Alunos.Find(ID);
-            AreaInteresses.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(ID));
-            AreaInteresses.ForEach(x => x.Aluno = aluno);
-            this.db.AreaInteresse.AddRange(AreaInteresses);
-            return AreaInteresses;
         }
     }
 
