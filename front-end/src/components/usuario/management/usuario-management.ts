@@ -1,6 +1,6 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
+import { RouterPathType, RouterConfig } from '../../../util/router/router.path';
 import { RouterManager } from '../../../util/router/router.manager';
 import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
 import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
@@ -61,6 +61,16 @@ export class UsuarioManagementComponent extends Vue {
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
+        }
+    }
+
+    public getRotasLabel(route: RouterConfig) {
+        return route.alias;
+    }
+
+    public aoSelecionarRota(route: RouterConfig) {
+        if (route) {
+            RouterManager.redirectRoute(route.path);
         }
     }
 
