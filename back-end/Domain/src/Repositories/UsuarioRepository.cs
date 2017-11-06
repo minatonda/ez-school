@@ -70,6 +70,8 @@ namespace Domain.Repositories
         public List<Usuario> GetAll(bool? ativo) => this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
         public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
         public List<AreaInteresse> GetAlunoAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Aluno).Include(x => x.CategoriaProfissional).Where(x => x.Aluno.ID == ID).ToList();
+        public List<AreaInteresse> GetProfessorAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Professor).Include(x => x.CategoriaProfissional).Where(x => x.Professor.ID == ID).ToList();
+
 
         public Aluno UpdateAluno(Aluno model, List<AreaInteresse> AreaInteresses)
         {
@@ -91,17 +93,25 @@ namespace Domain.Repositories
             return aluno;
         }
 
-        //public List<CategoriaProfissional> GetCategoriaProfissional(long ID) {
-        //    return this.db.CategoriaProfissionais.Include(i => i.ID).Include(i => i.Materia).Where(x => x.CursoGrade.ID == IDCursoGrade && x.CursoGrade.Curso.ID == ID).ToList();
-        //}
-
         public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
 
-        public Professor UpdateProfessor(Professor model)
+        public Professor UpdateProfessor(Professor model, List<AreaInteresse> AreaInteresses)
         {
             var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
 
+            var areaInteresse = this.GetProfessorAreaInteresse(model.ID);
+
+            var areaInteressesRemove = areaInteresse.Where(x => !AreaInteresses.Select(y => y.ID).Contains(x.ID)).ToList();
+            
+            var areaInteressesAdd = AreaInteresses.Where(x => !areaInteresse.Select(y => y.ID).Contains(x.ID)).ToList();
+            areaInteressesAdd.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(x.CategoriaProfissional.ID));
+            areaInteressesAdd.ForEach(x => x.Professor = model);
+
+            this.db.AreaInteresse.AddRange(areaInteressesAdd);
+            this.db.AreaInteresse.RemoveRange(areaInteressesRemove);
+
             this.db.Professores.Update(professor);
+            this.db.SaveChanges();
             return professor;
         }
 
