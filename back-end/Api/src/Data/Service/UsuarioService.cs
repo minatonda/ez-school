@@ -42,11 +42,14 @@ namespace Api.Data.Service {
             return AlunoAdapter.ToViewModel(model, areainteresse, true);
         }
         public ProfessorVM DetailProfessor(string id) {
-            return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), true);
+            var areainteresses = this._usuarioRepository.GetProfessorAreaInteresse(id);
+            return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), areainteresses, true);
         }
         public ProfessorVM UpdateProfessor(ProfessorVM viewModel) {
             var model = ProfessorAdapter.ToModel(viewModel, true);
-            return ProfessorAdapter.ToViewModel(this._usuarioRepository.UpdateProfessor(model), true);
+            this._usuarioRepository.UpdateProfessor(model, viewModel.CategoriaProfissionais.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
+            var areainteresse = this._usuarioRepository.GetProfessorAreaInteresse(null);
+            return ProfessorAdapter.ToViewModel(model, areainteresse, true);
         }
     }
 }
