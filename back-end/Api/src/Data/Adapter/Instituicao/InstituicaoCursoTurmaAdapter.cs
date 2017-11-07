@@ -17,6 +17,8 @@ namespace Api.Data.ViewModels {
             vm.Nome = model.Nome;
             vm.Descricao = model.Descricao;
 
+            vm.Label = vm.Nome;
+
             return vm;
         }
 

@@ -105,6 +105,32 @@ export class UsuarioFactory extends Factory {
         }
     }
 
+    public static async allAluno(termo: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/usuario/aluno`, { params: { termo: termo } }) as Array<Aluno>;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+
+    public static async allProfessor(termo: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/usuario/professor`, { params: { termo: termo } }) as Array<Aluno>;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+
     public static async updateAluno(id: string, model: Aluno, notify?: boolean) {
         try {
             let result = await this.post(`/api/usuario/${id}/aluno/update`, model) as Aluno;

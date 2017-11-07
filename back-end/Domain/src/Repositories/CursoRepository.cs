@@ -26,12 +26,18 @@ namespace Domain.Repositories {
             return model;
         }
         public void Disable(long ID) {
-            this.db.Cursos.Find(ID).Ativo = false;
+            this.db.Cursos.Find(ID).Ativo = DateTime.Now;
             this.db.Cursos.Update(this.db.Cursos.Find(ID));
             this.db.SaveChanges();
         }
         public Curso Get(long ID) => this.db.Cursos.Find(ID);
-        public List<Curso> GetAll(bool? ativo) => this.db.Cursos.Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
+        public List<Curso> GetAll(bool ativo) {
+            if (ativo) {
+                return this.db.Cursos.Where(x => !x.Ativo.HasValue).ToList();
+            } else {
+                return this.db.Cursos.ToList();
+            }
+        }
         public IEnumerable<Curso> Query(Expression<Func<Curso, bool>> predicate, params Expression<Func<Curso, object>>[] includeExpressions) {
             return includeExpressions.Aggregate<Expression<Func<Curso, object>>, IQueryable<Curso>>(db.Cursos, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }

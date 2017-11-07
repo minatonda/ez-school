@@ -6,19 +6,15 @@ using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Repositories
-{
-    public class UsuarioRepository : IRepository<Usuario>
-    {
+namespace Domain.Repositories {
+    public class UsuarioRepository : IRepository<Usuario> {
         private BaseContext db;
 
-        public UsuarioRepository(BaseContext db)
-        {
+        public UsuarioRepository(BaseContext db) {
             this.db = db;
         }
 
-        public Usuario Add(Usuario model)
-        {
+        public Usuario Add(Usuario model) {
             model.UsuarioInfo.ID = model.ID;
             this.db.UsuariosInfo.Add(model.UsuarioInfo);
 
@@ -36,10 +32,8 @@ namespace Domain.Repositories
             this.db.SaveChanges();
             return model;
         }
-        public Usuario Update(Usuario model)
-        {
-            if (model.UsuarioInfo != null)
-            {
+        public Usuario Update(Usuario model) {
+            if (model.UsuarioInfo != null) {
                 this.db.Attach(model.UsuarioInfo);
             }
 
@@ -55,10 +49,8 @@ namespace Domain.Repositories
             return model;
         }
 
-        public void Disable(string ID)
-        {
-            this.db.Usuarios.Find(ID).Ativo = false;
-
+        public void Disable(string ID) {
+            this.db.Usuarios.Find(ID).Ativo = DateTime.Now;
             this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
             this.db.SaveChanges();
         }
@@ -67,40 +59,44 @@ namespace Domain.Repositories
         public Usuario GetByRG(string rg) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.RG == rg);
         public UsuarioInfo GetInfo(string ID) => this.db.UsuariosInfo.Find(ID);
         public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
-        public List<Usuario> GetAll(bool? ativo) => this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList();
+        public List<Usuario> GetAll(bool ativo) {
+            if (ativo) {
+                return this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => !x.Ativo.HasValue).ToList();
+            } else {
+                return this.db.Usuarios.Include(i => i.UsuarioInfo).ToList();
+            }
+        }
+
         public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-
-        public Aluno UpdateAluno(Aluno model)
-        {
+        public List<Aluno> GetAlunosByTermo(string termo) {
+            return this.db.Alunos.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
+        }
+        public Aluno UpdateAluno(Aluno model) {
             var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
-
             this.db.Alunos.Update(aluno);
             return aluno;
         }
 
         public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-
-        public Professor UpdateProfessor(Professor model)
-        {
+        public List<Professor> GetProfessoresByTermo(string termo) {
+            return this.db.Professores.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
+        }
+        public Professor UpdateProfessor(Professor model) {
             var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
 
             this.db.Professores.Update(professor);
             return professor;
         }
 
-
-        public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions)
-        {
+        public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions) {
             return includeExpressions.Aggregate<Expression<Func<Usuario, object>>, IQueryable<Usuario>>(db.Usuarios, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
-        public void Disable(long ID)
-        {
+        public void Disable(long ID) {
             throw new NotImplementedException();
         }
 
-        public Usuario Get(long ID)
-        {
+        public Usuario Get(long ID) {
             throw new NotImplementedException();
         }
     }

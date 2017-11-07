@@ -1,6 +1,7 @@
 {
     "workbench.iconTheme": "material-icon-theme",
     "material-icon-theme.angular.iconsEnabled": false,
+    "omnisharp.projectLoadTimeout":180,
     "beautify.language": {
         "js": {
             //"type": ["javascript", "json", "typescript", "csharp"],

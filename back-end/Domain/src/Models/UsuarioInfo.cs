@@ -14,7 +14,7 @@ namespace Domain.Models {
         public DateTime? DataNascimento { get; set; }
         public string RG { get; set; }
         public string CPF { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

@@ -31,7 +31,7 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.ui.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso);
         }
         catch (e) {
 

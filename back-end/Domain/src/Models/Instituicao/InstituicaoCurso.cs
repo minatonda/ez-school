@@ -17,7 +17,7 @@ namespace Domain.Models
         public Instituicao Instituicao { get; set; }
         public Curso Curso { get; set; }
         public CursoGrade CursoGrade { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
 
         public DateTime DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }

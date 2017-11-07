@@ -38,6 +38,9 @@ namespace Domain {
             var listInstituicaoCursoPeriodo = getBaseInstituicaoCursoPeriodos(listInstituicaoCurso);
             context.InstituicaoCursoPeriodos.AddRange(listInstituicaoCursoPeriodo);
 
+            var listInstituicaoCursoTurma = getBaseInstituicaoCursoTurma(listInstituicaoCurso);
+            context.InstituicaoCursoTurmas.AddRange(listInstituicaoCursoTurma);
+
             context.SaveChanges();
         }
 
@@ -226,12 +229,37 @@ namespace Domain {
             };
         }
 
+        public static InstituicaoCursoTurma[] getBaseInstituicaoCursoTurma(InstituicaoCurso[] instituicaoCurso) {
+            return new InstituicaoCursoTurma[]{
+                new InstituicaoCursoTurma(){
+                    Nome="Turma A",
+                    Descricao="Turma A",
+                    InstituicaoCurso = instituicaoCurso[0],
+                    DataInicio=DateTime.Now,
+                },
+                new InstituicaoCursoTurma(){
+                    Nome="Turma B",
+                    Descricao="Turma B",
+                    InstituicaoCurso = instituicaoCurso[0],
+                    DataInicio=DateTime.Now,
+                },
+                new InstituicaoCursoTurma(){
+                    Nome="Turma C",
+                    Descricao="Turma C",
+                    InstituicaoCurso = instituicaoCurso[0],
+                    DataInicio=DateTime.Now,
+                }
+            };
+        }
+
         public static InstituicaoCursoPeriodo[] getBaseInstituicaoCursoPeriodos(InstituicaoCurso[] instituicaoCursos) {
             return new InstituicaoCursoPeriodo[]{
                 new InstituicaoCursoPeriodo(){
                     InstituicaoCurso=instituicaoCursos[0],
                     Inicio="08:00",
                     Fim="11:40",
+                    PausaInicio="09:30",
+                    PausaFim="10:00",
                     Dom=true,
                     Sab=true,
                     Sex=true,
@@ -244,6 +272,8 @@ namespace Domain {
                     InstituicaoCurso=instituicaoCursos[0],
                     Inicio="13:00",
                     Fim="18:40",
+                    PausaInicio="15:30",
+                    PausaFim="14:00",
                     Dom=true,
                     Sab=true,
                     Sex=true,

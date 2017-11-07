@@ -10,16 +10,24 @@ using Domain.Models;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaAdapter {
 
-        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, List<InstituicaoCursoOcorrenciaProfessor> professores, bool deep) {
+        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, Dictionary<InstituicaoCursoOcorrenciaProfessor, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula>> professores, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaVM();
 
             vm.ID = model.ID.ToString();
-            vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, false);
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
 
-            vm.Alunos = alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(x, true)).ToList();
-            vm.Professores = professores.Select(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToViewModel(x, false)).ToList();
+            if (model.Coordenador != null) {
+                vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, false);
+            }
+
+            if (alunos != null) {
+                vm.Alunos = alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(x, true)).ToList();
+            }
+
+            if (professores != null) {
+                vm.Professores = professores.Select(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToViewModel(x.Key, x.Value, false)).ToList();
+            }
 
             return vm;
         }
@@ -29,10 +37,13 @@ namespace Api.Data.ViewModels {
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
             }
-
-            model.Coordenador = ProfessorAdapter.ToModel(vm.Coordenador, false);
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
+
+            if (vm.Coordenador != null) {
+                model.Coordenador = ProfessorAdapter.ToModel(vm.Coordenador, false);
+            }
+            
             return model;
         }
 
@@ -40,8 +51,8 @@ namespace Api.Data.ViewModels {
             return vm.Alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(x, true)).ToList();
         }
 
-        public static List<InstituicaoCursoOcorrenciaProfessor> InstituicaoCursoOcorrenciaProfessoresFrom(InstituicaoCursoOcorrenciaVM vm) {
-            return vm.Professores.Select(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToModel(x, true)).ToList();
+        public static Dictionary<InstituicaoCursoOcorrenciaProfessor, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula>> InstituicaoCursoOcorrenciaProfessoresFrom(InstituicaoCursoOcorrenciaVM vm) {
+            return vm.Professores.ToDictionary(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToModel(x, true), x => InstituicaoCursoOcorrenciaProfessorAdapter.InstituicaoCursoOcorrenciaProfessorPeriodoAulasFrom(x));
         }
 
     }
