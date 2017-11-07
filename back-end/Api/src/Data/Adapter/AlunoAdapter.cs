@@ -11,11 +11,14 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class AlunoAdapter {
 
-        public static AlunoVM ToViewModel (Aluno model, bool deep) {
+        public static AlunoVM ToViewModel (Aluno model, List<AreaInteresse> areainteresse, bool deep) {
             var vm = new AlunoVM ();
             vm.ID = model.ID.ToString ();
             vm.Label = model.UsuarioInfo.Nome;
             vm.UsuarioInfo = UsuarioAdapter.ToViewModel (model.UsuarioInfo, false);
+            if(vm.CategoriaProfissionais != null) {
+                vm.CategoriaProfissionais = areainteresse.Select(x => CategoriaProfissionalAdapter.ToViewModel(x.CategoriaProfissional, true)).ToList();
+            }
 
             return vm;
         }
