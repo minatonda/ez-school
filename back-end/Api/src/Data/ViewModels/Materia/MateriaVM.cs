@@ -10,8 +10,13 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class MateriaVM : SelectVM {
 
+        public MateriaVM() {
+            this.MateriasRelacionadas = new List<MateriaVM>();
+        }
+
         public string Nome { get; set; }
         public string Descricao { get; set; }
+        public List<MateriaVM> MateriasRelacionadas { get; set; }
 
     }
 }
