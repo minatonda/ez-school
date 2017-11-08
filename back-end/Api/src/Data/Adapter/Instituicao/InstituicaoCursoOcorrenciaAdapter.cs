@@ -18,7 +18,7 @@ namespace Api.Data.ViewModels {
             vm.DataExpiracao = model.DataExpiracao;
 
             if (model.Coordenador != null) {
-                vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, false);
+                vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, null, false);
             }
 
             if (alunos != null) {
@@ -43,7 +43,7 @@ namespace Api.Data.ViewModels {
             if (vm.Coordenador != null) {
                 model.Coordenador = ProfessorAdapter.ToModel(vm.Coordenador, false);
             }
-            
+
             return model;
         }
 

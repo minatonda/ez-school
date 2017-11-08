@@ -18,6 +18,7 @@ import { InstituicaoCursoOcorrenciaManagementComponent } from '../../components/
 import { UsuarioAlunoComponent } from '../../components/usuario/aluno/usuario-aluno';
 import { CategoriaProfissionalComponent } from '../../components/categoria-profissional/categoria-profissional';
 import { CategoriaProfissionalManagementComponent } from '../../components/categoria-profissional/management/categoria-profissional-management';
+import { UsuarioProfessorComponent } from '../../components/usuario/professor/usuario-professor';
 
 export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.otr, path: RouterPath.ROOT, name: RouterPath.ROOT, component: HomeComponent, alias: 'Home' },
@@ -26,7 +27,7 @@ export const ROUTER_CONFIGS_CONSTANT: Array<RouterConfig> = [
     { menu: true, type: RouterPathType.add, path: RouterPath.USUARIO_ADD, name: RouterPath.USUARIO_ADD, component: UsuarioManagementComponent, alias: 'Usuário' },
     { menu: false, type: RouterPathType.upd, path: RouterPath.USUARIO_UPD, name: RouterPath.USUARIO_UPD, component: UsuarioManagementComponent, alias: 'Usuário' },
     { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_ALUNO, name: RouterPath.USUARIO_ALUNO, component: UsuarioAlunoComponent, alias: 'Aluno' },
-    { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_PROFESSOR, name: RouterPath.USUARIO_PROFESSOR, component: UsuarioAlunoComponent, alias: 'Professor' },
+    { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_PROFESSOR, name: RouterPath.USUARIO_PROFESSOR, component: UsuarioProfessorComponent, alias: 'Professor' },
     { menu: false, type: RouterPathType.otr, path: RouterPath.USUARIO_AUTENTICACAO, name: RouterPath.USUARIO_AUTENTICACAO, component: UsuarioAutenticacaoComponent, alias: 'Autenticação' },
 
     { menu: true, type: RouterPathType.list, path: RouterPath.CURSO, name: RouterPath.CURSO, component: CursoComponent, alias: 'Cursos' },

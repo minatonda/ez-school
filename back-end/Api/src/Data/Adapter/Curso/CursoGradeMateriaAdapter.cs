@@ -18,7 +18,7 @@ namespace Api.Data.ViewModels {
             vm.Label = model.Descricao;
 
             vm.Descricao = model.Descricao;
-            vm.Materia = MateriaAdapter.ToViewModel (model.Materia, true);
+            vm.Materia = MateriaAdapter.ToViewModel (model.Materia, null,  true);
 
             return vm;
         }

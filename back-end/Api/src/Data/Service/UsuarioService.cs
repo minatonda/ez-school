@@ -32,25 +32,31 @@ namespace Api.Data.Service {
             this._usuarioRepository.Disable(id);
         }
         public AlunoVM DetailAluno(string id) {
-            return AlunoAdapter.ToViewModel(this._usuarioRepository.GetAluno(id), true);
+            var areainteresses = this._usuarioRepository.GetAlunoAreaInteresse(id);
+            return AlunoAdapter.ToViewModel(this._usuarioRepository.GetAluno(id), areainteresses, true);
         }
         public AlunoVM UpdateAluno(AlunoVM viewModel) {
             var model = AlunoAdapter.ToModel(viewModel, true);
-            return AlunoAdapter.ToViewModel(this._usuarioRepository.UpdateAluno(model), true);
+            this._usuarioRepository.UpdateAluno(model, viewModel.CategoriaProfissionais.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
+            var areainteresse = this._usuarioRepository.GetAlunoAreaInteresse(null);
+            return AlunoAdapter.ToViewModel(model, areainteresse, true);
         }
         public List<AlunoVM> GetAlunosByTermo(string termo) {
-            return this._usuarioRepository.GetAlunosByTermo(termo).Select(x => AlunoAdapter.ToViewModel(x, true)).ToList();
+            return this._usuarioRepository.GetAlunosByTermo(termo).Select(x => AlunoAdapter.ToViewModel(x, null, true)).ToList();
         }
 
         public ProfessorVM DetailProfessor(string id) {
-            return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), true);
+            var areainteresses = this._usuarioRepository.GetProfessorAreaInteresse(id);
+            return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), areainteresses, true);
         }
         public ProfessorVM UpdateProfessor(ProfessorVM viewModel) {
             var model = ProfessorAdapter.ToModel(viewModel, true);
-            return ProfessorAdapter.ToViewModel(this._usuarioRepository.UpdateProfessor(model), true);
+            this._usuarioRepository.UpdateProfessor(model, viewModel.CategoriaProfissionais.Select(x => new AreaInteresse() { CategoriaProfissional = CategoriaProfissionalAdapter.ToModel(x, true) }).ToList());
+            var areainteresse = this._usuarioRepository.GetProfessorAreaInteresse(null);
+            return ProfessorAdapter.ToViewModel(model, areainteresse, true);
         }
         public List<ProfessorVM> GetProfessoresByTermo(string termo) {
-            return this._usuarioRepository.GetProfessoresByTermo(termo).Select(x => ProfessorAdapter.ToViewModel(x, true)).ToList();
+            return this._usuarioRepository.GetProfessoresByTermo(termo).Select(x => ProfessorAdapter.ToViewModel(x, null, true)).ToList();
         }
 
     }

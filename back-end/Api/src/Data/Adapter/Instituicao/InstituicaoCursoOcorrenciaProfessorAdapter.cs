@@ -14,13 +14,13 @@ namespace Api.Data.ViewModels {
             var vm = new InstituicaoCursoOcorrenciaProfessorVM();
 
             vm.ID = model.ID.ToString();
-            
+
             if (model.Turma != null) {
                 vm.Turma = InstituicaoCursoTurmaAdapter.ToViewModel(model.Turma, false);
             }
 
             if (model.Professor != null) {
-                vm.Professor = ProfessorAdapter.ToViewModel(model.Professor, true);
+                vm.Professor = ProfessorAdapter.ToViewModel(model.Professor, null, true);
             }
 
             if (model.Materia != null) {

@@ -18,7 +18,7 @@ namespace Api.Data.ViewModels {
                 vm.Turma = InstituicaoCursoTurmaAdapter.ToViewModel(model.Turma, false);
             }
             if (model.Aluno != null) {
-                vm.Aluno = AlunoAdapter.ToViewModel(model.Aluno, true);
+                vm.Aluno = AlunoAdapter.ToViewModel(model.Aluno, null, true);
             }
             if (model.Periodo != null) {
                 vm.Periodo = InstituicaoCursoPeriodoAdapter.ToViewModel(model.Periodo, false);
