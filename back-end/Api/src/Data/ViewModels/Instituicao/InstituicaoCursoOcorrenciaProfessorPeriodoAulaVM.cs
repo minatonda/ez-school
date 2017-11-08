@@ -13,7 +13,6 @@ namespace Api.Data.ViewModels {
 
         }
 
-        public InstituicaoCursoOcorrenciaProfessorVM InstituicaoCursoOcorrenciaProfessor { get; set; }
         public string Inicio { get; set; }
         public string Fim { get; set; }
         public DayOfWeek Dia { get; set; }

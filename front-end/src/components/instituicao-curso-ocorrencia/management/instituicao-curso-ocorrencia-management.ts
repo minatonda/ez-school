@@ -17,6 +17,7 @@ import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
 import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/instituicao-curso-turma';
 import { InstituicaoCursoOcorrenciaAluno } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-aluno';
 import { InstituicaoCursoOcorrenciaProfessor } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor';
+import { InstituicaoCursoOcorrenciaProfessorPeriodoAula } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor-periodo-aula';
 
 enum ModalOperation {
     aluno = 0,
@@ -25,6 +26,7 @@ enum ModalOperation {
 
 interface UI {
     periodos: Array < InstituicaoCursoPeriodo > ;
+    periodoAulas: Array < InstituicaoCursoOcorrenciaProfessorPeriodoAula > ;
     turmas: Array < InstituicaoCursoTurma > ;
     cursoGradeMaterias: Array < CursoGradeMateria > ;
     modalOperation: ModalOperation;
@@ -45,6 +47,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
 
     ui: UI = {
         periodos: undefined,
+        periodoAulas: undefined,
         cursoGradeMaterias: undefined,
         turmas: undefined,
         modalOperation: undefined,
@@ -106,6 +109,8 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         return this.model.professores.filter(x => x.periodo.id === periodo.id);
     }
 
+    
+
     addRegistro(aluno: Aluno, professor: Professor, turma: InstituicaoCursoTurma, periodo: InstituicaoCursoPeriodo, cursoGradeMateria: CursoGradeMateria) {
         switch (this.ui.modalOperation) {
             case (ModalOperation.aluno):
@@ -144,7 +149,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
             this.ui.periodos = await InstituicaoFactory.allPeriodo(this.$route.params.id, this.$route.params.idCurso);
             this.ui.cursoGradeMaterias = await InstituicaoFactory.allCursoGradeMaterias(this.$route.params.id, this.$route.params.idCurso);
             this.ui.turmas = await InstituicaoFactory.allTurma(this.$route.params.id, this.$route.params.idCurso);
-            let horas = await InstituicaoFactory.allPeriodoHoraLivre(this.$route.params.id, this.$route.params.idCurso, this.ui.periodos[0].id);
+            this.ui.periodoAulas = await InstituicaoFactory.allPeriodoAulaDisponivel(this.$route.params.id, this.$route.params.idCurso, this.ui.periodos[0].id);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }

@@ -66,9 +66,9 @@ namespace Api.Controllers {
             return this._instituicaoService.AllPeriodo(id, idCurso);
         }
 
-        [HttpGet("{id}/curso/{idCurso}/periodo/{idPeriodo}/hora-livre")]
-        public List<InstituicaoCursoPeriodoVM> AllPeriodoLivre(long id, long idCurso, long idPeriodo) {
-            return this._instituicaoService.AllPeriodoHoraDisponivel(id, idCurso, idPeriodo);
+        [HttpGet("{id}/curso/{idCurso}/periodo/{idPeriodo}/periodo-aula-disponivel")]
+        public List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {
+            return this._instituicaoService.AllPeriodoAulaDisponivel(id, idCurso, idPeriodo);
         }
 
         [HttpGet("{id}/curso/{idCurso}/turma")]

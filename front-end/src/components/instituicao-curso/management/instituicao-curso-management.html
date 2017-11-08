@@ -46,9 +46,9 @@
                             <div class="col-12 col-md-9 form-group">
                                 <label class="control-label invisible">Ocupar</label>
                                 <div class="btn-group d-flex" data-toggle="buttons">
-                                    <label class="btn btn-primary w-100" v-for="button in ui.instituicaoButtons" v-bind:class="{'active':ui.instituicaoCursoPeriodo[button.key]}">
-                                        <input type="checkbox" v-model="ui.instituicaoCursoPeriodo[button.key]">{{button.label}}
-                                    </label>
+                                    <button class="btn btn-primary w-100" v-for="button in ui.instituicaoButtons" v-on:click="toggleDiaSemana(button.value,ui.instituicaoCursoPeriodo)" v-bind:class="{'active':isDiaSemanaSelected(button.value,ui.instituicaoCursoPeriodo)}">
+                                        {{button.labelShort}}
+                                    </button>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 form-group">

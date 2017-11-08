@@ -7,19 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.Interface;
 
-namespace Api.Data.ViewModels
-{
-    public class InstituicaoCursoPeriodoVM : SelectVM
-    {
+namespace Api.Data.ViewModels {
+    public class InstituicaoCursoPeriodoVM : SelectVM {
+
+        public InstituicaoCursoPeriodoVM() {
+            this.DiaSemana = new List<DayOfWeek>();
+        }
+
         public string Inicio { get; set; }
         public string Fim { get; set; }
-        public bool Seg {get;set;}
-        public bool Ter {get;set;}
-        public bool Qua {get;set;}
-        public bool Qui {get;set;}
-        public bool Sex {get;set;}
-        public bool Sab {get;set;}
-        public bool Dom {get;set;}
+        public List<DayOfWeek> DiaSemana { get; set; }
 
     }
 }

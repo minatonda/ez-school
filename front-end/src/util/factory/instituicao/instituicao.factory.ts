@@ -6,6 +6,7 @@ import { InstituicaoCursoOcorrencia } from './instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from './instituicao-curso-periodo';
 import { InstituicaoCursoTurma } from './instituicao-curso-turma';
 import { CursoGradeMateria } from '../curso/curso-grade-materia';
+import { InstituicaoCursoOcorrenciaProfessorPeriodoAula } from './instituicao-curso-ocorrencia-professor-periodo-aula';
 
 export class InstituicaoFactory extends Factory {
 
@@ -131,9 +132,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async allPeriodoHoraLivre(id: string, idCurso: string, idPeriodo: string, notify?: boolean) {
+    public static async allPeriodoAulaDisponivel(id: string, idCurso: string, idPeriodo: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/periodo/${idPeriodo}/hora-livre`) as any ;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/periodo/${idPeriodo}/periodo-aula-disponivel`) as Array<InstituicaoCursoOcorrenciaProfessorPeriodoAula> ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

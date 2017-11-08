@@ -102,8 +102,8 @@ namespace Api.Data.Service {
             return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso).Select(x => InstituicaoCursoOcorrenciaAdapter.ToViewModel(x, null, null, false)).ToList();
         }
 
-        public List<InstituicaoCursoPeriodoVM> AllPeriodoHoraDisponivel(long id, long idCurso, long idPeriodo) {
-            var _list = new List<InstituicaoCursoPeriodoVM>();
+        public List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {
+            var _list = new List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM>();
 
             var _periodo = this._instituicaoRepository.GetCursoPeriodos(id, idCurso).SingleOrDefault(x => x.ID == idPeriodo);
             var _dateTimeInicio = DateTime.ParseExact(_periodo.Inicio, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
@@ -113,21 +113,60 @@ namespace Api.Data.Service {
             var _dateTimePausaInicio = DateTime.ParseExact(_periodo.PausaInicio, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             var _dateTimePausaFim = DateTime.ParseExact(_periodo.PausaFim, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             var _minutosPausa = (_dateTimePausaFim - _dateTimePausaInicio).TotalMinutes;
-
             _minutos -= _minutosPausa;
 
             while (_dateTimeInicio <= _dateTimePausaInicio) {
                 var _inicio = _dateTimeInicio.ToString("HH:mm");
                 _dateTimeInicio = _dateTimeInicio.AddMinutes((_minutos / _periodo.Quebras));
                 var _fim = _dateTimeInicio.ToString("HH:mm");
-                _list.Add(new InstituicaoCursoPeriodoVM() { Inicio = _inicio, Fim = _fim });
+                if (_periodo.Dom) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Sunday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Seg) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Monday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Ter) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Tuesday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Qua) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Wednesday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Qui) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Thursday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Sex) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Friday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Sab) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Saturday, Label = (_inicio + " - " + _fim) });
+                }
             }
 
             while (_dateTimePausaFim <= _dateTimeFim) {
                 var _inicio = _dateTimePausaFim.ToString("HH:mm");
                 _dateTimePausaFim = _dateTimePausaFim.AddMinutes((_minutos / _periodo.Quebras));
                 var _fim = _dateTimePausaFim.ToString("HH:mm");
-                _list.Add(new InstituicaoCursoPeriodoVM() { Inicio = _inicio, Fim = _fim });
+                if (_periodo.Dom) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Sunday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Seg) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Monday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Ter) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Tuesday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Qua) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Wednesday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Qui) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Thursday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Sex) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Friday, Label = (_inicio + " - " + _fim) });
+                }
+                if (_periodo.Sab) {
+                    _list.Add(new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() { Inicio = _inicio, Fim = _fim, Dia = DayOfWeek.Saturday, Label = (_inicio + " - " + _fim) });
+                }
             }
 
             return _list;
