@@ -14,6 +14,19 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12 col-md-10">
+                <selector v-bind:itens="ui.materias" placeholder="Materias Relacionadas" label="label" v-model="ui.materiaRelacionada"></selector>
+            </div>
+            <div class="col-12 col-md-2 form-group text-left">
+                <button class="btn btn-primary" v-on:click="addMateriaRelacionada(ui.materiaRelacionada)">Adicionar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <card-table-component v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table-component>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 form-group text-right">
                 <button class="btn btn-primary" v-on:click="save()">Salvar</button>
             </div>
