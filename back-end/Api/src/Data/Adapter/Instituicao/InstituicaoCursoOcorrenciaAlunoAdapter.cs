@@ -14,14 +14,9 @@ namespace Api.Data.ViewModels {
             var vm = new InstituicaoCursoOcorrenciaAlunoVM();
 
             vm.ID = model.ID.ToString();
-            if (model.Turma != null) {
-                vm.Turma = InstituicaoCursoTurmaAdapter.ToViewModel(model.Turma, false);
-            }
+
             if (model.Aluno != null) {
                 vm.Aluno = AlunoAdapter.ToViewModel(model.Aluno, null, true);
-            }
-            if (model.Periodo != null) {
-                vm.Periodo = InstituicaoCursoPeriodoAdapter.ToViewModel(model.Periodo, false);
             }
 
             vm.Label = vm.Aluno.UsuarioInfo.Nome;
@@ -34,14 +29,9 @@ namespace Api.Data.ViewModels {
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
             }
-            if (vm.Turma != null) {
-                model.Turma = InstituicaoCursoTurmaAdapter.ToModel(vm.Turma, false);
-            }
+            
             if (vm.Aluno != null) {
                 model.Aluno = AlunoAdapter.ToModel(vm.Aluno, true);
-            }
-            if (vm.Periodo != null) {
-                model.Periodo = InstituicaoCursoPeriodoAdapter.ToModel(vm.Periodo, false);
             }
 
             return model;

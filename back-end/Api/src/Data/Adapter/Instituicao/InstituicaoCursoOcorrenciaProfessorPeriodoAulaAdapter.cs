@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCursoOcorrenciaProfessorPeriodoAulaAdapter {
+    public class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaAdapter {
 
-        public static InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM ToViewModel(InstituicaoCursoOcorrenciaProfessorPeriodoAula model, bool deep) {
+        public static InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM ToViewModel(InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM();
             vm.ID = model.ID.ToString();
             vm.Dia = model.Dia;
@@ -51,8 +51,8 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static InstituicaoCursoOcorrenciaProfessorPeriodoAula ToModel(InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM vm, bool deep) {
-            var model = new InstituicaoCursoOcorrenciaProfessorPeriodoAula();
+        public static InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula ToModel(InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM vm, bool deep) {
+            var model = new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula();
             
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
@@ -61,6 +61,7 @@ namespace Api.Data.ViewModels {
             model.Dia = vm.Dia;
             model.Inicio = vm.Inicio;
             model.Fim = vm.Fim;
+            
             return model;
         }
 

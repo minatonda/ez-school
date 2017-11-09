@@ -85,21 +85,21 @@ namespace Api.Data.Service {
         public InstituicaoCursoOcorrenciaVM AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
             var _model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true);
             var _alunos = InstituicaoCursoOcorrenciaAdapter.InstituicaoCursoOcorrenciaAlunosFrom(instituicaoCurso);
-            var _professores = InstituicaoCursoOcorrenciaAdapter.InstituicaoCursoOcorrenciaProfessoresFrom(instituicaoCurso);
-            this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _model, _alunos, _professores);
-            return InstituicaoCursoOcorrenciaAdapter.ToViewModel(_model, _alunos, _professores, true);
+            //var _professores = InstituicaoCursoOcorrenciaAdapter.InstituicaoCursoOcorrenciaProfessoresFrom(instituicaoCurso);
+            this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _model, _alunos);
+            return InstituicaoCursoOcorrenciaAdapter.ToViewModel(_model, _alunos, true);
         }
 
         public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia(long id, long idCurso, string dataInicio) {
             var _dataInicio = DateTime.ParseExact(dataInicio, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
             var _instituicaoCursoOcorrencia = this._instituicaoRepository.GetCursoOcorrencia(id, idCurso, _dataInicio);
             var _alunos = this._instituicaoRepository.GetCursoOcorrenciaAlunos(_instituicaoCursoOcorrencia.ID);
-            var _professores = this._instituicaoRepository.GetCursoOcorrenciaProfessores(_instituicaoCursoOcorrencia.ID).ToDictionary(x => x, x => this._instituicaoRepository.GetCursoOcorrenciaProfessorPeriodoAula(x.ID));
-            return InstituicaoCursoOcorrenciaAdapter.ToViewModel(_instituicaoCursoOcorrencia, _alunos, _professores, true);
+            //var _professores = this._instituicaoRepository.GetCursoOcorrenciaProfessores(_instituicaoCursoOcorrencia.ID).ToDictionary(x => x, x => this._instituicaoRepository.GetCursoOcorrenciaProfessorPeriodoAula(x.ID));
+            return InstituicaoCursoOcorrenciaAdapter.ToViewModel(_instituicaoCursoOcorrencia, _alunos, true);
         }
 
         public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia(long id, long idCurso) {
-            return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso).Select(x => InstituicaoCursoOcorrenciaAdapter.ToViewModel(x, null, null, false)).ToList();
+            return this._instituicaoRepository.GetCursoOcorrencias(id, idCurso).Select(x => InstituicaoCursoOcorrenciaAdapter.ToViewModel(x, null, false)).ToList();
         }
 
         public List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {

@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCursoOcorrenciaProfessorAdapter {
+    public class InstituicaoCursoOcorrenciaPeriodoProfessorAdapter {
 
-        public static InstituicaoCursoOcorrenciaProfessorVM ToViewModel(InstituicaoCursoOcorrenciaProfessor model, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula> instituicaoCursoOcorrenciaProfessorPeriodoAulas, bool deep) {
+        public static InstituicaoCursoOcorrenciaProfessorVM ToViewModel(InstituicaoCursoOcorrenciaPeriodoProfessor model, List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> instituicaoCursoOcorrenciaProfessorPeriodoAulas, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaProfessorVM();
 
             vm.ID = model.ID.ToString();
 
-            if (model.Turma != null) {
-                vm.Turma = InstituicaoCursoTurmaAdapter.ToViewModel(model.Turma, false);
+            if (model.InstituicaoCursoTurma != null) {
+                vm.Turma = InstituicaoCursoTurmaAdapter.ToViewModel(model.InstituicaoCursoTurma, false);
             }
 
             if (model.Professor != null) {
                 vm.Professor = ProfessorAdapter.ToViewModel(model.Professor, null, true);
             }
 
-            if (model.Materia != null) {
-                vm.Materia = CursoGradeMateriaAdapter.ToViewModel(model.Materia, false);
+            if (model.CursoGradeMateria != null) {
+                vm.Materia = CursoGradeMateriaAdapter.ToViewModel(model.CursoGradeMateria, false);
             }
 
-            if (model.Periodo != null) {
-                vm.Periodo = InstituicaoCursoPeriodoAdapter.ToViewModel(model.Periodo, false);
+            if (model.InstituicaoCursoPeriodo != null) {
+                vm.Periodo = InstituicaoCursoPeriodoAdapter.ToViewModel(model.InstituicaoCursoPeriodo, false);
             }
 
             vm.Label = vm.Professor.UsuarioInfo.Nome;
@@ -36,15 +36,15 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static InstituicaoCursoOcorrenciaProfessor ToModel(InstituicaoCursoOcorrenciaProfessorVM vm, bool deep) {
-            var model = new InstituicaoCursoOcorrenciaProfessor();
+        public static InstituicaoCursoOcorrenciaPeriodoProfessor ToModel(InstituicaoCursoOcorrenciaProfessorVM vm, bool deep) {
+            var model = new InstituicaoCursoOcorrenciaPeriodoProfessor();
 
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
             }
 
             if (vm.Turma != null) {
-                model.Turma = InstituicaoCursoTurmaAdapter.ToModel(vm.Turma, false);
+                model.InstituicaoCursoTurma = InstituicaoCursoTurmaAdapter.ToModel(vm.Turma, false);
             }
 
             if (vm.Professor != null) {
@@ -52,18 +52,18 @@ namespace Api.Data.ViewModels {
             }
 
             if (vm.Materia != null) {
-                model.Materia = CursoGradeMateriaAdapter.ToModel(vm.Materia, false);
+                model.CursoGradeMateria = CursoGradeMateriaAdapter.ToModel(vm.Materia, false);
             }
 
             if (vm.Periodo != null) {
-                model.Periodo = InstituicaoCursoPeriodoAdapter.ToModel(vm.Periodo, false);
+                model.InstituicaoCursoPeriodo = InstituicaoCursoPeriodoAdapter.ToModel(vm.Periodo, false);
             }
 
             return model;
         }
 
-        public static List<InstituicaoCursoOcorrenciaProfessorPeriodoAula> InstituicaoCursoOcorrenciaProfessorPeriodoAulasFrom(InstituicaoCursoOcorrenciaProfessorVM vm) {
-            return vm.PeriodosAula.Select(x => InstituicaoCursoOcorrenciaProfessorPeriodoAulaAdapter.ToModel(x, true)).ToList();
+        public static List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> InstituicaoCursoOcorrenciaProfessorPeriodoAulasFrom(InstituicaoCursoOcorrenciaProfessorVM vm) {
+            return vm.PeriodosAula.Select(x => InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaAdapter.ToModel(x, true)).ToList();
         }
 
     }

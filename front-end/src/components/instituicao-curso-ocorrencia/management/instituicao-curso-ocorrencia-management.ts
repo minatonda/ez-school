@@ -93,63 +93,9 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         this.ui.modalOperation = ModalOperation.professor;
     }
 
-    isModalRegistroAluno() {
-        return this.ui.modalOperation === ModalOperation.aluno;
-    }
-
-    isModalRegistroProfessor() {
-        return this.ui.modalOperation === ModalOperation.professor;
-    }
-
-    alunosPorPeriodo(periodo: InstituicaoCursoPeriodo) {
-        return this.model.alunos.filter(x => x.periodo.id === periodo.id);
-    }
-
-    professoresPorPeriodo(periodo: InstituicaoCursoPeriodo) {
-        return this.model.professores.filter(x => x.periodo.id === periodo.id);
-    }
-
-    
-
-    addRegistro(aluno: Aluno, professor: Professor, turma: InstituicaoCursoTurma, periodo: InstituicaoCursoPeriodo, cursoGradeMateria: CursoGradeMateria) {
-        switch (this.ui.modalOperation) {
-            case (ModalOperation.aluno):
-                {
-                    this.addAluno(aluno, turma, periodo);
-                    break;
-                }
-            case (ModalOperation.professor):
-                {
-                    this.addProfessor(professor, turma, periodo, cursoGradeMateria);
-                    break;
-                }
-        }
-    }
-
-    addAluno(aluno: Aluno, turma: InstituicaoCursoTurma, periodo: InstituicaoCursoPeriodo) {
-        let instituicaoCursoOcorrencia = new InstituicaoCursoOcorrenciaAluno();
-        instituicaoCursoOcorrencia.aluno = aluno;
-        instituicaoCursoOcorrencia.periodo = periodo;
-        instituicaoCursoOcorrencia.turma = turma;
-        this.model.alunos.push(instituicaoCursoOcorrencia);
-    }
-
-    addProfessor(professor: Professor, turma: InstituicaoCursoTurma, periodo: InstituicaoCursoPeriodo, cursoGradeMateria: CursoGradeMateria) {
-        let instituicaoCursoOcorrencia = new InstituicaoCursoOcorrenciaProfessor();
-        instituicaoCursoOcorrencia.professor = professor;
-        instituicaoCursoOcorrencia.periodo = periodo;
-        instituicaoCursoOcorrencia.turma = turma;
-        instituicaoCursoOcorrencia.cursoGradeMateria = cursoGradeMateria;
-        this.model.professores.push(instituicaoCursoOcorrencia);
-    }
-
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.ui.periodos = await InstituicaoFactory.allPeriodo(this.$route.params.id, this.$route.params.idCurso);
-            this.ui.cursoGradeMaterias = await InstituicaoFactory.allCursoGradeMaterias(this.$route.params.id, this.$route.params.idCurso);
-            this.ui.turmas = await InstituicaoFactory.allTurma(this.$route.params.id, this.$route.params.idCurso);
-            this.ui.periodoAulas = await InstituicaoFactory.allPeriodoAulaDisponivel(this.$route.params.id, this.$route.params.idCurso, this.ui.periodos[0].id);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }

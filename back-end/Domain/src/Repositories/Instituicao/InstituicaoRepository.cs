@@ -183,26 +183,12 @@ namespace Domain.Repositories {
             this.db.SaveChanges();
         }
 
-        public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, Dictionary<InstituicaoCursoOcorrenciaProfessor, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula>> professores) {
+        public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos) {
             var instituicaoCurso = this.GetCurso(id, idCurso);
             model.InstituicaoCurso = instituicaoCurso;
-
             alunos.ForEach(x => x.Aluno = this.usuarioRepository.GetAluno(x.Aluno.ID));
-            alunos.ForEach(x => x.Periodo = this.db.InstituicaoCursoPeriodos.Find(x.Periodo.ID));
-            alunos.ForEach(x => x.Turma = this.db.InstituicaoCursoTurmas.Find(x.Turma.ID));
             alunos.ForEach(x => x.InstituicaoCursoOcorrencia = model);
             this.db.InstituicaoCursoOcorrenciaAlunos.AddRange(alunos);
-
-            professores.Keys.ToList().ForEach(x => x.Professor = this.usuarioRepository.GetProfessor(x.Professor.ID));
-            professores.Keys.ToList().ForEach(x => x.Periodo = this.db.InstituicaoCursoPeriodos.Find(x.Periodo.ID));
-            professores.Keys.ToList().ForEach(x => x.Turma = this.db.InstituicaoCursoTurmas.Find(x.Turma.ID));
-            professores.Keys.ToList().ForEach(x => x.InstituicaoCursoOcorrencia = model);
-
-            professores.ToList().ForEach(x => x.Value.ForEach(y => y.InstituicaoCursoOcorrenciaProfessor = x.Key));
-
-            this.db.InstituicaoCursoOcorrenciaProfessores.AddRange(professores.Keys.ToList());
-            this.db.InstituicaoCursoOcorrenciaProfessorPeriodoAulas.AddRange(professores.Values.SelectMany(x => x).ToList());
-
             this.db.InstituicaoCursoOcorrencias.Add(model);
             this.db.SaveChanges();
             return model;
@@ -220,29 +206,9 @@ namespace Domain.Repositories {
             .SingleOrDefault(x => x.InstituicaoCurso.ID == this.GetCurso(id, idCurso).ID && x.DataInicio.HasValue && x.DataInicio.Value.Date.Equals(dataInicio.Value.Date));
         }
 
-        public List<InstituicaoCursoOcorrenciaProfessor> GetCursoOcorrenciaProfessores(long idCursoOcorrencia) {
-            return this.db.InstituicaoCursoOcorrenciaProfessores
-            .Include(i => i.InstituicaoCursoOcorrencia)
-            .Include(i => i.Periodo)
-            .Include(i => i.Turma)
-            .Include(i => i.Professor)
-            .Include(i => i.Materia)
-            .Where(x => x.InstituicaoCursoOcorrencia.ID == idCursoOcorrencia)
-            .ToList();
-        }
-
-        public List<InstituicaoCursoOcorrenciaProfessorPeriodoAula> GetCursoOcorrenciaProfessorPeriodoAula(long idCursoOcorrenciaProfessor) {
-            return this.db.InstituicaoCursoOcorrenciaProfessorPeriodoAulas
-            .Include(i => i.InstituicaoCursoOcorrenciaProfessor)
-            .Where(x => x.InstituicaoCursoOcorrenciaProfessor.ID == idCursoOcorrenciaProfessor)
-            .ToList();
-        }
-        
         public List<InstituicaoCursoOcorrenciaAluno> GetCursoOcorrenciaAlunos(long idCursoOcorrencia) {
             return this.db.InstituicaoCursoOcorrenciaAlunos
             .Include(i => i.InstituicaoCursoOcorrencia)
-            .Include(i => i.Periodo)
-            .Include(i => i.Turma)
             .Include(i => i.Aluno)
             .Where(x => x.InstituicaoCursoOcorrencia.ID == idCursoOcorrencia)
             .ToList();

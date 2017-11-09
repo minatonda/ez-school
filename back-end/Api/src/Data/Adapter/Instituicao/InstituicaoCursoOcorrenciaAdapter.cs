@@ -10,7 +10,7 @@ using Domain.Models;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaAdapter {
 
-        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, Dictionary<InstituicaoCursoOcorrenciaProfessor, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula>> professores, bool deep) {
+        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaVM();
 
             vm.ID = model.ID.ToString();
@@ -22,11 +22,7 @@ namespace Api.Data.ViewModels {
             }
 
             if (alunos != null) {
-                vm.Alunos = alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(x, true)).ToList();
-            }
-
-            if (professores != null) {
-                vm.Professores = professores.Select(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToViewModel(x.Key, x.Value, false)).ToList();
+                vm.InstituicaoCursoOcorrenciaAlunos = alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(x, true)).ToList();
             }
 
             return vm;
@@ -48,11 +44,7 @@ namespace Api.Data.ViewModels {
         }
 
         public static List<InstituicaoCursoOcorrenciaAluno> InstituicaoCursoOcorrenciaAlunosFrom(InstituicaoCursoOcorrenciaVM vm) {
-            return vm.Alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(x, true)).ToList();
-        }
-
-        public static Dictionary<InstituicaoCursoOcorrenciaProfessor, List<InstituicaoCursoOcorrenciaProfessorPeriodoAula>> InstituicaoCursoOcorrenciaProfessoresFrom(InstituicaoCursoOcorrenciaVM vm) {
-            return vm.Professores.ToDictionary(x => InstituicaoCursoOcorrenciaProfessorAdapter.ToModel(x, true), x => InstituicaoCursoOcorrenciaProfessorAdapter.InstituicaoCursoOcorrenciaProfessorPeriodoAulasFrom(x));
+            return vm.InstituicaoCursoOcorrenciaAlunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(x, true)).ToList();
         }
 
     }

@@ -128,7 +128,10 @@ export class SelectorComponent extends Vue {
 
     public getItemLabel(item, highlight ?: boolean) {
         let labelResult: any;
-        if (this.label instanceof String || ((typeof this.label) === 'string')) {
+        if (this.label === undefined) {
+            return item;
+        }
+        else if (this.label instanceof String || ((typeof this.label) === 'string')) {
             labelResult = item[this.label as string];
             return highlight ? this.highlight(labelResult, this.text) : labelResult;
         }

@@ -9,14 +9,12 @@ import { InstituicaoCursoOcorrenciaProfessor } from './instituicao-curso-ocorren
 export class InstituicaoCursoOcorrencia {
     
     constructor() {
-        this.alunos = new Array<InstituicaoCursoOcorrenciaAluno>();
-        this.professores = new Array<InstituicaoCursoOcorrenciaProfessor>();
+        this.instituicaoCursoOcorrenciaAlunos = new Array<InstituicaoCursoOcorrenciaAluno>();
     }
 
     id?: string;
     coordenador: Professor;
-    alunos: Array<InstituicaoCursoOcorrenciaAluno>;
-    professores: Array<InstituicaoCursoOcorrenciaProfessor>;
+    instituicaoCursoOcorrenciaAlunos: Array<InstituicaoCursoOcorrenciaAluno>;
     dataInicio: Date;
     dataFim: Date;
 }
