@@ -1,4 +1,4 @@
-export class InstituicaoCursoOcorrenciaProfessorPeriodoAula {
+export class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula {
     id ?: string;
     inicio: string;
     fim: string;

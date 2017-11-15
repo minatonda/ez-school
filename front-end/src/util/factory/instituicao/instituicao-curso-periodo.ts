@@ -1,4 +1,4 @@
-import { DayOfWeek } from './instituicao-curso-ocorrencia-professor-periodo-aula';
+import { DayOfWeek } from "./instituicao-curso-ocorrencia-periodo-professor-periodo-aula";
 
 export class InstituicaoCursoPeriodo {
 

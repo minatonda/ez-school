@@ -67,7 +67,7 @@ namespace Api.Controllers {
         }
 
         [HttpGet("{id}/curso/{idCurso}/periodo/{idPeriodo}/periodo-aula-disponivel")]
-        public List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {
+        public List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {
             return this._instituicaoService.AllPeriodoAulaDisponivel(id, idCurso, idPeriodo);
         }
 

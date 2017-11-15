@@ -183,14 +183,40 @@ namespace Domain.Repositories {
             this.db.SaveChanges();
         }
 
-        public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos) {
+        public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia model) {
             var instituicaoCurso = this.GetCurso(id, idCurso);
             model.InstituicaoCurso = instituicaoCurso;
             model.Coordenador = this.usuarioRepository.GetProfessor(model.Coordenador.ID);
-            alunos.ForEach(x => x.Aluno = this.usuarioRepository.GetAluno(x.Aluno.ID));
-            alunos.ForEach(x => x.InstituicaoCursoOcorrencia = model);
-            this.db.InstituicaoCursoOcorrenciaAlunos.AddRange(alunos);
             this.db.InstituicaoCursoOcorrencias.Add(model);
+            this.db.SaveChanges();
+            return model;
+        }
+
+        public InstituicaoCursoOcorrenciaPeriodo AddCursoOcorrenciaPeriodo(long id, long idCurso, DateTime? dataInicio, InstituicaoCursoOcorrenciaPeriodo model, List<InstituicaoCursoOcorrenciaPeriodoAluno> alunos, Dictionary<InstituicaoCursoOcorrenciaPeriodoProfessor, List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula>> professores) {
+            var instituicaoCurso = this.GetCurso(id, idCurso);
+            var instituicaoCursoOcorrencia = this.GetCursoOcorrencia(id, idCurso, dataInicio);
+
+            model.InstituicaoCursoOcorrencia = instituicaoCursoOcorrencia;
+
+            alunos.ForEach(x => {
+                x.InstituicaoCursoOcorrenciaAluno.Aluno = this.usuarioRepository.GetAluno(x.InstituicaoCursoOcorrenciaAluno.Aluno.ID);
+                x.InstituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia = instituicaoCursoOcorrencia;
+                x.InstituicaoCursoPeriodo = this.GetCursoPeriodos(id, idCurso).SingleOrDefault(y => y.ID == x.InstituicaoCursoPeriodo.ID);
+                x.InstituicaoCursoTurma = this.GetCursoTurmas(id, idCurso).SingleOrDefault(y => y.ID == x.InstituicaoCursoTurma.ID);
+            });
+
+            professores.ToList().ForEach(x => {
+                x.Key.InstituicaoCursoOcorrencia = instituicaoCursoOcorrencia;
+                x.Key.InstituicaoCursoPeriodo = this.GetCursoPeriodos(id, idCurso).SingleOrDefault(y => y.ID == x.Key.InstituicaoCursoPeriodo.ID);
+                x.Key.InstituicaoCursoTurma = this.GetCursoTurmas(id, idCurso).SingleOrDefault(y => y.ID == x.Key.InstituicaoCursoTurma.ID);
+                x.Key.Professor = this.usuarioRepository.GetProfessor(x.Key.Professor.ID);
+                x.Key.CursoGradeMateria = this.db.CursoGradeMaterias.SingleOrDefault(y => y.ID == x.Key.CursoGradeMateria.ID);
+            });
+
+            this.db.InstituicaoCursoOcorrenciaAlunos.AddRange(alunos.Select(x => x.InstituicaoCursoOcorrenciaAluno));
+            this.db.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.AddRange(professores.SelectMany(x => x.Value));
+            this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.AddRange(professores.Select(x => x.Key));
+
             this.db.SaveChanges();
             return model;
         }

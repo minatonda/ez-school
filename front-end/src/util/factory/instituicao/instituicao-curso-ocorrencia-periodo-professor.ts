@@ -3,10 +3,10 @@ import { InstituicaoCursoTurma } from './instituicao-curso-turma';
 import { InstituicaoCursoPeriodo } from './instituicao-curso-periodo';
 import { CursoGradeMateria } from '../curso/curso-grade-materia';
 
-export class InstituicaoCursoOcorrenciaProfessor {
+export class InstituicaoCursoOcorrenciaPeriodoProfessor {
     id ?: string;
     professor: Professor;
     cursoGradeMateria: CursoGradeMateria;
-    turma: InstituicaoCursoTurma;
-    periodo: InstituicaoCursoPeriodo;
+    instituicaoCursoTurma: InstituicaoCursoTurma;
+    instituicaoCursoPeriodo: InstituicaoCursoPeriodo;
 }

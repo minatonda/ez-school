@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM : SelectVM {
-        public InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM() {
+    public class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM : SelectVM {
+        public InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM() {
 
         }
 
