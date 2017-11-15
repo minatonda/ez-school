@@ -13,7 +13,7 @@ namespace Domain.Models {
         public string Descricao { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

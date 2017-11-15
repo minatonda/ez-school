@@ -15,6 +15,6 @@ namespace Domain.Models {
         public long ID { get; set; }
         public string Nome { get; set; }
         public string CNPJ { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
     }
 }

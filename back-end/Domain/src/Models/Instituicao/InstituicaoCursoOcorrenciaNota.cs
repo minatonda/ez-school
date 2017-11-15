@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using Domain.Models.Interface;
 
 namespace Domain.Models {
-    public class InstituicaoCursoOcorrenciaMateriaNota : IBaseModel {
-        public InstituicaoCursoOcorrenciaMateriaNota () {
+    public class InstituicaoCursoOcorrenciaNota : IBaseModel {
+        public InstituicaoCursoOcorrenciaNota() {
 
         }
 
@@ -14,9 +14,9 @@ namespace Domain.Models {
         public int Valor { get; set; }
         public DateTime DataLancamento { get; set; }
         public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
-        public InstituicaoCursoOcorrenciaMateria InstituicaoCursoOcorrenciaMateria { get; set; }
-        
-        public bool Ativo { get; set; } = true;
+        public InstituicaoCursoOcorrenciaPeriodoProfessor InstituicaoCursoOcorrenciaPeriodoProfessor { get; set; }
+
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

@@ -31,11 +31,11 @@ export enum RouterPath {
 
         INSTITUICAO_CURSO = '/instituicao/:id/curso',
         INSTITUICAO_CURSO_ADD = '/instituicao/:id/curso/add',
-        INSTITUICAO_CURSO_UPD = '/instituicao/:id/curso/:idCurso/:dataInicio/upd',
+        INSTITUICAO_CURSO_UPD = '/instituicao/:id/curso/:idCurso/upd',
 
-        INSTITUICAO_CURSO_OCORRENCIA = '/instituicao/:id/curso/:idCurso/:dataInicio/ocorrencia',
-        INSTITUICAO_CURSO_OCORRENCIA_ADD = '/instituicao/:id/curso/:idCurso/:dataInicio/ocorrencia/add',
-        INSTITUICAO_CURSO_OCORRENCIA_UPD = '/instituicao/:id/curso/:idCurso/:dataInicio/ocorrencia/:dataInicioOcorrencia/upd',
+        INSTITUICAO_CURSO_OCORRENCIA = '/instituicao/:id/curso/:idCurso/ocorrencia',
+        INSTITUICAO_CURSO_OCORRENCIA_ADD = '/instituicao/:id/curso/:idCurso/ocorrencia/add',
+        INSTITUICAO_CURSO_OCORRENCIA_UPD = '/instituicao/:id/curso/:idCurso/ocorrencia/:dataInicioOcorrencia/upd',
 
         CATEGORIA_PROFISSIONAL = '/categoria-profissinal',
         CATEGORIA_PROFISSIONAL_ADD = '/categoria-profissinal/add',

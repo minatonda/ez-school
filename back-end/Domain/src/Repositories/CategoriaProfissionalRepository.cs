@@ -32,13 +32,19 @@ namespace Domain.Repositories {
             return model;
         }
         public void Disable(long ID) {
-            this.db.CategoriaProfissionais.Find(ID).Ativo = false;
+            this.db.CategoriaProfissionais.Find(ID).Ativo = DateTime.Now;
             this.db.CategoriaProfissionais.Update(this.db.CategoriaProfissionais.Find(ID));
             this.db.SaveChanges();
         }
 
         public CategoriaProfissional Get(long ID) => this.db.CategoriaProfissionais.Find(ID);
-        public List<CategoriaProfissional> GetAll(bool? ativo) => this.db.CategoriaProfissionais.Where(x => x.Ativo == (ativo.HasValue ? ativo.Value : false)).ToList(); 
+        public List<CategoriaProfissional> GetAll(bool ativo) {
+            if (ativo) {
+                return this.db.CategoriaProfissionais.Where(x => !x.Ativo.HasValue).ToList();
+            } else {
+                return this.db.CategoriaProfissionais.ToList();
+            }
+        }
 
         public IEnumerable<CategoriaProfissional> Query(Expression<Func<CategoriaProfissional, bool>> predicate, params Expression<Func<CategoriaProfissional, object>>[] includeExpressions) {
             return includeExpressions.Aggregate<Expression<Func<CategoriaProfissional, object>>, IQueryable<CategoriaProfissional>>(db.CategoriaProfissionais, (current, expression) => current.Include(expression)).Where(predicate.Compile());

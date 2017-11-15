@@ -10,11 +10,11 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaVM : SelectVM {
         public InstituicaoCursoOcorrenciaVM() {
-            this.Alunos = new List<AlunoVM>();
+            this.InstituicaoCursoOcorrenciaAlunos = new List<InstituicaoCursoOcorrenciaAlunoVM>();
         }
 
         public ProfessorVM Coordenador { get; set; }
-        public List<AlunoVM> Alunos { get; set; }
+        public List<InstituicaoCursoOcorrenciaAlunoVM> InstituicaoCursoOcorrenciaAlunos { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
 

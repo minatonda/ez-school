@@ -31,7 +31,7 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     async created() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.ui.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
+            this.ui.lista = await InstituicaoFactory.allCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso);
         }
         catch (e) {
 
@@ -43,8 +43,8 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: InstituicaoCursoOcorrencia) => item.dataInicio, () => 'Data de Início'),
-            new CardTableColumn((item: InstituicaoCursoOcorrencia) => item.dataFim, () => 'Data de Fim')
+            new CardTableColumn((item: InstituicaoCursoOcorrencia) => { return moment(item.dataInicio).format('DD/MM/YYYY'); }, () => 'Data de Início'),
+            new CardTableColumn((item: InstituicaoCursoOcorrencia) => { return item.dataFim ? moment(item.dataFim).format('DD/MM/YYYY') : undefined; }, () => 'Data de Fim')
         ];
     }
 
@@ -63,6 +63,17 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
                     dataInicioOcorrencia: moment(item.dataInicio).format('DD-MM-YYYY')
                 }),
                 (item) => 'Atualizar',
+                (item) => ['fa', 'fa-edit'],
+                (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item: InstituicaoCursoOcorrencia) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_OCORRENCIA, {
+                    id: this.$route.params.id,
+                    idCurso: this.$route.params.idCurso,
+                    dataInicio: this.$route.params.dataInicio,
+                    dataInicioOcorrencia: moment(item.dataInicio).format('DD-MM-YYYY')
+                }),
+                (item) => 'Gerenciar Períodos',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             )

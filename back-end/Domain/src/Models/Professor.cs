@@ -13,7 +13,7 @@ namespace Domain.Models {
         [Key]
         public string ID { get; set; }
         public UsuarioInfo UsuarioInfo { get; set; }
-        public bool Ativo { get; set; } = false;
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

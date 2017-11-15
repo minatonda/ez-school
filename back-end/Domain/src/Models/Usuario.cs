@@ -14,7 +14,7 @@ namespace Domain.Models {
         public string Password { get; set; }
         public string Email { get; set; }
         public UsuarioInfo UsuarioInfo { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

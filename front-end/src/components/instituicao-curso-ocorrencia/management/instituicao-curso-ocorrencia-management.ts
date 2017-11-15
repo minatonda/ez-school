@@ -10,11 +10,25 @@ import { CursoGrade } from '../../../util/factory/curso/curso-grade';
 import { CursoFactory } from '../../../util/factory/curso/curso.factory';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
 import { Professor } from '../../../util/factory/usuario/professor';
+import { CursoGradeMateria } from '../../../util/factory/curso/curso-grade-materia';
+import { Aluno } from '../../../util/factory/usuario/aluno';
+import { Usuario } from '../../../util/factory/usuario/usuario';
+import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
+import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/instituicao-curso-turma';
+import { InstituicaoCursoOcorrenciaAluno } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-aluno';
+import { InstituicaoCursoOcorrenciaProfessor } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor';
+import { InstituicaoCursoOcorrenciaProfessorPeriodoAula } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor-periodo-aula';
+import { INSPECT_MAX_BYTES } from 'buffer';
+
+enum ModalOperation {
+    aluno = 0,
+        professor = 1
+}
 
 interface UI {
-    periodo: InstituicaoCursoPeriodo;
-    professores: Array < Professor > ;
-    periodos: Array < InstituicaoCursoPeriodo > ;
+    queryAluno: any;
+    queryProfessor: any;
+    usuarioInfoLabel: any;
 }
 
 @Component({
@@ -28,15 +42,23 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     operation: RouterPathType;
 
     ui: UI = {
-        periodo: undefined,
-        professores: undefined,
-        periodos: undefined
+        queryAluno: async(term) => {
+            let itens = await UsuarioFactory.allAluno(term);
+            return itens;
+        },
+        queryProfessor: async(term) => {
+            let itens = await UsuarioFactory.allProfessor(term);
+            return itens;
+        },
+        usuarioInfoLabel: (item) => {
+            let obj: any = {};
+            obj.key = item.label;
+            obj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.usuarioInfo.rg}</span><span style="float:right;">${item.usuarioInfo.cpf}</span></div>`;
+            return obj;
+        }
     };
 
-
-
     model: InstituicaoCursoOcorrencia = new InstituicaoCursoOcorrencia();
-
 
     constructor() {
         super();
@@ -49,7 +71,6 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
-            this.ui.periodos = await InstituicaoFactory.allPeriodo(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio);
             if (this.operation === RouterPathType.upd) {
                 // this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idInstituicao, true);
             }
@@ -62,13 +83,19 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         }
     }
 
+    addAluno(aluno: Aluno) {
+        let instituicaoCursoOcorrenciaAluno = new InstituicaoCursoOcorrenciaAluno();
+        instituicaoCursoOcorrenciaAluno.aluno = aluno;
+        this.model.instituicaoCursoOcorrenciaAlunos.push(instituicaoCursoOcorrenciaAluno);
+    }
+
     async save() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await InstituicaoFactory.addCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idCurso, this.$route.params.dataInicio, this.model, true);
+                        await InstituicaoFactory.addCursoOcorrencia(this.$route.params.id, this.$route.params.idCurso, this.model, true);
                         break;
                     }
                 case (RouterPathType.upd):

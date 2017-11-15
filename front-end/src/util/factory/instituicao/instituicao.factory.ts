@@ -5,6 +5,8 @@ import { InstituicaoCurso } from './instituicao-curso';
 import { InstituicaoCursoOcorrencia } from './instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from './instituicao-curso-periodo';
 import { InstituicaoCursoTurma } from './instituicao-curso-turma';
+import { CursoGradeMateria } from '../curso/curso-grade-materia';
+import { InstituicaoCursoOcorrenciaProfessorPeriodoAula } from './instituicao-curso-ocorrencia-professor-periodo-aula';
 
 export class InstituicaoFactory extends Factory {
 
@@ -82,9 +84,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async detailCurso(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+    public static async detailCurso(id: string, idCurso: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}`) as InstituicaoCurso;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}`) as InstituicaoCurso;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -106,9 +108,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async renewCurso(id: string, model: InstituicaoCurso, notify?: boolean) {
+    public static async updateCurso(id: string, model: InstituicaoCurso, notify?: boolean) {
         try {
-            let result = await this.post(`/api/instituicao/${id}/curso/renew`, model) as InstituicaoCurso;
+            let result = await this.post(`/api/instituicao/${id}/curso/update`, model) as InstituicaoCurso;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -118,9 +120,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async allPeriodo(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+    public static async allPeriodo(id: string, idCurso: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/periodo`) as Array < InstituicaoCursoPeriodo > ;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/periodo`) as Array < InstituicaoCursoPeriodo > ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -130,9 +132,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async allTurma(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+    public static async allPeriodoAulaDisponivel(id: string, idCurso: string, idPeriodo: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/turma`) as Array < InstituicaoCursoTurma > ;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/periodo/${idPeriodo}/periodo-aula-disponivel`) as Array<InstituicaoCursoOcorrenciaProfessorPeriodoAula> ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -142,9 +144,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async allCursoOcorrencia(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+    public static async allTurma(id: string, idCurso: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/ocorrencia`) as Array < InstituicaoCursoOcorrencia > ;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/turma`) as Array < InstituicaoCursoTurma > ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -154,9 +156,9 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async detailCursoOcorrencia(id: string, idCurso: string, dataInicio: string, dataInicioOcorrencia: string, notify?: boolean) {
+    public static async allCursoGradeMaterias(id: string, idCurso: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/ocorrencia/${dataInicioOcorrencia}`) as InstituicaoCursoOcorrencia;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/grade-materias`) as Array < CursoGradeMateria > ;
             Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -166,9 +168,45 @@ export class InstituicaoFactory extends Factory {
         }
     }
 
-    public static async addCursoOcorrencia(id: string, idCurso: string, dataInicio: string, model: InstituicaoCursoOcorrencia, notify?: boolean) {
+    public static async allCursoTurmas(id: string, idCurso: string, notify?: boolean) {
         try {
-            let result = await this.put(`/api/instituicao/${id}/curso/${idCurso}/${dataInicio}/ocorrencia/add`, model) as InstituicaoCursoOcorrencia;
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/turma`) as Array < InstituicaoCursoTurma > ;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async allCursoOcorrencia(id: string, idCurso: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia`) as Array < InstituicaoCursoOcorrencia > ;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async detailCursoOcorrencia(id: string, idCurso: string, dataInicio: string, notify?: boolean) {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia/${dataInicio}`) as InstituicaoCursoOcorrencia;
+            Notify.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            return result;
+        }
+        catch (error) {
+            Notify.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            throw error;
+        }
+    }
+
+    public static async addCursoOcorrencia(id: string, idCurso: string, model: InstituicaoCursoOcorrencia, notify?: boolean) {
+        try {
+            let result = await this.put(`/api/instituicao/${id}/curso/${idCurso}/ocorrencia/add`, model) as InstituicaoCursoOcorrencia;
             Notify.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }

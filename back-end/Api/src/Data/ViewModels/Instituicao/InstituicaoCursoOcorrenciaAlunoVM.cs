@@ -8,15 +8,12 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class InstituicaoCursoPeriodoVM : SelectVM {
+    public class InstituicaoCursoOcorrenciaAlunoVM : SelectVM {
+        public InstituicaoCursoOcorrenciaAlunoVM() {
 
-        public InstituicaoCursoPeriodoVM() {
-            this.DiaSemana = new List<DayOfWeek>();
         }
 
-        public string Inicio { get; set; }
-        public string Fim { get; set; }
-        public List<DayOfWeek> DiaSemana { get; set; }
+        public AlunoVM Aluno { get; set; }
 
     }
 }

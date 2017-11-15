@@ -1,12 +1,13 @@
+import { DayOfWeek } from './instituicao-curso-ocorrencia-professor-periodo-aula';
+
 export class InstituicaoCursoPeriodo {
-    id?: string;
+
+    constructor() {
+        this.diaSemana = new Array < DayOfWeek > ();
+    }
+
+    id ?: string;
     inicio: string;
     fim: string;
-    seg: boolean = false;
-    ter: boolean = false;
-    qua: boolean = false;
-    qui: boolean = false;
-    sex: boolean = false;
-    sab: boolean = false;
-    dom: boolean = false;
+    diaSemana: Array < DayOfWeek > ;
 }

@@ -41,6 +41,10 @@ namespace Api.Data.Service {
             var areainteresse = this._usuarioRepository.GetAlunoAreaInteresse(null);
             return AlunoAdapter.ToViewModel(model, areainteresse, true);
         }
+        public List<AlunoVM> GetAlunosByTermo(string termo) {
+            return this._usuarioRepository.GetAlunosByTermo(termo).Select(x => AlunoAdapter.ToViewModel(x, null, true)).ToList();
+        }
+
         public ProfessorVM DetailProfessor(string id) {
             var areainteresses = this._usuarioRepository.GetProfessorAreaInteresse(id);
             return ProfessorAdapter.ToViewModel(this._usuarioRepository.GetProfessor(id), areainteresses, true);
@@ -51,5 +55,9 @@ namespace Api.Data.Service {
             var areainteresse = this._usuarioRepository.GetProfessorAreaInteresse(null);
             return ProfessorAdapter.ToViewModel(model, areainteresse, true);
         }
+        public List<ProfessorVM> GetProfessoresByTermo(string termo) {
+            return this._usuarioRepository.GetProfessoresByTermo(termo).Select(x => ProfessorAdapter.ToViewModel(x, null, true)).ToList();
+        }
+
     }
 }

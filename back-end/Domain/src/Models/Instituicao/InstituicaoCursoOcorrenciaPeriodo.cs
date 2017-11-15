@@ -3,22 +3,18 @@ using System.ComponentModel.DataAnnotations;
 using Domain.Models.Interface;
 
 namespace Domain.Models {
-    public class InstituicaoCursoOcorrenciaCoordenador : IBaseModel {
+    public class InstituicaoCursoOcorrenciaPeriodo : IBaseModel {
 
-        public InstituicaoCursoOcorrenciaCoordenador () {
+        public InstituicaoCursoOcorrenciaPeriodo() {
 
         }
 
         [Key]
         public long ID { get; set; }
         public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
-        public Professor Professor { get; set; }
-        public bool Confirmado  { get; set ;} = false;
-
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
-
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }

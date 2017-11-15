@@ -12,6 +12,8 @@ import { CardTableColumn, CardTableMenuEntry, CardTableMenu } from '../../common
 import { InstituicaoCursoOcorrencia } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia';
 import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
 import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/instituicao-curso-turma';
+import { DayOfWeekEnumLabel } from '../../../util/constants/enum-label.constant';
+import { DayOfWeek } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor-periodo-aula';
 
 interface UI {
     cursos: Array < Curso > ;
@@ -40,15 +42,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
         cursoGrades: undefined,
         instituicaoCursoPeriodo: new InstituicaoCursoPeriodo(),
         instituicaoCursoTurma: new InstituicaoCursoTurma(),
-        instituicaoButtons: [
-            { label: 'Seg', key: 'seg' },
-            { label: 'Ter', key: 'ter' },
-            { label: 'Qua', key: 'qua' },
-            { label: 'Qui', key: 'qui' },
-            { label: 'Sex', key: 'sex' },
-            { label: 'Sab', key: 'sab' },
-            { label: 'Dom', key: 'dom' },
-        ]
+        instituicaoButtons: DayOfWeekEnumLabel
     };
 
     constructor() {
@@ -64,7 +58,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             this.ui.cursos = await CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idCurso, this.$route.params.dataInicio, true);
+                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idCurso, true);
             }
         }
         catch (e) {
@@ -89,9 +83,9 @@ export class InstituicaoCursoManagementComponent extends Vue {
             new CardTableColumn((item: InstituicaoCursoPeriodo) => item.inicio, () => 'Início'),
             new CardTableColumn((item: InstituicaoCursoPeriodo) => item.fim, () => 'Fim'),
             new CardTableColumn((item: InstituicaoCursoPeriodo) => {
-                return this.ui.instituicaoButtons.map((button) => {
-                    if (item[button.key]) {
-                        return `<span class="badge badge-primary mx-2">${button.label}</span>`;
+                return DayOfWeekEnumLabel.map((day) => {
+                    if (this.isDiaSemanaSelected(day.value, item)) {
+                        return `<span class="badge badge-primary mx-2">${day.labelShort}</span>`;
                     }
                 }).join('');
             }, () => 'Dias'),
@@ -99,7 +93,9 @@ export class InstituicaoCursoManagementComponent extends Vue {
         return { itens: this.model.periodos, columns: columns, menu: menu };
     }
     public addPeriodo(periodo: InstituicaoCursoPeriodo) {
-        this.model.periodos.push(Object.assign({}, periodo));
+        let periodoAdd = Object.assign({}, periodo);
+        periodoAdd.diaSemana = periodo.diaSemana.slice();
+        this.model.periodos.push(periodoAdd);
     }
     public removePeriodo(item: InstituicaoCursoPeriodo) {
         this.model.periodos.splice(this.model.periodos.indexOf(item), 1);
@@ -128,6 +124,19 @@ export class InstituicaoCursoManagementComponent extends Vue {
         this.model.turmas.splice(this.model.turmas.indexOf(item), 1);
     }
 
+    public toggleDiaSemana(dia: DayOfWeek, periodo: InstituicaoCursoPeriodo) {
+        if (this.isDiaSemanaSelected(dia, periodo)) {
+            periodo.diaSemana.splice(periodo.diaSemana.indexOf(dia), 1);
+        }
+        else {
+            periodo.diaSemana.push(dia);
+        }
+    }
+
+    public isDiaSemanaSelected(dia: DayOfWeek, periodo: InstituicaoCursoPeriodo) {
+        return periodo.diaSemana.indexOf(dia) > -1;
+    }
+
     public async onCursoChanged(curso) {
         this.clearCursoGrade = true;
         setImmediate(() => { this.clearCursoGrade = false; });
@@ -150,7 +159,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
                     }
                 case (RouterPathType.upd):
                     {
-                        await InstituicaoFactory.renewCurso(this.$route.params.id, this.model, true);
+                        await InstituicaoFactory.updateCurso(this.$route.params.id, this.model, true);
                         break;
                     }
             }

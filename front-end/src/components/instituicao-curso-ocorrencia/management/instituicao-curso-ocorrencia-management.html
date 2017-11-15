@@ -6,13 +6,50 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="card w-100">
+            <div class="col-12 col-md-6">
+                <div class="card w-100 mt-2 mb-2">
+                    <div class="card-header"><b>Dados Principais</b></div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-4 form-group">
-                                <label class="control-label">Periodo</label>
-                                <selector v-model="ui.periodo" v-bind:itens="ui.periodos" placeholder="Periodo" label="label"></selector>
+                            <div class="col-12 col-md-12 form-group">
+                                <label class="control-label">Coordenador</label>
+                                <selector v-model="model.coordenador" v-bind:query="ui.queryProfessor" placeholder="Professor" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card w-100 mt-2 mb-2">
+                    <div class="card-header"><b>Alunos</b></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-9 form-group">
+                                <label class="control-label">Aluno</label>
+                                <selector v-model="ui.aluno" v-bind:query="ui.queryAluno" placeholder="Aluno" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label invisible">Ocupar</label>
+                                <button class="btn btn-primary btn-block" v-on:click="addAluno(ui.aluno)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card w-100 mt-2 mb-2" v-for="aluno in model.instituicaoCursoOcorrenciaAlunos">
+                                    <div class="card-body pt-2 pb-2">
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 align-self-center">
+                                                <b>Aluno: </b><span v-html="aluno.aluno.label"></span>
+                                            </div>
+                                            <div class="col-12 col-md-6 align-self-center">
+
+                                            </div>
+                                            <div class="col-12 col-md-2  align-self-center text-right">
+                                                <button class="btn btn-danger btn-sm"><span>Remover</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

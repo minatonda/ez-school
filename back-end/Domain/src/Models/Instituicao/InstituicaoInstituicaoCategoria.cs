@@ -19,5 +19,6 @@ namespace Domain.Models
         public Instituicao Instituicao { get; set; }
         [Key]
         public InstituicaoCategoria InstituicaoCategoria { get; set; }
+        public DateTime? Ativo { get; set; } = null;
     }
 }

@@ -4,12 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Models.Interface;
 
-namespace Domain.Models
-{
-    public class MateriaRelacionamento : IBaseModel
-    {
-        public MateriaRelacionamento()
-        {
+namespace Domain.Models {
+    public class MateriaRelacionamento : IBaseModel {
+        public MateriaRelacionamento() {
 
         }
 
@@ -18,6 +15,6 @@ namespace Domain.Models
         public long ID { get; set; }
         public Materia MateriaPrincipal { get; set; }
         public Materia MateriaPai { get; set; }
-        public bool Ativo { get; set; } = true;
+        public DateTime? Ativo { get; set; } = null;
     }
 }
