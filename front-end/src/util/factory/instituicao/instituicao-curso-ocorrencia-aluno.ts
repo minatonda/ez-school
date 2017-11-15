@@ -5,6 +5,4 @@ import { InstituicaoCursoPeriodo } from './instituicao-curso-periodo';
 export class InstituicaoCursoOcorrenciaAluno {
     id ?: string;
     aluno: Aluno;
-    turma: InstituicaoCursoTurma;
-    periodo: InstituicaoCursoPeriodo;
 }

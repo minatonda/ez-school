@@ -84,6 +84,11 @@ namespace Api.Data.Service {
 
         public InstituicaoCursoOcorrenciaVM AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
             var _model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true);
+
+            if (!_model.DataInicio.HasValue) {
+                _model.DataInicio = DateTime.Now;
+            }
+
             var _alunos = InstituicaoCursoOcorrenciaAdapter.InstituicaoCursoOcorrenciaAlunosFrom(instituicaoCurso);
             //var _professores = InstituicaoCursoOcorrenciaAdapter.InstituicaoCursoOcorrenciaProfessoresFrom(instituicaoCurso);
             this._instituicaoRepository.AddCursoOcorrencia(id, idCurso, _model, _alunos);

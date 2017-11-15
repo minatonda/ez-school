@@ -186,6 +186,7 @@ namespace Domain.Repositories {
         public InstituicaoCursoOcorrencia AddCursoOcorrencia(long id, long idCurso, InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos) {
             var instituicaoCurso = this.GetCurso(id, idCurso);
             model.InstituicaoCurso = instituicaoCurso;
+            model.Coordenador = this.usuarioRepository.GetProfessor(model.Coordenador.ID);
             alunos.ForEach(x => x.Aluno = this.usuarioRepository.GetAluno(x.Aluno.ID));
             alunos.ForEach(x => x.InstituicaoCursoOcorrencia = model);
             this.db.InstituicaoCursoOcorrenciaAlunos.AddRange(alunos);

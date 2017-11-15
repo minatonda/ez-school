@@ -18,6 +18,7 @@ import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/institu
 import { InstituicaoCursoOcorrenciaAluno } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-aluno';
 import { InstituicaoCursoOcorrenciaProfessor } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor';
 import { InstituicaoCursoOcorrenciaProfessorPeriodoAula } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor-periodo-aula';
+import { INSPECT_MAX_BYTES } from 'buffer';
 
 enum ModalOperation {
     aluno = 0,
@@ -25,11 +26,6 @@ enum ModalOperation {
 }
 
 interface UI {
-    periodos: Array < InstituicaoCursoPeriodo > ;
-    periodoAulas: Array < InstituicaoCursoOcorrenciaProfessorPeriodoAula > ;
-    turmas: Array < InstituicaoCursoTurma > ;
-    cursoGradeMaterias: Array < CursoGradeMateria > ;
-    modalOperation: ModalOperation;
     queryAluno: any;
     queryProfessor: any;
     usuarioInfoLabel: any;
@@ -46,11 +42,6 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
     operation: RouterPathType;
 
     ui: UI = {
-        periodos: undefined,
-        periodoAulas: undefined,
-        cursoGradeMaterias: undefined,
-        turmas: undefined,
-        modalOperation: undefined,
         queryAluno: async(term) => {
             let itens = await UsuarioFactory.allAluno(term);
             return itens;
@@ -64,7 +55,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
             obj.key = item.label;
             obj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.usuarioInfo.rg}</span><span style="float:right;">${item.usuarioInfo.cpf}</span></div>`;
             return obj;
-        },
+        }
     };
 
     model: InstituicaoCursoOcorrencia = new InstituicaoCursoOcorrencia();
@@ -75,22 +66,6 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
 
     created() {
 
-    }
-
-    openModalRegistro() {
-        (this.$refs['modal-aluno-professor'] as any).show();
-    }
-
-    closeModalRegistro() {
-        (this.$refs['modal-aluno-professor'] as any).hide();
-    }
-
-    setModalRegistroAluno() {
-        this.ui.modalOperation = ModalOperation.aluno;
-    }
-
-    setModalRegistroProfessor() {
-        this.ui.modalOperation = ModalOperation.professor;
     }
 
     async mounted() {
@@ -106,6 +81,12 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
+    }
+
+    addAluno(aluno: Aluno) {
+        let instituicaoCursoOcorrenciaAluno = new InstituicaoCursoOcorrenciaAluno();
+        instituicaoCursoOcorrenciaAluno.aluno = aluno;
+        this.model.instituicaoCursoOcorrenciaAlunos.push(instituicaoCursoOcorrenciaAluno);
     }
 
     async save() {

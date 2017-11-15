@@ -6,31 +6,43 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 form-group text-right">
-                <button class="btn btn-primary" v-on:click="openModalRegistro()">Novo Registro</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card w-100 mt-2 mb-2" v-for="periodo in ui.periodos">
-                    <div class="card-header"><b>Período: </b><span v-html="periodo.label">periodo.label</span></div>
+            <div class="col-12 col-md-6">
+                <div class="card w-100 mt-2 mb-2">
+                    <div class="card-header"><b>Dados Principais</b></div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-12 col-md-12 form-group">
+                                <label class="control-label">Coordenador</label>
+                                <selector v-model="model.coordenador" v-bind:query="ui.queryProfessor" placeholder="Professor" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card w-100 mt-2 mb-2">
+                    <div class="card-header"><b>Alunos</b></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-9 form-group">
+                                <label class="control-label">Aluno</label>
+                                <selector v-model="ui.aluno" v-bind:query="ui.queryAluno" placeholder="Aluno" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label invisible">Ocupar</label>
+                                <button class="btn btn-primary btn-block" v-on:click="addAluno(ui.aluno)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12"><b>Professores</b></div>
-                                </div>
-                                <div class="card w-100 mt-2 mb-2" v-for="professor in professoresPorPeriodo(periodo)">
+                                <div class="card w-100 mt-2 mb-2" v-for="aluno in model.instituicaoCursoOcorrenciaAlunos">
                                     <div class="card-body pt-2 pb-2">
                                         <div class="row">
                                             <div class="col-12 col-md-4 align-self-center">
-                                                <b>Professor: </b><span v-html="professor.professor.label"></span>
+                                                <b>Aluno: </b><span v-html="aluno.aluno.label"></span>
                                             </div>
-                                            <div class="col-12 col-md-4  align-self-center">
-                                                <b>Matéria: </b><span v-html="professor.cursoGradeMateria.label"></span>
-                                            </div>
-                                            <div class="col-12 col-md-2  align-self-center">
-                                                <b>Turma: </b><span v-html="professor.turma.label"></span>
+                                            <div class="col-12 col-md-6 align-self-center">
+
                                             </div>
                                             <div class="col-12 col-md-2  align-self-center text-right">
                                                 <button class="btn btn-danger btn-sm"><span>Remover</span></button>
@@ -40,78 +52,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <hr></hr>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12"><b>Alunos</b></div>
-                                </div>
-                                <div class="card w-100 mt-2 mb-2" v-for="aluno in alunosPorPeriodo(periodo)">
-                                    <div class="card-body pt-2 pb-2">
-                                        <div class="row">
-                                            <div class="col-12 col-md-4 align-self-center">
-                                                <b>Aluno: </b><span v-html="aluno.aluno.label"></span>
-                                            </div>
-                                            <div class="col-12 col-md-4  align-self-center">
-                                                <b>Turma: </b><span v-html="aluno.turma.label"></span>
-                                            </div>
-                                            <div class="col-12 col-md-4  align-self-center text-right">
-                                                <button class="btn btn-danger btn-sm"><span>Remover</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <b-modal ref="modal-aluno-professor" hide-footer size="lg" title="Adicionar Registro">
-                    <div class="row">
-                        <div class="col-12 form-group text-right">
-                            <button class="btn btn-primary" v-bind:class="{'active':isModalRegistroAluno()}" v-on:click="setModalRegistroAluno()">Aluno</button>
-                            <button class="btn btn-primary" v-bind:class="{'active':isModalRegistroProfessor()}" v-on:click="setModalRegistroProfessor()">Professor</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 form-group">
-                            <label class="control-label">Periodo</label>
-                            <selector v-model="ui.periodo" v-bind:itens="ui.periodos" placeholder="Período" label="label"></selector>
-                        </div>
-                        <div class="col-12 col-md-6 form-group">
-                            <label class="control-label">Turma</label>
-                            <selector v-model="ui.turma" v-bind:itens="ui.turmas" placeholder="Turma" label="label"></selector>
-                        </div>
-                        <div class="col-12">
-                            <hr></hr>
-                        </div>
-                        <div class="col-12 col-md-6 form-group" v-show="isModalRegistroProfessor()">
-                            <label class="control-label">Professor</label>
-                            <selector v-model="ui.professor" v-bind:query="ui.queryProfessor" placeholder="Professor" :label="ui.usuarioInfoLabel"></selector>
-                        </div>
-                        <div class="col-12 col-md-6 form-group" v-show="isModalRegistroProfessor()">
-                            <label class="control-label">Matéria</label>
-                            <selector v-model="ui.cursoGradeMateria" v-bind:itens="ui.cursoGradeMaterias" placeholder="Matéria" label="label"></selector>
-                        </div>
-                        <div class="col-12 col-md-6 form-group" v-show="isModalRegistroAluno()">
-                            <label class="control-label">Aluno</label>
-                            <selector v-model="ui.aluno" v-bind:query="ui.queryAluno" placeholder="Aluno" label="label"></selector>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button class="btn btn-primary" v-on:click="addRegistro(ui.aluno, ui.professor, ui.turma, ui.periodo, ui.cursoGradeMateria)">Adicionar</button>
-                        </div>
-                    </div>
-                </b-modal>
             </div>
         </div>
         <div class="row">

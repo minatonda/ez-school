@@ -14,8 +14,6 @@ namespace Api.Data.ViewModels {
         }
 
         public AlunoVM Aluno { get; set; }
-        public InstituicaoCursoTurmaVM Turma { get; set; }
-        public InstituicaoCursoPeriodoVM Periodo { get; set; }
 
     }
 }

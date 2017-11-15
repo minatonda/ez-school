@@ -184,9 +184,40 @@ namespace Domain {
                 RG = "421920816"
             };
             marcal.UsuarioInfo = marcalInfo;
+
+            var thais = new Usuario() {
+                Username = "thsmimi",
+                Password = "12345678",
+                Email = "tha_araujo@hotmail.com"
+            };
+            var thaisInfo = new UsuarioInfo() {
+                ID = thais.ID,
+                Nome = "Thais Araújo Santos",
+                DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                CPF = "52176819820",
+                RG = "510984128"
+            };
+            thais.UsuarioInfo = thaisInfo;
+
+            var barbara = new Usuario() {
+                Username = "anabarbara",
+                Password = "12345678",
+                Email = "ana_barbara@hotmail.com"
+            };
+            var barbaraInfo = new UsuarioInfo() {
+                ID = barbara.ID,
+                Nome = "Ana Bárbara",
+                DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                CPF = "768309116406",
+                RG = "760942814"
+            };
+            barbara.UsuarioInfo = barbaraInfo;
+
             return new Usuario[] {
                     carvalho,
-                    marcal
+                    marcal,
+                    thais,
+                    barbara
                 };
         }
 
