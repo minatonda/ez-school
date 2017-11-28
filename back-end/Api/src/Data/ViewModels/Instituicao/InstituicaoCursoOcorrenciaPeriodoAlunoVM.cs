@@ -13,7 +13,7 @@ namespace Api.Data.ViewModels {
 
         }
 
-        public InstituicaoCursoOcorrenciaAlunoVM InstituicaoCursoOcorrenciaAluno { get; set; }
+        public AlunoVM Aluno { get; set; }
         public InstituicaoCursoTurmaVM InstituicaoCursoTurma { get; set; }
         public InstituicaoCursoPeriodoVM InstituicaoCursoPeriodo { get; set; }
 

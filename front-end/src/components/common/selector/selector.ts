@@ -21,6 +21,8 @@ export class SelectorComponent extends Vue {
     placeholder: string;
     @Prop([String, Function])
     label: any;
+    @Prop({ type: Boolean })
+    disabled: false ;
     @Prop({ type: Function })
     change: Function;
     @Prop({ type: Boolean, default: false })
@@ -45,6 +47,10 @@ export class SelectorComponent extends Vue {
         else {
             return !!this.internalValue;
         }
+    }
+
+    public isDisabled() {
+        return !!this.disabled;
     }
 
     public isPointer(index) {
@@ -126,7 +132,7 @@ export class SelectorComponent extends Vue {
         }
     }
 
-    public getItemLabel(item, highlight ?: boolean) {
+    public getItemLabel(item, highlight?: boolean) {
         let labelResult: any;
         if (this.label === undefined) {
             return item;
@@ -224,7 +230,9 @@ export class SelectorComponent extends Vue {
 
     @Watch('text')
     public async onTextChanged(val) {
-        this.queryItens = await this.query(val);
+        if (this.query) {
+            this.queryItens = await this.query(val);
+        }
     }
 
 }

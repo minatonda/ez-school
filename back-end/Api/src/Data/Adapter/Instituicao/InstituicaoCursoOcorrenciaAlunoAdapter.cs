@@ -29,11 +29,18 @@ namespace Api.Data.ViewModels {
             if (vm.ID != null) {
                 model.ID = long.Parse(vm.ID);
             }
-            
+
             if (vm.Aluno != null) {
                 model.Aluno = AlunoAdapter.ToModel(vm.Aluno, true);
             }
 
+            return model;
+        }
+
+        public static InstituicaoCursoOcorrenciaAluno ToModel(InstituicaoCursoOcorrenciaVM instituicaoCursoOcorrencia, AlunoVM aluno) {
+            var model = new InstituicaoCursoOcorrenciaAluno();
+            model.InstituicaoCursoOcorrencia = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCursoOcorrencia, true);
+            model.Aluno = AlunoAdapter.ToModel(aluno, true);
             return model;
         }
 

@@ -18,6 +18,9 @@ namespace Api.Data.ViewModels {
             vm.Label = model.Inicio + " - " + model.Fim;
             vm.Inicio = model.Inicio;
             vm.Fim = model.Fim;
+            vm.PausaInicio = model.PausaInicio;
+            vm.PausaFim = model.PausaFim;
+            vm.Quebras = model.Quebras;
 
             if (model.Dom) {
                 vm.DiaSemana.Add(DayOfWeek.Sunday);
@@ -52,6 +55,9 @@ namespace Api.Data.ViewModels {
 
             model.Inicio = vm.Inicio;
             model.Fim = vm.Fim;
+            model.PausaInicio = vm.PausaInicio;
+            model.PausaFim = vm.PausaFim;
+            model.Quebras = vm.Quebras;
 
             model.Dom = vm.DiaSemana.Contains(DayOfWeek.Sunday);
             model.Seg = vm.DiaSemana.Contains(DayOfWeek.Monday);

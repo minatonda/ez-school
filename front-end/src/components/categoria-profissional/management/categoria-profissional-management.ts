@@ -1,10 +1,10 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType, RouterPath } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { CategoriaProfissionalFactory } from '../../../util/factory/categoria-profissional/categoria-profissional.factory';
-import { CategoriaProfissional } from '../../../util/factory/categoria-profissional/categoria-profissional';
+import { RouterPathType, RouterPath } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
+import { CategoriaProfissionalFactory } from '../../../module/factory/categoria-profissional.factory';
+import { CategoriaProfissional } from '../../../module/model/server/categoria-profissional';
 
 @Component({
     template: require('./categoria-profissional-management.html')
@@ -34,7 +34,7 @@ export class CategoriaProfissionalManagementComponent extends Vue {
             }
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -54,7 +54,7 @@ export class CategoriaProfissionalManagementComponent extends Vue {
                     break;
                 }
             }
-            RouterManager.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL);
+            Router.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL);
         }
         catch (e) {
 

@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { MateriaFactory } from '../../../util/factory/materia/materia.factory';
-import { Materia } from '../../../util/factory/materia/materia';
 import { CardTableMenuEntry, CardTableMenu, CardTableColumn } from '../../common/card-table/card-table.types';
+import { Materia } from '../../../module/model/server/materia';
+import { RouterPathType } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { MateriaFactory } from '../../../module/factory/materia.factory';
+import { Router } from '../../../router';
 
 interface UI {
     materiaRelacionada: Materia;
@@ -42,7 +42,7 @@ export class MateriaManagementComponent extends Vue {
             this.ui.materias = await MateriaFactory.all();
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);

@@ -1,12 +1,12 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../../../common/card-table/card-table.types';
-import { MateriaFactory } from '../../../../util/factory/materia/materia.factory';
-import { CursoFactory } from '../../../../util/factory/curso/curso.factory';
-import { Curso } from '../../../../util/factory/curso/curso';
-import { CursoGrade } from '../../../../util/factory/curso/curso-grade';
-import { Materia } from '../../../../util/factory/materia/materia';
-import { CursoGradeMateria } from '../../../../util/factory/curso/curso-grade-materia';
+import { CursoFactory } from '../../../../module/factory/curso.factory';
+import { MateriaFactory } from '../../../../module/factory/materia.factory';
+import { CursoGrade } from '../../../../module/model/server/curso-grade';
+import { CursoGradeMateria } from '../../../../module/model/server/curso-grade-materia';
+import { Curso } from '../../../../module/model/server/curso';
+import { Materia } from '../../../../module/model/server/materia';
 
 interface UI {
     grades: Array < CursoGrade > ;

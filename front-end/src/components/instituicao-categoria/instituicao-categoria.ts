@@ -1,10 +1,10 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { InstituicaoCategoriaFactory } from '../../util/factory/instituicao-categoria/instituicao-categoria.factory';
-import { InstituicaoCategoria } from '../../util/factory/instituicao-categoria/instituicao-categoria';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { InstituicaoCategoriaFactory } from '../../module/factory/instituicao-categoria.factory';
+import { InstituicaoCategoria } from '../../module/model/server/instituicao-categoria';
 
 interface UI {
     lista: Array < InstituicaoCategoria > ;
@@ -54,7 +54,7 @@ export class InstituicaoCategoriaComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -70,7 +70,7 @@ export class InstituicaoCategoriaComponent extends Vue {
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.INSTITUICAO_CATEGORIA_ADD);
+        Router.redirectRoute(RouterPath.INSTITUICAO_CATEGORIA_ADD);
     }
 
     public remove(item) {

@@ -1,9 +1,9 @@
 import { Vue } from 'vue-property-decorator';
 import { Component } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
-import { Usuario } from '../../../util/factory/usuario/usuario';
-import { AutenticacaoService } from '../../../util/service/autenticacao/autenticacao.service';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { AutenticacaoService } from '../../../module/service/autenticacao.service';
+import { UsuarioFactory } from '../../../module/factory/usuario.factory';
+import { Usuario } from '../../../module/model/server/usuario';
 
 @Component({
     template: require('./usuario-autenticacao.html')

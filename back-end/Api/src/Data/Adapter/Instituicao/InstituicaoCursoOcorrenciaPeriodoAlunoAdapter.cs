@@ -16,7 +16,7 @@ namespace Api.Data.ViewModels {
             vm.ID = model.ID.ToString();
 
             if (model.InstituicaoCursoOcorrenciaAluno != null) {
-                vm.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(model.InstituicaoCursoOcorrenciaAluno, true);
+                vm.Aluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(model.InstituicaoCursoOcorrenciaAluno, true).Aluno;
             }
 
             if (model.InstituicaoCursoPeriodo != null) {
@@ -32,10 +32,6 @@ namespace Api.Data.ViewModels {
 
         public static InstituicaoCursoOcorrenciaPeriodoAluno ToModel(InstituicaoCursoOcorrenciaPeriodoAlunoVM vm, bool deep) {
             var model = new InstituicaoCursoOcorrenciaPeriodoAluno();
-
-            if (vm.InstituicaoCursoOcorrenciaAluno != null) {
-                model.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(vm.InstituicaoCursoOcorrenciaAluno, true);
-            }
 
             if (vm.InstituicaoCursoPeriodo != null) {
                 model.InstituicaoCursoPeriodo = InstituicaoCursoPeriodoAdapter.ToModel(vm.InstituicaoCursoPeriodo, false);

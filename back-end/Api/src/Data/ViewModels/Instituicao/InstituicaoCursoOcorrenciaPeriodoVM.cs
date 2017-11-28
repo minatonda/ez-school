@@ -11,12 +11,12 @@ namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaPeriodoVM : SelectVM {
 
         public InstituicaoCursoOcorrenciaPeriodoVM() {
-            this.instituicaoCursoOcorrenciaPeriodoProfessores = new List<InstituicaoCursoOcorrenciaPeriodoProfessorVM>();
-            this.instituicaoCursoOcorrenciaPeriodoAlunos = new List<InstituicaoCursoOcorrenciaPeriodoAlunoVM>();
+            this.InstituicaoCursoOcorrenciaPeriodoProfessores = new List<InstituicaoCursoOcorrenciaPeriodoProfessorVM>();
+            this.InstituicaoCursoOcorrenciaPeriodoAlunos = new List<InstituicaoCursoOcorrenciaPeriodoAlunoVM>();
         }
 
-        public List<InstituicaoCursoOcorrenciaPeriodoProfessorVM> instituicaoCursoOcorrenciaPeriodoProfessores { get; set; }
-        public List<InstituicaoCursoOcorrenciaPeriodoAlunoVM> instituicaoCursoOcorrenciaPeriodoAlunos { get; set; }
+        public List<InstituicaoCursoOcorrenciaPeriodoProfessorVM> InstituicaoCursoOcorrenciaPeriodoProfessores { get; set; }
+        public List<InstituicaoCursoOcorrenciaPeriodoAlunoVM> InstituicaoCursoOcorrenciaPeriodoAlunos { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
 

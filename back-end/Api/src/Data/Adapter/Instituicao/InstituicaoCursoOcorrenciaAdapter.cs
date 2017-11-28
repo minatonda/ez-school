@@ -39,5 +39,9 @@ namespace Api.Data.ViewModels {
             return model;
         }
 
+        public static List<InstituicaoCursoOcorrenciaPeriodo> InstituicaoCursoOcorrenciaPeriodosFrom(InstituicaoCursoOcorrenciaVM vm) {
+            return vm.InstituicaoCursoOcorrenciaPeriodos.Select(x => InstituicaoCursoOcorrenciaPeriodoAdapter.ToModel(x, true)).ToList();
+        }
+
     }
 }

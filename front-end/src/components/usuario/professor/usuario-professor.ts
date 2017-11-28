@@ -1,15 +1,13 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { Professor } from '../../../util/factory/usuario/professor';
-import { Usuario } from '../../../util/factory/usuario/usuario';
-import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
-import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
+import { RouterPathType } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../../common/card-table/card-table.types';
-import { CategoriaProfissional } from '../../../util/factory/categoria-profissional/categoria-profissional';
-import { CategoriaProfissionalFactory } from '../../../util/factory/categoria-profissional/categoria-profissional.factory';
+import { CategoriaProfissionalFactory } from '../../../module/factory/categoria-profissional.factory';
+import { CategoriaProfissional } from '../../../module/model/server/categoria-profissional';
+import { UsuarioFactory } from '../../../module/factory/usuario.factory';
+import { Professor } from '../../../module/model/server/professor';
 
 interface UI {
     categoriaProfissional: CategoriaProfissional;
@@ -43,7 +41,7 @@ export class UsuarioProfessorComponent extends Vue {
             this.ui.categoriaProfissionais = await CategoriaProfissionalFactory.all();
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);

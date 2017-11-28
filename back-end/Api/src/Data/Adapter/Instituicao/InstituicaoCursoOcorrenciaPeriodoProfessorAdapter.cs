@@ -10,11 +10,11 @@ using Domain.Models;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaPeriodoProfessorAdapter {
 
-        public static InstituicaoCursoOcorrenciaPeriodoProfessorVM ToViewModel(InstituicaoCursoOcorrenciaPeriodoProfessor model, List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> instituicaoCursoOcorrenciaProfessorPeriodoAulas, bool deep) {
+        public static InstituicaoCursoOcorrenciaPeriodoProfessorVM ToViewModel(InstituicaoCursoOcorrenciaPeriodoProfessor model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaPeriodoProfessorVM();
 
             vm.ID = model.ID.ToString();
-            vm.Label = vm.Professor.UsuarioInfo.Nome;
+            vm.Label = model.Professor.UsuarioInfo.Nome;
 
             if (model.Professor != null) {
                 vm.Professor = ProfessorAdapter.ToViewModel(model.Professor, null, true);

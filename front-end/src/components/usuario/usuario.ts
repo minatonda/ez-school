@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { UsuarioFactory } from '../../util/factory/usuario/usuario.factory';
-import { Usuario } from '../../util/factory/usuario/usuario';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { UsuarioFactory } from '../../module/factory/usuario.factory';
+import { Usuario } from '../../module/model/server/usuario';
 
 interface UI {
     lista: Array < Usuario > ;
@@ -55,19 +55,19 @@ export class UsuarioComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.USUARIO_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.USUARIO_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.USUARIO_ALUNO, item),
+                (item) => Router.redirectRoute(RouterPath.USUARIO_ALUNO, item),
                 (item) => 'Aluno',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.USUARIO_PROFESSOR, item),
+                (item) => Router.redirectRoute(RouterPath.USUARIO_PROFESSOR, item),
                 (item) => 'Professor',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -83,7 +83,7 @@ export class UsuarioComponent extends Vue {
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.USUARIO_ADD);
+        Router.redirectRoute(RouterPath.USUARIO_ADD);
     }
 
     public remove(item) {

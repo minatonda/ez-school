@@ -1,0 +1,25 @@
+#toast-container>div {
+    opacity: 0.85;
+    border-radius: 2px;
+}
+
+#toast-container>div:hover {
+    opacity: 1;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.toast-success {
+    background-color: map-get(map-get($theme-colors, 'success'), 'darker');
+}
+
+.toast-error {
+    background-color: map-get(map-get($theme-colors, 'danger'), 'darker');
+}
+
+.toast-warning {
+    background-color: map-get(map-get($theme-colors, 'warning'), 'darker');
+}
+
+.toast-info {
+    background-color: map-get(map-get($theme-colors, 'primary'), 'darker');
+}
