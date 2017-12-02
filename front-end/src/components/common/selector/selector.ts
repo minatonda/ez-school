@@ -32,7 +32,7 @@ export class SelectorComponent extends Vue {
     @Prop({ type: Function, default: undefined })
     query: Function;
 
-    onCreate() {
+    created() {
         this.internalValue = this.value;
     }
 

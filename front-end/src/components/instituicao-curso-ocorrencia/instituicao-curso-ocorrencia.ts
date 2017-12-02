@@ -44,7 +44,7 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
     public getColumns() {
         return [
             new CardTableColumn((item: InstituicaoCursoOcorrencia) => { return moment(item.dataInicio).format('DD/MM/YYYY'); }, () => 'Data de Início'),
-            new CardTableColumn((item: InstituicaoCursoOcorrencia) => { return item.dataFim ? moment(item.dataFim).format('DD/MM/YYYY') : undefined; }, () => 'Data de Fim')
+            new CardTableColumn((item: InstituicaoCursoOcorrencia) => { return item.dataExpiracao ? moment(item.dataExpiracao).format('DD/MM/YYYY') : undefined; }, () => 'Data de Fim')
         ];
     }
 
@@ -75,6 +75,12 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
                 (item) => 'Gerenciar Períodos',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item) => this.remove(item),
+                (item) => 'Remover',
+                (item) => ['fa', 'fa-times'],
+                (item) => ['btn-danger']
             )
         ];
         return menu;
@@ -86,14 +92,15 @@ export class InstituicaoCursoOcorrenciaComponent extends Vue {
 
     public remove(item) {
         try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.disable(item.id);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            InstituicaoFactory.disableInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
         }
         finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
 

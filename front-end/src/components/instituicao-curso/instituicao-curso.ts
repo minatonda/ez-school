@@ -74,6 +74,12 @@ export class InstituicaoCursoComponent extends Vue {
                 (item) => 'Gerenciar Ocorrências',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item) => this.remove(item),
+                (item) => 'Remover',
+                (item) => ['fa', 'fa-times'],
+                (item) => ['btn-danger']
             )
         ];
         return menu;
@@ -85,14 +91,15 @@ export class InstituicaoCursoComponent extends Vue {
 
     public remove(item) {
         try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.disable(item.id);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            InstituicaoFactory.disableInstituicaoCurso(this.$route.params.id, item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
         }
         finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
 

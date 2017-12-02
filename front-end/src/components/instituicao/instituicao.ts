@@ -66,12 +66,6 @@ export class InstituicaoComponent extends Vue {
                 (item) => ['fa', 'fa-book'],
                 (item) => ['btn-primary']
             ),
-            // new CardTableMenuEntry(
-            //     (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-            //     (item) => 'Gerenciar Pessoas',
-            //     (item) => ['fa', 'fa-user'],
-            //     (item) => ['btn-primary']
-            // ),
             new CardTableMenuEntry(
                 (item) => this.remove(item),
                 (item) => 'Remover',
@@ -84,14 +78,15 @@ export class InstituicaoComponent extends Vue {
 
     public remove(item) {
         try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.disable(item.id);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            InstituicaoFactory.disable(item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
         }
         finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
 

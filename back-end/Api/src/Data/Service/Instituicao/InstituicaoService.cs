@@ -127,6 +127,87 @@ namespace Api.Data.Service {
             this._instituicaoRepository.SaveChanges();
         }
 
+        public void UpdateInstituicaoCursoOcorrencia(long id, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
+            var model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true);
+            model.InstituicaoCurso = this._instituicaoRepository.GetInstituicaoCurso(id);
+            this._instituicaoRepository.UpdateInstituicaoCursoOcorrencia(model);
+
+            var instituicaoCursoOcorrenciaPeriodosAttached = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoByInstituicaoCursoOcorrencia(model.ID, true);
+            var instituicaoCursoOcorrenciaPeriodosAttachedToRemove = instituicaoCursoOcorrenciaPeriodosAttached.Where(x => !instituicaoCurso.InstituicaoCursoOcorrenciaPeriodos.Select(y => InstituicaoCursoOcorrenciaPeriodoAdapter.ToModel(y, true).ID).Contains(x.ID)).ToList();
+
+            instituicaoCursoOcorrenciaPeriodosAttachedToRemove.ForEach(x => {
+                this._instituicaoRepository.DisableInstituicaoCursoOcorrenciaPeriodo(x.ID);
+            });
+
+            instituicaoCurso.InstituicaoCursoOcorrenciaPeriodos.ForEach(x => {
+                var modelInstituicaoCursoOcorrenciaPeriodo = InstituicaoCursoOcorrenciaPeriodoAdapter.ToModel(x, true);
+                modelInstituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia = model;
+
+                if (!instituicaoCursoOcorrenciaPeriodosAttached.Select(y => y.ID).Contains(modelInstituicaoCursoOcorrenciaPeriodo.ID)) {
+                    this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodo(modelInstituicaoCursoOcorrenciaPeriodo);
+                } else {
+                    this._instituicaoRepository.UpdateInstituicaoCursoOcorrenciaPeriodo(modelInstituicaoCursoOcorrenciaPeriodo);
+                }
+
+                var instituicaoCursoOcorrenciaPeriodoAlunosAttached = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByInstituicaoCursoOcorrenciaPeriodo(modelInstituicaoCursoOcorrenciaPeriodo.ID, true);
+                var instituicaoCursoOcorrenciaPeriodoAlunosAttachedToRemove = instituicaoCursoOcorrenciaPeriodoAlunosAttached.Where(y => !x.InstituicaoCursoOcorrenciaPeriodoAlunos.Select(z => InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToModel(z, true).ID).Contains(y.ID)).ToList();
+
+                instituicaoCursoOcorrenciaPeriodoAlunosAttachedToRemove.ForEach(y => {
+                    this._instituicaoRepository.DisableInstituicaoCursoOcorrenciaPeriodoAluno(y.ID);
+                });
+
+                x.InstituicaoCursoOcorrenciaPeriodoAlunos.ForEach(y => {
+                    var modelInstituicaoCursoOcorrenciaPeriodoAluno = InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToModel(y, true);
+                    modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(instituicaoCurso, y.Aluno);
+                    modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo = modelInstituicaoCursoOcorrenciaPeriodo;
+
+                    if (instituicaoCursoOcorrenciaPeriodoAlunosAttached.FirstOrDefault(z => z.InstituicaoCursoOcorrenciaAluno.Aluno.ID == modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno.Aluno.ID) == null) {
+                        this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoAluno(modelInstituicaoCursoOcorrenciaPeriodoAluno);
+                    } else {
+                        this._instituicaoRepository.UpdateInstituicaoCursoOcorrenciaPeriodoAluno(modelInstituicaoCursoOcorrenciaPeriodoAluno);
+                    }
+
+                });
+
+                var instituicaoCursoOcorrenciaPeriodoProfessoresAttached = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByInstituicaoCursoOcorrenciaPeriodo(modelInstituicaoCursoOcorrenciaPeriodo.ID, true);
+                var instituicaoCursoOcorrenciaPeriodoProfessoresAttachedToRemove = instituicaoCursoOcorrenciaPeriodoProfessoresAttached.Where(y => !x.InstituicaoCursoOcorrenciaPeriodoProfessores.Select(z => InstituicaoCursoOcorrenciaPeriodoProfessorAdapter.ToModel(z, true).ID).Contains(y.ID)).ToList();
+
+                instituicaoCursoOcorrenciaPeriodoProfessoresAttachedToRemove.ForEach(y => {
+                    this._instituicaoRepository.DisableInstituicaoCursoOcorrenciaPeriodoProfessor(y.ID);
+                });
+
+                x.InstituicaoCursoOcorrenciaPeriodoProfessores.ForEach(y => {
+                    var modelInstituicaoCursoOcorrenciaPeriodoProfessor = InstituicaoCursoOcorrenciaPeriodoProfessorAdapter.ToModel(y, true);
+                    modelInstituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo = modelInstituicaoCursoOcorrenciaPeriodo;
+
+                    if (!instituicaoCursoOcorrenciaPeriodoProfessoresAttached.Select(z => z.ID).Contains(modelInstituicaoCursoOcorrenciaPeriodoProfessor.ID)) {
+                        this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoProfessor(modelInstituicaoCursoOcorrenciaPeriodoProfessor);
+                    } else {
+                        this._instituicaoRepository.UpdateInstituicaoCursoOcorrenciaPeriodoProfessor(modelInstituicaoCursoOcorrenciaPeriodoProfessor);
+                    }
+
+
+                    var instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulasAttached = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaByInstituicaoCursoOcorrenciaPeriodoProfessor(modelInstituicaoCursoOcorrenciaPeriodoProfessor.ID, true);
+                    var instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulasToRemove = instituicaoCursoOcorrenciaPeriodoProfessoresAttached.Where(z => !y.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.Select(a => InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaAdapter.ToModel(a, true).ID).Contains(z.ID)).ToList();
+
+                    instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulasToRemove.ForEach(z => {
+                        this._instituicaoRepository.DisableInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(z.ID);
+                    });
+
+                    y.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.ForEach(z => {
+                        var modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaAdapter.ToModel(z, true);
+                        modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.InstituicaoCursoOcorrenciaPeriodoProfessor = modelInstituicaoCursoOcorrenciaPeriodoProfessor;
+
+                        if (!instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulasAttached.Select(a => a.ID).Contains(modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.ID)) {
+                            this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
+                        } 
+                    });
+                });
+            });
+
+            this._instituicaoRepository.SaveChanges();
+        }
+
         public void Disable(long id) {
             this._instituicaoRepository.Disable(id);
             this._instituicaoRepository.SaveChanges();
@@ -134,6 +215,11 @@ namespace Api.Data.Service {
 
         public void DisableInstituicaoCurso(long id) {
             this._instituicaoRepository.DisableInstituicaoCurso(id);
+            this._instituicaoRepository.SaveChanges();
+        }
+
+        public void DisableInstituicaoCursoOcorrencia(long id) {
+            this._instituicaoRepository.DisableInstituicaoCursoOcorrencia(id);
             this._instituicaoRepository.SaveChanges();
         }
 

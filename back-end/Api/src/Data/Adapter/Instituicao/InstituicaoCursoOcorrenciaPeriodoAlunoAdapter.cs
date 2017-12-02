@@ -32,6 +32,9 @@ namespace Api.Data.ViewModels {
 
         public static InstituicaoCursoOcorrenciaPeriodoAluno ToModel(InstituicaoCursoOcorrenciaPeriodoAlunoVM vm, bool deep) {
             var model = new InstituicaoCursoOcorrenciaPeriodoAluno();
+            if (vm.ID != null) {
+                model.ID = long.Parse(vm.ID);
+            }
 
             if (vm.InstituicaoCursoPeriodo != null) {
                 model.InstituicaoCursoPeriodo = InstituicaoCursoPeriodoAdapter.ToModel(vm.InstituicaoCursoPeriodo, false);

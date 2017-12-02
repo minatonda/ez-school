@@ -41,14 +41,24 @@ namespace Api.Controllers {
             this._instituicaoService.UpdateInstituicaoCurso(id, viewModel);
         }
 
+        [HttpPost("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/update")]
+        public void UpdateInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
+            this._instituicaoService.UpdateInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
+        }
+
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id) {
             this._instituicaoService.Disable(id);
         }
 
-        [HttpDelete("{id}/instituicao-curso/{idInstituicaoCurso}/disable")]
-        public void DisableCurso(long id, long idInstituicaoCurso) {
+        [HttpDelete("{id}/instituicao-curso/disable")]
+        public void DisableInstituicaoCurso(long id, [FromQuery]long idInstituicaoCurso) {
             this._instituicaoService.DisableInstituicaoCurso(idInstituicaoCurso);
+        }
+
+        [HttpDelete("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/disable")]
+        public void DisableInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromQuery]long idInstituicaoCursoOcorrencia) {
+            this._instituicaoService.DisableInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
         }
 
         [HttpGet("{id}")]
@@ -72,12 +82,12 @@ namespace Api.Controllers {
         }
 
         [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-periodo")]
-        public List<InstituicaoCursoPeriodoVM> AllPeriodo(long id, long idInstituicaoCurso) {
+        public List<InstituicaoCursoPeriodoVM> AllInstituicaoCursoPeriodo(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllInstituicaoCursoPeriodo(idInstituicaoCurso);
         }
 
         [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-turma")]
-        public List<InstituicaoCursoTurmaVM> AllTurma(long id, long idInstituicaoCurso) {
+        public List<InstituicaoCursoTurmaVM> AllInstituicaoCursoTurma(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllInstituicaoCursoTurma(idInstituicaoCurso);
         }
 

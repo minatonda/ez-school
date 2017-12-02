@@ -13,5 +13,5 @@ export class InstituicaoCursoOcorrenciaPeriodo {
     instituicaoCursoOcorrenciaPeriodoProfessores: Array < InstituicaoCursoOcorrenciaPeriodoProfessor > ;
     instituicaoCursoOcorrenciaPeriodoAlunos: Array < InstituicaoCursoOcorrenciaPeriodoAluno > ;
     dataInicio: Date;
-    dataFim: Date;
+    dataExpiracao: Date;
 }

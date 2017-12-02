@@ -10,7 +10,7 @@ export class InstituicaoCursoOcorrencia {
 
     id?: string;
     coordenador: Professor;
-    dataInicio: Date;
-    dataFim: Date;
+    dataInicio: string;
+    dataExpiracao: string;
     instituicaoCursoOcorrenciaPeriodos: Array < InstituicaoCursoOcorrenciaPeriodo > ;
 }

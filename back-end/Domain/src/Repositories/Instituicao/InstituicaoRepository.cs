@@ -143,6 +143,35 @@ namespace Domain.Repositories {
             this.db.InstituicaoCursoOcorrencias.Update(model);
         }
 
+        public void UpdateInstituicaoCursoOcorrenciaPeriodo(InstituicaoCursoOcorrenciaPeriodo instituicaoCursoOcorrenciaPeriodo) {
+            //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
+
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodos.Find(instituicaoCursoOcorrenciaPeriodo.ID);
+            model.InstituicaoCursoOcorrencia = this.db.InstituicaoCursoOcorrencias.Find(instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia.ID);
+            model.DataInicio = instituicaoCursoOcorrenciaPeriodo.DataInicio;
+            model.DataExpiracao = instituicaoCursoOcorrenciaPeriodo.DataExpiracao;
+
+            this.db.InstituicaoCursoOcorrenciaPeriodos.Update(model);
+        }
+
+        public void UpdateInstituicaoCursoOcorrenciaPeriodoAluno(InstituicaoCursoOcorrenciaPeriodoAluno instituicaoCursoOcorrenciaPeriodoAluno) {
+            //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
+
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodoAlunos.Include(i => i.InstituicaoCursoOcorrenciaAluno).ThenInclude(i => i.Aluno).Include(i => i.InstituicaoCursoOcorrenciaPeriodo).SingleOrDefault(x => x.InstituicaoCursoOcorrenciaPeriodo.ID == instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo.ID && x.InstituicaoCursoOcorrenciaAluno.Aluno.ID == instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno.Aluno.ID);
+            model.InstituicaoCursoPeriodo = this.db.InstituicaoCursoPeriodos.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo.ID);
+            model.InstituicaoCursoTurma = this.db.InstituicaoCursoTurmas.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma.ID);
+            this.db.InstituicaoCursoOcorrenciaPeriodoAlunos.Update(model);
+        }
+
+        public void UpdateInstituicaoCursoOcorrenciaPeriodoProfessor(InstituicaoCursoOcorrenciaPeriodoProfessor instituicaoCursoOcorrenciaPeriodoProfessor) {
+            //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
+
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.Find(instituicaoCursoOcorrenciaPeriodoProfessor.ID);
+            model.InstituicaoCursoPeriodo = this.db.InstituicaoCursoPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
+            model.InstituicaoCursoTurma = this.db.InstituicaoCursoTurmas.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
+            this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.Update(model);
+        }
+
         public void Disable(long id) {
             var model = this.db.Instituicoes.Find(id);
             model.Ativo = DateTime.Now;
@@ -168,6 +197,36 @@ namespace Domain.Repositories {
             this.db.InstituicaoCursoTurmas.Update(model);
         }
 
+        public void DisableInstituicaoCursoOcorrencia(long id) {
+            var model = this.db.InstituicaoCursoOcorrencias.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.InstituicaoCursoOcorrencias.Update(model);
+        }
+
+        public void DisableInstituicaoCursoOcorrenciaPeriodo(long id) {
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodos.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.InstituicaoCursoOcorrenciaPeriodos.Update(model);
+        }
+
+        public void DisableInstituicaoCursoOcorrenciaPeriodoAluno(long id) {
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodoAlunos.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.InstituicaoCursoOcorrenciaPeriodoAlunos.Update(model);
+        }
+
+        public void DisableInstituicaoCursoOcorrenciaPeriodoProfessor(long id) {
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.Update(model);
+        }
+
+        public void DisableInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(long id) {
+            var model = this.db.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.Update(model);
+        }
+
         public Instituicao Get(long id) {
             return this.db.Instituicoes
             .AsNoTracking()
@@ -187,6 +246,7 @@ namespace Domain.Repositories {
             return this.db.InstituicaoCursoOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
+            .Include(i => i.Coordenador).ThenInclude(i=>i.UsuarioInfo)
             .SingleOrDefault(x => x.ID == id);
         }
 

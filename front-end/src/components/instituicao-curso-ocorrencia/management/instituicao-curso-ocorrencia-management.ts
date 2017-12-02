@@ -132,7 +132,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
                     }
                 case (RouterPathType.upd):
                     {
-                        // await InstituicaoFactory.updateCursoOcorrencia(this.$route.params.idInstituicao, this.$route.params.idInstituicaoCurso, this.$route.params.dataInicio, this.model, true);
+                        await InstituicaoFactory.updateInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.model, true);
                         break;
                     }
             }
@@ -153,6 +153,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         this.resetDialogInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas();
         this.$forceUpdate();
     }
+
 
     saveInstituicaoCursoOcorrenciaPeriodo(instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodo) {
         if (this.ui.dialogInstituicaoCursoPeriodoOperation === ModalOperation.add) {
@@ -181,6 +182,7 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         }
     }
 
+
     addInstituicaoCursoOcorrenciaPeriodo(instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodo) {
         this.model.instituicaoCursoOcorrenciaPeriodos.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodo(), instituicaoCursoOcorrenciaPeriodo));
         this.closeDialogInstituicaoCursoOcorrenciaPeriodo();
@@ -191,15 +193,24 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
         this.backFromInstituicaoCursoOcorrenciaPeriodoAlunoToInstituicaoCursoOcorrenciaPeriodo();
     }
 
+    removeInstituicaoCursoOcorrenciaPeriodoAluno(instituicaoCursoOcorrenciaPeriodoAluno: InstituicaoCursoOcorrenciaPeriodoAluno) {
+        this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.splice(this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.indexOf(instituicaoCursoOcorrenciaPeriodoAluno), 1);
+    }
+
     addInstituicaoCursoOcorrenciaPeriodoProfessor(instituicaoCursoOcorrenciaPeriodoProfessor: InstituicaoCursoOcorrenciaPeriodoProfessor) {
         this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodoProfessor(), instituicaoCursoOcorrenciaPeriodoProfessor));
         this.backFromInstituicaoCursoOcorrenciaProfessorToInstituicaoCursoOcorrenciaPeriodo();
+    }
+
+    removeInstituicaoCursoOcorrenciaPeriodoProfessor(instituicaoCursoOcorrenciaPeriodoProfessor: InstituicaoCursoOcorrenciaPeriodoProfessor) {
+        this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.splice(this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.indexOf(instituicaoCursoOcorrenciaPeriodoProfessor), 1);
     }
 
     addInstituicaoCursoOcorenciaPeriodoProfessorPeriodoAula(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula: InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula) {
         this.ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(), instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula));
         this.ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = undefined;
     }
+
 
     getPeriodosDisponiveis(instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodo, instituicaoCursoOcorrenciaPeriodoProfessor: InstituicaoCursoOcorrenciaPeriodoProfessor, dayOfWeek: EnumLabel) {
         if (instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoPeriodo) {
@@ -252,6 +263,10 @@ export class InstituicaoCursoOcorrenciaManagementComponent extends Vue {
 
     getDayWeekLabel(dayOfWeek: DayOfWeek) {
         return this.ui.dayOfWeeks.find(x => x.value === dayOfWeek);
+    }
+
+    getDateTimeLabel(date: string) {
+        return moment(date).format('DD/MM/YYYY');
     }
 
 
