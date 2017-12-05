@@ -1,10 +1,10 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { InstituicaoCategoriaFactory } from '../../../util/factory/instituicao-categoria/instituicao-categoria.factory';
-import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoCategoria } from '../../../util/factory/instituicao-categoria/instituicao-categoria';
+import { RouterPathType } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
+import { InstituicaoCategoriaFactory } from '../../../module/factory/instituicao-categoria.factory';
+import { InstituicaoCategoria } from '../../../module/model/server/instituicao-categoria';
 
 @Component({
     template: require('./instituicao-categoria-management.html')
@@ -34,7 +34,7 @@ export class InstituicaoCategoriaManagementComponent extends Vue {
             }
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);

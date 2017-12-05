@@ -1,11 +1,12 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
-import { InstituicaoCurso } from '../../util/factory/instituicao/instituicao-curso';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { InstituicaoFactory } from '../../module/factory/instituicao.factory';
+import { InstituicaoCurso } from '../../module/model/server/instituicao-curso';
+
 import * as moment from 'moment';
 
 interface UI {
@@ -56,43 +57,49 @@ export class InstituicaoCursoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_UPD, {
+                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_CURSO_UPD, {
                     id: this.$route.params.id,
-                    idCurso: item.curso.id,
-                    dataInicio: moment(item.dataInicio).format('DD-MM-YYYY')
+                    idInstituicaoCurso: item.id
                 }),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item: InstituicaoCurso) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_OCORRENCIA, {
+                (item: InstituicaoCurso) => Router.redirectRoute(RouterPath.INSTITUICAO_CURSO_OCORRENCIA, {
                     id: this.$route.params.id,
-                    idCurso: item.curso.id,
+                    idInstituicaoCurso: item.curso.id,
                     dataInicio: moment(item.dataInicio).format('DD-MM-YYYY')
                 }),
                 (item) => 'Gerenciar Ocorrências',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
+            ),
+            new CardTableMenuEntry(
+                (item) => this.remove(item),
+                (item) => 'Remover',
+                (item) => ['fa', 'fa-times'],
+                (item) => ['btn-danger']
             )
         ];
         return menu;
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO_ADD, { idInstituicao: this.$route.params.idInstituicao });
+        Router.redirectRoute(RouterPath.INSTITUICAO_CURSO_ADD, { idInstituicao: this.$route.params.idInstituicao });
     }
 
     public remove(item) {
         try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.disable(item.id);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            InstituicaoFactory.disableInstituicaoCurso(this.$route.params.id, item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
         }
         finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
 

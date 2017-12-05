@@ -10,7 +10,7 @@ using Domain.Models;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoOcorrenciaAdapter {
 
-        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, List<InstituicaoCursoOcorrenciaAluno> alunos, bool deep) {
+        public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaVM();
 
             vm.ID = model.ID.ToString();
@@ -19,10 +19,6 @@ namespace Api.Data.ViewModels {
 
             if (model.Coordenador != null) {
                 vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, null, false);
-            }
-
-            if (alunos != null) {
-                vm.InstituicaoCursoOcorrenciaAlunos = alunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToViewModel(x, true)).ToList();
             }
 
             return vm;
@@ -43,8 +39,8 @@ namespace Api.Data.ViewModels {
             return model;
         }
 
-        public static List<InstituicaoCursoOcorrenciaAluno> InstituicaoCursoOcorrenciaAlunosFrom(InstituicaoCursoOcorrenciaVM vm) {
-            return vm.InstituicaoCursoOcorrenciaAlunos.Select(x => InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(x, true)).ToList();
+        public static List<InstituicaoCursoOcorrenciaPeriodo> InstituicaoCursoOcorrenciaPeriodosFrom(InstituicaoCursoOcorrenciaVM vm) {
+            return vm.InstituicaoCursoOcorrenciaPeriodos.Select(x => InstituicaoCursoOcorrenciaPeriodoAdapter.ToModel(x, true)).ToList();
         }
 
     }

@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType, RouterConfig } from '../../../util/router/router.path';
-import { RouterManager } from '../../../util/router/router.manager';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { UsuarioFactory } from '../../../util/factory/usuario/usuario.factory';
-import { Usuario } from '../../../util/factory/usuario/usuario';
-import { UsuarioInfo } from '../../../util/factory/usuario/usuario-info';
+import { RouterPathType, RouterConfig } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
+import { UsuarioFactory } from '../../../module/factory/usuario.factory';
+import { UsuarioInfo } from '../../../module/model/server/usuario-info';
+import { Usuario } from '../../../module/model/server/usuario';
 
 @Component({
     template: require('./usuario-management.html')
@@ -35,7 +35,7 @@ export class UsuarioManagementComponent extends Vue {
             }
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -70,7 +70,7 @@ export class UsuarioManagementComponent extends Vue {
 
     public aoSelecionarRota(route: RouterConfig) {
         if (route) {
-            RouterManager.redirectRoute(route.path);
+            Router.redirectRoute(route.path);
         }
     }
 

@@ -1,36 +1,25 @@
 import { Vue } from 'vue-property-decorator';
 import { Component } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { RouterConfig } from '../../../util/router/router.path';
-import { AutenticacaoService } from '../../../util/service/autenticacao/autenticacao.service';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { AutenticacaoService } from '../../../module/service/autenticacao.service';
+import { Router } from '../../../router';
+import { RouterConfig } from '../../../module/model/client/route-path';
 
 @Component({
     template: require('./navbar.html')
 })
 export class NavbarComponent extends Vue {
 
-    mounted() {
-        BroadcastEventBus.$on(BroadcastEvent.AUTENTICADO, () => {
-            this.autenticado = true;
-        });
-        BroadcastEventBus.$on(BroadcastEvent.NOT_AUTENTICADO, () => {
-            this.autenticado = false;
-        });
-    }
-
-    private autenticado = AutenticacaoService.isAutenticado();
-
     public desautenticar() {
         AutenticacaoService.desautenticar();
     }
 
     public isAutenticado() {
-        return this.autenticado;
+        return AutenticacaoService.isAutenticado();
     }
 
     public getRotas() {
-        return RouterManager.getRouteConfigsMenu();
+        return Router.getRouteConfigsMenu();
     }
 
     public getRotasLabel(route: RouterConfig) {
@@ -39,7 +28,7 @@ export class NavbarComponent extends Vue {
 
     public aoSelecionarRota(route: RouterConfig) {
         if (route) {
-            RouterManager.redirectRoute(route.path);
+            Router.redirectRoute(route.path);
         }
     }
 

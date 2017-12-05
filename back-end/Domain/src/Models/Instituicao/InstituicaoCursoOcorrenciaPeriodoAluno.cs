@@ -7,7 +7,7 @@ namespace Domain.Models {
 
         [Key]
         public long ID { get; set; }
-        public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
+        public InstituicaoCursoOcorrenciaPeriodo InstituicaoCursoOcorrenciaPeriodo { get; set; }
         public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
         public InstituicaoCursoPeriodo InstituicaoCursoPeriodo { get; set; }
         public InstituicaoCursoTurma InstituicaoCursoTurma { get; set; }

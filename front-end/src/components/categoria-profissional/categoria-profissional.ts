@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { CategoriaProfissionalFactory } from '../../util/factory/categoria-profissional/categoria-profissional.factory';
-import { CategoriaProfissional } from '../../util/factory/categoria-profissional/categoria-profissional';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { CategoriaProfissionalFactory } from '../../module/factory/categoria-profissional.factory';
+import { CategoriaProfissional } from '../../module/model/server/categoria-profissional';
 
 interface UI {
     lista: Array < CategoriaProfissional > ;
@@ -55,7 +55,7 @@ export class CategoriaProfissionalComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -71,7 +71,7 @@ export class CategoriaProfissionalComponent extends Vue {
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL_ADD);
+        Router.redirectRoute(RouterPath.CATEGORIA_PROFISSIONAL_ADD);
     }
 
     public remove(item) {

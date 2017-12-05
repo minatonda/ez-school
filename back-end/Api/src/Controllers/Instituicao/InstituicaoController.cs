@@ -17,13 +17,33 @@ namespace Api.Controllers {
         }
 
         [HttpPut("add")]
-        public InstituicaoVM Add([FromBody] InstituicaoVM viewModel) {
-            return this._instituicaoService.Add(viewModel);
+        public void Add([FromBody] InstituicaoVM viewModel) {
+            this._instituicaoService.Add(viewModel);
+        }
+
+        [HttpPut("{id}/instituicao-curso/add")]
+        public void AddInstituicaoCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
+            this._instituicaoService.AddInstituicaoCurso(id, viewModel);
+        }
+
+        [HttpPut("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/add")]
+        public void AddInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
+            this._instituicaoService.AddInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
         [HttpPost("update")]
-        public InstituicaoVM Update([FromBody] InstituicaoVM viewModel) {
-            return this._instituicaoService.Update(viewModel);
+        public void Update([FromBody] InstituicaoVM viewModel) {
+            this._instituicaoService.Update(viewModel);
+        }
+
+        [HttpPost("{id}/instituicao-curso/update")]
+        public void UpdateCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
+            this._instituicaoService.UpdateInstituicaoCurso(id, viewModel);
+        }
+
+        [HttpPost("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/update")]
+        public void UpdateInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
+            this._instituicaoService.UpdateInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
         [HttpDelete("disable")]
@@ -31,14 +51,14 @@ namespace Api.Controllers {
             this._instituicaoService.Disable(id);
         }
 
-        [HttpPut("{id}/curso/add")]
-        public void AddCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
-            this._instituicaoService.AddCurso(id, viewModel);
+        [HttpDelete("{id}/instituicao-curso/disable")]
+        public void DisableInstituicaoCurso(long id, [FromQuery]long idInstituicaoCurso) {
+            this._instituicaoService.DisableInstituicaoCurso(idInstituicaoCurso);
         }
 
-        [HttpPost("{id}/curso/renew")]
-        public void UpdateCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
-            this._instituicaoService.UpdateCurso(id, viewModel);
+        [HttpDelete("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/disable")]
+        public void DisableInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromQuery]long idInstituicaoCursoOcorrencia) {
+            this._instituicaoService.DisableInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
         }
 
         [HttpGet("{id}")]
@@ -46,59 +66,44 @@ namespace Api.Controllers {
             return this._instituicaoService.Detail(id);
         }
 
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}")]
+        public InstituicaoCursoVM DetailInstituicaoCurso(long id, long idInstituicaoCurso) {
+            return this._instituicaoService.DetailInstituicaoCurso(idInstituicaoCurso);
+        }
+
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/{idInstituicaoCursoOcorrencia}")]
+        public InstituicaoCursoOcorrenciaVM DetailInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, long idInstituicaoCursoOcorrencia) {
+            return this._instituicaoService.DetailInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
+        }
+
         [HttpGet]
         public List<InstituicaoVM> All() {
             return this._instituicaoService.All();
         }
 
-        [HttpDelete("{id}/cursos/{idCurso}/disable")]
-        public void DisableCurso(long id, long idCurso) {
-            this._instituicaoService.DisableCurso(id, idCurso);
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-periodo")]
+        public List<InstituicaoCursoPeriodoVM> AllInstituicaoCursoPeriodo(long id, long idInstituicaoCurso) {
+            return this._instituicaoService.AllInstituicaoCursoPeriodo(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/curso/{idCurso}")]
-        public InstituicaoCursoVM DetailCurso(long id, long idCurso) {
-            return this._instituicaoService.DetailCurso(id, idCurso);
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-turma")]
+        public List<InstituicaoCursoTurmaVM> AllInstituicaoCursoTurma(long id, long idInstituicaoCurso) {
+            return this._instituicaoService.AllInstituicaoCursoTurma(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/curso/{idCurso}/periodo")]
-        public List<InstituicaoCursoPeriodoVM> AllPeriodo(long id, long idCurso) {
-            return this._instituicaoService.AllPeriodo(id, idCurso);
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/curso-grade-materia")]
+        public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idInstituicaoCurso) {
+            return this._instituicaoService.AllCursoGradeMateria(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/curso/{idCurso}/periodo/{idPeriodo}/periodo-aula-disponivel")]
-        public List<InstituicaoCursoOcorrenciaProfessorPeriodoAulaVM> AllPeriodoAulaDisponivel(long id, long idCurso, long idPeriodo) {
-            return this._instituicaoService.AllPeriodoAulaDisponivel(id, idCurso, idPeriodo);
+        [HttpGet("{id}/instituicao-curso")]
+        public List<InstituicaoCursoVM> AllInstituicaoCurso(long id) {
+            return this._instituicaoService.AllInstituicaoCurso(id);
         }
 
-        [HttpGet("{id}/curso/{idCurso}/turma")]
-        public List<InstituicaoCursoTurmaVM> AllTurma(long id, long idCurso) {
-            return this._instituicaoService.AllTurma(id, idCurso);
-        }
-
-        [HttpGet("{id}/curso/{idCurso}/grade-materias")]
-        public List<CursoGradeMateriaVM> AllGradeMateria(long id, long idCurso) {
-            return this._instituicaoService.AllCursoGradeMateria(id, idCurso);
-        }
-
-        [HttpGet("{id}/curso")]
-        public List<InstituicaoCursoVM> AllCurso(long id) {
-            return this._instituicaoService.AllCurso(id);
-        }
-
-        [HttpGet("{id}/curso/{idCurso}/ocorrencia")]
-        public List<InstituicaoCursoOcorrenciaVM> AllCursoOcorrencia(long id, long idCurso) {
-            return this._instituicaoService.AllCursoOcorrencia(id, idCurso);
-        }
-
-        [HttpGet("{id}/curso/{idCurso}/ocorrencia/{dataInicio}")]
-        public InstituicaoCursoOcorrenciaVM DetailCursoOcorrencia(long id, long idCurso, string dataInicio) {
-            return this._instituicaoService.DetailCursoOcorrencia(id, idCurso, dataInicio);
-        }
-
-        [HttpPut("{id}/curso/{idCurso}/ocorrencia/add")]
-        public void AddCursoOcorrencia(long id, long idCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
-            this._instituicaoService.AddCursoOcorrencia(id, idCurso, viewModel);
+        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia")]
+        public List<InstituicaoCursoOcorrenciaVM> AllInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso) {
+            return this._instituicaoService.AllInstituicaoCursoOcorrencia(idInstituicaoCurso);
         }
 
     }

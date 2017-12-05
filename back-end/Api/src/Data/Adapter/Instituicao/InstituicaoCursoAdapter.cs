@@ -10,7 +10,7 @@ using Domain.Models;
 namespace Api.Data.ViewModels {
     public class InstituicaoCursoAdapter {
 
-        public static InstituicaoCursoVM ToViewModel(InstituicaoCurso model, List<InstituicaoCursoPeriodo> instituicaoCursoPeriodos, List<InstituicaoCursoTurma> instituicaoCursoTurmas, bool deep) {
+        public static InstituicaoCursoVM ToViewModel(InstituicaoCurso model, bool deep) {
             var vm = new InstituicaoCursoVM();
             vm.ID = model.ID.ToString();
 
@@ -23,14 +23,6 @@ namespace Api.Data.ViewModels {
             }
             if (model.CursoGrade != null) {
                 vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, null, false);
-            }
-
-            if (instituicaoCursoTurmas != null) {
-                vm.Turmas = instituicaoCursoTurmas.Select(x => InstituicaoCursoTurmaAdapter.ToViewModel(x, true)).ToList();
-            }
-
-            if (instituicaoCursoPeriodos != null) {
-                vm.Periodos = instituicaoCursoPeriodos.Select(x => InstituicaoCursoPeriodoAdapter.ToViewModel(x, true)).ToList();
             }
 
             return vm;
@@ -51,7 +43,7 @@ namespace Api.Data.ViewModels {
             if (vm.CursoGrade != null) {
                 model.CursoGrade = CursoGradeAdapter.ToModel(vm.CursoGrade, false);
             }
-            
+
             return model;
         }
 

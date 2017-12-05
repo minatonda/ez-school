@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { MateriaFactory } from '../../util/factory/materia/materia.factory';
-import { Materia } from '../../util/factory/materia/materia';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { MateriaFactory } from '../../module/factory/materia.factory';
+import { Materia } from '../../module/model/server/materia';
 
 interface UI {
     lista: Array < Materia > ;
@@ -55,7 +55,7 @@ export class MateriaComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.MATERIA_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.MATERIA_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -71,7 +71,7 @@ export class MateriaComponent extends Vue {
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.MATERIA_ADD);
+        Router.redirectRoute(RouterPath.MATERIA_ADD);
     }
 
     public remove(item) {

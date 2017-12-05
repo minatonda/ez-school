@@ -1,10 +1,10 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
-import { Instituicao } from '../../../util/factory/instituicao/instituicao';
+import { RouterPathType } from '../../../module/model/client/route-path';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
+import { InstituicaoFactory } from '../../../module/factory/instituicao.factory';
+import { Instituicao } from '../../../module/model/server/instituicao';
 
 @Component({
     template: require('./instituicao-management.html')
@@ -34,7 +34,7 @@ export class InstituicaoManagementComponent extends Vue {
             }
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);

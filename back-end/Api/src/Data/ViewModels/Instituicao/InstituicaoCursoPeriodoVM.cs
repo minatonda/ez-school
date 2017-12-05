@@ -16,6 +16,9 @@ namespace Api.Data.ViewModels {
 
         public string Inicio { get; set; }
         public string Fim { get; set; }
+        public string PausaInicio { get; set; }
+        public string PausaFim { get; set; }
+        public long Quebras { get; set; }
         public List<DayOfWeek> DiaSemana { get; set; }
 
     }

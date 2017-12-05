@@ -6,51 +6,48 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 form-group">
                 <div class="card w-100 mt-2 mb-2">
                     <div class="card-header"><b>Dados Principais</b></div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-12 form-group">
+                            <div class="col-12 col-md-4 form-group">
                                 <label class="control-label">Coordenador</label>
                                 <selector v-model="model.coordenador" v-bind:query="ui.queryProfessor" placeholder="Professor" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label class="control-label">Data de Início</label>
+                                <datepicker v-model="model.dataInicio" format="dd/MM/yyyy" placeholder="Data de início" input-class="form-control" bootstrapStyling language="pt-br"></datepicker>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label class="control-label">Data de Expiração</label>
+                                <datepicker v-model="model.dataExpiracao" format="dd/MM/yyyy" placeholder="Data de expiração" input-class="form-control" language="pt-br"></datepicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4 form-group">
+                                <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodo()">Novo Período Escolar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6">
-                <div class="card w-100 mt-2 mb-2">
-                    <div class="card-header"><b>Alunos</b></div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-9 form-group">
-                                <label class="control-label">Aluno</label>
-                                <selector v-model="ui.aluno" v-bind:query="ui.queryAluno" placeholder="Aluno" v-bind:label="ui.usuarioInfoLabel"></selector>
-                            </div>
-                            <div class="col-12 col-md-3 form-group">
-                                <label class="control-label invisible">Ocupar</label>
-                                <button class="btn btn-primary btn-block" v-on:click="addAluno(ui.aluno)">Adicionar</button>
-                            </div>
+            <div class="col-12 form-group">
+                <div class="card card-body w-100 p-2" v-for="instituicaoCursoOcorrenciaPeriodo in model.instituicaoCursoOcorrenciaPeriodos">
+                    <div class="row">
+                        <div class="col-12 col-md-4 align-self-center">
+                            <b>Data de Início: </b><span>{{getDateTimeLabel(instituicaoCursoOcorrenciaPeriodo.dataInicio)}}</span>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card w-100 mt-2 mb-2" v-for="aluno in model.instituicaoCursoOcorrenciaAlunos">
-                                    <div class="card-body pt-2 pb-2">
-                                        <div class="row">
-                                            <div class="col-12 col-md-4 align-self-center">
-                                                <b>Aluno: </b><span v-html="aluno.aluno.label"></span>
-                                            </div>
-                                            <div class="col-12 col-md-6 align-self-center">
-
-                                            </div>
-                                            <div class="col-12 col-md-2  align-self-center text-right">
-                                                <button class="btn btn-danger btn-sm"><span>Remover</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-12 col-md-4 align-self-center">
+                            <b>Data de Finalização: </b><span>{{getDateTimeLabel(instituicaoCursoOcorrenciaPeriodo.dataExpiracao)}}</span>
+                        </div>
+                        <div class="col-12 col-md-4 align-self-center text-right">
+                            <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodoToUpdate(instituicaoCursoOcorrenciaPeriodo)">
+                                Editar
+                            </button>
+                            <button class="btn btn-danger">
+                                Excluir
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -62,4 +59,187 @@
             </div>
         </div>
     </div>
+    <b-modal ref="modal-ocorrencia-periodo" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Ocorrência">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <datepicker v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataInicio" format="dd/MM/yyyy" placeholder="Data de Início" input-class="form-control" language="pt-br"></datepicker>
+            </div>
+            <div class="col-12 col-md-4">
+                <datepicker v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataExpiracao" format="dd/MM/yyyy" placeholder="Data de Finalização" input-class="form-control" language="pt-br"></datepicker>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodoAlunoToAdd();">Aluno</button>
+                <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodoProfessorToAdd();">Professor</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body p-2 form-group" v-for="instituicaoCursoOcorrenciaPeriodoAluno in ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos">
+                    <div class="row">
+                        <div class="col-12 col-md-4 align-self-center">
+                            <b>Aluno: </b><span>{{instituicaoCursoOcorrenciaPeriodoAluno.aluno.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-3 align-self-center">
+                            <b>Periodo: </b><span>{{instituicaoCursoOcorrenciaPeriodoAluno.instituicaoCursoPeriodo.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-3 align-self-center">
+                            <b>Turma: </b><span>{{instituicaoCursoOcorrenciaPeriodoAluno.instituicaoCursoTurma.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-2 align-self-center text-right">
+                            <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodoAlunoToUpdate(instituicaoCursoOcorrenciaPeriodoAluno)">
+                                Editar
+                            </button>
+                            <button class="btn btn-danger" v-on:click="removeInstituicaoCursoOcorrenciaPeriodoAluno(instituicaoCursoOcorrenciaPeriodoAluno)">
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body p-2 form-group" v-for="instituicaoCursoOcorrenciaPeriodoProfessor in ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores">
+                    <div class="row">
+                        <div class="col-12 col-md-4 align-self-center">
+                            <b>Professor: </b><span>{{instituicaoCursoOcorrenciaPeriodoProfessor.professor.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-4 align-self-center">
+                            <b>Matéria: </b><span>{{instituicaoCursoOcorrenciaPeriodoProfessor.cursoGradeMateria.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-4 align-self-center text-right">
+                            <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodoProfessorToUpdate(instituicaoCursoOcorrenciaPeriodoProfessor)">
+                                Editar
+                            </button>
+                            <button class="btn btn-danger" v-on:click="removeInstituicaoCursoOcorrenciaPeriodoProfessor(instituicaoCursoOcorrenciaPeriodoProfessor)">
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-left">
+                <button class="btn btn-primary" v-on:click="closeDialogInstituicaoCursoOcorrenciaPeriodo()">Sair</button>
+            </div>
+            <div class="col-6 text-right">
+                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodo(ui.instituicaoCursoOcorrenciaPeriodo)">Salvar</button>
+            </div>
+        </div>
+    </b-modal>
+    <b-modal ref="modal-ocorrencia-periodo-professor" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Professor">
+        <div class="row">
+            <div class="col-12 col-md-3 form-group">
+                <label class="control-label">Professor</label>
+                <selector v-model="ui.instituicaoCursoOcorrenciaPeriodoProfessor.professor" v-on:change="onChangeProfessorAndCursoGradeMateria" v-bind:query="ui.queryProfessor" placeholder="Professor" v-bind:label="ui.usuarioInfoLabel"></selector>
+            </div>
+            <div class="col-12 col-md-3 form-group">
+                <label class="control-label">Materia</label>
+                <selector v-model="ui.instituicaoCursoOcorrenciaPeriodoProfessor.cursoGradeMateria" v-on:change="onChangeProfessorAndCursoGradeMateria" v-bind:itens="ui.cursoGradeMaterias" placeholder="Matéria" label="label"></selector>
+            </div>
+            <div class="col-12 col-md-3 form-group">
+                <label class="control-label">Periodo</label>
+                <selector v-model="ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoPeriodo" v-on:change="onChangeProfessorAndCursoGradeMateria" v-bind:itens="ui.instituicaoCursoPeriodos" placeholder="Período" label="label"></selector>
+            </div>
+            <div class="col-12 col-md-3 form-group">
+                <label class="control-label">Turma</label>
+                <selector v-model="ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoTurma" v-on:change="onChangeProfessorAndCursoGradeMateria" v-bind:itens="ui.instituicaoCursoTurmas" placeholder="Turma" label="label"></selector>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label">Dia</label>
+                <selector v-model="ui.dayOfWeek" v-bind:disabled="!isSelectPeriodoAula()" v-bind:itens="ui.dayOfWeeks" placeholder="Dia" label="label"></selector>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label">Horário</label>
+                <selector v-model="ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula" v-bind:disabled="!isSelectPeriodoAula()" v-bind:itens="getPeriodosDisponiveis(ui.instituicaoCursoOcorrenciaPeriodo,ui.instituicaoCursoOcorrenciaPeriodoProfessor,ui.dayOfWeek)"
+                    placeholder="Horário" label="label">
+                </selector>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label invisible">Ocupar</label>
+                <button class="btn btn-primary btn-block" v-bind:disabled="!isSelectPeriodoAula() || !ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula" v-on:click="addInstituicaoCursoOcorenciaPeriodoProfessorPeriodoAula(ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula)">Salvar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body p-2 w-100 form-group" v-for="instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula in ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas">
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <b>Dia: </b><span>{{getDayWeekLabel(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.dia).label}}</span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <b>Início: </b><span>{{instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.inicio}}</span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <b>Fim: </b><span>{{instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.fim}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-left">
+                <button class="btn btn-primary" v-on:click="backFromInstituicaoCursoOcorrenciaProfessorToInstituicaoCursoOcorrenciaPeriodo()">Voltar</button>
+            </div>
+            <div class="col-6 text-right">
+                <button class="btn btn-primary" v-on:click="closeDialogInstituicaoCursoOcorrenciaPeriodoProfessor()">Sair</button>
+                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoProfessor(ui.instituicaoCursoOcorrenciaPeriodoProfessor)">Salvar</button>
+            </div>
+        </div>
+    </b-modal>
+    <b-modal ref="modal-ocorrencia-periodo-aluno" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Aluno">
+        <div class="row">
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label">Aluno</label>
+                <selector v-model="ui.instituicaoCUrsoOcorrenciaPeriodoAluno.aluno" v-bind:query="ui.queryAluno" placeholder="Aluno" v-bind:label="ui.usuarioInfoLabel"></selector>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label">Turma</label>
+                <selector v-model="ui.instituicaoCUrsoOcorrenciaPeriodoAluno.instituicaoCursoTurma" v-bind:itens="ui.instituicaoCursoTurmas" placeholder="Turma" label="label"></selector>
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="control-label">Periodo</label>
+                <selector v-model="ui.instituicaoCUrsoOcorrenciaPeriodoAluno.instituicaoCursoPeriodo" v-bind:itens="ui.instituicaoCursoPeriodos" placeholder="Período" label="label"></selector>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-left">
+                <button class="btn btn-primary" v-on:click="backFromInstituicaoCursoOcorrenciaPeriodoAlunoToInstituicaoCursoOcorrenciaPeriodo()">Voltar</button>
+            </div>
+            <div class="col-6 text-right">
+                <button class="btn btn-primary" v-on:click="closeDialogInstituicaoCursoOcorrenciaPeriodoAluno()">Sair</button>
+                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoAluno(ui.instituicaoCUrsoOcorrenciaPeriodoAluno)">Salvar</button>
+            </div>
+        </div>
+    </b-modal>
 </div>

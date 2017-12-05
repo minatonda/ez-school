@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { InstituicaoFactory } from '../../util/factory/instituicao/instituicao.factory';
-import { Instituicao } from '../../util/factory/instituicao/instituicao';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { InstituicaoFactory } from '../../module/factory/instituicao.factory';
+import { Instituicao } from '../../module/model/server/instituicao';
 
 interface UI {
     lista: Array < Instituicao > ;
@@ -55,23 +55,17 @@ export class InstituicaoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             ),
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.INSTITUICAO_CURSO, { id: item.id }),
+                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_CURSO, { id: item.id }),
                 (item) => 'Gerenciar Cursos',
                 (item) => ['fa', 'fa-book'],
                 (item) => ['btn-primary']
             ),
-            // new CardTableMenuEntry(
-            //     (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
-            //     (item) => 'Gerenciar Pessoas',
-            //     (item) => ['fa', 'fa-user'],
-            //     (item) => ['btn-primary']
-            // ),
             new CardTableMenuEntry(
                 (item) => this.remove(item),
                 (item) => 'Remover',
@@ -84,14 +78,15 @@ export class InstituicaoComponent extends Vue {
 
     public remove(item) {
         try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoFactory.disable(item.id);
+            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            InstituicaoFactory.disable(item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
         }
         finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
+            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
 

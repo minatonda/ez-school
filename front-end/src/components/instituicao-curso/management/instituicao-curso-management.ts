@@ -1,19 +1,18 @@
 import { Vue } from 'vue-property-decorator';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import { RouterPathType } from '../../../util/router/router.path';
-import { BroadcastEventBus, BroadcastEvent } from '../../../util/broadcast/broadcast.event-bus';
-import { RouterManager } from '../../../util/router/router.manager';
-import { InstituicaoCurso } from '../../../util/factory/instituicao/instituicao-curso';
-import { InstituicaoFactory } from '../../../util/factory/instituicao/instituicao.factory';
-import { Curso } from '../../../util/factory/curso/curso';
-import { CursoGrade } from '../../../util/factory/curso/curso-grade';
-import { CursoFactory } from '../../../util/factory/curso/curso.factory';
-import { CardTableColumn, CardTableMenuEntry, CardTableMenu } from '../../common/card-table/card-table.types';
-import { InstituicaoCursoOcorrencia } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia';
-import { InstituicaoCursoPeriodo } from '../../../util/factory/instituicao/instituicao-curso-periodo';
-import { InstituicaoCursoTurma } from '../../../util/factory/instituicao/instituicao-curso-turma';
-import { DayOfWeekEnumLabel } from '../../../util/constants/enum-label.constant';
-import { DayOfWeek } from '../../../util/factory/instituicao/instituicao-curso-ocorrencia-professor-periodo-aula';
+import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
+import { Router } from '../../../router';
+import { RouterPathType } from '../../../module/model/client/route-path';
+import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../common/card-table/card-table.types';
+import { DayOfWeekEnumLabel } from '../../../module/constant/enum-label.constant';
+import { CursoFactory } from '../../../module/factory/curso.factory';
+import { InstituicaoFactory } from '../../../module/factory/instituicao.factory';
+import { Curso } from '../../../module/model/server/curso';
+import { CursoGrade } from '../../../module/model/server/curso-grade';
+import { InstituicaoCursoPeriodo } from '../../../module/model/server/instituicao-curso-periodo';
+import { InstituicaoCursoTurma } from '../../../module/model/server/instituicao-curso-turma';
+import { DayOfWeek } from '../../../module/model/server/instituicao-curso-ocorrencia-periodo-professor-periodo-aula';
+import { InstituicaoCurso } from '../../../module/model/server/instituicao-curso';
 
 interface UI {
     cursos: Array < Curso > ;
@@ -58,11 +57,11 @@ export class InstituicaoCursoManagementComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
             this.ui.cursos = await CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await InstituicaoFactory.detailCurso(this.$route.params.id, this.$route.params.idCurso, true);
+                this.model = await InstituicaoFactory.detailInstituicaoCurso(this.$route.params.id, this.$route.params.idInstituicaoCurso, true);
             }
         }
         catch (e) {
-            RouterManager.redirectRoutePrevious();
+            Router.redirectRoutePrevious();
         }
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
@@ -154,12 +153,12 @@ export class InstituicaoCursoManagementComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await InstituicaoFactory.addCurso(this.$route.params.id, this.model, true);
+                        await InstituicaoFactory.addInstituicaoCurso(this.$route.params.id, this.model, true);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await InstituicaoFactory.updateCurso(this.$route.params.id, this.model, true);
+                        await InstituicaoFactory.updateInstituicaoCurso(this.$route.params.id, this.model, true);
                         break;
                     }
             }

@@ -1,11 +1,11 @@
 import { Vue } from 'vue-property-decorator';
 import { Prop, Component } from 'vue-property-decorator';
-import { BroadcastEventBus, BroadcastEvent } from '../../util/broadcast/broadcast.event-bus';
+import { BroadcastEventBus, BroadcastEvent } from '../../module/broadcast.event-bus';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../common/card-table/card-table.types';
-import { RouterManager } from '../../util/router/router.manager';
-import { RouterPath } from '../../util/router/router.path';
-import { Curso } from '../../util/factory/curso/curso';
-import { CursoFactory } from '../../util/factory/curso/curso.factory';
+import { Router } from '../../router';
+import { RouterPath } from '../../module/model/client/route-path';
+import { CursoFactory } from '../../module/factory/curso.factory';
+import { Curso } from '../../module/model/server/curso';
 
 interface UI {
     lista: Array < Curso > ;
@@ -55,7 +55,7 @@ export class CursoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => RouterManager.redirectRoute(RouterPath.CURSO_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.CURSO_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -71,7 +71,7 @@ export class CursoComponent extends Vue {
     }
 
     public doNew() {
-        RouterManager.redirectRoute(RouterPath.CURSO_ADD);
+        Router.redirectRoute(RouterPath.CURSO_ADD);
     }
 
     public remove(item) {

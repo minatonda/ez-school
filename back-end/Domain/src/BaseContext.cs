@@ -7,6 +7,10 @@ namespace Domain {
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
+
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioInfo> UsuariosInfo { get; set; }
         public DbSet<Materia> Materias { get; set; }
@@ -19,6 +23,7 @@ namespace Domain {
         public DbSet<InstituicaoCurso> InstituicaoCursos { get; set; }
         public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoOcorrencia> InstituicaoCursoOcorrencias { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaPeriodo> InstituicaoCursoOcorrenciaPeriodos { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaAluno> InstituicaoCursoOcorrenciaAlunos { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessor> InstituicaoCursoOcorrenciaPeriodoProfessores { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodoAluno> InstituicaoCursoOcorrenciaPeriodoAlunos { get; set; }
