@@ -140,7 +140,7 @@ export class InstituicaoCursoManagementComponent extends Vue {
         this.clearCursoGrade = true;
         setImmediate(() => { this.clearCursoGrade = false; });
         if (curso) {
-            this.ui.cursoGrades = await CursoFactory.allGrade(curso.id);
+            this.ui.cursoGrades = await CursoFactory.allCursoGrade(curso.id);
         }
         else {
             this.ui.cursoGrades = [];

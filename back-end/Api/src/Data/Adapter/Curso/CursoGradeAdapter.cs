@@ -11,7 +11,7 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class CursoGradeAdapter {
 
-        public static CursoGradeVM ToViewModel(CursoGrade model, List<CursoGradeMateria> materias, bool deep) {
+        public static CursoGradeVM ToViewModel(CursoGrade model, bool deep) {
             var vm = new CursoGradeVM();
             vm.ID = model.ID.ToString();
 
@@ -19,9 +19,6 @@ namespace Api.Data.ViewModels {
             vm.Descricao = model.Descricao;
             vm.DataCriacao = model.DataCriacao;
 
-            if (materias != null) {
-                vm.Materias = materias.Select(x => CursoGradeMateriaAdapter.ToViewModel(x, false)).ToList();
-            }
             return vm;
         }
         public static CursoGrade ToModel(CursoGradeVM vm, bool deep) {

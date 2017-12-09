@@ -6,6 +6,22 @@ import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.eve
 import { Router } from '../../../router';
 import { CursoFactory } from '../../../module/factory/curso.factory';
 import { Curso } from '../../../module/model/server/curso';
+import { Materia } from '../../../module/model/server/materia';
+import { MateriaFactory } from '../../../module/factory/materia.factory';
+import { CursoGrade } from '../../../module/model/server/curso-grade';
+import { CursoGradeMateria } from '../../../module/model/server/curso-grade-materia';
+
+enum ModalOperation {
+    add = 0,
+        update = 1
+}
+
+interface UI {
+    materias: Array < Materia > ;
+    cursoGrade: CursoGrade;
+    cursoGradeMateria: CursoGradeMateria;
+    dialogCursoGradeOperation: ModalOperation;
+}
 
 @Component({
     template: require('./curso-management.html')
@@ -18,7 +34,14 @@ export class CursoManagementComponent extends Vue {
     operation: RouterPathType;
 
     model: Curso = new Curso();
-    
+
+    ui: UI = {
+        materias: undefined,
+        cursoGrade: new CursoGrade(),
+        cursoGradeMateria: new CursoGradeMateria(),
+        dialogCursoGradeOperation: ModalOperation.add
+    };
+
     constructor() {
         super();
     }
@@ -30,9 +53,9 @@ export class CursoManagementComponent extends Vue {
     async mounted() {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER);
+            this.ui.materias = await MateriaFactory.all();
             if (this.operation === RouterPathType.upd) {
                 this.model = await CursoFactory.detail(this.$route.params.id, true);
-                this.model.grades = await CursoFactory.allGrade(this.model.id);
             }
         }
         catch (e) {
@@ -41,6 +64,16 @@ export class CursoManagementComponent extends Vue {
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
+    }
+
+    saveCursoGrade(cursoGrade: CursoGrade) {
+        if (this.ui.dialogCursoGradeOperation === ModalOperation.add) {
+            this.addCursoGrade(cursoGrade);
+        }
+        else {
+
+        }
+        this.closeDialogCursoGrade();
     }
 
     async save() {
@@ -66,6 +99,44 @@ export class CursoManagementComponent extends Vue {
         finally {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
+    }
+
+
+    addCursoGrade(cursoGrade: CursoGrade) {
+        this.model.grades.push(Object.assign(new CursoGrade(), cursoGrade));
+    }
+
+    removeCursoGrade(cursoGrade: CursoGrade) {
+        this.model.grades.splice(this.model.grades.indexOf(cursoGrade), 1);
+    }
+
+    addCursoGradeMateria(cursoGradeMateria: CursoGradeMateria) {
+        this.ui.cursoGrade.materias.push(Object.assign(new CursoGradeMateria(), cursoGradeMateria));
+    }
+
+    removeCursoGradeMateria(cursoGradeMateria: CursoGradeMateria) {
+        this.ui.cursoGrade.materias.splice(this.ui.cursoGrade.materias.indexOf(cursoGradeMateria), 1);
+    }
+
+
+    openDialogCursoGrade() {
+        (this.$refs['modal-curso-grade'] as any).show();
+    }
+
+    closeDialogCursoGrade() {
+        (this.$refs['modal-curso-grade'] as any).hide();
+    }
+
+    openDialogCursoGradeToAdd() {
+        this.ui.dialogCursoGradeOperation = ModalOperation.add;
+        this.ui.cursoGrade = new CursoGrade();
+        this.openDialogCursoGrade();
+    }
+
+    openDialogCursoGradeUpdate(cursoGrade: CursoGrade) {
+        this.ui.dialogCursoGradeOperation = ModalOperation.update;
+        this.ui.cursoGrade = cursoGrade;
+        this.openDialogCursoGrade();
     }
 
 }
