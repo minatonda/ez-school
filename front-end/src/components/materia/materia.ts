@@ -74,10 +74,11 @@ export class MateriaComponent extends Vue {
         Router.redirectRoute(RouterPath.MATERIA_ADD);
     }
 
-    public remove(item) {
+    public async remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            MateriaFactory.disable(item.id);
+            await MateriaFactory.disable(item.id);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 

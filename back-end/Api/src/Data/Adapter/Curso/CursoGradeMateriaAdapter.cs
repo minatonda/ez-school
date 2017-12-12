@@ -10,25 +10,25 @@ using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
     public class CursoGradeMateriaAdapter {
-    
-        public static CursoGradeMateriaVM ToViewModel (CursoGradeMateria model, bool deep) {
-            var vm = new CursoGradeMateriaVM ();
 
-            vm.ID = model.ID.ToString ();
+        public static CursoGradeMateriaVM ToViewModel(CursoGradeMateria model, bool deep) {
+            var vm = new CursoGradeMateriaVM();
+
+            vm.ID = model.ID.ToString();
             vm.Label = model.Descricao;
 
             vm.Descricao = model.Descricao;
-            vm.Materia = MateriaAdapter.ToViewModel (model.Materia, null,  true);
+            vm.Materia = MateriaAdapter.ToViewModel(model.Materia, true);
 
             return vm;
         }
-        public static CursoGradeMateria ToModel (CursoGradeMateriaVM vm, bool deep) {
-            var model = new CursoGradeMateria ();
+        public static CursoGradeMateria ToModel(CursoGradeMateriaVM vm, bool deep) {
+            var model = new CursoGradeMateria();
             if (vm.ID != null) {
-                model.ID = long.Parse (vm.ID);
+                model.ID = long.Parse(vm.ID);
             }
             model.Descricao = vm.Descricao;
-            model.Materia = MateriaAdapter.ToModel (vm.Materia, true);
+            model.Materia = MateriaAdapter.ToModel(vm.Materia, true);
             return model;
         }
 
