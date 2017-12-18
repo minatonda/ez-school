@@ -8,37 +8,38 @@ using Domain.Models.Interface;
 using Domain.Repositories;
 using Api.Data.ViewModels;
 
-namespace Api.Data.Service
-{
-    public class InstituicaoCategoriaService
-    {
+namespace Api.Data.Service {
+    public class InstituicaoCategoriaService {
         private InstituicaoCategoriaRepository _instituicaoCategoriaRepository;
-        public InstituicaoCategoriaService(InstituicaoCategoriaRepository instituicaoCategoriaRepository)
-        {
+        public InstituicaoCategoriaService(InstituicaoCategoriaRepository instituicaoCategoriaRepository) {
             this._instituicaoCategoriaRepository = instituicaoCategoriaRepository;
         }
-        public List<InstituicaoCategoriaVM> All()
-        {
-            return this._instituicaoCategoriaRepository.GetAll(true).Select(x => InstituicaoCategoriaAdapter.ToViewModel(x, true)).ToList();
-        }
-        public InstituicaoCategoriaVM Detail(long id)
-        {
-            return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Get(id), true);
-        }
-        public InstituicaoCategoriaVM Add(InstituicaoCategoriaVM viewModel)
-        {
+
+        public void Add(InstituicaoCategoriaVM viewModel) {
             var model = InstituicaoCategoriaAdapter.ToModel(viewModel, true);
-            return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Add(model), true);
-        }
-        public InstituicaoCategoriaVM Update(InstituicaoCategoriaVM viewModel)
-        {
-            var model = InstituicaoCategoriaAdapter.ToModel(viewModel, true);
-            return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Update(model), true);
-        }
-        public void Disable(long id)
-        {
-            this._instituicaoCategoriaRepository.Disable(id);
+            this._instituicaoCategoriaRepository.Add(model);
+            this._instituicaoCategoriaRepository.SaveChanges();
         }
 
+        public void Update(InstituicaoCategoriaVM viewModel) {
+            var model = InstituicaoCategoriaAdapter.ToModel(viewModel, true);
+            this._instituicaoCategoriaRepository.Update(model);
+
+            this._instituicaoCategoriaRepository.SaveChanges();
+
+        }
+
+        public void Disable(long id) {
+            this._instituicaoCategoriaRepository.Disable(id);
+            this._instituicaoCategoriaRepository.SaveChanges();
+        }
+
+        public InstituicaoCategoriaVM Detail(long id) {
+            return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Get(id), true);
+        }
+        
+        public List<InstituicaoCategoriaVM> All() {
+            return this._instituicaoCategoriaRepository.GetAll(true).Select(x => InstituicaoCategoriaAdapter.ToViewModel(x, true)).ToList();
+        }
     }
 }

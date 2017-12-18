@@ -22,6 +22,8 @@ export class InstituicaoCategoriaComponent extends Vue {
         lista: undefined
     };
 
+    model: InstituicaoCategoria = new InstituicaoCategoria();
+
     constructor() {
         super();
     }
@@ -54,7 +56,7 @@ export class InstituicaoCategoriaComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_UPD, item),
+                (item) => Router.redirectRoute(RouterPath.INSTITUICAO_CATEGORIA_UPD, item),
                 (item) => 'Atualizar',
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
@@ -76,7 +78,8 @@ export class InstituicaoCategoriaComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            InstituicaoCategoriaFactory.disable(item.id);
+            InstituicaoCategoriaFactory.disable(item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
