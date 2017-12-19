@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Domain.Repositories {
     public class CategoriaProfissionalRepository : IRepository<CategoriaProfissional> {
@@ -18,26 +19,36 @@ namespace Domain.Repositories {
         public CategoriaProfissionalRepository() {
         }
 
-        public CategoriaProfissional Add(CategoriaProfissional model) {
-            this.db.CategoriaProfissionais.Add(model);
-            this.db.SaveChanges();
-            return model;
+        public CategoriaProfissional Add(CategoriaProfissional categoriaProfissional) {
+            this.db.CategoriaProfissionais.Add(categoriaProfissional);
+            return categoriaProfissional;
         }
-        public CategoriaProfissional Update(CategoriaProfissional model) {
-            var _model = this.db.CategoriaProfissionais.Find(model.ID);
-            _model.Nome = model.Nome;
-            _model.Descricao = model.Descricao;
-            this.db.CategoriaProfissionais.Update(_model);
-            this.db.SaveChanges();
+
+        public void AddHistoryCategoriaProfissional(long id) {
+            var history = this.Get(id);
+            history.ID = 0;
+            history.Ativo = DateTime.Now;
+            this.Add(history);
+        }
+
+        public CategoriaProfissional Update(CategoriaProfissional categoriaProfissional) {
+            var model = this.db.CategoriaProfissionais.Find(categoriaProfissional.ID);
+
+            model.Nome = categoriaProfissional.Nome;
+            model.Descricao = categoriaProfissional.Descricao;
+
+            this.db.CategoriaProfissionais.Update(model);
             return model;
         }
         public void Disable(long ID) {
-            this.db.CategoriaProfissionais.Find(ID).Ativo = DateTime.Now;
-            this.db.CategoriaProfissionais.Update(this.db.CategoriaProfissionais.Find(ID));
-            this.db.SaveChanges();
+            var model = this.db.CategoriaProfissionais.Find(ID);
+
+            model.Ativo = DateTime.Now;
+            this.db.CategoriaProfissionais.Update(model);
         }
 
         public CategoriaProfissional Get(long ID) => this.db.CategoriaProfissionais.Find(ID);
+
         public List<CategoriaProfissional> GetAll(bool ativo) {
             if (ativo) {
                 return this.db.CategoriaProfissionais.Where(x => !x.Ativo.HasValue).ToList();
@@ -50,7 +61,13 @@ namespace Domain.Repositories {
             return includeExpressions.Aggregate<Expression<Func<CategoriaProfissional, object>>, IQueryable<CategoriaProfissional>>(db.CategoriaProfissionais, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
+        public IDbContextTransaction BeginTransaction() {
+            return this.db.Database.BeginTransaction();
+        }
 
+        public void SaveChanges() {
+            this.db.SaveChanges();
+        }
     }
 
 }
