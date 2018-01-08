@@ -16,23 +16,30 @@ namespace Api.Data.Service {
         public CategoriaProfissionalService(CategoriaProfissionalRepository categoriaProfissionalRepository) {
             this._categoriaProfissionalRepository = categoriaProfissionalRepository;
         }
-        public List < CategoriaProfissionalVM > All() {
-            return this._categoriaProfissionalRepository.GetAll(true).Select(x => CategoriaProfissionalAdapter.ToViewModel(x, true)).ToList();
+
+        public void Add(CategoriaProfissionalVM viewModel) {
+            var model = CategoriaProfissionalAdapter.ToModel(viewModel, true);
+            this._categoriaProfissionalRepository.Add(model);
+            this._categoriaProfissionalRepository.SaveChanges();
         }
+
+        public void Update(CategoriaProfissionalVM viewModel) {
+            var model = CategoriaProfissionalAdapter.ToModel(viewModel, true);
+            this._categoriaProfissionalRepository.Update(model);
+            this._categoriaProfissionalRepository.SaveChanges();
+        }
+
+        public void Disable(long id) {
+            this._categoriaProfissionalRepository.Disable(id);
+            this._categoriaProfissionalRepository.SaveChanges();
+        }
+
         public CategoriaProfissionalVM Detail(long id) {
             return CategoriaProfissionalAdapter.ToViewModel(this._categoriaProfissionalRepository.Get(id), true);
         }
-        public CategoriaProfissionalVM Add(CategoriaProfissionalVM viewModel) {
-            var model = CategoriaProfissionalAdapter.ToModel(viewModel, true);
-            return CategoriaProfissionalAdapter.ToViewModel(this._categoriaProfissionalRepository.Add(model), true);
-        }
-        public CategoriaProfissionalVM Update(CategoriaProfissionalVM viewModel) {
-            var model = CategoriaProfissionalAdapter.ToModel(viewModel, true);
-            return CategoriaProfissionalAdapter.ToViewModel(this._categoriaProfissionalRepository.Update(model), true);
-        }
-        public void Disable(long id) {
-            this._categoriaProfissionalRepository.Disable(id);
-        }
 
+        public List < CategoriaProfissionalVM > All() {
+            return this._categoriaProfissionalRepository.GetAll(true).Select(x => CategoriaProfissionalAdapter.ToViewModel(x, true)).ToList();
+        }
     }
 }

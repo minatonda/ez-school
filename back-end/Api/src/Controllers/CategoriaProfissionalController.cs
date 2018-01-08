@@ -15,30 +15,35 @@ namespace Api.Controllers
         {
             this._categoriaProfissionalService = new CategoriaProfissionalService(categoriaProfissionalRepository);
         }
-        [HttpGet]
-        public List<CategoriaProfissionalVM> All()
+        
+        [HttpPut("add")]
+        public void Add([FromBody] CategoriaProfissionalVM viewModel)
         {
-            return this._categoriaProfissionalService.All();
+            this._categoriaProfissionalService.Add(viewModel);
         }
+
+        [HttpPost("update")]
+        public void Update([FromBody] CategoriaProfissionalVM viewModel)
+        {
+            this._categoriaProfissionalService.Update(viewModel);
+        }
+
+        [HttpDelete("disable")]
+        public void Disable([FromQuery] long id)
+        {
+            this._categoriaProfissionalService.Disable(id);
+        }
+
         [HttpGet("{id}")]
         public CategoriaProfissionalVM Detail(long id)
         {
             return this._categoriaProfissionalService.Detail(id);
         }
-        [HttpPut("add")]
-        public CategoriaProfissionalVM Add([FromBody] CategoriaProfissionalVM viewModel)
+
+        [HttpGet]
+        public List<CategoriaProfissionalVM> All()
         {
-            return this._categoriaProfissionalService.Add(viewModel);
-        }
-        [HttpPost("update")]
-        public CategoriaProfissionalVM Update([FromBody] CategoriaProfissionalVM viewModel)
-        {
-            return this._categoriaProfissionalService.Update(viewModel);
-        }
-        [HttpDelete("disable")]
-        public void Disable([FromQuery] long id)
-        {
-            this._categoriaProfissionalService.Disable(id);
+            return this._categoriaProfissionalService.All();
         }
 
     }

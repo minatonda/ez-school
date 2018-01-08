@@ -77,7 +77,8 @@ export class CategoriaProfissionalComponent extends Vue {
     public remove(item) {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            CategoriaProfissionalFactory.disable(item.id);
+            CategoriaProfissionalFactory.disable(item.id, true);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 
