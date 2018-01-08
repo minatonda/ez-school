@@ -5,9 +5,9 @@ using Api.Data.ViewModels;
 using Domain.Repositories;
 
 namespace Api.Controllers {
+
     [Route("api/curso")]
     public class CursoController : Controller {
-
         private CursoService _cursoService;
         public CursoController(CursoRepository cursoRepository) {
             this._cursoService = new CursoService(cursoRepository);
@@ -42,7 +42,7 @@ namespace Api.Controllers {
         public List<CursoGradeVM> AllCursoGrade(long id) {
             return this._cursoService.Detail(id).Grades;
         }
-
+        
         [HttpGet("{id}/grade/{idCursoGrade}/curso-grade-materia")]
         public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idCursoGrade) {
             return this._cursoService.Detail(id).Grades.Find(x => x.ID == idCursoGrade.ToString()).Materias;

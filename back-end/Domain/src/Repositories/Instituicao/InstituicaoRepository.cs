@@ -19,9 +19,8 @@ namespace Domain.Repositories {
             this.usuarioRepository = usuarioRepository;
         }
 
-        public Instituicao Add(Instituicao instituicao) {
+        public void Add(Instituicao instituicao) {
             this.db.Instituicoes.Add(instituicao);
-            return instituicao;
         }
 
         public void AddInstituicaoCurso(InstituicaoCurso model) {
@@ -109,7 +108,7 @@ namespace Domain.Repositories {
             this.AddInstituicaoCursoOcorrencia(history);
         }
 
-        public Instituicao Update(Instituicao instituicao) {
+        public void Update(Instituicao instituicao) {
             //this.AddHistoryInstituicao(instituicao.ID);
 
             var model = this.db.Instituicoes.Find(instituicao.ID);
@@ -118,7 +117,6 @@ namespace Domain.Repositories {
             model.CNPJ = instituicao.CNPJ;
 
             this.db.Instituicoes.Update(model);
-            return model;
         }
 
         public void UpdateInstituicaoCurso(InstituicaoCurso instituicaoCurso) {
@@ -246,12 +244,12 @@ namespace Domain.Repositories {
             return this.db.InstituicaoCursoOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
-            .Include(i => i.Coordenador).ThenInclude(i=>i.UsuarioInfo)
+            .Include(i => i.Coordenador).ThenInclude(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.ID == id);
         }
 
         public List<Instituicao> GetAll(bool ativo) {
-            return this.db.Instituicoes.Where(x => x.Ativo.HasValue == !ativo).ToList();
+            return this.db.Instituicoes.AsNoTracking().Where(x => x.Ativo.HasValue == !ativo).ToList();
         }
 
         public List<InstituicaoCurso> GetAllInstituicaoCursoByInstituicao(long id, bool ativo) {
@@ -362,10 +360,6 @@ namespace Domain.Repositories {
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor)
             .Where(x => x.InstituicaoCursoOcorrenciaPeriodoProfessor.ID == id && x.Ativo.HasValue == !ativo)
             .ToList();
-        }
-
-        public IEnumerable<Instituicao> Query(Expression<Func<Instituicao, bool>> predicate, params Expression<Func<Instituicao, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Instituicao, object>>, IQueryable<Instituicao>>(db.Instituicoes, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

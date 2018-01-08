@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Domain.Repositories {
+
     public class UsuarioRepository : IRepository<Usuario> {
         private BaseContext db;
 
@@ -14,119 +16,167 @@ namespace Domain.Repositories {
             this.db = db;
         }
 
-        public Usuario Add(Usuario model) {
-            model.UsuarioInfo.ID = model.ID;
-            this.db.UsuariosInfo.Add(model.UsuarioInfo);
+        public void Add(Usuario model) {
+
+            var usuarioInfo = model.UsuarioInfo != null ? model.UsuarioInfo : new UsuarioInfo();
+            usuarioInfo.ID = model.ID;
+            this.AddUsuarioInfo(usuarioInfo);
 
             var aluno = new Aluno();
             aluno.ID = model.ID;
             aluno.UsuarioInfo = model.UsuarioInfo;
-            this.db.Alunos.Add(aluno);
+            this.AddAluno(aluno);
 
             var professor = new Professor();
             professor.ID = model.ID;
             aluno.UsuarioInfo = model.UsuarioInfo;
-            this.db.Professores.Add(professor);
+            this.AddProfessor(professor);
 
             this.db.Usuarios.Add(model);
-            this.db.SaveChanges();
-            return model;
-        }
-        public Usuario Update(Usuario model) {
-            if (model.UsuarioInfo != null) {
-                this.db.Attach(model.UsuarioInfo);
-            }
-
-            this.db.Usuarios.Find(model.ID).Username = model.Username;
-            this.db.Usuarios.Find(model.ID).Password = model.Password;
-            this.db.UsuariosInfo.Find(model.UsuarioInfo.ID).Nome = model.UsuarioInfo.Nome;
-            this.db.UsuariosInfo.Find(model.UsuarioInfo.ID).DataNascimento = model.UsuarioInfo.DataNascimento;
-            this.db.UsuariosInfo.Find(model.UsuarioInfo.ID).CPF = model.UsuarioInfo.CPF;
-            this.db.UsuariosInfo.Find(model.UsuarioInfo.ID).RG = model.UsuarioInfo.RG;
-
-            this.db.Usuarios.Update(this.db.Usuarios.Find(model.ID));
-            this.db.SaveChanges();
-            return model;
         }
 
-        public void Disable(string ID) {
-            this.db.Usuarios.Find(ID).Ativo = DateTime.Now;
-            this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
-            this.db.SaveChanges();
+        public void AddUsuarioInfo(UsuarioInfo model) {
+            this.db.UsuariosInfo.Add(model);
         }
 
-        public Usuario Get(string ID) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.ID == ID);
-        public Usuario GetByRG(string rg) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.RG == rg);
-        public UsuarioInfo GetInfo(string ID) => this.db.UsuariosInfo.Find(ID);
-        public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
-        public List<Usuario> GetAll(bool ativo) {
-            if (ativo) {
-                return this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => !x.Ativo.HasValue).ToList();
-            } else {
-                return this.db.Usuarios.Include(i => i.UsuarioInfo).ToList();
-            }
+        public void AddAluno(Aluno model) {
+            this.db.Alunos.Add(model);
         }
 
-        public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-        public List<Aluno> GetAlunosByTermo(string termo) {
-            return this.db.Alunos.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
+        public void AddProfessor(Professor model) {
+            this.db.Professores.Add(model);
         }
-        public List<AreaInteresse> GetAlunoAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Aluno).Include(x => x.CategoriaProfissional).Where(x => x.Aluno.ID == ID).ToList();
-        public Aluno UpdateAluno(Aluno model, List<AreaInteresse> AreaInteresses) {
+
+        public void Update(Usuario model) {
+            var usuario = this.db.Usuarios.SingleOrDefault(x => x.ID == model.ID);
+
+            usuario.Username = model.Username;
+            usuario.Password = model.Password;
+
+            this.db.Usuarios.Update(usuario);
+        }
+
+        public void UpdateUsuarioInfo(UsuarioInfo model) {
+            var usuarioInfo = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.ID);
+
+            usuarioInfo.Nome = model.Nome;
+            usuarioInfo.DataNascimento = model.DataNascimento;
+            usuarioInfo.CPF = model.CPF;
+            usuarioInfo.RG = model.RG;
+
+            this.db.UsuariosInfo.Update(usuarioInfo);
+        }
+
+        public void UpdateAluno(Aluno model) {
             var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
-
-            var areaInteresse = this.GetAlunoAreaInteresse(model.ID);
-
-            var areaInteressesRemove = areaInteresse.Where(x => !AreaInteresses.Select(y => y.ID).Contains(x.ID)).ToList();
-
-            var areaInteressesAdd = AreaInteresses.Where(x => !areaInteresse.Select(y => y.ID).Contains(x.ID)).ToList();
-            areaInteressesAdd.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(x.CategoriaProfissional.ID));
-            areaInteressesAdd.ForEach(x => x.Aluno = model);
-
-            this.db.AreaInteresse.AddRange(areaInteressesAdd);
-            this.db.AreaInteresse.RemoveRange(areaInteressesRemove);
-
             this.db.Alunos.Update(aluno);
-            this.db.SaveChanges();
-            return aluno;
         }
 
-        public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-        public List<Professor> GetProfessoresByTermo(string termo) {
-            return this.db.Professores.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
-        }
-        public List<AreaInteresse> GetProfessorAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Professor).Include(x => x.CategoriaProfissional).Where(x => x.Professor.ID == ID).ToList();
-
-        public Professor UpdateProfessor(Professor model, List<AreaInteresse> AreaInteresses) {
+        public void UpdateProfessor(Professor model) {
             var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
-
-            var areaInteresse = this.GetProfessorAreaInteresse(model.ID);
-
-            var areaInteressesRemove = areaInteresse.Where(x => !AreaInteresses.Select(y => y.ID).Contains(x.ID)).ToList();
-
-            var areaInteressesAdd = AreaInteresses.Where(x => !areaInteresse.Select(y => y.ID).Contains(x.ID)).ToList();
-            areaInteressesAdd.ForEach(x => x.CategoriaProfissional = this.db.CategoriaProfissionais.Find(x.CategoriaProfissional.ID));
-            areaInteressesAdd.ForEach(x => x.Professor = model);
-
-            this.db.AreaInteresse.AddRange(areaInteressesAdd);
-            this.db.AreaInteresse.RemoveRange(areaInteressesRemove);
-
             this.db.Professores.Update(professor);
-            this.db.SaveChanges();
-            return professor;
-        }
-
-        public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Usuario, object>>, IQueryable<Usuario>>(db.Usuarios, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public void Disable(long ID) {
             throw new NotImplementedException();
         }
 
-        public Usuario Get(long ID) {
+        public void Disable(string ID) {
+            this.db.Usuarios.Find(ID).Ativo = DateTime.Now;
+            this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
+        }
+
+        public Usuario Get(long id) {
             throw new NotImplementedException();
         }
+
+        public Usuario Get(string ID) {
+            return this.db.Usuarios
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.ID == ID);
+        }
+
+        public Usuario GetByRG(string rg) {
+            return this.db.Usuarios
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.RG == rg);
+        }
+
+        public Usuario GetByUsernameAndPassword(string username, string password) {
+            return this.db.Usuarios
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.Username == username && x.Password == password);
+        }
+
+        public UsuarioInfo GetInfo(string id) {
+            return this.db.UsuariosInfo
+            .AsNoTracking()
+            .SingleOrDefault(x => x.ID == id);
+        }
+
+        public UsuarioInfo GetInfoByRG(string rg) {
+            return this.db.UsuariosInfo
+            .AsNoTracking()
+            .SingleOrDefault(x => x.RG == rg);
+        }
+
+        public Aluno GetAluno(string id) {
+            return this.db.Alunos
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.ID == id);
+        }
+
+        public Professor GetProfessor(string ID) {
+            return this.db.Professores
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+        }
+
+        public List<Usuario> GetAll(bool ativo) {
+            return this.db.Usuarios
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .Where(x => x.Ativo.HasValue == !ativo).ToList();
+        }
+
+        public List<Aluno> GetAllAlunosByTermo(string termo, bool ativo) {
+            return this.db.Alunos
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()) && x.Ativo.HasValue == !ativo && x.UsuarioInfo.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<Professor> GetAllProfessoresByTermo(string termo, bool ativo) {
+            return this.db.Professores
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()) && x.Ativo.HasValue == !ativo && x.UsuarioInfo.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<AreaInteresse> GetAreaInteressesByProfessor(string id) {
+            return this.db.AreaInteresse
+            .AsNoTracking()
+            .Include(i => i.Professor)
+            .Include(x => x.CategoriaProfissional)
+            .Where(x => x.Professor.ID == id)
+            .ToList();
+        }
+
+        public IDbContextTransaction BeginTransaction() {
+            return this.db.Database.BeginTransaction();
+        }
+
+        public void SaveChanges() {
+            this.db.SaveChanges();
+        }
+
     }
 
 }

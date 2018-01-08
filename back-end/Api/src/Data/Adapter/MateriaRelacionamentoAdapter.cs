@@ -14,11 +14,6 @@ namespace Api.Data.ViewModels {
         public static MateriaRelacionamentoVM ToViewModel(MateriaRelacionamento model, bool deep) {
             var vm = new MateriaRelacionamentoVM();
             vm.ID = model.ID.ToString();
-
-            if(model.MateriaPai!=null){
-                vm.MateriaPai = MateriaAdapter.ToViewModel(model.MateriaPai,true);
-            }
-
             return vm;
         }
 

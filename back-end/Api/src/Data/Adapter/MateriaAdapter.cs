@@ -22,13 +22,6 @@ namespace Api.Data.ViewModels {
             return vm;
         }
 
-        public static SelectVM ToViewModelShort(Materia model) {
-            var vm = new SelectVM();
-            vm.ID = model.ID.ToString();
-            vm.Label = model.Nome;
-            return vm;
-        }
-
         public static Materia ToModel(MateriaVM vm, bool deep) {
             var model = new Materia();
             if (vm.ID != null) {

@@ -38,7 +38,7 @@ namespace Api.Data.Service {
             return CategoriaProfissionalAdapter.ToViewModel(this._categoriaProfissionalRepository.Get(id), true);
         }
 
-        public List < CategoriaProfissionalVM > All() {
+        public List<CategoriaProfissionalVM> All() {
             return this._categoriaProfissionalRepository.GetAll(true).Select(x => CategoriaProfissionalAdapter.ToViewModel(x, true)).ToList();
         }
     }

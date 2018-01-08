@@ -9,8 +9,11 @@ using Domain.Repositories;
 using Api.Data.ViewModels;
 
 namespace Api.Data.Service {
+
     public class InstituicaoCategoriaService {
+
         private InstituicaoCategoriaRepository _instituicaoCategoriaRepository;
+        
         public InstituicaoCategoriaService(InstituicaoCategoriaRepository instituicaoCategoriaRepository) {
             this._instituicaoCategoriaRepository = instituicaoCategoriaRepository;
         }
@@ -37,7 +40,7 @@ namespace Api.Data.Service {
         public InstituicaoCategoriaVM Detail(long id) {
             return InstituicaoCategoriaAdapter.ToViewModel(this._instituicaoCategoriaRepository.Get(id), true);
         }
-        
+
         public List<InstituicaoCategoriaVM> All() {
             return this._instituicaoCategoriaRepository.GetAll(true).Select(x => InstituicaoCategoriaAdapter.ToViewModel(x, true)).ToList();
         }

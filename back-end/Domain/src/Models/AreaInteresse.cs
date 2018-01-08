@@ -4,12 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Models.Interface;
 
-namespace Domain.Models
-{
-    public class AreaInteresse
-    {
-        public AreaInteresse()
-        {
+namespace Domain.Models {
+    public class AreaInteresse {
+        public AreaInteresse() {
 
         }
 
@@ -20,5 +17,6 @@ namespace Domain.Models
         public Professor Professor { get; set; }
         public CategoriaProfissional CategoriaProfissional { get; set; }
         public string Descricao { get; set; }
+        public DateTime? Ativo { get; set; } = null;
     }
 }
