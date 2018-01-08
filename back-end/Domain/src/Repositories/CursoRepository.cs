@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Domain;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Domain.Repositories {
     public class CursoRepository : IRepository<Curso> {
@@ -13,76 +14,122 @@ namespace Domain.Repositories {
         public CursoRepository(BaseContext db) {
             this.db = db;
         }
-        public Curso Add(Curso model) {
-            this.db.Cursos.Add(model);
-            this.db.SaveChanges();
+
+        public Curso Add(Curso curso) {
+            this.db.Cursos.Add(curso);
+            return curso;
+        }
+
+        public CursoGrade AddCursoGrade(CursoGrade cursoGrade) {
+            cursoGrade.Curso = this.db.Cursos.Find(cursoGrade.Curso.ID);
+            this.db.CursoGrades.Add(cursoGrade);
+            return cursoGrade;
+        }
+
+        public CursoGradeMateria AddCursoGradeMateria(CursoGradeMateria cursoGradeMateria) {
+            cursoGradeMateria.CursoGrade = this.db.CursoGrades.Find(cursoGradeMateria.CursoGrade.ID);
+            cursoGradeMateria.Materia = this.db.Materias.Find(cursoGradeMateria.Materia.ID);
+            this.db.CursoGradeMaterias.Add(cursoGradeMateria);
+            return cursoGradeMateria;
+        }
+
+        public Curso Update(Curso curso) {
+            var model = this.db.Cursos.Find(curso.ID);
+            model.Nome = curso.Nome;
+            model.Descricao = curso.Descricao;
+            this.db.Cursos.Update(model);
             return model;
         }
-        public Curso Update(Curso model) {
-            this.db.Cursos.Find(model.ID).Nome = model.Nome;
-            this.db.Cursos.Find(model.ID).Descricao = model.Descricao;
-            this.db.Cursos.Update(this.db.Cursos.Find(model.ID));
-            this.db.SaveChanges();
+
+        public CursoGrade UpdateCursoGrade(CursoGrade cursoGrade) {
+            var model = this.db.CursoGrades.Find(cursoGrade.ID);
+            model.Curso = this.db.Cursos.Find(cursoGrade.Curso.ID);
+            model.Descricao = cursoGrade.Descricao;
+            model.DataCriacao = cursoGrade.DataCriacao;
+            this.db.CursoGrades.Update(model);
             return model;
         }
-        public void Disable(long ID) {
-            this.db.Cursos.Find(ID).Ativo = DateTime.Now;
-            this.db.Cursos.Update(this.db.Cursos.Find(ID));
-            this.db.SaveChanges();
+
+        public CursoGradeMateria UpdateCursoGradeMateria(CursoGradeMateria cursoGradeMateria) {
+            var model = this.db.CursoGradeMaterias.Find(cursoGradeMateria.ID);
+            model.CursoGrade = this.db.CursoGrades.Find(cursoGradeMateria.CursoGrade.ID);
+            model.Descricao = cursoGradeMateria.Descricao;
+            this.db.CursoGradeMaterias.Update(model);
+            return model;
         }
-        public Curso Get(long ID) => this.db.Cursos.Find(ID);
+
+        public void Disable(long id) {
+            var model = this.db.Cursos.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.Cursos.Update(model);
+        }
+
+        public void DisableCursoGrade(long id) {
+            var model = this.db.CursoGrades.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.CursoGrades.Update(model);
+        }
+
+        public void DisableCursoGradeMateria(long id) {
+            var model = this.db.CursoGradeMaterias.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.CursoGradeMaterias.Update(model);
+        }
+
+        public Curso Get(long ID) {
+            return this.db.Cursos
+            .AsNoTracking()
+            .SingleOrDefault(x => x.ID == ID);
+        }
+
+        public CursoGrade GetCursoGrade(long id) {
+            return this.db.CursoGrades
+            .AsNoTracking()
+            .Include(i => i.Curso)
+            .SingleOrDefault(x => x.ID == id);
+        }
+
+        public CursoGradeMateria GetCursoGradeMateria(long id) {
+            return this.db.CursoGradeMaterias
+            .AsNoTracking()
+            .Include(i => i.CursoGrade)
+            .Include(i => i.Materia)
+            .SingleOrDefault(x => x.ID == id);
+        }
+
         public List<Curso> GetAll(bool ativo) {
-            if (ativo) {
-                return this.db.Cursos.Where(x => !x.Ativo.HasValue).ToList();
-            } else {
-                return this.db.Cursos.ToList();
-            }
+            return this.db.Cursos
+            .AsNoTracking()
+            .Where(x => x.Ativo.HasValue == !ativo)
+            .ToList();
         }
+
+        public List<CursoGrade> GetAllCursoGradesByCurso(long id, bool ativo) {
+            return this.db.CursoGrades
+            .AsNoTracking()
+            .Include(i => i.Curso)
+            .Where(x => x.Curso.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<CursoGradeMateria> GetAllCursoGradeMateriasByCursoGrade(long id, bool ativo) {
+            return this.db.CursoGradeMaterias
+            .AsNoTracking()
+            .Include(i => i.CursoGrade)
+            .Include(i => i.Materia)
+            .Where(x => x.CursoGrade.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
         public IEnumerable<Curso> Query(Expression<Func<Curso, bool>> predicate, params Expression<Func<Curso, object>>[] includeExpressions) {
             return includeExpressions.Aggregate<Expression<Func<Curso, object>>, IQueryable<Curso>>(db.Cursos, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
-        public CursoGrade GetGrade(long ID, long IDCursoGrade) {
-            return this.db.CursoGrades.Include(i => i.Curso).SingleOrDefault(x => x.Curso.ID == ID && x.ID == IDCursoGrade);
-        }
-        public List<CursoGrade> GetGrades(long ID) {
-            return this.db.CursoGrades.Include(i => i.Curso).Where(x => x.Curso.ID == ID).ToList();
+        public IDbContextTransaction BeginTransaction() {
+            return this.db.Database.BeginTransaction();
         }
 
-        public CursoGrade AddGrade(long ID, CursoGrade model, List<CursoGradeMateria> materias) {
-            var curso = this.db.Cursos.Find(ID);
-            model.Curso = curso;
-            materias.ForEach(x => x.CursoGrade = model);
-            materias.ForEach(x => x.Materia = this.db.Materias.Find(x.Materia.ID));
-            this.db.CursoGrades.Add(model);
-            this.db.CursoGradeMaterias.AddRange(materias);
-            this.db.SaveChanges();
-
-            return model;
-        }
-        public CursoGrade UpdateGrade(long ID, CursoGrade model, List<CursoGradeMateria> materias) {
-
-            var curso = this.db.Cursos.Find(ID);
-
-            var cursoGrade = this.GetGrade(ID, model.ID);
-
-            var materiasCurso = this.GetGradeMaterias(ID, model.ID);
-
-            var materiasRemove = materiasCurso.Where(x => !materias.Select(y => y.ID).Contains(x.ID));
-            var materiasAdd = materias.Where(x => !materiasCurso.Select(y => y.ID).Contains(x.ID));
-
-            this.db.CursoGradeMaterias.AddRange(materiasAdd);
-            this.db.CursoGradeMaterias.RemoveRange(materiasRemove);
-
-            this.db.SaveChanges();
-            return model;
-        }
-
-        public List<CursoGradeMateria> GetGradeMaterias(long ID, long IDCursoGrade) {
-            return this.db.CursoGradeMaterias.Include(i => i.CursoGrade).Include(i => i.Materia).Where(x => x.CursoGrade.ID == IDCursoGrade && x.CursoGrade.Curso.ID == ID).ToList();
-        }
-        public void DeleteGrade(long ID, long IDCursoGrade) {
-            this.db.RemoveRange(this.db.CursoGradeMaterias.Include(i => i.CursoGrade).ThenInclude(i => i.Curso).Where(x => x.CursoGrade.Curso.ID == ID && x.CursoGrade.ID == IDCursoGrade).ToList());
+        public void SaveChanges() {
             this.db.SaveChanges();
         }
 

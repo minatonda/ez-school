@@ -78,6 +78,7 @@ export class CursoComponent extends Vue {
         try {
             BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
             CursoFactory.disable(item.id);
+            this.ui.lista.splice(this.ui.lista.indexOf(item), 1);
         }
         catch (e) {
 

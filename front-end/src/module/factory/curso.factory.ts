@@ -5,7 +5,7 @@ import { CursoGrade } from '../model/server/curso-grade';
 
 export class Factory extends BaseFactory {
 
-    private  title = 'Curso';
+    private title = 'Curso';
 
     public async add(model: Curso, notify?: boolean) {
         try {
@@ -57,7 +57,7 @@ export class Factory extends BaseFactory {
 
     public async all(notify?: boolean) {
         try {
-            let result = await this.get('/api/curso') as Array<Curso>;
+            let result = await this.get('/api/curso') as Array < Curso > ;
             NotifyUtil.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -67,9 +67,9 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public async allGrade(id: string, notify?: boolean) {
+    public async allCursoGrade(id: string, notify?: boolean) {
         try {
-            let result = await this.get(`/api/curso/${id}/grade`) as Array<CursoGrade>;
+            let result = await this.get(`/api/curso/${id}/curso-grade`) as Array < CursoGrade > ;
             NotifyUtil.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
@@ -79,26 +79,14 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public async addGrade(id: string, model: CursoGrade, notify?: boolean) {
+    public async allCursoGradeMateria(id: string, idCursoGrade: string, notify?: boolean) {
         try {
-            let result = await this.put(`/api/curso/${id}/grade/add`, model) as CursoGrade;
-            NotifyUtil.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
+            let result = await this.get(`/api/curso/${id}/curso-grade/${idCursoGrade}/curso-grade-materia`) as Array < CursoGrade > ;
+            NotifyUtil.notify(MESSAGES.REGISTRO_GET, this.title, NOTIFY_TYPE.SUCCESS, !notify);
             return result;
         }
         catch (error) {
-            NotifyUtil.notify(MESSAGES.REGISTRO_ADD_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
-            throw error;
-        }
-    }
-
-    public async updateGrade(id: string, model: CursoGrade, notify?: boolean) {
-        try {
-            let result = await this.post(`/api/curso/${id}/grade/update`, model) as CursoGrade;
-            NotifyUtil.notify(MESSAGES.REGISTRO_ADD, this.title, NOTIFY_TYPE.SUCCESS, !notify);
-            return result;
-        }
-        catch (error) {
-            NotifyUtil.notify(MESSAGES.REGISTRO_ADD_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
+            NotifyUtil.notify(MESSAGES.REGISTRO_GET_FAIL, this.title, NOTIFY_TYPE.ERROR, !notify);
             throw error;
         }
     }

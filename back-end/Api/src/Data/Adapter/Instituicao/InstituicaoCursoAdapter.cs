@@ -22,7 +22,7 @@ namespace Api.Data.ViewModels {
                 vm.Curso = CursoAdapter.ToViewModel(model.Curso, false);
             }
             if (model.CursoGrade != null) {
-                vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, null, false);
+                vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, false);
             }
 
             return vm;

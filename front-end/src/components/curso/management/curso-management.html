@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12 col-md-4 form-group">
+            <div class="col-12 col-md-12 form-group">
                 <div class="card mnh-100">
                     <div class="card-body">
                         <div class="row">
@@ -10,24 +10,99 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 form-group">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Nome</label>
                                 <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
                             </div>
-                            <div class="col-12 form-group">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Descrição</label>
                                 <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 form-group text-right">
-                                <button class="btn btn-primary" v-on:click="save()">Salvar</button>
+                            <div class="col-12">
+                                <hr></hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-primary" v-on:click="openDialogCursoGradeToAdd()">Nova Grade</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-8 form-group">
-                <curso-grade-management-component class="mnh-100" v-bind:curso="model" v-if="operation=='upd'"></curso-grade-management-component>
+            <div class="col-12 form-group">
+                <div class="card card-body w-100 p-2 mb-2" v-for="cursoGrade in model.grades">
+                    <div class="row">
+                        <div class="col-12 col-md-8 align-self-center">
+                            <b>Descrição: </b><span>{{cursoGrade.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-4 align-self-center text-right">
+                            <button class="btn btn-primary" v-on:click="openDialogCursoGradeUpdate(cursoGrade)">
+                                Editar
+                            </button>
+                            <button class="btn btn-danger" v-on:click="removeCursoGrade(cursoGrade)">
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group text-right">
+                <button class="btn btn-primary" v-on:click="save()">Salvar</button>
             </div>
         </div>
     </div>
+    <b-modal ref="modal-curso-grade" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <label class="control-label">Descrição</label>
+                <input class="form-control" placeholder="Descrição" v-model="ui.cursoGrade.descricao"></input>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <label class="control-label">Materia</label>
+                <selector v-model="ui.cursoGradeMateria.materia" placeholder="Materia" v-bind:itens="ui.materias" label="label"></selector>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="control-label invisible">Ocupar</label>
+                <button class="btn btn-primary btn-block" v-on:click="addCursoGradeMateria(ui.cursoGradeMateria)">Adicionar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body w-100 p-2 mb-2" v-for="cursoGradeMateria in ui.cursoGrade.materias">
+                    <div class="row">
+                        <div class="col-12 col-md-8 align-self-center">
+                            <b>Descrição: </b><span>{{cursoGradeMateria.materia.label}}</span>
+                        </div>
+                        <div class="col-12 col-md-4 align-self-center text-right">
+                            <button class="btn btn-danger" v-on:click="removeCursoGradeMateria(cursoGradeMateria)">
+                                Excluir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" v-on:click="saveCursoGrade(ui.cursoGrade)">Salvar</button>
+            </div>
+        </div>
+    </b-modal>
 </div>

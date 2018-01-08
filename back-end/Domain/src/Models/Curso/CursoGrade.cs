@@ -13,6 +13,7 @@ namespace Domain.Models {
         public string Descricao { get; set; }
         public Curso Curso { get; set; }
         public DateTime? DataCriacao { get; set; }
+        public DateTime? Ativo { get; set; } = null;
 
     }
 }
