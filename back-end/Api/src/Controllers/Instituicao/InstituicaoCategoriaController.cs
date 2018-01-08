@@ -10,38 +10,43 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [Route("api/instituicao-categoria")]
-    public class InstituicaoCategoriaCategoriaController : Controller
+    public class InstituicaoCategoriaController : Controller
     {
 
-        private InstituicaoCategoriaService _InstituicaoCategoriaCategoriaService;
-        public InstituicaoCategoriaCategoriaController(InstituicaoCategoriaRepository InstituicaoCategoriaRepository)
+        private InstituicaoCategoriaService _InstituicaoCategoriaService;
+        public InstituicaoCategoriaController(InstituicaoCategoriaRepository InstituicaoCategoriaRepository)
         {
-            this._InstituicaoCategoriaCategoriaService = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
-        }
-        [HttpGet]
-        public List<InstituicaoCategoriaVM> All()
-        {
-            return this._InstituicaoCategoriaCategoriaService.All();
-        }
-        [HttpGet("{id}")]
-        public InstituicaoCategoriaVM Detail(long id)
-        {
-            return this.Detail(id);
-        }
+            this._InstituicaoCategoriaService = new InstituicaoCategoriaService(InstituicaoCategoriaRepository);
+        }        
+
         [HttpPut("add")]
-        public InstituicaoCategoriaVM Add([FromBody] InstituicaoCategoriaVM viewModel)
+        public void Add([FromBody] InstituicaoCategoriaVM viewModel)
         {
-            return this._InstituicaoCategoriaCategoriaService.Add(viewModel);
+            this._InstituicaoCategoriaService.Add(viewModel);
         }
+
         [HttpPost("update")]
-        public InstituicaoCategoriaVM Update([FromBody] InstituicaoCategoriaVM viewModel)
+        public void Update([FromBody] InstituicaoCategoriaVM viewModel)
         {
-           return this._InstituicaoCategoriaCategoriaService.Update(viewModel);
+           this._InstituicaoCategoriaService.Update(viewModel);
         }
+
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id)
         {
-            this._InstituicaoCategoriaCategoriaService.Disable(id);
+            this._InstituicaoCategoriaService.Disable(id);
+        }
+
+        [HttpGet("{id}")]
+        public InstituicaoCategoriaVM Detail(long id)
+        {
+            return this._InstituicaoCategoriaService.Detail(id);
+        }
+        
+        [HttpGet]
+        public List<InstituicaoCategoriaVM> All()
+        {
+            return this._InstituicaoCategoriaService.All();
         }
     }
 }
