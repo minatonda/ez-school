@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-10">
-                <selector v-bind:itens="ui.materias" placeholder="Materias Relacionadas" label="label" v-model="ui.materiaRelacionada"></selector>
+                <selector v-bind:itens="ui.materias" placeholder="Materias Relacionadas" label="label" v-model="ui.materiaRelacionada.materiaPai"></selector>
             </div>
             <div class="col-12 col-md-2 form-group text-left">
                 <button class="btn btn-primary" v-on:click="addMateriaRelacionada(ui.materiaRelacionada)">Adicionar</button>

@@ -4,40 +4,32 @@ using Api.Data.Service;
 using Api.Data.ViewModels;
 using Domain.Repositories;
 
-namespace Api.Controllers
-{
+namespace Api.Controllers {
     [Route("api/materia")]
-    public class MateriaController : Controller
-    {
+    public class MateriaController : Controller {
         private MateriaService _materiaService;
-        public MateriaController(MateriaRepository materiaRepository)
-        {
+        public MateriaController(MateriaRepository materiaRepository) {
             this._materiaService = new MateriaService(materiaRepository);
         }
-        [HttpGet]
-        public List<MateriaVM> All()
-        {
-            return this._materiaService.All();
-        }
-        [HttpGet("{id}")]
-        public MateriaVM Detail(long id)
-        {
-            return this._materiaService.Detail(id);
-        }
         [HttpPut("add")]
-        public MateriaVM Add([FromBody] MateriaVM viewModel)
-        {
-            return this._materiaService.Add(viewModel);
+        public void Add([FromBody] MateriaVM viewModel) {
+            this._materiaService.Add(viewModel);
         }
         [HttpPost("update")]
-        public MateriaVM Update([FromBody] MateriaVM viewModel)
-        {
-            return this._materiaService.Update(viewModel);
+        public void Update([FromBody] MateriaVM viewModel) {
+            this._materiaService.Update(viewModel);
         }
-        [HttpDelete("disable/{id}")]
-        public void Disable(long id)
-        {
-            this._materiaService.Delete(id);
+        [HttpDelete("disable")]
+        public void Disable([FromQuery] long id) {
+            this._materiaService.Disable(id);
+        }
+        [HttpGet ("{id}")]
+        public MateriaVM Detail(long id) {
+            return this._materiaService.Detail(id);
+        }
+        [HttpGet]
+        public List<MateriaVM> All() {
+            return this._materiaService.All();
         }
     }
 }

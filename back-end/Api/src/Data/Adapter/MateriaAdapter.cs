@@ -11,17 +11,13 @@ using Domain.Models.Interface;
 namespace Api.Data.ViewModels {
     public class MateriaAdapter {
 
-        public static MateriaVM ToViewModel(Materia model, List<Materia> materiasRelacionadas, bool deep) {
+        public static MateriaVM ToViewModel(Materia model, bool deep) {
             var vm = new MateriaVM();
             vm.ID = model.ID.ToString();
             vm.Label = model.Nome;
 
             vm.Nome = model.Nome;
             vm.Descricao = model.Descricao;
-
-            if(materiasRelacionadas != null) {
-                vm.MateriasRelacionadas = materiasRelacionadas.Select(x => MateriaAdapter.ToViewModel(x, null, true)).ToList();
-            }
 
             return vm;
         }
@@ -43,9 +39,6 @@ namespace Api.Data.ViewModels {
             model.Descricao = vm.Descricao;
 
             return model;
-        }
-        public static List<Materia> MateriasRelacionadasFromVM(MateriaVM vm) {
-            return vm.MateriasRelacionadas.Select(x => MateriaAdapter.ToModel(x, true)).ToList();
         }
 
     }

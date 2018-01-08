@@ -6,9 +6,10 @@ import { RouterPathType } from '../../../module/model/client/route-path';
 import { BroadcastEventBus, BroadcastEvent } from '../../../module/broadcast.event-bus';
 import { MateriaFactory } from '../../../module/factory/materia.factory';
 import { Router } from '../../../router';
+import { MateriaRelacionamento } from '../../../module/model/server/materia-relacionamento';
 
 interface UI {
-    materiaRelacionada: Materia;
+    materiaRelacionada: MateriaRelacionamento;
     materias: Array<Materia>;
 }
 
@@ -21,9 +22,9 @@ export class MateriaManagementComponent extends Vue {
     alias: string;
     @Prop()
     operation: RouterPathType;
-
+    
     model: Materia = new Materia();
-    ui: UI = { materias: new Array<Materia>(), materiaRelacionada: undefined };
+    ui: UI = { materias: new Array<Materia>(), materiaRelacionada: new MateriaRelacionamento() };
     
     constructor() {
         super();
@@ -49,8 +50,8 @@ export class MateriaManagementComponent extends Vue {
         }
     }
     
-    public addMateriaRelacionada(materiaRelacionada: Materia) {
-        this.model.materiasRelacionadas.push(materiaRelacionada);
+    public addMateriaRelacionada(materiaRelacionada: MateriaRelacionamento) {
+        this.model.materiasRelacionadas.push(Object.assign(new MateriaRelacionamento(), materiaRelacionada));
     }
 
     async save() {
@@ -77,7 +78,7 @@ export class MateriaManagementComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: Materia) => item.descricao, () => 'Materias Relacionadas'),
+            new CardTableColumn((item: MateriaRelacionamento) => item.materiaPai.descricao, () => 'Materias Relacionadas'),
         ];
     }
 
@@ -89,7 +90,7 @@ export class MateriaManagementComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => this.remove(item),
+                (item) => this.removeMateriaRelacionada(item),
                 (item) => 'Remover',
                 (item) => ['fa', 'fa-times'],
                 (item) => ['btn-danger']
@@ -98,17 +99,8 @@ export class MateriaManagementComponent extends Vue {
         return menu;
     }
 
-    public remove(item) {
-        try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            MateriaFactory.disable(item.ID);
-        }
-        catch (e) {
-
-        }
-        finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
-        }
+    removeMateriaRelacionada(materiaRelacionada: MateriaRelacionamento) {
+        this.model.materiasRelacionadas.splice(this.model.materiasRelacionadas.indexOf(materiaRelacionada), 1);
     }
 
 }

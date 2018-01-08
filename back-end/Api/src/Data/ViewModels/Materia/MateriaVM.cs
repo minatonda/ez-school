@@ -11,12 +11,12 @@ namespace Api.Data.ViewModels {
     public class MateriaVM : SelectVM {
 
         public MateriaVM() {
-            this.MateriasRelacionadas = new List<MateriaVM>();
+            this.MateriasRelacionadas = new List<MateriaRelacionamentoVM>();
         }
 
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public List<MateriaVM> MateriasRelacionadas { get; set; }
+        public List<MateriaRelacionamentoVM> MateriasRelacionadas { get; set; }
 
     }
 }
