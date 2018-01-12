@@ -22,28 +22,58 @@ namespace Api.Data.Service {
         public void Add(UsuarioVM viewModel) {
             var model = UsuarioAdapter.ToModel(viewModel, true);
             this._usuarioRepository.Add(model);
+            this._usuarioRepository.AddAluno(model.UsuarioInfo);
+            this._usuarioRepository.AddProfessor(model.UsuarioInfo);
+            this._usuarioRepository.SaveChanges();
         }
 
         public void Update(UsuarioVM viewModel) {
             var model = UsuarioAdapter.ToModel(viewModel, true);
             this._usuarioRepository.Update(model);
+            this._usuarioRepository.SaveChanges();
         }
 
         public void UpdateAluno(AlunoVM viewModel) {
-            var model = AlunoAdapter.ToModel(viewModel, true);
-            var attached = this._usuarioRepository.GetAluno(model.ID);
-            var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByAluno(model.ID, true);
-            this._usuarioRepository.UpdateAluno(model);
+            var _model = AlunoAdapter.ToModel(viewModel, true);
+            var _attached = this._usuarioRepository.GetAluno(_model.ID);
+            var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByAluno(_model.ID, true);
+            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
+
+            viewModel.AreaInteresses.ForEach(x => {
+                var modelAreaInteresse = new AreaInteresse();
+                modelAreaInteresse.Aluno = _model;
+
+                if (!_attachedAreaInteresses.Select(y => y.ID.ToString()).Contains(x.ID)) {
+                    this._areaInteresseRepository.Add(modelAreaInteresse);
+                }
+            });
+
+            this._usuarioRepository.UpdateAluno(_model);
+            this._usuarioRepository.SaveChanges();
         }
 
         public void UpdateProfessor(ProfessorVM viewModel) {
-            var model = ProfessorAdapter.ToModel(viewModel, true);
-            var attached = this._usuarioRepository.GetAluno(model.ID);
-            var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByProfessor(model.ID, true);
-            this._usuarioRepository.UpdateProfessor(model);
+            var _model = ProfessorAdapter.ToModel(viewModel, true);
+            var _attached = this._usuarioRepository.GetProfessor(_model.ID);
+            var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByProfessor(_model.ID, true);
+            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
+
+            viewModel.AreaInteresses.ForEach(x => {
+                var modelAreaInteresse = new AreaInteresse();
+                modelAreaInteresse.Professor = _model;
+
+                if (!_attachedAreaInteresses.Select(y => y.ID.ToString()).Contains(x.ID)) {
+                    this._areaInteresseRepository.Add(modelAreaInteresse);
+                }
+            });
+            
+            this._usuarioRepository.UpdateProfessor(_model);
+            this._usuarioRepository.SaveChanges();
         }
+
         public void Disable(string id) {
             this._usuarioRepository.Disable(id);
+            this._usuarioRepository.SaveChanges();
         }
 
         public UsuarioVM Detail(string id) {

@@ -17,6 +17,13 @@ namespace Domain.Repositories {
         }
 
         public void Add(AreaInteresse model) {
+            if (model.Aluno != null) {
+                model.Aluno = this.db.Alunos.Find(model.Aluno.ID);
+            }
+            if (model.Professor != null) {
+                model.Professor = this.db.Professores.Find(model.Professor.ID);
+            }
+            model.CategoriaProfissional = this.db.CategoriaProfissionais.Find(model.CategoriaProfissional.ID);
             this.db.AreaInteresse.Add(model);
         }
 
@@ -32,10 +39,17 @@ namespace Domain.Repositories {
         public void Update(AreaInteresse categoriaProfissional) {
             var model = this.db.AreaInteresse.Find(categoriaProfissional.ID);
 
-            model.CategoriaProfissional = categoriaProfissional.CategoriaProfissional;
-            model.Aluno = categoriaProfissional.Aluno;
-            model.Professor = categoriaProfissional.Professor;
-            model.Descricao = categoriaProfissional.Descricao;
+            if (categoriaProfissional.Aluno != null) {
+                model.Aluno = this.db.Alunos.Find(categoriaProfissional.Aluno.ID);
+            } else {
+                model.Aluno = null;
+            }
+            
+            if (categoriaProfissional.Professor != null) {
+                model.Professor = this.db.Professores.Find(categoriaProfissional.Professor.ID);
+            } else {
+                model.Professor = null;
+            }
 
             this.db.AreaInteresse.Update(model);
         }

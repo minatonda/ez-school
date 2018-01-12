@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 using Domain.Models.Interface;
 
 namespace Api.Data.ViewModels {
-    public class AlunoVM : SelectVM {
-
-        public AlunoVM() {
-            this.AreaInteresses = new List<AreaInteresseVM>();
-        }
-
-        public UsuarioInfoVM UsuarioInfo { get; set; }
-        public List<AreaInteresseVM> AreaInteresses { get; set; }
+    public class AreaInteresseVM : SelectVM {
+        
+        public CategoriaProfissionalVM CategoriaProfissional { get; set; }
 
     }
 }

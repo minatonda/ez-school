@@ -16,7 +16,6 @@ namespace Domain.Models {
         public Aluno Aluno { get; set; }
         public Professor Professor { get; set; }
         public CategoriaProfissional CategoriaProfissional { get; set; }
-        public string Descricao { get; set; }
         public DateTime? Ativo { get; set; } = null;
     }
 }

@@ -43,8 +43,24 @@ namespace Domain.Repositories {
             this.db.Alunos.Add(model);
         }
 
+        public void AddAluno(UsuarioInfo usuarioInfo) {
+            var aluno = new Aluno();
+            aluno.ID = usuarioInfo.ID;
+            aluno.UsuarioInfo = usuarioInfo;
+            aluno.Ativo = null;
+            this.db.Alunos.Add(aluno);
+        }
+
         public void AddProfessor(Professor model) {
             this.db.Professores.Add(model);
+        }
+
+        public void AddProfessor(UsuarioInfo usuarioInfo) {
+            var professor = new Professor();
+            professor.ID = usuarioInfo.ID;
+            professor.UsuarioInfo = usuarioInfo;
+            professor.Ativo = null;
+            this.db.Professores.Add(professor);
         }
 
         public void Update(Usuario model) {
