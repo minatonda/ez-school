@@ -17,7 +17,7 @@ namespace Api.Data.ViewModels {
             vm.Label = model.UsuarioInfo.Nome;
             vm.UsuarioInfo = UsuarioAdapter.ToViewModel(model.UsuarioInfo, false);
             if (areainteresse != null) {
-                vm.CategoriaProfissionais = areainteresse.Select(x => CategoriaProfissionalAdapter.ToViewModel(x.CategoriaProfissional, true)).ToList();
+                vm.AreaInteresses = areainteresse.Select(x => AreaInteresseAdapter.ToViewModel(x, true)).ToList();
             }
 
             return vm;

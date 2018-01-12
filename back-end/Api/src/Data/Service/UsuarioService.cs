@@ -40,7 +40,7 @@ namespace Api.Data.Service {
             var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
 
             viewModel.AreaInteresses.ForEach(x => {
-                var modelAreaInteresse = new AreaInteresse();
+                var modelAreaInteresse = AreaInteresseAdapter.ToModel(x, true);
                 modelAreaInteresse.Aluno = _model;
 
                 if (!_attachedAreaInteresses.Select(y => y.ID.ToString()).Contains(x.ID)) {
@@ -59,7 +59,7 @@ namespace Api.Data.Service {
             var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
 
             viewModel.AreaInteresses.ForEach(x => {
-                var modelAreaInteresse = new AreaInteresse();
+                var modelAreaInteresse = AreaInteresseAdapter.ToModel(x, true);
                 modelAreaInteresse.Professor = _model;
 
                 if (!_attachedAreaInteresses.Select(y => y.ID.ToString()).Contains(x.ID)) {
