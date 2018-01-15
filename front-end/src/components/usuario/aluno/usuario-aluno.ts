@@ -93,7 +93,7 @@ export class UsuarioAlunoComponent extends Vue {
     }
 
     public remove(item) {
-        this.model.areaInteresses = this.model.areaInteresses.filter(x => x != item);
+        this.model.areaInteresses = this.model.areaInteresses.filter(x => x !== item);
     }
 
 }
