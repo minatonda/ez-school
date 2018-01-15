@@ -1,15 +1,13 @@
-import { CategoriaProfissional } from './categoria-profissional';
+import { AreaInteresse } from './area-interesse';
 import { UsuarioInfo } from './usuario-info';
-
-
 
 export class Professor {
 
     constructor() {
-        this.categoriaProfissionais = new Array<CategoriaProfissional>();
+        this.areaInteresses = new Array<AreaInteresse>();
     }
-    
+
     id?: string;
     usuarioInfo: UsuarioInfo;
-    categoriaProfissionais: Array<CategoriaProfissional>;
+    areaInteresses: Array<AreaInteresse>;
 }

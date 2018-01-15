@@ -8,10 +8,11 @@ import { CategoriaProfissionalFactory } from '../../../module/factory/categoria-
 import { CategoriaProfissional } from '../../../module/model/server/categoria-profissional';
 import { UsuarioFactory } from '../../../module/factory/usuario.factory';
 import { Professor } from '../../../module/model/server/professor';
+import { AreaInteresse } from '../../../module/model/server/area-interesse';
 
 interface UI {
     categoriaProfissional: CategoriaProfissional;
-    categoriaProfissionais: Array<CategoriaProfissional>;
+    categoriaProfissionais: Array < CategoriaProfissional > ;
 }
 
 @Component({
@@ -25,7 +26,7 @@ export class UsuarioProfessorComponent extends Vue {
     operation: RouterPathType;
 
     model: Professor = new Professor();
-    ui: UI = { categoriaProfissionais: new Array<CategoriaProfissional>(), categoriaProfissional: undefined };
+    ui: UI = { categoriaProfissionais: new Array < CategoriaProfissional > (), categoriaProfissional: undefined };
     constructor() {
         super();
     }
@@ -48,8 +49,10 @@ export class UsuarioProfessorComponent extends Vue {
         }
     }
 
-    public addCategoriaProfissional(categoriaProfissional: CategoriaProfissional) {
-        this.model.categoriaProfissionais.push(categoriaProfissional);
+    public addAreaInteresse(categoriaProfissional: CategoriaProfissional) {
+        let areaInteresse = new AreaInteresse();
+        areaInteresse.categoriaProfissional = categoriaProfissional;
+        this.model.areaInteresses.push(areaInteresse);
     }
 
     async save() {
@@ -64,15 +67,15 @@ export class UsuarioProfessorComponent extends Vue {
             BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER);
         }
     }
-    
+
     public getColumns() {
         return [
-            new CardTableColumn((item: CategoriaProfissional) => item.descricao, () => 'Areas de Interesse'),
+            new CardTableColumn((item: AreaInteresse) => item.categoriaProfissional.descricao, () => 'Area de Interesse'),
         ];
     }
 
     public getItens() {
-        return this.model.categoriaProfissionais;
+        return this.model.areaInteresses;
     }
 
     public getMenu() {
@@ -89,16 +92,7 @@ export class UsuarioProfessorComponent extends Vue {
     }
 
     public remove(item) {
-        try {
-            BroadcastEventBus.$emit(BroadcastEvent.EXIBIR_LOADER, true);
-            CategoriaProfissionalFactory.disable(item.ID);
-        }
-        catch (e) {
-
-        }
-        finally {
-            BroadcastEventBus.$emit(BroadcastEvent.ESCONDER_LOADER, true);
-        }
+        this.model.areaInteresses = this.model.areaInteresses.filter(x => x != item);
     }
 
 }

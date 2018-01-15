@@ -44,7 +44,7 @@ namespace Domain.Repositories {
             } else {
                 model.Aluno = null;
             }
-            
+
             if (categoriaProfissional.Professor != null) {
                 model.Professor = this.db.Professores.Find(categoriaProfissional.Professor.ID);
             } else {
@@ -71,11 +71,11 @@ namespace Domain.Repositories {
         }
 
         public List<AreaInteresse> GetAllByProfessor(string idProfessor, bool ativo) {
-            return this.db.AreaInteresse.AsNoTracking().Include(x => x.Professor).Where(x => x.Professor.ID == idProfessor && x.Ativo.HasValue == !ativo).ToList();
+            return this.db.AreaInteresse.AsNoTracking().Include(i => i.Aluno).Include(i => i.CategoriaProfissional).Where(x => x.Professor.ID == idProfessor && x.Ativo.HasValue == !ativo).ToList();
         }
 
         public List<AreaInteresse> GetAllByAluno(string idAluno, bool ativo) {
-            return this.db.AreaInteresse.AsNoTracking().Include(x => x.Aluno).Where(x => x.Aluno.ID == idAluno && x.Ativo.HasValue == !ativo).ToList();
+            return this.db.AreaInteresse.AsNoTracking().Include(i => i.Aluno).Include(i => i.CategoriaProfissional).Where(x => x.Aluno.ID == idAluno && x.Ativo.HasValue == !ativo).ToList();
         }
 
         public IDbContextTransaction BeginTransaction() {

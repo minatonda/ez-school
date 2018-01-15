@@ -15,11 +15,11 @@
                 <selector v-bind:itens="ui.categoriaProfissionais" placeholder="Area de interesse" label="label" v-model="ui.categoriaProfissional"></selector>
             </div>
             <div class="col-12 col-md-2 form-group text-left">
-                <button class="btn btn-primary" v-on:click="addCategoriaProfissional(ui.categoriaProfissional)">Adicionar</button>
+                <button class="btn btn-primary" v-on:click="addAreaInteresse(ui.categoriaProfissional)">Adicionar</button>
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 form-group">
                 <card-table-component v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table-component>
             </div>
         </div>
