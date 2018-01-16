@@ -102,6 +102,7 @@ namespace Domain.Repositories {
             this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
         }
 
+
         public Usuario Get(long id) {
             throw new NotImplementedException();
         }

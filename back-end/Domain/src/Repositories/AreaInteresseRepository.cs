@@ -62,6 +62,12 @@ namespace Domain.Repositories {
             this.db.CategoriaProfissionais.Update(model);
         }
 
+        public void DisableAreaInteresse(long id) {
+            var model = this.db.AreaInteresse.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.AreaInteresse.Update(model);
+        }
+
         public AreaInteresse Get(long id) {
             return this.db.AreaInteresse.Include(x => x.Aluno).Include(x => x.Professor).Include(x => x.CategoriaProfissional).SingleOrDefault(x => x.ID == id);
         }

@@ -83,7 +83,7 @@ export class UsuarioAlunoComponent extends Vue {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry(
-                (item) => this.remove(item),
+                (item) => this.removeAreaInteresse(item),
                 (item) => 'Remover',
                 (item) => ['fa', 'fa-times'],
                 (item) => ['btn-danger']
@@ -92,8 +92,8 @@ export class UsuarioAlunoComponent extends Vue {
         return menu;
     }
 
-    public remove(item) {
-        this.model.areaInteresses = this.model.areaInteresses.filter(x => x !== item);
+    removeAreaInteresse(areaInteresse: AreaInteresse) {
+        this.model.areaInteresses.splice(this.model.areaInteresses.indexOf(areaInteresse), 1);
     }
 
 }

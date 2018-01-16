@@ -7,6 +7,8 @@ using Domain.Models;
 using Domain.Models.Interface;
 using Domain.Repositories;
 using Api.Data.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Api.Data.Service {
     public class UsuarioService {
@@ -37,8 +39,12 @@ namespace Api.Data.Service {
             var _model = AlunoAdapter.ToModel(viewModel, true);
             var _attached = this._usuarioRepository.GetAluno(_model.ID);
             var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByAluno(_model.ID, true);
-            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
+            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Where(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
 
+            _attachedAreaInteressesToRemove.ForEach(y => {
+                this._areaInteresseRepository.DisableAreaInteresse(y.ID);
+            });
+            
             viewModel.AreaInteresses.ForEach(x => {
                 var modelAreaInteresse = AreaInteresseAdapter.ToModel(x, true);
                 modelAreaInteresse.Aluno = _model;
@@ -56,7 +62,11 @@ namespace Api.Data.Service {
             var _model = ProfessorAdapter.ToModel(viewModel, true);
             var _attached = this._usuarioRepository.GetProfessor(_model.ID);
             var _attachedAreaInteresses = this._areaInteresseRepository.GetAllByProfessor(_model.ID, true);
-            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Select(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
+            var _attachedAreaInteressesToRemove = _attachedAreaInteresses.Where(x => !viewModel.AreaInteresses.Select(y => y.ID).Contains(x.ID.ToString())).ToList();
+
+            _attachedAreaInteressesToRemove.ForEach(y => {
+                this._areaInteresseRepository.DisableAreaInteresse(y.ID);
+            });
 
             viewModel.AreaInteresses.ForEach(x => {
                 var modelAreaInteresse = AreaInteresseAdapter.ToModel(x, true);
