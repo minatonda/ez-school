@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row mt-2">
+            <div class="col-12">
+                <legend v-html="alias"></legend>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <card-table v-bind:columns="getColumns()" v-bind:itens="ui.itens" v-bind:menu="getMenu()"></card-table>
+            </div>
+        </div>
+    </div>
+</div>

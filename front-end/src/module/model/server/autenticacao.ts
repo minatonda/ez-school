@@ -1,6 +1,0 @@
-export class Autenticacao {
-    access_token: string;
-    created: Date;
-    expires: Date;
-    time_zone: string;
-}

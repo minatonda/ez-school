@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <legend>{{alias}}</legend>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 form-group">
+                <input class="form-control" v-model="model.usuarioInfo.label" disabled="true">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-10">
+                <selector v-bind:itens="ui.categoriaProfissionais" placeholder="Area de interesse" label="label" v-model="ui.categoriaProfissional"></selector>
+            </div>
+            <div class="col-12 col-md-2 form-group text-left">
+                <button class="btn btn-primary" v-on:click="addCategoriaProfissional(ui.categoriaProfissional)">Adicionar</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <card-table v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group text-right">
+                <button class="btn btn-primary" v-on:click="save()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

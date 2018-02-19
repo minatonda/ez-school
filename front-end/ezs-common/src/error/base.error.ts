@@ -1,0 +1,10 @@
+export class BaseError implements Error {
+    
+    constructor(name: string, message: string) {
+        this.name = name;
+        this.message = message;
+    }
+
+    name: string;
+    message: string;
+}

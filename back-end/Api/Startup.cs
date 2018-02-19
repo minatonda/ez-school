@@ -79,8 +79,7 @@ namespace Api {
             app.UseRequestLocalizationFromBrazil ();
             app.UseAuthentication ();
             app.UseCors (builder =>
-                builder.WithOrigins ("http://localhost:8080")
-                .WithOrigins ("http://192.168.1.36:8080")
+                builder.AllowAnyOrigin()
                 .AllowAnyHeader ().AllowAnyMethod ()
             );
             app.UseMvc ();

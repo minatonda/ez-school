@@ -1,0 +1,75 @@
+<div class="row gp-card-table">
+    <div class="col-12">
+        <div class="row" v-if="filters.length">
+            <div class="col-12 pb-2" v-bind:class="{'col-md-3':iFilter !== filters.length-1,'col-md-2':iFilter === filters.length-1}" v-for="(filter,iFilter) in filters">
+                <input class="form-control" v-model="ui.filter[filter.key]" v-bind:placeholder="filter.description">
+            </div>
+            <div class="col-12 pb-2 col-md-1">
+                <button class="btn btn-primary btn-block" v-on:click="doQuery(ui.page, ui.limit, ui.filter);">
+                    Filtrar
+                </button>
+            </div>
+            <div class="col-12">
+                <hr></hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-3 pb-2 text-left">
+                <div class="input-group" style="min-height:initial;" v-if="ui.pageData">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doDecreasePage()">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control text-center" v-bind:value="ui.page+1 + ' / '+ ui.pageData.totalPages" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doIncreasePage()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 pb-2 text-left">
+                <div class="input-group" style="min-height:initial;" v-if="ui.pageData">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doDecreaseLimit()">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control text-center" v-bind:value="ui.limit + ' itens por página'" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doIncreaseLimit()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 pb-2 text-right">
+                <button class="btn btn-primary" type="button" role="button" v-bind:class="getMenuButtonClass(menuItem,getItens())" v-for="menuItem in getMenuMain()" v-bind:title="getMenuItemLabel(menuItem,getItens())" v-on:click="triggerMenuMethod(menuItem,getItens())">
+                    <i v-bind:class="getMenuIconClass(menuItem,getItens())"></i><span class="pl-2" v-html="getMenuItemLabel(menuItem,getItens())"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <table class="table table-bordered table-striped table-sm" cellpadding="0" cellspacing="0" width="100%" border="1">
+            <thead>
+                <tr>
+                    <th v-for="column in getColumns()" v-html="getColumnLabel(column)"></th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in getItens()">
+                    <td class="align-middle" v-for="column in getColumns()" v-bind:data-column-name="getColumnLabel(column)" v-html="getColumnValue(column,item)"></td>
+                    <td class="align-middle" v-bind:data-column-name="'Menu'">
+                        <button class="btn btn-primary btn-sm m-1" type="button" role="button" v-bind:class="getMenuButtonClass(menuItem,item)" v-for="menuItem in getMenuRow()" v-bind:title="getMenuItemLabel(menuItem,item)" v-on:click="triggerMenuMethod(menuItem,item)">
+                            <i v-bind:class="getMenuIconClass(menuItem,item)"></i><span class="pl-2" v-html="getMenuItemLabel(menuItem,item)"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
