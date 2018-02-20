@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12 col-md-6">
+        <h3>Alunos</h3>
+        <hr>
+        <div class="card text-left mb-2" style="cursor:pointer;" v-for="aluno in ui.alunos">
+            <div class="card-header p-2">
+                <div class="row">
+                    <div class="col-12 col-md-9 align-self-center">
+                        {{aluno.label}}
+                    </div>
+                    <div class="col-12 col-md-3 align-self-center">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Faltas : </div>
+                            </div>
+                            <input class="form-control text-center" value="0">
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

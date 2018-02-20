@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vue-upgrade4</title>
+</head>
+
+<body class="bg-thirdy">
+
+  <div id="app-main" class="container-fluid" v-cloak>
+    <navbar-component></navbar-component>
+    <div class="row">
+      <div class="col-12">
+        <router-view class="p-padding-top-10 p-padding-bottom-10" style="min-height: calc(100vh - 47px);"></router-view>
+        <loader-compact-root-component :show="showLoader"></loader-compact-root-component>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

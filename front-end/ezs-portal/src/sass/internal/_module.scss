@@ -1,0 +1,10 @@
+@import '_reset.scss';
+@import '_core.scss';
+@import '_property.scss';
+
+legend {
+    border-bottom: 1px solid #949494;
+    padding-bottom: 5px;
+    margin-bottom: 24px;
+    font-size: 20px;
+}

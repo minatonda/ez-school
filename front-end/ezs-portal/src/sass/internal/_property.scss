@@ -1,0 +1,106 @@
+@for $space-count from 1 through 10 {
+    $spacing: $space-count*2px; /// Margens
+    .p-margin-#{$space-count} {
+        margin: #{$spacing} !important;
+    }
+    .p-margin-top-#{$space-count} {
+        margin-top: #{$spacing} !important;
+    }
+    .p-margin-right-#{$space-count} {
+        margin-right: #{$spacing} !important;
+    }
+    .p-margin-bottom-#{$space-count} {
+        margin-bottom: #{$spacing} !important;
+    }
+    .p-margin-left-#{$space-count} {
+        margin-left: #{$spacing} !important;
+    }
+    .p-margin-horizontal-#{$space-count} {
+        margin-left: #{$spacing} !important;
+        margin-right: #{$spacing} !important;
+    }
+    .p-margin-vertical-#{$space-count} {
+        margin-top: #{$spacing} !important;
+        margin-bottom: #{$spacing} !important;
+    } /// Paddings
+    .p-padding-#{$space-count} {
+        padding: #{$spacing} !important;
+    }
+    .p-padding-top-#{$space-count} {
+        padding-top: #{$spacing} !important;
+    }
+    .p-padding-right-#{$space-count} {
+        padding-right: #{$spacing} !important;
+    }
+    .p-padding-bottom-#{$space-count} {
+        padding-bottom: #{$spacing} !important;
+    }
+    .p-padding-left-#{$space-count} {
+        padding-left: #{$spacing} !important;
+    }
+    .p-padding-horizontal-#{$space-count} {
+        padding-left: #{$spacing} !important;
+        padding-right: #{$spacing} !important;
+    }
+    .p-padding-vertical-#{$space-count} {
+        padding-top: #{$spacing} !important;
+        padding-bottom: #{$spacing} !important;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'xs')) {
+    .p-hidden-xs-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'xs')) {
+    .p-hidden-xs-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'sm')) {
+    .p-hidden-sm-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'sm')) {
+    .p-hidden-sm-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'md')) {
+    .p-hidden-md-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'md')) {
+    .p-hidden-md-down {
+        display: none;
+    }
+}
+
+@media screen and (min-width:map-get($grid-breakpoints, 'lg')) {
+    .p-hidden-lg-up {
+        display: none;
+    }
+}
+
+@media screen and (max-width:map-get($grid-breakpoints, 'lg')) {
+    .p-hidden-lg-down {
+        display: none;
+    }
+}
+
+$mnh: 0;
+@while $mnh <= 100 {
+  .mnh-#{$mnh}{
+    min-height: #{$mnh+'%'};
+  }
+  $mnh: $mnh + 25;
+}
+
