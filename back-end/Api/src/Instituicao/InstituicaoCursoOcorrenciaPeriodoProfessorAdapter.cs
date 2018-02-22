@@ -1,6 +1,6 @@
 using Api.CursoApi;
 using Api.UsuarioApi;
-using Domain.Models;
+using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
 

@@ -1,5 +1,5 @@
 using Api.MateriaApi;
-using Domain.Models;
+using Domain.CursoDomain;
 
 namespace Api.CursoApi {
 

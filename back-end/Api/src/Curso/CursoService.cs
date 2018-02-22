@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Repositories;
+using Domain.CursoDomain;
 
 namespace Api.CursoApi {
 

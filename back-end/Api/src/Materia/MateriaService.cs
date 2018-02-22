@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Repositories;
+using Domain.MateriaDomain;
 
 namespace Api.MateriaApi {
 

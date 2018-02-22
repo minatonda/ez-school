@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Domain.CategoriaProfissionalDomain;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Repositories;
 
 namespace Api.CategoriaProfissionalApi {
 

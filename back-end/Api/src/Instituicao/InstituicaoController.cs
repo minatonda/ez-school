@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Api.CursoApi;
-using Domain.Repositories;
+using Domain.CursoDomain;
+using Domain.InstituicaoDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.InstituicaoApi {

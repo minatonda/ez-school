@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Domain.Repositories;
+using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.UsuarioApi {

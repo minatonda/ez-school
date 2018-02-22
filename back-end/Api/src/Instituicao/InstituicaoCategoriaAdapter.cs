@@ -1,4 +1,4 @@
-using Domain.Models;
+using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
     public class InstituicaoCategoriaAdapter {

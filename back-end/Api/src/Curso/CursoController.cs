@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Domain.Repositories;
+using Domain.CursoDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.CursoApi {

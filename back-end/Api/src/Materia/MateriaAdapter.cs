@@ -1,5 +1,5 @@
 using Api.Common.ViewModels;
-using Domain.Models;
+using Domain.MateriaDomain;
 
 namespace Api.MateriaApi {
     

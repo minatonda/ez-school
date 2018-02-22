@@ -1,5 +1,5 @@
 using Api.UsuarioApi;
-using Domain.Models;
+using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
     public class InstituicaoCursoOcorrenciaAlunoAdapter {

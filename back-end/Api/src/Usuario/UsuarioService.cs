@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Api.CategoriaProfissionalApi;
-using Domain.Models;
-using Domain.Repositories;
+using Domain.AreaInteresseDomain;
+using Domain.UsuarioDomain;
 
 namespace Api.UsuarioApi {
 
