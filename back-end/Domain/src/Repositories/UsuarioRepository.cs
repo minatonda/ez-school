@@ -32,6 +32,7 @@ namespace Domain.Repositories {
             this.db.SaveChanges();
             return model;
         }
+
         public Usuario Update(Usuario model) {
             if (model.UsuarioInfo != null) {
                 this.db.Attach(model.UsuarioInfo);
@@ -49,29 +50,6 @@ namespace Domain.Repositories {
             return model;
         }
 
-        public void Disable(string ID) {
-            this.db.Usuarios.Find(ID).Ativo = DateTime.Now;
-            this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
-            this.db.SaveChanges();
-        }
-
-        public Usuario Get(string ID) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.ID == ID);
-        public Usuario GetByRG(string rg) => this.db.Usuarios.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.RG == rg);
-        public UsuarioInfo GetInfo(string ID) => this.db.UsuariosInfo.Find(ID);
-        public UsuarioInfo GetInfoByRG(string rg) => this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
-        public List<Usuario> GetAll(bool ativo) {
-            if (ativo) {
-                return this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => !x.Ativo.HasValue).ToList();
-            } else {
-                return this.db.Usuarios.Include(i => i.UsuarioInfo).ToList();
-            }
-        }
-
-        public Aluno GetAluno(string ID) => this.db.Alunos.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-        public List<Aluno> GetAlunosByTermo(string termo) {
-            return this.db.Alunos.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
-        }
-        public List<AreaInteresse> GetAlunoAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Aluno).Include(x => x.CategoriaProfissional).Where(x => x.Aluno.ID == ID).ToList();
         public Aluno UpdateAluno(Aluno model, List<AreaInteresse> AreaInteresses) {
             var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
 
@@ -91,12 +69,6 @@ namespace Domain.Repositories {
             return aluno;
         }
 
-        public Professor GetProfessor(string ID) => this.db.Professores.Include(i => i.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == ID);
-        public List<Professor> GetProfessoresByTermo(string termo) {
-            return this.db.Professores.Include(i => i.UsuarioInfo).Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower())).ToList();
-        }
-        public List<AreaInteresse> GetProfessorAreaInteresse(string ID) => this.db.AreaInteresse.Include(i => i.Professor).Include(x => x.CategoriaProfissional).Where(x => x.Professor.ID == ID).ToList();
-
         public Professor UpdateProfessor(Professor model, List<AreaInteresse> AreaInteresses) {
             var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
 
@@ -114,6 +86,78 @@ namespace Domain.Repositories {
             this.db.Professores.Update(professor);
             this.db.SaveChanges();
             return professor;
+        }
+
+        public void Disable(string ID) {
+            this.db.Usuarios.Find(ID).Ativo = DateTime.Now;
+            this.db.Usuarios.Update(this.db.Usuarios.Find(ID));
+            this.db.SaveChanges();
+        }
+
+        public Usuario Get(string ID) {
+            return this.db.Usuarios
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.ID == ID);
+        }
+
+        public Usuario GetByRG(string rg) {
+            return this.db.Usuarios
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.RG == rg);
+        }
+
+        public UsuarioInfo GetInfo(string ID) {
+            return this.db.UsuariosInfo.Find(ID);
+        }
+
+        public UsuarioInfo GetInfoByRG(string rg) {
+            return this.db.UsuariosInfo.SingleOrDefault(x => x.RG == rg);
+        }
+
+        public List<Usuario> GetAll(bool ativo) {
+            if (ativo) {
+                return this.db.Usuarios.Include(i => i.UsuarioInfo).Where(x => !x.Ativo.HasValue).ToList();
+            } else {
+                return this.db.Usuarios.Include(i => i.UsuarioInfo).ToList();
+            }
+        }
+
+        public Aluno GetAluno(string ID) {
+            return this.db.Alunos
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+        }
+        public List<Aluno> GetAlunosByTermo(string termo) {
+            return this.db.Alunos
+            .Include(i => i.UsuarioInfo)
+            .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()))
+            .ToList();
+        }
+        public List<AreaInteresse> GetAlunoAreaInteresse(string ID) {
+            return this.db.AreaInteresse
+            .Include(i => i.Aluno)
+            .Include(x => x.CategoriaProfissional)
+            .Where(x => x.Aluno.ID == ID).ToList();
+        }
+
+
+        public Professor GetProfessor(string ID) {
+            return this.db.Professores
+            .Include(i => i.UsuarioInfo)
+            .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
+        }
+        public List<Professor> GetProfessoresByTermo(string termo) {
+            return this.db.Professores
+            .Include(i => i.UsuarioInfo)
+            .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()))
+            .ToList();
+        }
+        public List<AreaInteresse> GetProfessorAreaInteresse(string ID) {
+            return this.db.AreaInteresse
+            .Include(i => i.Professor)
+            .Include(x => x.CategoriaProfissional)
+            .Where(x => x.Professor.ID == ID)
+            .ToList();
         }
 
         public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions) {
