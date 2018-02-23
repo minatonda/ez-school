@@ -130,12 +130,14 @@ namespace Domain.UsuarioDomain {
             .Include(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
         }
+        
         public List<Aluno> GetAlunosByTermo(string termo) {
             return this.db.Alunos
             .Include(i => i.UsuarioInfo)
             .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()))
             .ToList();
         }
+        
         public List<AreaInteresse> GetAlunoAreaInteresse(string ID) {
             return this.db.AreaInteresse
             .Include(i => i.Aluno)
@@ -143,18 +145,19 @@ namespace Domain.UsuarioDomain {
             .Where(x => x.Aluno.ID == ID).ToList();
         }
 
-
         public Professor GetProfessor(string ID) {
             return this.db.Professores
             .Include(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
         }
+
         public List<Professor> GetProfessoresByTermo(string termo) {
             return this.db.Professores
             .Include(i => i.UsuarioInfo)
             .Where(x => x.UsuarioInfo.Nome.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.RG.ToLower().Contains(termo.ToLower()) || x.UsuarioInfo.CPF.ToLower().Contains(termo.ToLower()))
             .ToList();
         }
+
         public List<AreaInteresse> GetProfessorAreaInteresse(string ID) {
             return this.db.AreaInteresse
             .Include(i => i.Professor)

@@ -1,17 +1,19 @@
 using System.Collections.Generic;
+using Api.Common.Base;
 using Api.CursoApi;
 using Domain.CursoDomain;
 using Domain.InstituicaoDomain;
+using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.InstituicaoApi {
-    
+
     [Route("api/instituicao")]
-    public class InstituicaoController : Controller {
+    public class InstituicaoController : BaseController {
 
         private InstituicaoService _instituicaoService;
-        
-        public InstituicaoController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository) {
+
+        public InstituicaoController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
             this._instituicaoService = new InstituicaoService(instituicaoRepository, cursoRepository);
         }
 

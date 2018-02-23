@@ -1,9 +1,9 @@
-using Api.Common.ViewModels;
+using Api.Common.Base;
 using Api.MateriaApi;
 
 namespace Api.CursoApi {
 
-    public class CursoGradeMateriaVM : SelectVM {
+    public class CursoGradeMateriaVM : BaseVM {
 
         public CursoGradeMateriaVM() {
 

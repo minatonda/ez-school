@@ -1,10 +1,10 @@
 
 using System;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.UsuarioApi {
 
-    public class UsuarioInfoVM : SelectVM {
+    public class UsuarioInfoVM : BaseVM {
 
         public string Nome { get; set; }
         public DateTime? DataNascimento { get; set; }

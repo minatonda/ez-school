@@ -1,7 +1,7 @@
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoTurmaVM : SelectVM {
+    public class InstituicaoCursoTurmaVM : BaseVM {
         public string Nome { get; set; }
         public string Descricao { get; set; }
         

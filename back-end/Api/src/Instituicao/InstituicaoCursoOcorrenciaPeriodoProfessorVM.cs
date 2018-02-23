@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 using Api.CursoApi;
 using Api.UsuarioApi;
 
 namespace Api.InstituicaoApi {
 
-    public class InstituicaoCursoOcorrenciaPeriodoProfessorVM : SelectVM {
+    public class InstituicaoCursoOcorrenciaPeriodoProfessorVM : BaseVM {
         
         public InstituicaoCursoOcorrenciaPeriodoProfessorVM() {
 

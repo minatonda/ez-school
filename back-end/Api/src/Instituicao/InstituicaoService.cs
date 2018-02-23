@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Api.CursoApi;
+using Api.UsuarioApi;
 using Domain.CursoDomain;
 using Domain.InstituicaoDomain;
 
@@ -81,6 +82,14 @@ namespace Api.InstituicaoApi {
             });
 
             this._instituicaoRepository.SaveChanges();
+        }
+
+        public void AddInstituicaoCursoOcorrenciaPeriodoAlunoAusenciaByInstituicaoCursoOcorrenciaPeriodoAndCursoGradeMateria(long idInstituicaoCursoOcorrenciaPeriodo, long idCursoGradeMateria, List<AlunoVM> alunos) {
+            var cursoGradeMateria = this._cursoRespository.GetCursoGradeMateria(idCursoGradeMateria);
+            alunos.ForEach(aluno => {
+                var instituicaoCursoOcorrenciaPeriodoAluno = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoAlunoByAlunoIdAndInstituicaoCursoOcorrenciaPeriodoId(aluno.ID, idInstituicaoCursoOcorrenciaPeriodo);
+            });
+
         }
 
         public void Update(InstituicaoVM viewModel) {
@@ -197,7 +206,7 @@ namespace Api.InstituicaoApi {
 
                         if (!instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulasAttached.Select(a => a.ID).Contains(modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.ID)) {
                             this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(modelInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
-                        } 
+                        }
                     });
                 });
             });
@@ -295,6 +304,10 @@ namespace Api.InstituicaoApi {
             }).ToList();
 
             return instituicaoCursoOcorrenciaVM;
+        }
+
+        public List<InstituicaoCursoOcorrenciaPeriodoVM> AllInstituicaoCursoOcorrenciaPeriodoByProfessor(string id) {
+            return this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoByProfessor(id, true).Select(x => InstituicaoCursoOcorrenciaPeriodoAdapter.ToViewModel(x, true)).ToList();
         }
 
         public List<InstituicaoCursoOcorrenciaVM> AllInstituicaoCursoOcorrencia(long id) {

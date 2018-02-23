@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using Api.Common.Base;
 using Domain.MateriaDomain;
+using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.MateriaApi {
 
     [Route("api/materia")]
-    public class MateriaController : Controller {
+    public class MateriaController : BaseController {
 
         private MateriaService _materiaService;
 
-        public MateriaController(MateriaRepository materiaRepository) {
+        public MateriaController(MateriaRepository materiaRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
             this._materiaService = new MateriaService(materiaRepository);
         }
 
@@ -28,7 +30,7 @@ namespace Api.MateriaApi {
             this._materiaService.Disable(id);
         }
 
-        [HttpGet ("{id}")]
+        [HttpGet("{id}")]
         public MateriaVM Detail(long id) {
             return this._materiaService.Detail(id);
         }

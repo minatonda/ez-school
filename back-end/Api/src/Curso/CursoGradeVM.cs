@@ -1,11 +1,11 @@
 
 using System;
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.CursoApi {
 
-    public class CursoGradeVM : SelectVM {
+    public class CursoGradeVM : BaseVM {
         
         public CursoGradeVM() {
             this.Materias = new List<CursoGradeMateriaVM>();

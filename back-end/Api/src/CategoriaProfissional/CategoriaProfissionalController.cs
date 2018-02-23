@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using Api.Common.Base;
 using Domain.CategoriaProfissionalDomain;
+using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.CategoriaProfissionalApi {
 
     [Route("api/categoria-profissional")]
-    public class CategoriaProfissionalController : Controller {
+    public class CategoriaProfissionalController : BaseController {
 
         private CategoriaProfissionalService _categoriaProfissionalService;
-        public CategoriaProfissionalController(CategoriaProfissionalRepository categoriaProfissionalRepository) {
+        public CategoriaProfissionalController(CategoriaProfissionalRepository categoriaProfissionalRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
             this._categoriaProfissionalService = new CategoriaProfissionalService(categoriaProfissionalRepository);
         }
 

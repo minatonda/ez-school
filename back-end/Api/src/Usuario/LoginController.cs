@@ -39,11 +39,12 @@ namespace Api.UsuarioApi {
                 return BadRequest("Invalid credentials");
             }
 
-            Claim[] claims = new Claim[4] {
+            Claim[] claims = new Claim[5] {
                 new Claim (JwtRegisteredClaimNames.Sub, user.Username),
                 new Claim (JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator ()),
                 new Claim (JwtRegisteredClaimNames.Iat, _jwtOptions.IssuedAt.ToUnixEpochDateToString (), ClaimValueTypes.Integer64),
-                identity.FindFirst ("Auth")
+                identity.FindFirst ("Auth"),
+                identity.FindFirst ("usuario-info-id")
             };
 
             JwtSecurityToken jwt = new JwtSecurityToken(
@@ -66,15 +67,18 @@ namespace Api.UsuarioApi {
 
             return Ok(response);
         }
-        
+
         private Task<ClaimsIdentity> GetClaimsIdentity(Usuario user) {
-            if (this._usuarioRepository.Query(m => m.Username == user.Username && m.Password == m.Password).SingleOrDefault() != null)
+            var attachedUser = this._usuarioRepository.Query(m => m.Username == user.Username && m.Password == m.Password).SingleOrDefault();
+            if (attachedUser != null) {
                 return Task.FromResult(new ClaimsIdentity(
                     new GenericIdentity(user.Username, "Token"),
                     new[] {
+                        new Claim ("usuario-info-id", attachedUser.ID),
                         new Claim ("Auth", "WebApi")
                     }
                 ));
+            }
             return Task.FromResult<ClaimsIdentity>(null);
         }
     }

@@ -1,9 +1,9 @@
 using System;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.UsuarioApi {
 
-    public class AutenticacaoVM : SelectVM {
+    public class AutenticacaoVM : BaseVM {
 
         public string access_token { get; set; }
         public DateTime created { get; set; }

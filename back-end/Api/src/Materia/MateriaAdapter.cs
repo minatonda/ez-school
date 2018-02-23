@@ -1,4 +1,4 @@
-using Api.Common.ViewModels;
+using Api.Common.Base;
 using Domain.MateriaDomain;
 
 namespace Api.MateriaApi {

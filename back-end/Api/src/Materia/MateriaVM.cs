@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.MateriaApi {
     
-    public class MateriaVM : SelectVM {
+    public class MateriaVM : BaseVM {
 
         public MateriaVM() {
             this.MateriasRelacionadas = new List<MateriaRelacionamentoVM>();

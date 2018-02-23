@@ -1,7 +1,7 @@
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoVM : SelectVM {
+    public class InstituicaoVM : BaseVM {
         public string Nome { get; set; }
         public string CNPJ { get; set; }
 

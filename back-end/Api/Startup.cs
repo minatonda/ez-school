@@ -65,12 +65,11 @@ namespace Api {
             services.AddMvcWithPolicy();
 
             services.AddScoped<BaseContext, BaseContext>();
+            services.AddScoped<UsuarioRepository, UsuarioRepository>();
             services.AddTransient<CursoRepository, CursoRepository>();
             services.AddTransient<MateriaRepository, MateriaRepository>();
-            services.AddTransient<ProfessorRepository, ProfessorRepository>();
             services.AddTransient<InstituicaoRepository, InstituicaoRepository>();
             services.AddTransient<InstituicaoCategoriaRepository, InstituicaoCategoriaRepository>();
-            services.AddTransient<UsuarioRepository, UsuarioRepository>();
             services.AddTransient<CategoriaProfissionalRepository, CategoriaProfissionalRepository>();
 
             services.AddJwtOptions(Configuration, SigningKey, Environment);

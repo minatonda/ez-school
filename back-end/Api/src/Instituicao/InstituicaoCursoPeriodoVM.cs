@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoPeriodoVM : SelectVM {
+    public class InstituicaoCursoPeriodoVM : BaseVM {
 
         public InstituicaoCursoPeriodoVM() {
             this.DiaSemana = new List<DayOfWeek>();

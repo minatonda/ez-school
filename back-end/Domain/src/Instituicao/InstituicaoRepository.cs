@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Domain.InstituicaoDomain {
     public class InstituicaoRepository : IRepository<Instituicao> {
-        
+
         private BaseContext db;
         private CursoRepository cursoRepository;
         private UsuarioRepository usuarioRepository;
@@ -248,8 +248,24 @@ namespace Domain.InstituicaoDomain {
             return this.db.InstituicaoCursoOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
-            .Include(i => i.Coordenador).ThenInclude(i=>i.UsuarioInfo)
+            .Include(i => i.Coordenador).ThenInclude(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.ID == id);
+        }
+
+         public InstituicaoCursoOcorrenciaPeriodo GetInstituicaoCursoOcorrenciaPeriodo(long id) {
+            return this.db.InstituicaoCursoOcorrenciaPeriodos
+            .AsNoTracking()
+            .Include(i => i.InstituicaoCursoOcorrencia)
+            .SingleOrDefault(x => x.ID == id);
+        }
+
+        public InstituicaoCursoOcorrenciaPeriodoAluno GetInstituicaoCursoOcorrenciaPeriodoAlunoByAlunoIdAndInstituicaoCursoOcorrenciaPeriodoId(string alunoId, long instituicaoCursoOcorrenciaPeriodoId) {
+            return this.db.InstituicaoCursoOcorrenciaPeriodoAlunos
+            .AsNoTracking()
+            .Include(i => i.InstituicaoCursoOcorrenciaAluno)
+            .ThenInclude(i => i.Aluno)
+            .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
+            .SingleOrDefault(x => x.InstituicaoCursoOcorrenciaAluno.Aluno.ID == alunoId && x.InstituicaoCursoOcorrenciaPeriodo.ID == instituicaoCursoOcorrenciaPeriodoId);
         }
 
         public List<Instituicao> GetAll(bool ativo) {
@@ -328,6 +344,16 @@ namespace Domain.InstituicaoDomain {
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrencia)
             .Where(x => x.InstituicaoCursoOcorrencia.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<InstituicaoCursoOcorrenciaPeriodo> GetAllInstituicaoCursoOcorrenciaPeriodoByProfessor(string id, bool ativo) {
+            return this.db.InstituicaoCursoOcorrenciaPeriodoProfessores
+            .AsNoTracking()
+            .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
+            .Include(i => i.Professor)
+            .Where(x => x.Professor.ID == id && x.Ativo.HasValue == !ativo)
+            .Select(x => x.InstituicaoCursoOcorrenciaPeriodo)
             .ToList();
         }
 

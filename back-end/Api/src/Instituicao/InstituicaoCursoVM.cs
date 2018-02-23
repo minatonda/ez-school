@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 using Api.CursoApi;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoVM : SelectVM {
+    public class InstituicaoCursoVM : BaseVM {
 
         public InstituicaoCursoVM() {
             this.Periodos = new List<InstituicaoCursoPeriodoVM>();

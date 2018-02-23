@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoOcorrenciaPeriodoVM : SelectVM {
+    public class InstituicaoCursoOcorrenciaPeriodoVM : BaseVM {
 
         public InstituicaoCursoOcorrenciaPeriodoVM() {
             this.InstituicaoCursoOcorrenciaPeriodoProfessores = new List<InstituicaoCursoOcorrenciaPeriodoProfessorVM>();

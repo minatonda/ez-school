@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Api.CategoriaProfissionalApi;
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.UsuarioApi {
 
-    public class AlunoVM : SelectVM {
+    public class AlunoVM : BaseVM {
 
         public AlunoVM() {
             this.CategoriaProfissionais = new List<CategoriaProfissionalVM>();

@@ -44,6 +44,24 @@ namespace Domain.Common {
             var listInstituicaoCursoTurma = getBaseInstituicaoCursoTurma(listInstituicaoCurso);
             context.InstituicaoCursoTurmas.AddRange(listInstituicaoCursoTurma);
 
+            var listInstituicaoCursoOcorrencia = getBaseInstituicaoCursoOcorrencias(listInstituicaoCurso, listProfessores);
+            context.InstituicaoCursoOcorrencias.AddRange(listInstituicaoCursoOcorrencia);
+
+            var listInstituicaoCursoOcorrenciaAluno = getBaseInstituicaoCursoOcorrenciaAlunos(listAlunos, listInstituicaoCursoOcorrencia);
+            context.InstituicaoCursoOcorrenciaAlunos.AddRange(listInstituicaoCursoOcorrenciaAluno);
+
+            var listInstituicaoCursoOcorrenciaPeriodo = getBaseInstituicaoCursoOcorrenciaPeriodos(listInstituicaoCursoOcorrencia);
+            context.InstituicaoCursoOcorrenciaPeriodos.AddRange(listInstituicaoCursoOcorrenciaPeriodo);
+
+            var listInstituicaoCursoOcorrenciaPeriodoAluno = getBaseInstituicaoCursoOcorrenciaPeriodoAlunos(listInstituicaoCursoOcorrenciaAluno, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
+            context.InstituicaoCursoOcorrenciaPeriodoAlunos.AddRange(listInstituicaoCursoOcorrenciaPeriodoAluno);
+
+            var listInstituicaoCursoOcorrenciaPeriodoProfessor = getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(listProfessores, listCursoGradeMateria, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
+            context.InstituicaoCursoOcorrenciaPeriodoProfessores.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessor);
+
+            var listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = getBaseInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas(listInstituicaoCursoOcorrenciaPeriodoProfessor);
+            context.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
+
             context.SaveChanges();
         }
 
@@ -59,6 +77,7 @@ namespace Domain.Common {
                         },
                 };
         }
+
         public static Materia[] getBaseMaterias() {
             return new Materia[] {
                     new Materia () {
@@ -87,6 +106,7 @@ namespace Domain.Common {
                         },
                 };
         }
+
         public static Curso[] getBaseCursos() {
             return new Curso[] {
                     new Curso () {
@@ -127,7 +147,8 @@ namespace Domain.Common {
             return new CursoGradeMateria[] {
                     new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
-                                Materia = materias[2]
+                                Materia = materias[2],
+                                Descricao = materias[2].Descricao
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
@@ -151,14 +172,17 @@ namespace Domain.Common {
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
-                                Materia = materias[5]
+                                Materia = materias[5],
+                                Descricao = materias[2].Descricao
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[1],
-                                Materia = materias[2]
+                                Materia = materias[2],
+                                Descricao = materias[2].Descricao
                         },
                 };
         }
+
         public static Usuario[] getBaseUsuarios() {
             var carvalho = new Usuario() {
                 Username = "dev",
@@ -259,6 +283,103 @@ namespace Domain.Common {
                     CursoGrade = cursoGrades[0],
                     DataInicio=DateTime.Now,
                     Instituicao = instituicoes[0],
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrencia[] getBaseInstituicaoCursoOcorrencias(InstituicaoCurso[] instituicaoCursos, Professor[] professores) {
+            return new InstituicaoCursoOcorrencia[]{
+                new InstituicaoCursoOcorrencia(){
+                    Coordenador = professores[0],
+                    InstituicaoCurso = instituicaoCursos[0],
+                    DataInicio = DateTime.Now,
+                    DataExpiracao = DateTime.Now.AddDays(1800)
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrenciaAluno[] getBaseInstituicaoCursoOcorrenciaAlunos(Aluno[] alunos, InstituicaoCursoOcorrencia[] instituicaoCursoOcorrencias) {
+            return new InstituicaoCursoOcorrenciaAluno[]{
+                new InstituicaoCursoOcorrenciaAluno(){
+                    Aluno = alunos[0],
+                    DataInicio = DateTime.Now,
+                    InstituicaoCursoOcorrencia = instituicaoCursoOcorrencias[0]
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrenciaPeriodo[] getBaseInstituicaoCursoOcorrenciaPeriodos(InstituicaoCursoOcorrencia[] instituicaoCursoOcorrencias) {
+            return new InstituicaoCursoOcorrenciaPeriodo[]{
+                new InstituicaoCursoOcorrenciaPeriodo(){
+                    InstituicaoCursoOcorrencia = instituicaoCursoOcorrencias[0],
+                    DataInicio = DateTime.Now,
+                    DataExpiracao = DateTime.Now.AddDays(360)
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrenciaPeriodoAluno[] getBaseInstituicaoCursoOcorrenciaPeriodoAlunos(InstituicaoCursoOcorrenciaAluno[] instituicaoCursoOcorrenciaAlunos, InstituicaoCursoOcorrenciaPeriodo[] instituicaoCursoOcorrenciaPeriodos, InstituicaoCursoPeriodo[] instituicaoCursoPeriodos, InstituicaoCursoTurma[] instituicaoCursoTurmas) {
+            return new InstituicaoCursoOcorrenciaPeriodoAluno[]{
+                new InstituicaoCursoOcorrenciaPeriodoAluno(){
+                    InstituicaoCursoOcorrenciaAluno = instituicaoCursoOcorrenciaAlunos[0],
+                    InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
+                    InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
+                    Confirmado = true
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrenciaPeriodoProfessor[] getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(Professor[] professores, CursoGradeMateria[] cursoGradeMaterias, InstituicaoCursoOcorrenciaPeriodo[] instituicaoCursoOcorrenciaPeriodos, InstituicaoCursoPeriodo[] instituicaoCursoPeriodos, InstituicaoCursoTurma[] instituicaoCursoTurmas) {
+            return new InstituicaoCursoOcorrenciaPeriodoProfessor[]{
+                new InstituicaoCursoOcorrenciaPeriodoProfessor(){
+                    InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
+                    InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
+                    Professor = professores[0],
+                    CursoGradeMateria = cursoGradeMaterias[0],
+                    DataInicio = DateTime.Now
+                }
+            };
+        }
+
+        public static InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula[] getBaseInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas(InstituicaoCursoOcorrenciaPeriodoProfessor[] instituicaoCursoOcorrenciaPeriodoProfessores) {
+            return new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula[]{
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("07:00"),
+                    Fim = TimeSpan.Parse("07:50"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("07:50"),
+                    Fim = TimeSpan.Parse("08:40"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("08:40"),
+                    Fim = TimeSpan.Parse("09:30"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("09:50"),
+                    Fim = TimeSpan.Parse("10:40"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("10:40"),
+                    Fim = TimeSpan.Parse("11:30"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(){
+                    Dia = DayOfWeek.Monday,
+                    Inicio = TimeSpan.Parse("11:30"),
+                    Fim = TimeSpan.Parse("12:20"),
+                    InstituicaoCursoOcorrenciaPeriodoProfessor = instituicaoCursoOcorrenciaPeriodoProfessores[0]
                 }
             };
         }

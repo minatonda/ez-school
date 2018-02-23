@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using Api.Common.Base;
 using Domain.CursoDomain;
+using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.CursoApi {
 
     [Route("api/curso")]
-    public class CursoController : Controller {
+    public class CursoController : BaseController {
 
         private CursoService _cursoService;
 
-        public CursoController(CursoRepository cursoRepository) {
+        public CursoController(CursoRepository cursoRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
             this._cursoService = new CursoService(cursoRepository);
         }
 

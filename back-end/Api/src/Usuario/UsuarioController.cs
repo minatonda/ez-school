@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Api.Common.Base;
 using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.UsuarioApi {
 
     [Route("api/usuario")]
-    public class UsuarioController : Controller {
+    public class UsuarioController : BaseController {
 
         private UsuarioService usuarioService;
 
-        public UsuarioController(UsuarioRepository usuarioRepository) {
+        public UsuarioController(UsuarioRepository usuarioRepository) : base(usuarioRepository) {
             this.usuarioService = new UsuarioService(usuarioRepository);
         }
 
@@ -21,6 +22,7 @@ namespace Api.UsuarioApi {
 
         [HttpGet("{id}/{term?}")]
         public Object Detail(string id, [FromQuery]string termo) {
+            var x = this.getLogged();
             switch (id.ToLower()) {
                 case ("professor"): {
                         if (termo != null) {
@@ -71,7 +73,7 @@ namespace Api.UsuarioApi {
         public ProfessorVM DetailProfessor(string id) {
             return this.usuarioService.DetailProfessor(id);
         }
-        
+
         [HttpPost("{id}/professor/update")]
         public ProfessorVM UpdateProfessor([FromBody] ProfessorVM viewModel) {
             return this.usuarioService.UpdateProfessor(viewModel);

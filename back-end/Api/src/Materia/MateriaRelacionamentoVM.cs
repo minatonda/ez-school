@@ -1,8 +1,8 @@
-using Api.Common.ViewModels;
+using Api.Common.Base;
 
 namespace Api.MateriaApi {
     
-    public class MateriaRelacionamentoVM : SelectVM {
+    public class MateriaRelacionamentoVM : BaseVM {
 
         public MateriaRelacionamentoVM() {
 

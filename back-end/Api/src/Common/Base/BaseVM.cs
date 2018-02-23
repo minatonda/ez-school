@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Common.ViewModels {
-    public class SelectVM {
+namespace Api.Common.Base {
+    public class BaseVM {
 
         public string ID { get; set; }
         public string Label { get; set; }

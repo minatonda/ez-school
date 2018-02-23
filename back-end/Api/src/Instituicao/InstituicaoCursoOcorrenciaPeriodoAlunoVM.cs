@@ -1,10 +1,10 @@
 
-using Api.Common.ViewModels;
+using Api.Common.Base;
 using Api.UsuarioApi;
 
 namespace Api.InstituicaoApi {
 
-    public class InstituicaoCursoOcorrenciaPeriodoAlunoVM : SelectVM {
+    public class InstituicaoCursoOcorrenciaPeriodoAlunoVM : BaseVM {
 
         public InstituicaoCursoOcorrenciaPeriodoAlunoVM() {
 
