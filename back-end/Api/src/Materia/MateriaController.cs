@@ -11,7 +11,7 @@ namespace Api.MateriaApi {
 
         private MateriaService _materiaService;
 
-        public MateriaController(MateriaRepository materiaRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
+        public MateriaController(MateriaRepository materiaRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
             this._materiaService = new MateriaService(materiaRepository);
         }
 

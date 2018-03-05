@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoPeriodoVM : BaseVM {
+    public class InstituicaoCursoPeriodoVM : BaseVM<long> {
 
         public InstituicaoCursoPeriodoVM() {
             this.DiaSemana = new List<DayOfWeek>();

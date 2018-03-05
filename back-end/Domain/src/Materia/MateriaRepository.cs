@@ -15,10 +15,9 @@ namespace Domain.MateriaDomain {
         public MateriaRepository(BaseContext db) {
             this.db = db;
         }
-        public Materia Add(Materia model) {
+        public void Add(Materia model) {
             this.db.Materias.Add(model);
             this.db.SaveChanges();
-            return model;
         }
 
         public void AddMateriaRelacionada(MateriaRelacionamento materia) {
@@ -34,22 +33,20 @@ namespace Domain.MateriaDomain {
             history.Ativo = DateTime.Now;
             this.Add(history);
         }
-        public Materia Update(Materia materia) {
+        public void Update(Materia materia) {
             var model = this.db.Materias.Find(materia.ID);
 
             model.Nome = materia.Nome;
             model.Descricao = materia.Descricao;
 
             this.db.Materias.Update(model);
-            return model;
         }
-        public Materia Update(Materia model, List<Materia> Materias) {
+        public void Update(Materia model, List<Materia> Materias) {
             this.db.Materias.Find(model.ID).Nome = model.Nome;
             this.db.Materias.Find(model.ID).Descricao = model.Descricao;
             this.db.Materias.Update(this.db.Materias.Find(model.ID));
             this.db.MateriaRelacionamento.AddRange(Materias.Select(x => new MateriaRelacionamento() { MateriaPai = this.db.Materias.Find(x.ID), MateriaPrincipal = model }));
             this.db.SaveChanges();
-            return model;
         }
         public void Disable(long id) {
             var model = this.db.Materias.Find(id);

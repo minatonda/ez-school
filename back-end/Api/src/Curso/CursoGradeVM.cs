@@ -5,7 +5,7 @@ using Api.Common.Base;
 
 namespace Api.CursoApi {
 
-    public class CursoGradeVM : BaseVM {
+    public class CursoGradeVM : BaseVM<long> {
         
         public CursoGradeVM() {
             this.Materias = new List<CursoGradeMateriaVM>();

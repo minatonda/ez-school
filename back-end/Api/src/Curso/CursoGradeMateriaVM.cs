@@ -3,7 +3,7 @@ using Api.MateriaApi;
 
 namespace Api.CursoApi {
 
-    public class CursoGradeMateriaVM : BaseVM {
+    public class CursoGradeMateriaVM : BaseVM<long> {
 
         public CursoGradeMateriaVM() {
 

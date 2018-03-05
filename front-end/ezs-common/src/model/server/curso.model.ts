@@ -1,11 +1,15 @@
 import { CursoGradeModel } from './curso-grade.model';
+import { BaseModel } from './base.model';
 
-export class CursoModel {
+export class CursoModel extends BaseModel < number > {
+
     constructor() {
+        super();
         this.grades = new Array<CursoGradeModel>();
     }
-    id?: string;
+
     nome: string;
     descricao: string;
     grades: Array<CursoGradeModel>;
+
 }

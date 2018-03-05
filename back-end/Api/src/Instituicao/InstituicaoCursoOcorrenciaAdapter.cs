@@ -4,18 +4,17 @@ using Api.UsuarioApi;
 using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
-    
+
     public class InstituicaoCursoOcorrenciaAdapter {
 
         public static InstituicaoCursoOcorrenciaVM ToViewModel(InstituicaoCursoOcorrencia model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaVM();
-
-            vm.ID = model.ID.ToString();
+            vm.ID = model.ID;
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
 
             if (model.Coordenador != null) {
-                vm.Coordenador = ProfessorAdapter.ToViewModel(model.Coordenador, null, false);
+                vm.Coordenador = UsuarioAdapter.ToViewModel(model.Coordenador, null, false);
             }
 
             return vm;
@@ -23,14 +22,12 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoOcorrencia ToModel(InstituicaoCursoOcorrenciaVM vm, bool deep) {
             var model = new InstituicaoCursoOcorrencia();
-            if (vm.ID != null) {
-                model.ID = long.Parse(vm.ID);
-            }
+            model.ID = vm.ID;
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
 
             if (vm.Coordenador != null) {
-                model.Coordenador = ProfessorAdapter.ToModel(vm.Coordenador, false);
+                model.Coordenador = UsuarioAdapter.ToModel(vm.Coordenador, false);
             }
 
             return model;

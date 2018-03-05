@@ -26,7 +26,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disable = async (id: string) => {
+    public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/curso/disable', { params: { id: id } });
             return result;
@@ -36,7 +36,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detail = async (id: string) => {
+    public detail = async (id: number | string) => {
         try {
             let result = await this.get(`/api/curso/${id}`) as CursoModel;
             return result;
@@ -56,7 +56,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allCursoGrade = async (id: string) => {
+    public allCursoGrade = async (id: number | string) => {
         try {
             let result = await this.get(`/api/curso/${id}/curso-grade`) as Array < CursoGradeModel > ;
             return result;
@@ -66,7 +66,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allCursoGradeMateria = async (id: string, idCursoGrade: string) => {
+    public allCursoGradeMateria = async (id: number | string, idCursoGrade: number | string) => {
         try {
             let result = await this.get(`/api/curso/${id}/curso-grade/${idCursoGrade}/curso-grade-materia`) as Array < CursoGradeModel > ;
             return result;

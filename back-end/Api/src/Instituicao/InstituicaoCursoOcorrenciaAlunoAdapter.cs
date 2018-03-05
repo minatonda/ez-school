@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Api.UsuarioApi;
+using Domain.AreaInteresseDomain;
 using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
@@ -6,35 +8,32 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoOcorrenciaAlunoVM ToViewModel(InstituicaoCursoOcorrenciaAluno model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaAlunoVM();
-
-            vm.ID = model.ID.ToString();
+            vm.ID = model.ID;
 
             if (model.Aluno != null) {
-                vm.Aluno = AlunoAdapter.ToViewModel(model.Aluno, null, true);
+                vm.Aluno = UsuarioAdapter.ToViewModel(model.Aluno, new List<AreaInteresse>(), true);
             }
 
-            vm.Label = vm.Aluno.UsuarioInfo.Nome;
+            vm.Label = vm.Aluno.Nome;
 
             return vm;
         }
 
         public static InstituicaoCursoOcorrenciaAluno ToModel(InstituicaoCursoOcorrenciaAlunoVM vm, bool deep) {
             var model = new InstituicaoCursoOcorrenciaAluno();
-            if (vm.ID != null) {
-                model.ID = long.Parse(vm.ID);
-            }
+            model.ID = vm.ID;
 
             if (vm.Aluno != null) {
-                model.Aluno = AlunoAdapter.ToModel(vm.Aluno, true);
+                model.Aluno = UsuarioAdapter.ToModel(vm.Aluno, true);
             }
 
             return model;
         }
 
-        public static InstituicaoCursoOcorrenciaAluno ToModel(InstituicaoCursoOcorrenciaVM instituicaoCursoOcorrencia, AlunoVM aluno) {
+        public static InstituicaoCursoOcorrenciaAluno ToModel(InstituicaoCursoOcorrenciaVM instituicaoCursoOcorrencia, UsuarioInfoVM aluno) {
             var model = new InstituicaoCursoOcorrenciaAluno();
             model.InstituicaoCursoOcorrencia = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCursoOcorrencia, true);
-            model.Aluno = AlunoAdapter.ToModel(aluno, true);
+            model.Aluno = UsuarioAdapter.ToModel(aluno, true);
             return model;
         }
 

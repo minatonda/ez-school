@@ -6,10 +6,7 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoPeriodoVM ToViewModel(InstituicaoCursoPeriodo model, bool deep) {
             var vm = new InstituicaoCursoPeriodoVM();
-
-            vm.ID = model.ID.ToString();
-
-            vm.Label = model.Inicio + " - " + model.Fim;
+            vm.ID = model.ID;
             vm.Inicio = model.Inicio;
             vm.Fim = model.Fim;
             vm.PausaInicio = model.PausaInicio;
@@ -38,15 +35,14 @@ namespace Api.InstituicaoApi {
                 vm.DiaSemana.Add(DayOfWeek.Saturday);
             }
 
+            vm.Label = model.Inicio + " - " + model.Fim;
+
             return vm;
         }
 
         public static InstituicaoCursoPeriodo ToModel(InstituicaoCursoPeriodoVM vm, bool deep) {
             var model = new InstituicaoCursoPeriodo();
-            if (vm.ID != null) {
-                model.ID = long.Parse(vm.ID);
-            }
-
+            model.ID = vm.ID;
             model.Inicio = vm.Inicio;
             model.Fim = vm.Fim;
             model.PausaInicio = vm.PausaInicio;

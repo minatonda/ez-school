@@ -10,7 +10,7 @@ namespace Api.CategoriaProfissionalApi {
     public class CategoriaProfissionalController : BaseController {
 
         private CategoriaProfissionalService _categoriaProfissionalService;
-        public CategoriaProfissionalController(CategoriaProfissionalRepository categoriaProfissionalRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
+        public CategoriaProfissionalController(CategoriaProfissionalRepository categoriaProfissionalRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
             this._categoriaProfissionalService = new CategoriaProfissionalService(categoriaProfissionalRepository);
         }
 

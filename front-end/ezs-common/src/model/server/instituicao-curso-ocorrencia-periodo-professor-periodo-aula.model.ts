@@ -1,9 +1,12 @@
-export class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel {
-    id?: string;
+import { BaseModel } from './base.model';
+
+export class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel extends BaseModel < number > {
+
     inicio: string;
     fim: string;
     dia: DayOfWeekModel;
     label: string;
+
 }
 
 export enum DayOfWeekModel {

@@ -11,7 +11,7 @@ namespace Domain.InstituicaoDomain {
         public long ID { get; set; }
         public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
         public ExpiracaoMotivo ExpiracaoMotivo { get; set; }
-        public Aluno Aluno { get; set; }
+        public UsuarioInfo Aluno { get; set; }
         public bool Confirmado { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }

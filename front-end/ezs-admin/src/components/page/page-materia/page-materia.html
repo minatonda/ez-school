@@ -1,29 +1,55 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <legend>{{alias}}</legend>
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>{{alias}}</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Descrição</label>
+                                <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-10">
-                <selector v-bind:itens="ui.materias" placeholder="Materias Relacionadas" label="label" v-model="ui.materiaRelacionada.materiaPai"></selector>
-            </div>
-            <div class="col-12 col-md-2 form-group text-left">
-                <button class="btn btn-primary" v-on:click="addMateriaRelacionada(ui.materiaRelacionada)">Adicionar</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 form-group">
-                <card-table v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table>
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Materias Relacionadas</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3">
+                                <label class="control-label">Materia</label>
+                                <selector v-bind:itens="ui.materias" placeholder="Materia" label="label" v-model="ui.materiaRelacionada.materiaPai"></selector>
+                            </div>
+                            <div class="col-12 col-md-2 form-group text-left">
+                                <label class="control-label invisible">Ocupar</label>
+                                <button class="btn btn-primary btn-block" v-on:click="addMateriaRelacionada(ui.materiaRelacionada)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <card-table v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

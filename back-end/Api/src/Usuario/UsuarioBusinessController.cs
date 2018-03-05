@@ -11,14 +11,19 @@ namespace Api.UsuarioApi {
 
         private UsuarioService usuarioService;
 
-        public UsuarioBusinessController(UsuarioRepository usuarioRepository) : base(usuarioRepository) {
-            this.usuarioService = new UsuarioService(usuarioRepository);
+        public UsuarioBusinessController(UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
+            this.usuarioService = new UsuarioService(usuarioRepository, areaInteresseRepository);
         }
 
 
         [HttpGet("/me")]
         public UsuarioInfoVM Me() {
             return this.getLogged();
+        }
+
+        [HttpGet("all-by-term")]
+        public List<UsuarioInfoVM> AllByTerm([FromQuery] string perfil, [FromQuery]string termo) {
+            return this.usuarioService.GetAllByTermo(perfil, termo);
         }
 
     }

@@ -3,7 +3,7 @@ using Api.Common.Base;
 
 namespace Api.UsuarioApi {
 
-    public class AutenticacaoVM : BaseVM {
+    public class AutenticacaoVM : BaseVM<string> {
 
         public string access_token { get; set; }
         public DateTime created { get; set; }

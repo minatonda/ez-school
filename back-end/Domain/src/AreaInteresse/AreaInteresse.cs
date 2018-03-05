@@ -16,9 +16,9 @@ namespace Domain.AreaInteresseDomain {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public long ID { get; set; }
-        public Aluno Aluno { get; set; }
-        public Professor Professor { get; set; }
+        public UsuarioInfo UsuarioInfo { get; set; }
         public CategoriaProfissional CategoriaProfissional { get; set; }
         public string Descricao { get; set; }
+        public DateTime? Ativo { get; set; } = null;
     }
 }

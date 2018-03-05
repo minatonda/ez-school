@@ -4,7 +4,7 @@ using Api.Common.Base;
 using Api.CursoApi;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoVM : BaseVM {
+    public class InstituicaoCursoVM : BaseVM<long> {
 
         public InstituicaoCursoVM() {
             this.Periodos = new List<InstituicaoCursoPeriodoVM>();

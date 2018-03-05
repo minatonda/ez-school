@@ -38,7 +38,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disable = async (id: string) => {
+    public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/usuario/disable', { params: { id: id } });
             return result;
@@ -48,7 +48,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detail = async (id: string) => {
+    public detail = async (id: number | string) => {
         try {
             let result = await this.get(`/api/usuario/${id}`) as UsuarioModel;
             return result;
@@ -58,7 +58,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detailAluno = async (id: string) => {
+    public detailAluno = async (id: number | string) => {
         try {
             let result = await this.get(`/api/usuario/${id}/aluno`) as AlunoModel;
             return result;
@@ -68,7 +68,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detailProfessor = async (id: string) => {
+    public detailProfessor = async (id: number | string) => {
         try {
             let result = await this.get(`/api/usuario/${id}/professor`) as ProfessorModel;
             return result;
@@ -108,7 +108,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public updateAluno = async (id: string, model: AlunoModel) => {
+    public updateAluno = async (id: number | string, model: AlunoModel) => {
         try {
             let result = await this.post(`/api/usuario/${id}/aluno/update`, model) as AlunoModel;
             return result;
@@ -118,7 +118,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public updateProfessor = async (id: string, model: ProfessorModel) => {
+    public updateProfessor = async (id: number | string, model: ProfessorModel) => {
         try {
             let result = await this.post(`/api/usuario/${id}/professor/update`, model) as ProfessorModel;
             return result;

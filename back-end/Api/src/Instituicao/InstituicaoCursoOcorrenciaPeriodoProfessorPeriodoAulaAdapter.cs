@@ -6,8 +6,7 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM ToViewModel(InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula model, bool deep) {
             var vm = new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM();
-
-            vm.ID = model.ID.ToString();
+            vm.ID = model.ID;
             vm.Inicio = model.Inicio;
             vm.Fim = model.Fim;
             vm.Dia = model.Dia;
@@ -17,10 +16,7 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula ToModel(InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM vm, bool deep) {
             var model = new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula();
-
-            if (vm.ID != null) {
-                model.ID = long.Parse(vm.ID);
-            }
+            model.ID = vm.ID;
             model.Inicio = vm.Inicio;
             model.Fim = vm.Fim;
             model.Dia = vm.Dia;

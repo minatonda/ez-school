@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Api.Common.Base {
-    public class BaseVM {
+    public class BaseVM <TID> {
 
-        public string ID { get; set; }
+        public TID ID { get; set; }
         public string Label { get; set; }
 
     }

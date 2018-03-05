@@ -1,16 +1,26 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <legend>{{alias}}</legend>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>{{alias}}</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 form-group">
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
+                            </div>
+                            <div class="col-12 col-md-6 form-group">
+                                <label class="control-label">Descrição</label>
+                                <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

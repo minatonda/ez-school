@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Domain.CategoriaProfissionalDomain;
 using Domain.CursoDomain;
 using Domain.InstituicaoDomain;
 using Domain.MateriaDomain;
@@ -14,53 +15,56 @@ namespace Domain.Common {
             var listUsuario = getBaseUsuarios();
             context.Usuarios.AddRange(listUsuario);
 
-            var listCurso = getBaseCursos();
+            var listCurso = BaseContextInitializer.getBaseCursos();
             context.Cursos.AddRange(listCurso);
 
-            var listMateria = getBaseMaterias();
+            var listMateria = BaseContextInitializer.getBaseMaterias();
             context.Materias.AddRange(listMateria);
 
-            var listCursoGrade = getBaseCursoGrades(listCurso);
+            var listCursoGrade = BaseContextInitializer.getBaseCursoGrades(listCurso);
             context.CursoGrades.AddRange(listCursoGrade);
 
-            var listCursoGradeMateria = getBaseCursoGradeMaterias(listCursoGrade, listMateria);
+            var listCursoGradeMateria = BaseContextInitializer.getBaseCursoGradeMaterias(listCursoGrade, listMateria);
             context.CursoGradeMaterias.AddRange(listCursoGradeMateria);
 
-            var listInstituicoes = getBaseInstituicoes();
+            var listInstituicoes = BaseContextInitializer.getBaseInstituicoes();
             context.Instituicoes.AddRange(listInstituicoes);
 
-            var listAlunos = getBaseAlunos(listUsuario);
+            var listAlunos = BaseContextInitializer.getBaseAlunos(listUsuario);
             context.Alunos.AddRange(listAlunos);
 
-            var listProfessores = getBaseProfessores(listUsuario);
+            var listProfessores = BaseContextInitializer.getBaseProfessores(listUsuario);
             context.Professores.AddRange(listProfessores);
 
-            var listInstituicaoCurso = getBaseInstituicaoCursos(listCursoGrade, listInstituicoes);
+            var listInstituicaoCurso = BaseContextInitializer.getBaseInstituicaoCursos(listCursoGrade, listInstituicoes);
             context.InstituicaoCursos.AddRange(listInstituicaoCurso);
 
-            var listInstituicaoCursoPeriodo = getBaseInstituicaoCursoPeriodos(listInstituicaoCurso);
+            var listInstituicaoCursoPeriodo = BaseContextInitializer.getBaseInstituicaoCursoPeriodos(listInstituicaoCurso);
             context.InstituicaoCursoPeriodos.AddRange(listInstituicaoCursoPeriodo);
 
-            var listInstituicaoCursoTurma = getBaseInstituicaoCursoTurma(listInstituicaoCurso);
+            var listInstituicaoCursoTurma = BaseContextInitializer.getBaseInstituicaoCursoTurma(listInstituicaoCurso);
             context.InstituicaoCursoTurmas.AddRange(listInstituicaoCursoTurma);
 
-            var listInstituicaoCursoOcorrencia = getBaseInstituicaoCursoOcorrencias(listInstituicaoCurso, listProfessores);
+            var listInstituicaoCursoOcorrencia = BaseContextInitializer.getBaseInstituicaoCursoOcorrencias(listInstituicaoCurso, listUsuario);
             context.InstituicaoCursoOcorrencias.AddRange(listInstituicaoCursoOcorrencia);
 
-            var listInstituicaoCursoOcorrenciaAluno = getBaseInstituicaoCursoOcorrenciaAlunos(listAlunos, listInstituicaoCursoOcorrencia);
+            var listInstituicaoCursoOcorrenciaAluno = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaAlunos(listUsuario, listInstituicaoCursoOcorrencia);
             context.InstituicaoCursoOcorrenciaAlunos.AddRange(listInstituicaoCursoOcorrenciaAluno);
 
-            var listInstituicaoCursoOcorrenciaPeriodo = getBaseInstituicaoCursoOcorrenciaPeriodos(listInstituicaoCursoOcorrencia);
+            var listInstituicaoCursoOcorrenciaPeriodo = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodos(listInstituicaoCursoOcorrencia);
             context.InstituicaoCursoOcorrenciaPeriodos.AddRange(listInstituicaoCursoOcorrenciaPeriodo);
 
-            var listInstituicaoCursoOcorrenciaPeriodoAluno = getBaseInstituicaoCursoOcorrenciaPeriodoAlunos(listInstituicaoCursoOcorrenciaAluno, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
+            var listInstituicaoCursoOcorrenciaPeriodoAluno = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoAlunos(listInstituicaoCursoOcorrenciaAluno, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
             context.InstituicaoCursoOcorrenciaPeriodoAlunos.AddRange(listInstituicaoCursoOcorrenciaPeriodoAluno);
 
-            var listInstituicaoCursoOcorrenciaPeriodoProfessor = getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(listProfessores, listCursoGradeMateria, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
+            var listInstituicaoCursoOcorrenciaPeriodoProfessor = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(listUsuario, listCursoGradeMateria, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
             context.InstituicaoCursoOcorrenciaPeriodoProfessores.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessor);
 
-            var listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = getBaseInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas(listInstituicaoCursoOcorrenciaPeriodoProfessor);
+            var listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas(listInstituicaoCursoOcorrenciaPeriodoProfessor);
             context.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
+
+            var listCategoriaProfissional = BaseContextInitializer.getBaseCategoriaProfissionais();
+            context.CategoriaProfissionais.AddRange(listCategoriaProfissional);
 
             context.SaveChanges();
         }
@@ -187,12 +191,13 @@ namespace Domain.Common {
             var carvalho = new Usuario() {
                 Username = "dev",
                 Password = "dev",
-                Email = "dev@ezschool.com"
+                Email = "dev@ezschool.com",
             };
             var carvalhoInfo = new UsuarioInfo() {
                 ID = carvalho.ID,
                 Nome = "Matheus Carvalho",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Perfis = String.Join(",", new string[] { UsuarioPerfil.ADMIN, UsuarioPerfil.PROFESSOR, UsuarioPerfil.ALUNO, UsuarioPerfil.COMPANHIA }),
                 CPF = "42187917835",
                 RG = "421920816"
             };
@@ -207,6 +212,7 @@ namespace Domain.Common {
                 ID = marcal.ID,
                 Nome = "Matheus Marçal",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Perfis = String.Join(",", new string[] { UsuarioPerfil.ADMIN, UsuarioPerfil.PROFESSOR, UsuarioPerfil.ALUNO, UsuarioPerfil.COMPANHIA }),
                 CPF = "42187917835",
                 RG = "421920816"
             };
@@ -221,6 +227,7 @@ namespace Domain.Common {
                 ID = thais.ID,
                 Nome = "Thais Araújo Santos",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Perfis = String.Join(",", new string[] { UsuarioPerfil.ADMIN, UsuarioPerfil.PROFESSOR, UsuarioPerfil.ALUNO, UsuarioPerfil.COMPANHIA }),
                 CPF = "52176819820",
                 RG = "510984128"
             };
@@ -235,6 +242,7 @@ namespace Domain.Common {
                 ID = barbara.ID,
                 Nome = "Ana Bárbara",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Perfis = String.Join(",", new string[] { UsuarioPerfil.ADMIN, UsuarioPerfil.PROFESSOR, UsuarioPerfil.ALUNO, UsuarioPerfil.COMPANHIA }),
                 CPF = "768309116406",
                 RG = "760942814"
             };
@@ -287,10 +295,10 @@ namespace Domain.Common {
             };
         }
 
-        public static InstituicaoCursoOcorrencia[] getBaseInstituicaoCursoOcorrencias(InstituicaoCurso[] instituicaoCursos, Professor[] professores) {
+        public static InstituicaoCursoOcorrencia[] getBaseInstituicaoCursoOcorrencias(InstituicaoCurso[] instituicaoCursos, Usuario[] professores) {
             return new InstituicaoCursoOcorrencia[]{
                 new InstituicaoCursoOcorrencia(){
-                    Coordenador = professores[0],
+                    Coordenador = professores[0].UsuarioInfo,
                     InstituicaoCurso = instituicaoCursos[0],
                     DataInicio = DateTime.Now,
                     DataExpiracao = DateTime.Now.AddDays(1800)
@@ -298,10 +306,10 @@ namespace Domain.Common {
             };
         }
 
-        public static InstituicaoCursoOcorrenciaAluno[] getBaseInstituicaoCursoOcorrenciaAlunos(Aluno[] alunos, InstituicaoCursoOcorrencia[] instituicaoCursoOcorrencias) {
+        public static InstituicaoCursoOcorrenciaAluno[] getBaseInstituicaoCursoOcorrenciaAlunos(Usuario[] alunos, InstituicaoCursoOcorrencia[] instituicaoCursoOcorrencias) {
             return new InstituicaoCursoOcorrenciaAluno[]{
                 new InstituicaoCursoOcorrenciaAluno(){
-                    Aluno = alunos[0],
+                    Aluno = alunos[0].UsuarioInfo,
                     DataInicio = DateTime.Now,
                     InstituicaoCursoOcorrencia = instituicaoCursoOcorrencias[0]
                 }
@@ -330,13 +338,13 @@ namespace Domain.Common {
             };
         }
 
-        public static InstituicaoCursoOcorrenciaPeriodoProfessor[] getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(Professor[] professores, CursoGradeMateria[] cursoGradeMaterias, InstituicaoCursoOcorrenciaPeriodo[] instituicaoCursoOcorrenciaPeriodos, InstituicaoCursoPeriodo[] instituicaoCursoPeriodos, InstituicaoCursoTurma[] instituicaoCursoTurmas) {
+        public static InstituicaoCursoOcorrenciaPeriodoProfessor[] getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(Usuario[] professores, CursoGradeMateria[] cursoGradeMaterias, InstituicaoCursoOcorrenciaPeriodo[] instituicaoCursoOcorrenciaPeriodos, InstituicaoCursoPeriodo[] instituicaoCursoPeriodos, InstituicaoCursoTurma[] instituicaoCursoTurmas) {
             return new InstituicaoCursoOcorrenciaPeriodoProfessor[]{
                 new InstituicaoCursoOcorrenciaPeriodoProfessor(){
                     InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
                     InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
                     InstituicaoCursoTurma = instituicaoCursoTurmas[0],
-                    Professor = professores[0],
+                    Professor = professores[0].UsuarioInfo,
                     CursoGradeMateria = cursoGradeMaterias[0],
                     DataInicio = DateTime.Now
                 }
@@ -436,6 +444,27 @@ namespace Domain.Common {
                     Qua=true,
                     Ter=true,
                     Seg=true
+                }
+            };
+        }
+
+        public static CategoriaProfissional[] getBaseCategoriaProfissionais() {
+            return new CategoriaProfissional[]{
+                new CategoriaProfissional(){
+                    Nome="Tecnologia da Informação",
+                    Descricao="Tecnologia da Informação"
+                },
+                new CategoriaProfissional(){
+                    Nome="Contabilidade",
+                    Descricao="Contabilidade"
+                },
+                new CategoriaProfissional(){
+                    Nome="Medicina",
+                    Descricao="Medicina"
+                },
+                new CategoriaProfissional(){
+                    Nome="Farmácia",
+                    Descricao="Farmácia"
                 }
             };
         }

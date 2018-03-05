@@ -1,8 +1,10 @@
 import { InstituicaoCursoTurmaModel } from './instituicao-curso-turma.model';
 import { InstituicaoCursoPeriodoModel } from './instituicao-curso-periodo.model';
 import { AlunoModel } from './aluno.model';
+import { BaseModel } from './base.model';
 
-export class InstituicaoCursoOcorrenciaAlunoModel {
-    id ?: string;
+export class InstituicaoCursoOcorrenciaAlunoModel extends BaseModel < number > {
+
     aluno: AlunoModel;
+
 }

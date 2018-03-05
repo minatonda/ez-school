@@ -21,7 +21,7 @@ export class PageInstituicaoCursoListaProps implements PageListaPropsInterface {
                     name: AppRouterPath.INSTITUICAO_CURSO_OCORRENCIA,
                     params: {
                         id: AppRouter.app.$route.params.id,
-                        idInstituicaoCurso: item.curso.id,
+                        idInstituicaoCurso: item.curso.id.toString(),
                         dataInicio: moment(item.dataInicio).format('DD-MM-YYYY')
                     }
                 }),
@@ -29,7 +29,8 @@ export class PageInstituicaoCursoListaProps implements PageListaPropsInterface {
                 (item) => ['fa', 'fa-edit'],
                 (item) => ['btn-primary']
             )
-        ], main: []
+        ],
+        main: []
     };
     routePathAdd = AppRouterPath.INSTITUICAO_CURSO_ADD;
     routePathUpdate = AppRouterPath.INSTITUICAO_CURSO_UPD;

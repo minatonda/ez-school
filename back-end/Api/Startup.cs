@@ -71,6 +71,7 @@ namespace Api {
             services.AddTransient<InstituicaoRepository, InstituicaoRepository>();
             services.AddTransient<InstituicaoCategoriaRepository, InstituicaoCategoriaRepository>();
             services.AddTransient<CategoriaProfissionalRepository, CategoriaProfissionalRepository>();
+            services.AddTransient<AreaInteresseRepository, AreaInteresseRepository>();
 
             services.AddJwtOptions(Configuration, SigningKey, Environment);
         }

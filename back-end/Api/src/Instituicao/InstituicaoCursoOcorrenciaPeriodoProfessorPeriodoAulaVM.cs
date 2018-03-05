@@ -3,7 +3,7 @@ using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
 
-    public class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM : BaseVM {
+    public class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM : BaseVM<long> {
 
         public InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaVM() {
 

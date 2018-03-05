@@ -19,9 +19,8 @@ namespace Domain.CategoriaProfissionalDomain  {
         public CategoriaProfissionalRepository() {
         }
 
-        public CategoriaProfissional Add(CategoriaProfissional categoriaProfissional) {
+        public void Add(CategoriaProfissional categoriaProfissional) {
             this.db.CategoriaProfissionais.Add(categoriaProfissional);
-            return categoriaProfissional;
         }
 
         public void AddHistoryCategoriaProfissional(long id) {
@@ -31,14 +30,13 @@ namespace Domain.CategoriaProfissionalDomain  {
             this.Add(history);
         }
 
-        public CategoriaProfissional Update(CategoriaProfissional categoriaProfissional) {
+        public void Update(CategoriaProfissional categoriaProfissional) {
             var model = this.db.CategoriaProfissionais.Find(categoriaProfissional.ID);
 
             model.Nome = categoriaProfissional.Nome;
             model.Descricao = categoriaProfissional.Descricao;
 
             this.db.CategoriaProfissionais.Update(model);
-            return model;
         }
         public void Disable(long ID) {
             var model = this.db.CategoriaProfissionais.Find(ID);

@@ -1,14 +1,6 @@
-import { CategoriaProfissionalModel } from './categoria-profissional.model';
-import { UsuarioInfoModel } from './usuario-info.model';
+import { BaseModel } from './base.model';
 
-export class AlunoModel {
+export class AlunoModel extends BaseModel < string > {
 
-    constructor() {
-        this.categoriaProfissionais = new Array<CategoriaProfissionalModel>();
-        this.usuarioInfo = new UsuarioInfoModel();
-    }
 
-    id?: string;
-    usuarioInfo: UsuarioInfoModel;
-    categoriaProfissionais: Array<CategoriaProfissionalModel>;
 }

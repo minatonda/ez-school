@@ -20,7 +20,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public addInstituicaoCurso = async (id: string, model: InstituicaoCursoModel) => {
+    public addInstituicaoCurso = async (id: number | string, model: InstituicaoCursoModel) => {
         try {
             let result = await this.put(`/api/instituicao/${id}/instituicao-curso/add`, model) as InstituicaoCursoModel;
             return result;
@@ -30,7 +30,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public addInstituicaoCursoOcorrencia = async (id: string, idInstituicaoCurso: string, model: InstituicaoCursoOcorrenciaModel) => {
+    public addInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string, model: InstituicaoCursoOcorrenciaModel) => {
         try {
             let result = await this.put(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia/add`, model) as InstituicaoCursoOcorrenciaModel;
             return result;
@@ -50,7 +50,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public updateInstituicaoCurso = async (id: string, model: InstituicaoCursoModel) => {
+    public updateInstituicaoCurso = async (id: number | string, model: InstituicaoCursoModel) => {
         try {
             let result = await this.post(`/api/instituicao/${id}/instituicao-curso/update`, model) as InstituicaoCursoModel;
             return result;
@@ -60,7 +60,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public updateInstituicaoCursoOcorrencia = async (id: string, idInstituicaoCurso: string, model: InstituicaoCursoOcorrenciaModel) => {
+    public updateInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string, model: InstituicaoCursoOcorrenciaModel) => {
         try {
             let result = await this.post(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia/update`, model) as InstituicaoCursoModel;
             return result;
@@ -70,7 +70,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detail = async (id: string) => {
+    public detail = async (id: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}`) as InstituicaoModel;
             return result;
@@ -80,7 +80,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detailInstituicaoCurso = async (id: string, idInstituicaoCurso: string) => {
+    public detailInstituicaoCurso = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}`) as InstituicaoCursoModel;
             return result;
@@ -90,7 +90,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detailInstituicaoCursoOcorrencia = async (id: string, idInstituicaoCurso: string, idInstituicaoCursoOcorrencia: string) => {
+    public detailInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string, idInstituicaoCursoOcorrencia: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia/${idInstituicaoCursoOcorrencia}`) as InstituicaoCursoOcorrenciaModel;
             return result;
@@ -110,7 +110,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allInstituicaoCurso = async (id: string) => {
+    public allInstituicaoCurso = async (id: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso`) as Array < InstituicaoCursoModel > ;
             return result;
@@ -120,7 +120,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allInstituicaoCursoPeriodo = async (id: string, idInstituicaoCurso: string) => {
+    public allInstituicaoCursoPeriodo = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-periodo`) as Array < InstituicaoCursoPeriodoModel > ;
             return result;
@@ -130,7 +130,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allInstituicaoCursoTurma = async (id: string, idInstituicaoCurso: string) => {
+    public allInstituicaoCursoTurma = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-turma`) as Array < InstituicaoCursoTurmaModel > ;
             return result;
@@ -140,7 +140,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allCursoGradeMaterias = async (id: string, idInstituicaoCurso: string) => {
+    public allCursoGradeMaterias = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/curso-grade-materia`) as Array < CursoGradeMateriaModel > ;
             return result;
@@ -150,7 +150,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allInstituicaoCursoOcorrencia = async (id: string, idInstituicaoCurso: string) => {
+    public allInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia`) as Array < InstituicaoCursoOcorrenciaModel > ;
             return result;
@@ -160,7 +160,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disable = async (id: string) => {
+    public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/instituicao/disable', { params: { id: id } });
             return result;
@@ -170,7 +170,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disableInstituicaoCurso = async (id: string, idInstituicaoCurso: string) => {
+    public disableInstituicaoCurso = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.delete(`/api/instituicao/${id}/instituicao-curso/disable`, { params: { idInstituicaoCurso: idInstituicaoCurso } });
             return result;
@@ -180,7 +180,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disableInstituicaoCursoOcorrencia = async (id: string, idInstituicaoCurso: string, idInstituicaoCursoOcorrencia: string) => {
+    public disableInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string, idInstituicaoCursoOcorrencia: number | string) => {
         try {
             let result = await this.delete(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia/disable`, { params: { idInstituicaoCursoOcorrencia: idInstituicaoCursoOcorrencia } });
             return result;

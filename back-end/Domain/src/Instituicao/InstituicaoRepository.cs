@@ -21,9 +21,8 @@ namespace Domain.InstituicaoDomain {
             this.usuarioRepository = usuarioRepository;
         }
 
-        public Instituicao Add(Instituicao instituicao) {
+        public void Add(Instituicao instituicao) {
             this.db.Instituicoes.Add(instituicao);
-            return instituicao;
         }
 
         public void AddInstituicaoCurso(InstituicaoCurso model) {
@@ -45,12 +44,12 @@ namespace Domain.InstituicaoDomain {
 
         public void AddInstituicaoCursoOcorrencia(InstituicaoCursoOcorrencia instituicaoCursoOcorrencia) {
             instituicaoCursoOcorrencia.InstituicaoCurso = this.db.InstituicaoCursos.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
-            instituicaoCursoOcorrencia.Coordenador = this.db.Professores.Find(instituicaoCursoOcorrencia.Coordenador.ID);
+            instituicaoCursoOcorrencia.Coordenador = this.db.UsuariosInfo.Find(instituicaoCursoOcorrencia.Coordenador.ID);
             this.db.InstituicaoCursoOcorrencias.Add(instituicaoCursoOcorrencia);
         }
 
         public void AddInstituicaoCursoOcorrenciaAluno(InstituicaoCursoOcorrenciaAluno instituicaoCursoOcorrenciaAluno) {
-            instituicaoCursoOcorrenciaAluno.Aluno = this.db.Alunos.Find(instituicaoCursoOcorrenciaAluno.Aluno.ID);
+            instituicaoCursoOcorrenciaAluno.Aluno = this.db.UsuariosInfo.Find(instituicaoCursoOcorrenciaAluno.Aluno.ID);
             instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia = this.db.InstituicaoCursoOcorrencias.Find(instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia.ID);
             this.db.InstituicaoCursoOcorrenciaAlunos.Add(instituicaoCursoOcorrenciaAluno);
         }
@@ -80,7 +79,7 @@ namespace Domain.InstituicaoDomain {
             instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo = this.db.InstituicaoCursoOcorrenciaPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo.ID);
             instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo = this.db.InstituicaoCursoPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
             instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma = this.db.InstituicaoCursoTurmas.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
-            instituicaoCursoOcorrenciaPeriodoProfessor.Professor = this.db.Professores.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.Professor = this.db.UsuariosInfo.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
 
             this.db.InstituicaoCursoOcorrenciaPeriodoProfessores.Add(instituicaoCursoOcorrenciaPeriodoProfessor);
         }
@@ -111,7 +110,7 @@ namespace Domain.InstituicaoDomain {
             this.AddInstituicaoCursoOcorrencia(history);
         }
 
-        public Instituicao Update(Instituicao instituicao) {
+        public void Update(Instituicao instituicao) {
             //this.AddHistoryInstituicao(instituicao.ID);
 
             var model = this.db.Instituicoes.Find(instituicao.ID);
@@ -120,7 +119,6 @@ namespace Domain.InstituicaoDomain {
             model.CNPJ = instituicao.CNPJ;
 
             this.db.Instituicoes.Update(model);
-            return model;
         }
 
         public void UpdateInstituicaoCurso(InstituicaoCurso instituicaoCurso) {
@@ -140,7 +138,7 @@ namespace Domain.InstituicaoDomain {
             model.InstituicaoCurso = this.db.InstituicaoCursos.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
             model.DataInicio = instituicaoCursoOcorrencia.DataInicio;
             model.DataExpiracao = instituicaoCursoOcorrencia.DataExpiracao;
-            model.Coordenador = this.db.Professores.Find(instituicaoCursoOcorrencia.Coordenador.ID);
+            model.Coordenador = this.db.UsuariosInfo.Find(instituicaoCursoOcorrencia.Coordenador.ID);
 
             this.db.InstituicaoCursoOcorrencias.Update(model);
         }
@@ -248,7 +246,7 @@ namespace Domain.InstituicaoDomain {
             return this.db.InstituicaoCursoOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
-            .Include(i => i.Coordenador).ThenInclude(i => i.UsuarioInfo)
+            .Include(i => i.Coordenador)
             .SingleOrDefault(x => x.ID == id);
         }
 
@@ -334,7 +332,6 @@ namespace Domain.InstituicaoDomain {
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrencia)
             .Include(i => i.Aluno)
-            .ThenInclude(i => i.UsuarioInfo)
             .Where(x => x.InstituicaoCursoOcorrencia.ID == id && x.Ativo.HasValue == !ativo)
             .ToList();
         }
@@ -362,7 +359,6 @@ namespace Domain.InstituicaoDomain {
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
-            .ThenInclude(i => i.UsuarioInfo)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
             .Include(i => i.InstituicaoCursoPeriodo)
             .Include(i => i.InstituicaoCursoTurma)
@@ -374,7 +370,6 @@ namespace Domain.InstituicaoDomain {
             return this.db.InstituicaoCursoOcorrenciaPeriodoProfessores
             .AsNoTracking()
             .Include(i => i.Professor)
-            .ThenInclude(i => i.UsuarioInfo)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
             .Include(i => i.InstituicaoCursoPeriodo)
             .Include(i => i.InstituicaoCursoTurma)

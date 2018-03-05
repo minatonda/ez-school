@@ -3,13 +3,13 @@ using Api.UsuarioApi;
 
 namespace Api.InstituicaoApi {
 
-    public class InstituicaoCursoOcorrenciaAlunoVM : BaseVM {
-    
+    public class InstituicaoCursoOcorrenciaAlunoVM : BaseVM<long> {
+
         public InstituicaoCursoOcorrenciaAlunoVM() {
 
         }
 
-        public AlunoVM Aluno { get; set; }
+        public UsuarioInfoVM Aluno { get; set; }
 
     }
 }

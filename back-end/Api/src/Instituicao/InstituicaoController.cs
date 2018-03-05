@@ -13,7 +13,7 @@ namespace Api.InstituicaoApi {
 
         private InstituicaoService _instituicaoService;
 
-        public InstituicaoController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
+        public InstituicaoController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
             this._instituicaoService = new InstituicaoService(instituicaoRepository, cursoRepository);
         }
 

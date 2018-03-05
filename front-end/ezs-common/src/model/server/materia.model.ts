@@ -1,13 +1,15 @@
 import { MateriaRelacionamentoModel } from './materia-relacionamento.model';
+import { BaseModel } from './base.model';
 
-export class MateriaModel {
+export class MateriaModel  extends BaseModel < number > {
 
     constructor() {
+        super();
         this.materiasRelacionadas = new Array<MateriaRelacionamentoModel>();
     }
 
-    id?: string;
     nome: string;
     descricao: string;
     materiasRelacionadas: Array<MateriaRelacionamentoModel>;
+
 }

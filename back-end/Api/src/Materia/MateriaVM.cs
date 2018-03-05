@@ -3,7 +3,7 @@ using Api.Common.Base;
 
 namespace Api.MateriaApi {
     
-    public class MateriaVM : BaseVM {
+    public class MateriaVM : BaseVM<long> {
 
         public MateriaVM() {
             this.MateriasRelacionadas = new List<MateriaRelacionamentoVM>();

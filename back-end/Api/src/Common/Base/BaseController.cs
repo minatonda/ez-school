@@ -16,8 +16,8 @@ namespace Api.Common.Base {
 
         private UsuarioService usuarioService;
 
-        public BaseController(UsuarioRepository usuarioRepository) {
-            this.usuarioService = new UsuarioService(usuarioRepository);
+        public BaseController(UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) {
+            this.usuarioService = new UsuarioService(usuarioRepository, areaInteresseRepository);
         }
 
         public UsuarioInfoVM getLogged() {

@@ -11,7 +11,7 @@ namespace Api.CursoApi {
 
         private CursoService _cursoService;
 
-        public CursoController(CursoRepository cursoRepository, UsuarioRepository usuarioRepository) : base(usuarioRepository) {
+        public CursoController(CursoRepository cursoRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
             this._cursoService = new CursoService(cursoRepository);
         }
 
@@ -47,7 +47,7 @@ namespace Api.CursoApi {
 
         [HttpGet("{id}/grade/{idCursoGrade}/curso-grade-materia")]
         public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idCursoGrade) {
-            return this._cursoService.Detail(id).Grades.Find(x => x.ID == idCursoGrade.ToString()).Materias;
+            return this._cursoService.Detail(id).Grades.Find(x => x.ID == idCursoGrade).Materias;
         }
 
     }

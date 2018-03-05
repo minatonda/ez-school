@@ -16,9 +16,8 @@ namespace Domain.InstituicaoDomain {
             this.db = db;
         }
 
-        public InstituicaoCategoria Add(InstituicaoCategoria instituicaoCategoria) {
+        public void Add(InstituicaoCategoria instituicaoCategoria) {
             this.db.InstituicaoCategorias.Add(instituicaoCategoria);
-            return instituicaoCategoria;
         }
 
         public void AddHistoryInstituicaoCategoria(long id) {
@@ -28,14 +27,13 @@ namespace Domain.InstituicaoDomain {
             this.Add(history);
         }
 
-        public InstituicaoCategoria Update(InstituicaoCategoria instituicaoCategoria) {
+        public void Update(InstituicaoCategoria instituicaoCategoria) {
             var model = this.db.InstituicaoCategorias.Find(instituicaoCategoria.ID);
 
             model.Nome = instituicaoCategoria.Nome;
             model.Descricao = instituicaoCategoria.Descricao;
 
             this.db.InstituicaoCategorias.Update(model);
-            return model;
         }
 
         public void Disable(long ID) {

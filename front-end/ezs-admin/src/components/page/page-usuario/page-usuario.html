@@ -1,28 +1,68 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12">
-                <legend>{{alias}}</legend>
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>{{alias}}</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Username</label>
+                                <input class="form-control" type="text" placeholder="Username" v-model="model.username">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Password</label>
+                                <input class="form-control" type="password" placeholder="Password" v-model="model.password">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" type="text" placeholder="Nome" v-model="model.usuarioInfo.nome">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Data de Nascimento</label>
+                                <date-catcher v-model="model.usuarioInfo.dataNascimento" placeholder="Data de Nascimento" v-bind:model-as-date="true"></date-catcher>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">RG</label>
+                                <input class="form-control" type="text" placeholder="RG" v-model="model.usuarioInfo.rg">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">CPF</label>
+                                <input class="form-control" type="text" placeholder="CPF" v-model="model.usuarioInfo.cpf">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Username" v-model="model.username">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="password" placeholder="Password" v-model="model.password">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="Nome" v-model="model.usuarioInfo.nome">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <date-catcher v-model="model.usuarioInfo.dataNascimento" placeholder="Data de Nascimento" v-bind:model-as-date="true"></date-catcher>
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="RG" v-model="model.usuarioInfo.rg">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-                <input class="form-control" type="text" placeholder="CPF" v-model="model.usuarioInfo.cpf">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Areas de Interesse</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3">
+                                <selector v-bind:itens="ui.categoriaProfissionais" placeholder="Area de interesse" label="label" v-model="ui.areaInteresse.categoriaProfissional"></selector>
+                            </div>
+                            <div class="col-12 col-md-2 form-group text-left">
+                                <button class="btn btn-primary" v-on:click="addCategoriaProfissional(ui.areaInteresse)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <card-table v-bind:columns="getColumns()" v-bind:itens="getItens()" v-bind:menu="getMenu()"></card-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Api.Common.Base;
 
 namespace Api.InstituicaoApi {
-    public class InstituicaoCursoOcorrenciaPeriodoVM : BaseVM {
+    public class InstituicaoCursoOcorrenciaPeriodoVM : BaseVM<long> {
 
         public InstituicaoCursoOcorrenciaPeriodoVM() {
             this.InstituicaoCursoOcorrenciaPeriodoProfessores = new List<InstituicaoCursoOcorrenciaPeriodoProfessorVM>();

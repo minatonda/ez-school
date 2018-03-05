@@ -1,6 +1,8 @@
-export class InstituicaoCategoriaModel {
+import { BaseModel } from './base.model';
 
-    id?: string;
+export class InstituicaoCategoriaModel  extends BaseModel < number > {
+
     nome: string;
     descricao: string;
+
 }

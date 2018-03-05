@@ -25,7 +25,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public disable = async (id: string) => {
+    public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/categoria-profissional/disable', { params: { id: id } });
             return result;
@@ -35,7 +35,7 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detail = async (id: string) => {
+    public detail = async (id:  number | string) => {
         try {
             let result = await this.get(`/api/categoria-profissional/${id}`) as CategoriaProfissionalModel;
             return result;

@@ -8,9 +8,7 @@ namespace Api.InstituicaoApi {
 
         public static InstituicaoCursoVM ToViewModel(InstituicaoCurso model, bool deep) {
             var vm = new InstituicaoCursoVM();
-            vm.ID = model.ID.ToString();
-
-            vm.Label = model.Curso.Nome;
+            vm.ID = model.ID;
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
 
@@ -21,14 +19,14 @@ namespace Api.InstituicaoApi {
                 vm.CursoGrade = CursoGradeAdapter.ToViewModel(model.CursoGrade, false);
             }
 
+            vm.Label = model.Curso.Nome;
+
             return vm;
         }
 
         public static InstituicaoCurso ToModel(InstituicaoCursoVM vm, bool deep) {
             var model = new InstituicaoCurso();
-            if (vm.ID != null) {
-                model.ID = long.Parse(vm.ID);
-            }
+            model.ID = vm.ID;
             model.DataInicio = vm.DataInicio;
             model.DataExpiracao = vm.DataExpiracao;
 

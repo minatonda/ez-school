@@ -11,47 +11,28 @@ namespace Api.UsuarioApi {
 
         private UsuarioService usuarioService;
 
-        public UsuarioController(UsuarioRepository usuarioRepository) : base(usuarioRepository) {
-            this.usuarioService = new UsuarioService(usuarioRepository);
-        }
-
-        [HttpGet]
-        public List<UsuarioVM> All() {
-            return this.usuarioService.All();
-        }
-
-        [HttpGet("{id}/{term?}")]
-        public Object Detail(string id, [FromQuery]string termo) {
-            var x = this.getLogged();
-            switch (id.ToLower()) {
-                case ("professor"): {
-                        if (termo != null) {
-                            return this.usuarioService.GetProfessoresByTermo(termo);
-                        } else {
-                            return new List<Object>();
-                        }
-                    }
-                case ("aluno"): {
-                        if (termo != null) {
-                            return this.usuarioService.GetAlunosByTermo(termo);
-                        } else {
-                            return new List<Object>();
-                        }
-                    }
-                default: {
-                        return this.usuarioService.Detail(id);
-                    }
-            }
+        public UsuarioController(UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
+            this.usuarioService = new UsuarioService(usuarioRepository, areaInteresseRepository);
         }
 
         [HttpPut("add")]
-        public UsuarioVM Add([FromBody] UsuarioVM viewModel) {
-            return this.usuarioService.Add(viewModel);
+        public void Add([FromBody] UsuarioVM viewModel) {
+            this.usuarioService.Add(viewModel);
         }
 
         [HttpPost("update")]
-        public UsuarioVM Update([FromBody] UsuarioVM viewModel) {
-            return this.usuarioService.Update(viewModel);
+        public void Update([FromBody] UsuarioVM viewModel) {
+            this.usuarioService.Update(viewModel);
+        }
+
+        [HttpPost("{id}/aluno/update")]
+        public void UpdateAluno([FromBody] AlunoVM viewModel) {
+            this.usuarioService.UpdateAluno(viewModel);
+        }
+
+        [HttpPost("{id}/professor/update")]
+        public void UpdateProfessor([FromBody] ProfessorVM viewModel) {
+            this.usuarioService.UpdateProfessor(viewModel);
         }
 
         [HttpDelete("disable")]
@@ -59,14 +40,15 @@ namespace Api.UsuarioApi {
             this.usuarioService.Disable(id);
         }
 
+        [HttpGet("{id}")]
+        public UsuarioVM Detail(string id, [FromQuery]string termo) {
+            var x = this.getLogged();
+            return this.usuarioService.Detail(id);
+        }
+
         [HttpGet("{id}/aluno")]
         public AlunoVM DetailAluno(string id) {
             return this.usuarioService.DetailAluno(id);
-        }
-
-        [HttpPost("{id}/aluno/update")]
-        public AlunoVM UpdateAluno([FromBody] AlunoVM viewModel) {
-            return this.usuarioService.UpdateAluno(viewModel);
         }
 
         [HttpGet("{id}/professor")]
@@ -74,10 +56,11 @@ namespace Api.UsuarioApi {
             return this.usuarioService.DetailProfessor(id);
         }
 
-        [HttpPost("{id}/professor/update")]
-        public ProfessorVM UpdateProfessor([FromBody] ProfessorVM viewModel) {
-            return this.usuarioService.UpdateProfessor(viewModel);
+        [HttpGet]
+        public List<UsuarioVM> All() {
+            return this.usuarioService.All();
         }
+
 
     }
 }

@@ -1,10 +1,14 @@
 import { CursoGradeMateriaModel } from './curso-grade-materia.model';
+import { BaseModel } from './base.model';
 
-export class CursoGradeModel {
+export class CursoGradeModel extends BaseModel < number > {
+
     constructor() {
-        this.materias = new Array<CursoGradeMateriaModel>();
+        super();
+        this.materias = new Array < CursoGradeMateriaModel > ();
     }
-    id?: string;
+    
     descricao: string;
-    materias: Array<CursoGradeMateriaModel>;
+    materias: Array < CursoGradeMateriaModel > ;
+
 }
