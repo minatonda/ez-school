@@ -3,6 +3,7 @@ import { UsuarioModel } from './../../model/server/usuario.model';
 import { ProfessorModel } from './../../model/server/professor.model';
 import { AlunoModel } from './../../model/server/aluno.model';
 import { AutenticacaoModel } from './../../model/server/autenticacao.model';
+import { UsuarioInfoModel } from '../../model/server/usuario-info.model';
 
 export class Factory extends BaseFactory {
 
@@ -58,26 +59,6 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public detailAluno = async (id: number | string) => {
-        try {
-            let result = await this.get(`/api/usuario/${id}/aluno`) as AlunoModel;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-    public detailProfessor = async (id: number | string) => {
-        try {
-            let result = await this.get(`/api/usuario/${id}/professor`) as ProfessorModel;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
     public all = async () => {
         try {
             let result = await this.get('/api/usuario') as Array < UsuarioModel > ;
@@ -88,39 +69,9 @@ export class Factory extends BaseFactory {
         }
     }
 
-    public allAluno = async (termo: string) => {
+    public me = async () => {
         try {
-            let result = await this.get(`/api/usuario/aluno`, { params: { termo: termo } }) as Array < AlunoModel > ;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-    public allProfessor = async (termo: string) => {
-        try {
-            let result = await this.get(`/api/usuario/professor`, { params: { termo: termo } }) as Array < AlunoModel > ;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-    public updateAluno = async (id: number | string, model: AlunoModel) => {
-        try {
-            let result = await this.post(`/api/usuario/${id}/aluno/update`, model) as AlunoModel;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-    public updateProfessor = async (id: number | string, model: ProfessorModel) => {
-        try {
-            let result = await this.post(`/api/usuario/${id}/professor/update`, model) as ProfessorModel;
+            let result = await this.get('/api/business/usuario/me') as UsuarioInfoModel;
             return result;
         }
         catch (error) {

@@ -1,4 +1,3 @@
-
 import moment, { Duration, Moment } from 'moment';
 import { HumanizeDefinitionsType, TimeUtil } from './../time/time.util';
 
@@ -6,7 +5,8 @@ import { HumanizeDefinitionsType, TimeUtil } from './../time/time.util';
 export class Util {
 
     public getDateFormatted = (dateTimeString: string, outFormat: string, inFormat?: string) => {
-        return moment(dateTimeString, inFormat || 'YYYY-MM-DD HH:mm:ss').format(outFormat);
+        let momentDate = moment(dateTimeString, inFormat);
+        return momentDate.isValid() ? momentDate.format(outFormat) : '';
     }
 
     public getDuration = (start: any, end: any) => {

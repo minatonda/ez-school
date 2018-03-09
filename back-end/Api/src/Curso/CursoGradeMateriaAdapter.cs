@@ -9,7 +9,9 @@ namespace Api.CursoApi {
             var vm = new CursoGradeMateriaVM();
             vm.ID = model.ID;
             vm.Descricao = model.Descricao;
-            vm.Materia = MateriaAdapter.ToViewModel(model.Materia, true);
+            if (model.Materia != null) {
+                vm.Materia = MateriaAdapter.ToViewModel(model.Materia, false);
+            }
 
             vm.Label = model.Descricao;
 
@@ -20,7 +22,10 @@ namespace Api.CursoApi {
             var model = new CursoGradeMateria();
             model.ID = vm.ID;
             model.Descricao = vm.Descricao;
-            model.Materia = MateriaAdapter.ToModel(vm.Materia, true);
+            if (vm.Materia != null) {
+                model.Materia = MateriaAdapter.ToModel(vm.Materia, false);
+            }
+            
             return model;
         }
 

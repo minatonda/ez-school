@@ -7,6 +7,7 @@ import { ApplicationService } from './module/service/application.service';
 import { AppBroadcastEventBus, AppBroadcastEvent } from './app.broadcast-event-bus';
 import { AppRouterPath } from './app.router.path';
 import { I18N_LANG } from '../../ezs-common/src/constant/i18n-template-messages.contant';
+import { Factory } from './module/constant/factory.constant';
 
 @Component({
     router: AppRouter,
@@ -52,6 +53,8 @@ export class AppComponent extends Vue {
 
         AppBroadcastEventBus.$on(AppBroadcastEvent.AUTENTICADO, async () => {
             try {
+                let me = await Factory.UsuarioFactory.me();
+                ApplicationService.setUsuarioInfo(me);
                 AppRouter.push(AppRouterPath.ROOT);
             }
             catch (e) {
@@ -60,7 +63,7 @@ export class AppComponent extends Vue {
         });
 
         AppBroadcastEventBus.$on(AppBroadcastEvent.DESAUTENTICADO, () => {
-            AppRouter.push(AppRouterPath.AUTENTICACAO);
+            ApplicationService.setUsuarioInfo(null);
         });
     }
 
