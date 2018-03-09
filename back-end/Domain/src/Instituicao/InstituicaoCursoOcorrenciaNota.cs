@@ -9,13 +9,12 @@ namespace Domain.InstituicaoDomain {
         }
 
         [Key]
-        public string ID { get; set; }
-        public string Descricao { get; set; }
-        public int Valor { get; set; }
+        public long ID { get; set; }
+        public string IDTag { get; set; }
+        public double Valor { get; set; }
         public DateTime DataLancamento { get; set; }
-        public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
+        public InstituicaoCursoOcorrenciaPeriodoAluno InstituicaoCursoOcorrenciaPeriodoAluno { get; set; }
         public InstituicaoCursoOcorrenciaPeriodoProfessor InstituicaoCursoOcorrenciaPeriodoProfessor { get; set; }
-
         public DateTime? Ativo { get; set; } = null;
 
     }

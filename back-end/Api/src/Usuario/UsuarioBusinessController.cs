@@ -16,7 +16,7 @@ namespace Api.UsuarioApi {
         }
 
 
-        [HttpGet("/me")]
+        [HttpGet("me")]
         public UsuarioInfoVM Me() {
             return this.getLogged();
         }

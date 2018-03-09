@@ -52,6 +52,7 @@ export class AppComponent extends Vue {
 
         AppBroadcastEventBus.$on(AppBroadcastEvent.AUTENTICADO, async () => {
             try {
+                let usuarioInfo
                 AppRouter.push(AppRouterPath.ROOT);
             }
             catch (e) {

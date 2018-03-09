@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Api.CursoApi;
+using Domain.CursoDomain;
 using Domain.InstituicaoDomain;
 
 namespace Api.InstituicaoApi {
@@ -11,7 +13,7 @@ namespace Api.InstituicaoApi {
             vm.ID = model.ID;
             vm.DataInicio = model.DataInicio;
             vm.DataExpiracao = model.DataExpiracao;
-            
+
             return vm;
         }
 
@@ -22,14 +24,6 @@ namespace Api.InstituicaoApi {
             model.DataExpiracao = vm.DataExpiracao;
 
             return model;
-        }
-
-        public static List<InstituicaoCursoOcorrenciaPeriodoAluno> InstituicaoCursoOcorrenciaPeriodoAlunoFrom(InstituicaoCursoOcorrenciaPeriodoVM vm) {
-            return vm.InstituicaoCursoOcorrenciaPeriodoAlunos.Select(x => InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToModel(x, true)).ToList();
-        }
-
-        public static Dictionary<InstituicaoCursoOcorrenciaPeriodoProfessor, List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula>> InstituicaoCursoOcorrenciaPeriodoProfessorFrom(InstituicaoCursoOcorrenciaPeriodoVM vm) {
-            return vm.InstituicaoCursoOcorrenciaPeriodoProfessores.ToDictionary(x => InstituicaoCursoOcorrenciaPeriodoProfessorAdapter.ToModel(x, true), x => x.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.Select(y => InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaAdapter.ToModel(y, x, true)).ToList());
         }
 
     }

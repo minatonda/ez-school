@@ -5,7 +5,7 @@ using Domain.CursoDomain;
 using Domain.UsuarioDomain;
 
 namespace Domain.InstituicaoDomain {
-    
+
     public class InstituicaoCursoOcorrenciaPeriodoProfessor : IBaseModel {
 
         public InstituicaoCursoOcorrenciaPeriodoProfessor() {
@@ -20,6 +20,7 @@ namespace Domain.InstituicaoDomain {
         public InstituicaoCursoTurma InstituicaoCursoTurma { get; set; }
         public UsuarioInfo Professor { get; set; }
         public bool Confirmado { get; set; }
+        public string FormulaNotaFinal { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
         public DateTime? Ativo { get; set; } = null;

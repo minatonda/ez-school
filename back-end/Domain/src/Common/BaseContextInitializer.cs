@@ -152,7 +152,7 @@ namespace Domain.Common {
                     new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[2],
-                                Descricao = materias[2].Descricao
+                                Descricao = materias[2].Nome
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
@@ -177,12 +177,12 @@ namespace Domain.Common {
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[5],
-                                Descricao = materias[2].Descricao
+                                Descricao = materias[2].Nome
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[1],
                                 Materia = materias[2],
-                                Descricao = materias[2].Descricao
+                                Descricao = materias[2].Nome
                         },
                 };
         }
@@ -346,6 +346,22 @@ namespace Domain.Common {
                     InstituicaoCursoTurma = instituicaoCursoTurmas[0],
                     Professor = professores[0].UsuarioInfo,
                     CursoGradeMateria = cursoGradeMaterias[0],
+                    DataInicio = DateTime.Now
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessor(){
+                    InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
+                    InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
+                    Professor = professores[0].UsuarioInfo,
+                    CursoGradeMateria = cursoGradeMaterias[1],
+                    DataInicio = DateTime.Now
+                },
+                new InstituicaoCursoOcorrenciaPeriodoProfessor(){
+                    InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
+                    InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
+                    Professor = professores[1].UsuarioInfo,
+                    CursoGradeMateria = cursoGradeMaterias[2],
                     DataInicio = DateTime.Now
                 }
             };

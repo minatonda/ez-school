@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row form-group">
+            <div class="col-12">
+                <div class="card form-group">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Tabela de Notas</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Atividade</label>
+                                <input class="form-control" placeholder="Atividade" v-model="ui.idTag">
+                            </div>
+                            <div class="col-12 col-md-2 form-group">
+                                <label class="control-label invisible">Ocupar</label>
+                                <button class="btn btn-primary btn-block" v-on:click="addIdTag(ui.idTag)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th v-for="idTag in ui.idTags">{{idTag}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="instituicaoCursoOcorrenciaPeriodoAluno in ui.alunos">
+                                            <td v-bind:data-column-name="instituicaoCursoOcorrenciaPeriodoAluno.aluno.nome" style="vertical-align:middle;">
+                                                {{instituicaoCursoOcorrenciaPeriodoAluno.aluno.nome}}
+                                            </td>
+                                            <td v-for="idTag in ui.idTags">
+                                                <input class="form-control" v-model="getInstituicaoCursoOcorrenciaNotaByInstituicaoCursoOcorrenciaPeriodoAlunoAndIdTag(instituicaoCursoOcorrenciaPeriodoAluno,idTag).valor">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card form-group">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Formula da Nota Final</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('(')"><b>(</b></button>
+                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal(')')"><b>)</b></button>
+                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('+')"><b>+</b></button>
+                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('-')"><b>-</b></button>
+                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('*')"><b>*</b></button>
+                                <button class="btn btn-float btn-primary mr-4" type="button" v-on:click="incrementFormulaNotaFinal('/')"><b>/</b></button>
+                                <button class="btn btn-secondary mr-4">
+                                        <input type="number" class="form-control d-inline-block" v-model="ui.number" style="width:70px;">
+                                        <button class="btn btn-float btn-primary btn-sm" type="button" v-on:click="incrementFormulaNotaFinal(ui.number)"> <i class="fa fa-hashtag"></i></button>
+                                </button>
+                                <button class="btn btn-float btn-primary mr-1 btn-sm" type="button" v-for="idTag in ui.idTags" v-on:click="incrementFormulaNotaFinal(idTag)"><b>{{idTag}}</b></button>
+                                <button class="btn btn-float btn-primary ml-3 btn-sm" type="button" v-on:click="decrementFormulaNotaFinal()"><i class="fa fa-undo"></i></button>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <input class="form-control" v-bind:value="getFormulaNotaFinalAsText()" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" v-on:click="doSaveNotas(ui.instituicaoCursoOcorrenciaNotas,ui.formulaNotaFinal)">
+                    <span>Salvar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

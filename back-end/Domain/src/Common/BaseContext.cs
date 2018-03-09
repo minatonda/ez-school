@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Domain.Common {
 
     public class BaseContext : DbContext {
-        
+
         public BaseContext(DbContextOptions<BaseContext> options) : base(options) {
 
         }
@@ -30,12 +30,12 @@ namespace Domain.Common {
         public DbSet<InstituicaoCurso> InstituicaoCursos { get; set; }
         public DbSet<InstituicaoCategoria> InstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoOcorrencia> InstituicaoCursoOcorrencias { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaNota> InstituicaoCursoOcorrenciaNotas { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodo> InstituicaoCursoOcorrenciaPeriodos { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaAluno> InstituicaoCursoOcorrenciaAlunos { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessor> InstituicaoCursoOcorrenciaPeriodoProfessores { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodoAluno> InstituicaoCursoOcorrenciaPeriodoAlunos { get; set; }
         public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas { get; set; }
-
         public DbSet<InstituicaoInstituicaoCategoria> InstituicaoInstituicaoCategorias { get; set; }
         public DbSet<InstituicaoCursoPeriodo> InstituicaoCursoPeriodos { get; set; }
         public DbSet<CategoriaProfissional> CategoriaProfissionais { get; set; }

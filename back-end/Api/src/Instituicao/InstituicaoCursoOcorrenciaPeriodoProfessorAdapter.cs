@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Api.CursoApi;
 using Api.UsuarioApi;
 using Domain.AreaInteresseDomain;
+using Domain.CursoDomain;
 using Domain.InstituicaoDomain;
+using Domain.UsuarioDomain;
 
 namespace Api.InstituicaoApi {
 
