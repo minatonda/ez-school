@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-body pt-3 pb-2">
+            <div class="row">
+                <div class="col-12 col-md-5 mb-2 text-left">
+                    <div class="input-group" style="min-height:initial;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doDecreasePage()">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control text-center" v-bind:value="data.page + ' / ' + data.pageTotal" disabled>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doIncreasePage()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 mb-2 text-left">
+                    <div class="input-group" style="min-height:initial;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doDecreaseLimit()">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control text-center" v-bind:value="data.limit + ' registros por página'" disabled>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" style="min-width:initial;" type="button" v-on:click="doIncreaseLimit()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2 mb-2 text-left">
+                    <div class="card card-body pb-2 pt-2 mnh-100 w-100 bg-primary text-light text-center">
+                        <b>{{data.totalItens}} Registros</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

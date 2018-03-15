@@ -3,7 +3,7 @@ import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { RouterPathType } from '../../../../../ezs-common/src/model/client/router-path-type.model';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { InstituicaoCursoOcorrenciaModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia.model';
 import { InstituicaoCursoOcorrenciaPeriodoModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-periodo.model';
 import { InstituicaoCursoOcorrenciaPeriodoAlunoModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-periodo-aluno.model';
@@ -17,8 +17,9 @@ import { EnumLabel } from '../../../../../ezs-common/src/model/client/enum-label
 
 import * as moment from 'moment';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
-import { I18N_MESSAGE } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
+import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
 
 enum ModalOperation {
     add = 0,
@@ -73,19 +74,19 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
         dayOfWeeks: DayOfWeekEnumLabel,
 
         queryAluno: async (term) => {
-            let itens = await Factory.UsuarioFactory.allAluno(term);
+            let itens = await FACTORY_CONSTANT.UsuarioFactory.allByTermo(term, false, false);
             return itens;
         },
         queryProfessor: async (term) => {
-            let itens = await Factory.UsuarioFactory.allProfessor(term);
+            let itens = await FACTORY_CONSTANT.UsuarioFactory.allByTermo(term, false, false);
             return itens;
         },
 
-        usuarioInfoLabel: (item) => {
-            let obj: any = {};
-            obj.key = item.label;
-            obj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.usuarioInfo.rg}</span><span style="float:right;">${item.usuarioInfo.cpf}</span></div>`;
-            return obj;
+        usuarioInfoLabel: (item: UsuarioInfoModel) => {
+            let labelObj = {} as any;
+            labelObj.key = item.label;
+            labelObj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.rg}</span><span style="float:right;">${item.cpf}</span></div>`;
+            return labelObj;
         },
 
         dialogInstituicaoCursoPeriodoOperation: ModalOperation.add,
@@ -107,14 +108,14 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await Factory.InstituicaoFactory.detailInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.$route.params.idInstituicaoCursoOcorrencia);
+                this.model = await FACTORY_CONSTANT.InstituicaoFactory.detailInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.$route.params.idInstituicaoCursoOcorrencia);
             }
-            this.ui.cursoGradeMaterias = await Factory.InstituicaoFactory.allCursoGradeMaterias(this.$route.params.id, this.$route.params.idInstituicaoCurso);
-            this.ui.instituicaoCursoTurmas = await Factory.InstituicaoFactory.allInstituicaoCursoTurma(this.$route.params.id, this.$route.params.idInstituicaoCurso);
-            this.ui.instituicaoCursoPeriodos = await Factory.InstituicaoFactory.allInstituicaoCursoPeriodo(this.$route.params.id, this.$route.params.idInstituicaoCurso);
+            this.ui.cursoGradeMaterias = await FACTORY_CONSTANT.InstituicaoFactory.allCursoGradeMaterias(this.$route.params.id, this.$route.params.idInstituicaoCurso);
+            this.ui.instituicaoCursoTurmas = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoCursoTurma(this.$route.params.id, this.$route.params.idInstituicaoCurso);
+            this.ui.instituicaoCursoPeriodos = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoCursoPeriodo(this.$route.params.id, this.$route.params.idInstituicaoCurso);
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.CONSULTAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
             AppRouter.back();
         }
         finally {
@@ -128,19 +129,19 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await Factory.InstituicaoFactory.addInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.model);
+                        await FACTORY_CONSTANT.InstituicaoFactory.addInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.model);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await Factory.InstituicaoFactory.updateInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.model);
+                        await FACTORY_CONSTANT.InstituicaoFactory.updateInstituicaoCursoOcorrencia(this.$route.params.id, this.$route.params.idInstituicaoCurso, this.model);
                         break;
                     }
             }
-            NotifyUtil.notifyI18N(I18N_MESSAGE.MODELO_SALVAR, ApplicationService.getLanguage(), NOTIFY_TYPE.SUCCESS);
+            NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.MODELO_SALVAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);

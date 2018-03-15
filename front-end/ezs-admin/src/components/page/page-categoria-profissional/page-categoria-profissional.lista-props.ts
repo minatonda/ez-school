@@ -2,19 +2,25 @@ import { PageListaPropsInterface } from '../page-lista/page-lista-props.interfac
 import { CardTableColumn, CardTableMenuEntry } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 import { AppRouterPath } from '../../../app.router.path';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { CategoriaProfissionalModel } from '../../../../../ezs-common/src/model/server/categoria-profissional.model';
 
 export class PageCategoriaProfissionalListaProps implements PageListaPropsInterface {
 
     columns = [
-        new CardTableColumn((item: CategoriaProfissionalModel) => item.nome, () => 'Nome'),
-        new CardTableColumn((item: CategoriaProfissionalModel) => item.descricao, () => 'Descrição')
+        new CardTableColumn({
+            value: (item: CategoriaProfissionalModel) => item.nome,
+            label: () => 'Nome'
+        }),
+        new CardTableColumn({
+            value: (item: CategoriaProfissionalModel) => item.descricao,
+            label: () => 'Descrição'
+        })
     ];
     menu = { row: [], main: [] };
     routePathAdd = AppRouterPath.CATEGORIA_PROFISSIONAL_ADD;
     routePathUpdate = AppRouterPath.CATEGORIA_PROFISSIONAL_UPD;
-    query = Factory.CategoriaProfissionalFactory.all;
-    queryRemove = Factory.CategoriaProfissionalFactory.disable;
-  
+    query = FACTORY_CONSTANT.CategoriaProfissionalFactory.all;
+    queryRemove = FACTORY_CONSTANT.CategoriaProfissionalFactory.disable;
+
 }

@@ -10,6 +10,8 @@ import { InstituicaoBusinessAulaModel } from '../../model/server/instituicao-bus
 import { InstituicaoBusinessAulaDetalheAlunoModel } from '../../model/server/instituicao-business-aula-detalhe-aluno.model';
 import { InstituicaoCursoOcorrenciaPeriodoAlunoModel } from '../../model/server/instituicao-curso-ocorrencia-periodo-aluno.model';
 import { InstituicaoCursoOcorrenciaNotaModel } from '../../model/server/instituicao-curso-ocorrencia-nota.model';
+import { InstituicaoColaboradorModel } from '../../model/server/instituicao-colaborador.model';
+import { InstituicaoColaboradorPerfilModel } from '../../model/server/instituicao-colaborador-perfil.model';
 
 export class Factory extends BaseFactory {
 
@@ -18,6 +20,24 @@ export class Factory extends BaseFactory {
     public add = async (model: InstituicaoModel) => {
         try {
             await this.put('/api/instituicao/add', model);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public addInstituicaoColaborador = async (id: number | string, model: InstituicaoColaboradorModel) => {
+        try {
+            await this.put(`/api/instituicao/${id}/instituicao-colaborador/add`, model);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public addInstituicaoColaboradorPerfil = async (id: number | string, model: InstituicaoColaboradorPerfilModel) => {
+        try {
+            await this.put(`/api/instituicao/${id}/instituicao-colaborador-perfil/add`, model);
         }
         catch (error) {
             throw error;
@@ -45,6 +65,24 @@ export class Factory extends BaseFactory {
     public update = async (model: InstituicaoModel) => {
         try {
             await this.post('/api/instituicao/update', model);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public updateInstituicaoColaborador = async (id: number | string, model: InstituicaoColaboradorModel) => {
+        try {
+            await this.post(`/api/instituicao/${id}/instituicao-colaborador/add`, model);
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public updateInstituicaoColaboradorPerfil = async (id: number | string, model: InstituicaoColaboradorPerfilModel) => {
+        try {
+            await this.post(`/api/instituicao/${id}/instituicao-colaborador-perfil/add`, model);
         }
         catch (error) {
             throw error;
@@ -108,6 +146,26 @@ export class Factory extends BaseFactory {
         }
     }
 
+    public detailInstituicaoColaborador = async (id: number | string, idInstituicaoColaborador: number | string) => {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador/${idInstituicaoColaborador}`) as InstituicaoColaboradorModel;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public detailInstituicaoColaboradorPerfil = async (id: number | string, idInstituicaoColaboradorPerfil: number | string) => {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador-perfil/${idInstituicaoColaboradorPerfil}`) as InstituicaoColaboradorPerfilModel;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
     public detailInstituicaoCurso = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
             let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}`) as InstituicaoCursoModel;
@@ -131,6 +189,26 @@ export class Factory extends BaseFactory {
     public all = async () => {
         try {
             let result = await this.get('/api/instituicao') as Array < InstituicaoModel > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public allInstituicaoColaborador = async (id: number | string) => {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador`) as Array < InstituicaoColaboradorModel > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public allInstituicaoColaboradorPerfil = async (id: number | string) => {
+        try {
+            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador-perfil`) as Array < InstituicaoColaboradorPerfilModel > ;
             return result;
         }
         catch (error) {

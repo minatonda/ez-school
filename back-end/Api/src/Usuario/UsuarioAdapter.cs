@@ -28,7 +28,22 @@ namespace Api.UsuarioApi {
             vm.CPF = model.CPF;
             vm.RG = model.RG;
             vm.DataNascimento = model.DataNascimento;
-            vm.Perfis = model.Perfis.Split(',').ToList();
+            if (model.Roles.Length > 0) {
+                vm.Roles = model.Roles.Split(',').ToList();
+            } else {
+                vm.Roles = new List<string>();
+            }
+            return vm;
+        }
+
+        public static UsuarioInfoVM ToViewModel(UsuarioInfo model, Aluno aluno, Professor professor, bool deep) {
+            var vm = UsuarioAdapter.ToViewModel(model, true);
+            if (aluno != null) {
+                vm.Aluno = AlunoAdapter.ToViewModel(aluno, true);
+            }
+            if (professor != null) {
+                vm.Professor = ProfessorAdapter.ToViewModel(professor, true);
+            }
             return vm;
         }
 
@@ -39,7 +54,7 @@ namespace Api.UsuarioApi {
             model.CPF = vm.CPF;
             model.RG = vm.RG;
             model.DataNascimento = vm.DataNascimento;
-            model.Perfis = String.Join(",", vm.Perfis);
+            model.Roles = String.Join(",", vm.Roles);
             return model;
         }
 
@@ -65,7 +80,7 @@ namespace Api.UsuarioApi {
             if (vm.UsuarioInfo != null && deep) {
                 model.UsuarioInfo = UsuarioAdapter.ToModel(vm.UsuarioInfo, false);
             }
-            
+
             return model;
         }
 

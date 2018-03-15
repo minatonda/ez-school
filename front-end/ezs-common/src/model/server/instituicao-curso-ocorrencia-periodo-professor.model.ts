@@ -1,9 +1,9 @@
 import { InstituicaoCursoTurmaModel } from './instituicao-curso-turma.model';
 import { InstituicaoCursoPeriodoModel } from './instituicao-curso-periodo.model';
 import { InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel } from './instituicao-curso-ocorrencia-periodo-professor-periodo-aula.model';
-import { ProfessorModel } from './professor.model';
 import { CursoGradeMateriaModel } from './curso-grade-materia.model';
 import { BaseModel } from './base.model';
+import { UsuarioInfoModel } from './usuario-info.model';
 
 export class InstituicaoCursoOcorrenciaPeriodoProfessorModel extends BaseModel < number > {
 
@@ -12,7 +12,7 @@ export class InstituicaoCursoOcorrenciaPeriodoProfessorModel extends BaseModel <
         this.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas = new Array < InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel > ();
     }
 
-    professor: ProfessorModel;
+    professor: UsuarioInfoModel;
     cursoGradeMateria: CursoGradeMateriaModel;
     instituicaoCursoTurma: InstituicaoCursoTurmaModel;
     instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel;

@@ -7,13 +7,15 @@ export class UsuarioInfoModel extends BaseModel < string > {
     constructor() {
         super();
         this.areaInteresses = new Array < AreaInteresseModel > ();
+        this.roles = new Array < string > ();
     }
-    
+
     nome: string;
     dataNascimento: string;
     rg: string;
     cpf: string;
+    email: string;
     areaInteresses: Array < AreaInteresseModel > ;
-    perfis: Array < string > ;
+    roles: Array < string > ;
 
 }

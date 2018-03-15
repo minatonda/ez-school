@@ -95,6 +95,17 @@ namespace Domain.InstituicaoDomain {
             this.db.InstituicaoCursoOcorrenciaNotas.Add(instituicaoCursoOcorrenciaNota);
         }
 
+        public void AddInstituicaoColaborador(InstituicaoColaborador instituicaoColaborador) {
+            instituicaoColaborador.Instituicao = this.db.Instituicoes.Find(instituicaoColaborador.Instituicao.ID);
+            instituicaoColaborador.Usuario = this.db.UsuariosInfo.Find(instituicaoColaborador.Usuario.ID);
+            this.db.InstituicaoColaboradores.Add(instituicaoColaborador);
+        }
+
+        public void AddInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfil instituicaoColaboradorPerfil) {
+            instituicaoColaboradorPerfil.Instituicao = this.db.Instituicoes.Find(instituicaoColaboradorPerfil.Instituicao.ID);
+            this.db.InstituicaoColaboradorPerfis.Add(instituicaoColaboradorPerfil);
+        }
+
         public void AddHistoryInstituicao(long id) {
             var history = this.Get(id);
             history.ID = 0;
@@ -188,6 +199,22 @@ namespace Domain.InstituicaoDomain {
             this.db.InstituicaoCursoOcorrenciaNotas.Update(model);
         }
 
+        public void UpdateInstituicaoColaborador(InstituicaoColaborador instituicaoColaborador) {
+            var model = this.db.InstituicaoColaboradores.Include(x => x.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaborador.ID);
+            model.Perfis = instituicaoColaborador.Perfis;
+            model.Instituicao = this.db.Instituicoes.Find(instituicaoColaborador.Instituicao.ID);
+            model.Usuario = this.db.UsuariosInfo.Find(instituicaoColaborador.Usuario.ID);
+            this.db.InstituicaoColaboradores.Add(model);
+        }
+
+        public void UpdateInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfil instituicaoColaboradorPerfil) {
+            var model = this.db.InstituicaoColaboradorPerfis.Include(i => i.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaboradorPerfil.ID);
+            model.Instituicao = this.db.Instituicoes.Find(instituicaoColaboradorPerfil.Instituicao.ID);
+            model.Nome = instituicaoColaboradorPerfil.Nome;
+            model.Roles = instituicaoColaboradorPerfil.Roles;
+            this.db.InstituicaoColaboradorPerfis.Update(model);
+        }
+
         public void Disable(long id) {
             var model = this.db.Instituicoes.Find(id);
             model.Ativo = DateTime.Now;
@@ -255,7 +282,7 @@ namespace Domain.InstituicaoDomain {
             .Include(i => i.Curso)
             .Include(i => i.Instituicao)
             .Include(i => i.CursoGrade)
-            .SingleOrDefault(x => x.ID == id && !x.DataExpiracao.HasValue);
+            .SingleOrDefault(x => x.ID == id);
         }
 
         public InstituicaoCursoOcorrencia GetInstituicaoCursoOcorrencia(long id) {
@@ -299,6 +326,21 @@ namespace Domain.InstituicaoDomain {
             .Include(i => i.InstituicaoCursoTurma)
             .Include(i => i.InstituicaoCursoPeriodo)
             .SingleOrDefault(x => x.ID == id);
+        }
+
+        public InstituicaoColaborador GetInstituicaoColaborador(long id) {
+            return this.db.InstituicaoColaboradores
+            .AsNoTracking()
+            .Include(i => i.Instituicao)
+            .Include(i => i.Usuario)
+            .SingleOrDefault(x => x.ID == id);
+        }
+
+        public InstituicaoColaboradorPerfil GetInstituicaoColaboradorPerfil(long id) {
+            return this.db.InstituicaoColaboradorPerfis
+            .AsNoTracking()
+            .Include(i => i.Instituicao)
+            .SingleOrDefault(x => x.Instituicao.ID == id);
         }
 
         public List<Instituicao> GetAll(bool ativo) {
@@ -428,6 +470,18 @@ namespace Domain.InstituicaoDomain {
             .ToList();
         }
 
+        public List<InstituicaoCursoOcorrenciaPeriodoAluno> GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByAluno(string id, bool ativo) {
+            return this.db.InstituicaoCursoOcorrenciaPeriodoAlunos
+            .AsNoTracking()
+            .Include(i => i.InstituicaoCursoOcorrenciaAluno)
+            .ThenInclude(i => i.Aluno)
+            .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
+            .Include(i => i.InstituicaoCursoPeriodo)
+            .Include(i => i.InstituicaoCursoTurma)
+            .Where(x => x.InstituicaoCursoOcorrenciaAluno.Aluno.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
         public List<InstituicaoCursoOcorrenciaPeriodoAluno> GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByInstituicaoCursoOcorrenciaPeriodo(long id, bool ativo) {
             return this.db.InstituicaoCursoOcorrenciaPeriodoAlunos
             .AsNoTracking()
@@ -461,6 +515,62 @@ namespace Domain.InstituicaoDomain {
             .ToList();
         }
 
+        public List<InstituicaoColaborador> GetAllInstituicaoColaboradorByInstituicao(long id, bool ativo) {
+            return this.db.InstituicaoColaboradores
+            .AsNoTracking()
+            .Include(i => i.Instituicao)
+            .Include(i => i.Usuario)
+            .Where(x => x.Instituicao.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByInstituicao(long id, bool ativo) {
+            return this.db.InstituicaoColaboradorPerfis
+            .AsNoTracking()
+            .Include(i => i.Instituicao)
+            .Where(x => x.Instituicao.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByUsuario(string id, long idInstituicao, bool ativo) {
+            var colaboradores = this.db.InstituicaoColaboradores
+            .AsNoTracking()
+            .Include(i => i.Usuario)
+            .Include(i => i.Instituicao)
+            .Where(x => x.Usuario.ID == id && x.Instituicao.ID == idInstituicao && x.Ativo.HasValue == !ativo)
+            .ToList();
+
+            return this.db.InstituicaoColaboradorPerfis.AsNoTracking()
+            .Where(x => colaboradores.Any(i => i.Perfis.Contains(x.ID.ToString())) && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByUsuario(string id, bool ativo) {
+            var colaboradores = this.db.InstituicaoColaboradores
+            .AsNoTracking()
+            .Include(i => i.Usuario)
+            .Include(i => i.Instituicao)
+            .Where(x => x.Usuario.ID == id && x.Ativo.HasValue == !ativo)
+            .ToList();
+
+            return this.db.InstituicaoColaboradorPerfis.AsNoTracking()
+            .Where(x => colaboradores.Any(i => i.Perfis.Contains(x.ID.ToString())) && x.Ativo.HasValue == !ativo)
+            .ToList();
+        }
+
+        public List<Instituicao> AllInstituicaoByUsuario(string id, bool ativo) {
+            var instituicoes = this.db.InstituicaoColaboradores
+            .AsNoTracking()
+            .Include(i => i.Usuario)
+            .Include(i => i.Instituicao)
+            .Where(x => x.Usuario.ID == id && x.Ativo.HasValue == !ativo);
+            return instituicoes
+            .Select(x => x.Instituicao)
+            .GroupBy(x => x.ID)
+            .Select(x => x.First())
+            .ToList();
+        }
+
         public string GetFormulaNotaFinalWithValuesByAluno(long idInstituicaoCursoOcorrenciaPeriodoProfessor, string idAluno) {
             var instituicaoCursoOcorrenciaPeriodoProfessor = this.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor);
             var instituicaoCursoOcorrenciaPeriodoAluno = this.db.InstituicaoCursoOcorrenciaPeriodoAlunos
@@ -489,6 +599,10 @@ namespace Domain.InstituicaoDomain {
                 formulaNotaFinal = "0";
             }
             return formulaNotaFinal;
+        }
+
+        public bool HavePermission(long idInstituicao, string[] Roles) {
+            return true;
         }
 
         public IEnumerable<Instituicao> Query(Expression<Func<Instituicao, bool>> predicate, params Expression<Func<Instituicao, object>>[] includeExpressions) {

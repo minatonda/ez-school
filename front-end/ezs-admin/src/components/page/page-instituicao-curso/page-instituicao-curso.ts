@@ -3,7 +3,7 @@ import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { RouterPathType } from '../../../../../ezs-common/src/model/client/router-path-type.model';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { InstituicaoCursoModel } from '../../../../../ezs-common/src/model/server/instituicao-curso.model';
 import { InstituicaoCursoPeriodoModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-periodo.model';
 import { InstituicaoCursoTurmaModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-turma.model';
@@ -12,7 +12,7 @@ import { DayOfWeekEnumLabel } from '../../../module/constant/enum-label.constant
 import { CursoModel } from '../../../../../ezs-common/src/model/server/curso.model';
 import { CursoGradeModel } from '../../../../../ezs-common/src/model/server/curso-grade.model';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
-import { I18N_MESSAGE } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 
 interface UI {
@@ -56,13 +56,13 @@ export class PageInstituicaoCursoComponent extends Vue {
     async mounted() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            this.ui.cursos = await Factory.CursoFactory.all();
+            this.ui.cursos = await FACTORY_CONSTANT.CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await Factory.InstituicaoFactory.detailInstituicaoCurso(this.$route.params.id, this.$route.params.idInstituicaoCurso);
+                this.model = await FACTORY_CONSTANT.InstituicaoFactory.detailInstituicaoCurso(this.$route.params.id, this.$route.params.idInstituicaoCurso);
             }
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.CONSULTAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
             AppRouter.back();
         }
         finally {
@@ -76,19 +76,19 @@ export class PageInstituicaoCursoComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await Factory.InstituicaoFactory.addInstituicaoCurso(this.$route.params.id, this.model);
+                        await FACTORY_CONSTANT.InstituicaoFactory.addInstituicaoCurso(this.$route.params.id, this.model);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await Factory.InstituicaoFactory.updateInstituicaoCurso(this.$route.params.id, this.model);
+                        await FACTORY_CONSTANT.InstituicaoFactory.updateInstituicaoCurso(this.$route.params.id, this.model);
                         break;
                     }
             }
-            NotifyUtil.notifyI18N(I18N_MESSAGE.MODELO_SALVAR, ApplicationService.getLanguage(), NOTIFY_TYPE.SUCCESS);
+            NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.MODELO_SALVAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
@@ -98,23 +98,32 @@ export class PageInstituicaoCursoComponent extends Vue {
     public getTablePeriodo() {
         let menu = new CardTableMenu();
         menu.row = [
-            new CardTableMenuEntry(
-                (item) => this.removePeriodo(item),
-                (item) => 'Remover',
-                (item) => ['fa', 'fa-times'],
-                (item) => ['btn-danger']
-            )
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removePeriodo(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
         ];
         let columns = [
-            new CardTableColumn((item: InstituicaoCursoPeriodoModel) => item.inicio, () => 'Início'),
-            new CardTableColumn((item: InstituicaoCursoPeriodoModel) => item.fim, () => 'Fim'),
-            new CardTableColumn((item: InstituicaoCursoPeriodoModel) => {
-                return DayOfWeekEnumLabel.map((day) => {
-                    if (this.isDiaSemanaSelected(day.value, item)) {
-                        return `<span class="badge badge-primary mx-2">${day.labelShort}</span>`;
-                    }
-                }).join('');
-            }, () => 'Dias'),
+            new CardTableColumn({
+                value: (item: InstituicaoCursoPeriodoModel) => item.inicio,
+                label: () => 'Início'
+            }),
+            new CardTableColumn({
+                value: (item: InstituicaoCursoPeriodoModel) => item.fim,
+                label: () => 'Fim'
+            }),
+            new CardTableColumn({
+                value: (item: InstituicaoCursoPeriodoModel) => {
+                    return DayOfWeekEnumLabel.map((day) => {
+                        if (this.isDiaSemanaSelected(day.value, item)) {
+                            return `<span class="badge badge-primary mx-2">${day.labelShort}</span>`;
+                        }
+                    }).join('');
+                },
+                label: () => 'Dias'
+            })
         ];
         return { itens: this.model.periodos, columns: columns, menu: menu };
     }
@@ -130,16 +139,22 @@ export class PageInstituicaoCursoComponent extends Vue {
     public getTableTurma() {
         let menu = new CardTableMenu();
         menu.row = [
-            new CardTableMenuEntry(
-                (item) => this.removeTurma(item),
-                (item) => 'Remover',
-                (item) => ['fa', 'fa-times'],
-                (item) => ['btn-danger']
-            )
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removeTurma(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
         ];
         let columns = [
-            new CardTableColumn((item: InstituicaoCursoTurmaModel) => item.nome, () => 'Nome'),
-            new CardTableColumn((item: InstituicaoCursoTurmaModel) => item.descricao, () => 'Descrição')
+            new CardTableColumn({
+                value: (item: InstituicaoCursoTurmaModel) => item.nome,
+                label: () => 'Nome'
+            }),
+            new CardTableColumn({
+                value: (item: InstituicaoCursoTurmaModel) => item.descricao,
+                label: () => 'Descrição'
+            })
         ];
         return { itens: this.model.turmas, columns: columns, menu: menu };
     }
@@ -167,7 +182,7 @@ export class PageInstituicaoCursoComponent extends Vue {
         this.clearCursoGrade = true;
         setImmediate(() => { this.clearCursoGrade = false; });
         if (curso) {
-            this.ui.cursoGrades = await Factory.CursoFactory.allCursoGrade(curso.id);
+            this.ui.cursoGrades = await FACTORY_CONSTANT.CursoFactory.allCursoGrade(curso.id);
         }
         else {
             this.ui.cursoGrades = [];

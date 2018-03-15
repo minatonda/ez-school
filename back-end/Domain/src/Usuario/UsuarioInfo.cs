@@ -17,7 +17,7 @@ namespace Domain.UsuarioDomain {
         public DateTime? DataNascimento { get; set; }
         public string RG { get; set; }
         public string CPF { get; set; }
-        public string Perfis { get; set; } = "";
+        public string Roles { get; set; } = "";
         public DateTime? Ativo { get; set; } = null;
 
     }

@@ -2,15 +2,16 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { RouterPathType } from '../../../../../ezs-common/src/model/client/router-path-type.model';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { UsuarioModel } from '../../../../../ezs-common/src/model/server/usuario.model';
 import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
 import { CategoriaProfissionalModel } from '../../../../../ezs-common/src/model/server/categoria-profissional.model';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
-import { I18N_MESSAGE } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 import { AreaInteresseModel } from '../../../../../ezs-common/src/model/server/area-interesse.model';
+import { ENUM_CONTANT } from '../../../../../ezs-common/src/constant/enum.contant';
 
 interface UI {
     areaInteresse: AreaInteresseModel;
@@ -45,13 +46,13 @@ export class PageUsuarioComponent extends Vue {
     async mounted() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            this.ui.categoriaProfissionais = await Factory.CategoriaProfissionalFactory.all();
+            this.ui.categoriaProfissionais = await FACTORY_CONSTANT.CategoriaProfissionalFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await Factory.UsuarioFactory.detail(this.$route.params.id);
+                this.model = await FACTORY_CONSTANT.UsuarioFactory.detail(this.$route.params.id);
             }
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.CONSULTAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
             AppRouter.back();
         }
         finally {
@@ -65,54 +66,87 @@ export class PageUsuarioComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        await Factory.UsuarioFactory.add(this.model);
+                        await FACTORY_CONSTANT.UsuarioFactory.add(this.model);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await Factory.UsuarioFactory.update(this.model);
+                        await FACTORY_CONSTANT.UsuarioFactory.update(this.model);
                         break;
                     }
             }
-            NotifyUtil.notifyI18N(I18N_MESSAGE.MODELO_SALVAR, ApplicationService.getLanguage(), NOTIFY_TYPE.SUCCESS);
+            NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.MODELO_SALVAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
         }
     }
 
-    public addCategoriaProfissional(areaInteresse: AreaInteresseModel) {
+    addCategoriaProfissional(areaInteresse: AreaInteresseModel) {
         this.model.usuarioInfo.areaInteresses.push(Object.assign({}, areaInteresse));
+        this.$forceUpdate();
     }
 
-    public getColumns() {
-        return [
-            new CardTableColumn((item: AreaInteresseModel) => item.categoriaProfissional.descricao, () => 'Areas de Interesse'),
-        ];
+    addRole(enumerable: any) {
+        this.model.usuarioInfo.roles.push(enumerable.value.toString());
+        this.$forceUpdate();
     }
 
-    public getItens() {
-        return this.model.usuarioInfo.areaInteresses;
+    getRoles() {
+        return ApplicationService.getEnumLabels(ENUM_CONTANT.BASE_ROLE);
     }
 
-    public getMenu() {
+    getTableAreaInteresse() {
         let menu = new CardTableMenu();
         menu.row = [
-            new CardTableMenuEntry(
-                (item) => this.remove(item),
-                (item) => 'Remover',
-                (item) => ['fa', 'fa-times'],
-                (item) => ['btn-danger']
-            )
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removeAreaInteresse(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
         ];
-        return menu;
+        let columns = [
+            new CardTableColumn({
+                value: (item: AreaInteresseModel) => item.categoriaProfissional.descricao,
+                label: () => 'Aréa de Interesse'
+            }),
+        ];
+        return { columns: columns, menu: menu };
     }
 
-    public remove(item) {
+    getTableRole() {
+        let menu = new CardTableMenu();
+        menu.row = [
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removeRole(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
+        ];
+        let columns = [
+            new CardTableColumn({
+                value: (item: number) => {
+                    return this.getRoles().find(x => x.value.toString() === item.toString()).label;
+                },
+                label: () => 'Regra'
+            })
+        ];
+        return { columns: columns, menu: menu };
+    }
+
+    removeAreaInteresse(item) {
         this.model.usuarioInfo.areaInteresses.splice(this.model.usuarioInfo.areaInteresses.indexOf(item), 1);
+        this.$forceUpdate();
+    }
+
+    removeRole(item) {
+        this.model.usuarioInfo.roles.splice(this.model.usuarioInfo.roles.indexOf(item), 1);
+        this.$forceUpdate();
     }
 
 }

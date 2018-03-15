@@ -1,13 +1,11 @@
 import { Vue, Watch } from 'vue-property-decorator';
 import { Prop, Component } from 'vue-property-decorator';
-import { CardTableMenu, CardTableColumn, CardTableFilter, CardTableMenuEntry, CardTablePage } from './card-table.types';
+import { CardTableMenu, CardTableColumn, CardTableMenuEntry } from './card-table.types';
+import { DropDownItem } from '../dropdown/dropdown';
+import { FormBuilderUtil } from '../form-builder/form-builder.util';
 
 interface UI {
-    pageData: CardTablePage<any>;
-    itens: Array<any>;
-    page: number;
-    limit: number;
-    filter: any;
+
 }
 
 @Component({
@@ -19,66 +17,16 @@ export class CardTableComponent extends Vue {
     menu: CardTableMenu;
 
     @Prop()
-    columns: Array<CardTableColumn>;
+    columns: Array < CardTableColumn > ;
 
     @Prop()
-    itens: Array<any>;
+    itens: Array < any > ;
 
-    @Prop({ type: Function })
-    query: Function;
+    ui: UI = {};
 
-    @Prop({ type: Array, default: () => [] })
-    filters: Array<CardTableFilter>;
+    util = FormBuilderUtil;
 
-    ui: UI = {
-        pageData: undefined,
-        itens: undefined,
-        page: 0,
-        limit: 10,
-        filter: {}
-    };
-
-    @Watch('itens')
-    onItensChanged(val) {
-        this.ui.itens = this.itens;
-    }
-
-    @Watch('query')
-    onQueryChanged(val) {
-        this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
-    created() {
-        this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
-    async doQuery(page, limit, filter) {
-        if (this.query && !this.itens) {
-            this.ui.pageData = await this.query(page, limit, filter) as CardTablePage<any>;
-            this.ui.itens = this.ui.pageData.content;
-        }
-    }
-
-    async doIncreasePage() {
-        this.ui.page++;
-        await this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
-    async doDecreasePage() {
-        this.ui.page--;
-        await this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
-    async doIncreaseLimit() {
-        this.ui.limit += 10;
-        await this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
-    async doDecreaseLimit() {
-        this.ui.limit -= 10;
-        await this.doQuery(this.ui.page, this.ui.limit, this.ui.filter);
-    }
-
+    created() {}
 
     /* COLUMN MANAGEMENT */
     getColumns() {
@@ -100,7 +48,7 @@ export class CardTableComponent extends Vue {
     /* COLUMN MANAGEMENT - END*/
 
     getItens() {
-        return this.ui.itens;
+        return this.itens;
     }
 
     /* MENU MANAGEMENT */
@@ -110,6 +58,18 @@ export class CardTableComponent extends Vue {
 
     getMenuMain() {
         return this.menu && this.menu.main;
+    }
+
+    getMenuItensAsDropDown(menu: Array < CardTableMenuEntry > ) {
+        if (menu) {
+            return menu.map(x => {
+                let dropdownItem: DropDownItem = {
+                    text: `<i class='${x.iconClass(this.getItens()).join(' ')} mr-2'></i>${x.label(this.getItens())}`,
+                    item: x.method
+                };
+                return dropdownItem;
+            });
+        }
     }
 
     getMenuItemLabel(menuItem: CardTableMenuEntry, item: any) {
@@ -124,9 +84,17 @@ export class CardTableComponent extends Vue {
         return menuItem.btnClass(item);
     }
 
-    triggerMenuMethod(menuItem: CardTableMenuEntry, item: any) {
+    isMenuItemDisabled(menu: CardTableMenuEntry, item: any) {
+        return menu.disabled ? menu.disabled(item) : false;
+    }
+
+    isColumnInput(column: CardTableColumn) {
+        return column.config && column.config.input;
+    }
+
+    doCallMenuMethod(menuItem: CardTableMenuEntry, item: any) {
         menuItem.method(item);
     }
-    /* MENU MANAGEMENT - END*/
+
 
 }

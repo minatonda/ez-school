@@ -17,7 +17,7 @@ enum RenderType {
 }
 
 @Component({
-    template: require('./gp-dropdown.html')
+    template: require('./dropdown.html')
 })
 export class DropdownComponent extends Vue {
 

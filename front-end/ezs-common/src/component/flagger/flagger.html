@@ -1,0 +1,10 @@
+<div class="flagger">
+    <button 
+        type="button" 
+        class="btn btn-float btn-sm waves-circle mr-1" 
+        v-for="item in entries"
+        v-bind:class="{'btn-primary': isChecked(item)}" 
+        v-on:click="doToggleCheck(item)">
+        <span>{{getLabel(item)}}</span>
+    </button>
+</div>

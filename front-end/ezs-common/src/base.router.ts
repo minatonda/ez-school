@@ -6,15 +6,13 @@ import { AutenticaoServiceInterface } from './service/autenticacao.service.inter
 export class BaseRouter extends VueRouter {
 
     protected configs: Array<BaseRouteConfig>;
-    protected autenticacaoService: AutenticaoServiceInterface;
 
-    constructor(config: Array<BaseRouteConfig>, autenticacaoService: AutenticaoServiceInterface) {
+    constructor(config: Array<BaseRouteConfig>) {
         super();
         config.forEach(x => {
             x.props = Object.assign({ operation: x.type, alias: x.alias }, x.props);
         });
         this.configs = config;
-        this.autenticacaoService = autenticacaoService;
         this.addRoutes(config);
     }
 

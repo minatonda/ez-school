@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.Configuration;
 using Api.Middlewares.Jwt;
+using Api.Middlewares.Exceptions;
 using Domain;
 using Domain.CategoriaProfissionalDomain;
 using Domain.Common;
@@ -78,9 +79,11 @@ namespace Api {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, BaseContext context) {
-            if (Environment.IsDevelopment()) {
-                app.UseDeveloperExceptionPage();
-            }
+            // if (Environment.IsDevelopment()) {
+            //     app.UseDeveloperExceptionPage();
+            // }
+            
+            app.UseExceptionMiddleware();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

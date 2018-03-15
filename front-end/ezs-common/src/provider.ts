@@ -9,17 +9,20 @@ import { LoaderCompactComponent } from './component/loader-compact/loader-compac
 import { CardTableComponent } from './component/card-table/card-table';
 import { SelectorComponent } from './component/selector/selector';
 import { DateCatcherComponent } from './component/date-catcher/date-catcher';
+import { DropdownComponent } from './component/dropdown/dropdown';
+import { FormBuilderComponent } from './component/form-builder/form-builder';
+import { FlaggerComponent } from './component/flagger/flagger';
 
 
 export class Provider {
-    public static retrieveFactories(autenticacaoService: AutenticaoServiceInterface) {
+    public static retrieveFactories(autenticacaoService: AutenticaoServiceInterface, interceptorOnRequestSuccess: any, interceptorOnRequestError: any) {
         return {
-            UsuarioFactory: new UsuarioFactory(autenticacaoService),
-            CategoriaProfissionalFactory: new CategoriaProfissionalFactory(autenticacaoService),
-            InstituicaoFactory: new InstituicaoFactory(autenticacaoService),
-            InstituicaoCategoriaFactory: new InstituicaoCategoriaFactory(autenticacaoService),
-            MateriaFactory: new MateriaFactory(autenticacaoService),
-            CursoFactory: new CursoFactory(autenticacaoService),
+            UsuarioFactory: new UsuarioFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
+            CategoriaProfissionalFactory: new CategoriaProfissionalFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
+            InstituicaoFactory: new InstituicaoFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
+            InstituicaoCategoriaFactory: new InstituicaoCategoriaFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
+            MateriaFactory: new MateriaFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
+            CursoFactory: new CursoFactory(autenticacaoService, interceptorOnRequestSuccess, interceptorOnRequestError),
         };
     }
 
@@ -28,7 +31,10 @@ export class Provider {
             { alias: 'loader-compact', component: LoaderCompactComponent },
             { alias: 'card-table', component: CardTableComponent },
             { alias: 'selector', component: SelectorComponent },
-            { alias: 'date-catcher', component: DateCatcherComponent }
+            { alias: 'date-catcher', component: DateCatcherComponent },
+            { alias: 'dropdown', component: DropdownComponent },
+            { alias: 'flagger', component: FlaggerComponent },
+            { alias: 'form-builder', component: FormBuilderComponent }
         ];
     }
 }

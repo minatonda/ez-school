@@ -3,13 +3,13 @@ import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { RouterPathType } from '../../../../../ezs-common/src/model/client/router-path-type.model';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { CursoModel } from '../../../../../ezs-common/src/model/server/curso.model';
 import { CursoGradeModel } from '../../../../../ezs-common/src/model/server/curso-grade.model';
 import { CursoGradeMateriaModel } from '../../../../../ezs-common/src/model/server/curso-grade-materia.model';
 import { MateriaModel } from '../../../../../ezs-common/src/model/server/materia.model';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
-import { I18N_MESSAGE } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 
 enum ModalOperation {
@@ -54,13 +54,13 @@ export class PageCursoComponent extends Vue {
     async mounted() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            this.ui.materias = await Factory.MateriaFactory.all();
+            this.ui.materias = await FACTORY_CONSTANT.MateriaFactory.all();
             if (this.operation === RouterPathType.upd) {
-                this.model = await Factory.CursoFactory.detail(this.$route.params.id);
+                this.model = await FACTORY_CONSTANT.CursoFactory.detail(this.$route.params.id);
             }
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.CONSULTAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
             AppRouter.back();
         }
         finally {
@@ -74,19 +74,19 @@ export class PageCursoComponent extends Vue {
             switch (this.operation) {
                 case (RouterPathType.add):
                     {
-                        let result = await Factory.CursoFactory.add(this.model);
+                        let result = await FACTORY_CONSTANT.CursoFactory.add(this.model);
                         break;
                     }
                 case (RouterPathType.upd):
                     {
-                        await Factory.CursoFactory.update(this.model);
+                        await FACTORY_CONSTANT.CursoFactory.update(this.model);
                         break;
                     }
             }
-            NotifyUtil.notifyI18N(I18N_MESSAGE.MODELO_SALVAR, ApplicationService.getLanguage(), NOTIFY_TYPE.SUCCESS);
+            NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.MODELO_SALVAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);

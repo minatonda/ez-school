@@ -1,53 +1,56 @@
+import { FlaggerEntry } from '../flagger/flagger';
+import { FormBuilderInput } from '../form-builder/form-builder.types';
+
 export interface CardTableColumnConfig {
     moeda?: boolean;
+    input?: FormBuilderInput;
+    title?: string;
+}
+
+interface CardTableColumnInterface {
+    value: (item: any) => string | number | Date;
+    label: () => string | number | Date;
+    config?: CardTableColumnConfig;
 }
 
 export class CardTableColumn {
-    constructor(value: (item: any) => string | number | Date, label: () => string | number | Date, config?: CardTableColumnConfig) {
-        this.value = value;
-        this.label = label;
-        this.config = config;
+    constructor(config: CardTableColumnInterface) {
+        for (let key in config) {
+            this[key] = config[key];
+        }
+        if (!config.config) {
+            this.config = {};
+        }
     }
     value: (item: any) => string | number | Date;
     label: () => string | number | Date;
-    config: CardTableColumnConfig;
+    config?: CardTableColumnConfig;
 }
 
-export class CardTableMenuEntry {
-    constructor(method: (item: any) => any, label: (item: any) => string | number | Date, iconClass: (item: any) => Array<string>, btnClass?: (item: any) => Array<string>) {
-        this.method = method;
-        this.label = label;
-        this.iconClass = iconClass;
-        this.btnClass = btnClass;
-    }
-    method: (item: any) => string | number | Date;
+interface CardTableMenuEntryInterface {
+    method: (item: any) => void;
     label: (item: any) => string | number | Date;
-    iconClass: (item: any) => Array<string>;
-    btnClass: (item: any) => Array<string>;
+    iconClass: (item: any) => Array < string > ;
+    btnClass: (item: any) => Array < string > ;
+    disabled?: (item: any) => boolean;
+}
+
+export class CardTableMenuEntry implements CardTableMenuEntryInterface {
+    constructor(config: CardTableMenuEntryInterface) {
+        this.method = config.method;
+        this.label = config.label;
+        this.iconClass = config.iconClass;
+        this.btnClass = config.btnClass;
+        this.disabled = config.disabled;
+    }
+    method: (item: any) => void;
+    label: (item: any) => string | number | Date;
+    iconClass: (item: any) => string[];
+    btnClass: (item: any) => string[];
+    disabled: (item: any) => boolean;
 }
 
 export class CardTableMenu {
-    main: Array<CardTableMenuEntry>;
-    row: Array<CardTableMenuEntry>;
-}
-
-export class CardTableFilter {
-    constructor(description: string, key: string) {
-        this.description = description;
-        this.key = key;
-    }
-    description: string;
-    key: string;
-}
-
-export class CardTablePage <T> {
-    content: Array<T>;
-    last: boolean;
-    first: boolean;
-    sort: boolean;
-    size: number;
-    number: number;
-    totalPages: number;
-    totalElements: number;
-    numberOfElements: number;
+    main: Array < CardTableMenuEntry > ;
+    row: Array < CardTableMenuEntry > ;
 }

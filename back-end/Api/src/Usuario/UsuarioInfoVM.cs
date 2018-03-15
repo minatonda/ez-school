@@ -18,7 +18,9 @@ namespace Api.UsuarioApi {
         public string RG { get; set; }
         public string CPF { get; set; }
         public bool Ativo { get; set; } = true;
-        public List<string> Perfis { get; set; }
+        public List<string> Roles { get; set; }
+        public AlunoVM Aluno { get; set; }
+        public ProfessorVM Professor { get; set; }
         public List<AreaInteresseVM> AreaInteresses { get; set; }
 
     }

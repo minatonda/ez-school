@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>{{alias}}</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Usuario</label>
+                                <selector v-model="model.usuario" v-bind:query="ui.queryUsuario" placeholder="Usuário" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group text-right">
+                <button class="btn btn-primary" v-on:click="save()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

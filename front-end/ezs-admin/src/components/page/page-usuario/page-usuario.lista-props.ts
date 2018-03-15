@@ -2,17 +2,31 @@ import { PageListaPropsInterface } from '../page-lista/page-lista-props.interfac
 import { CardTableColumn, CardTableMenuEntry } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 import { AppRouterPath } from '../../../app.router.path';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { UsuarioModel } from '../../../../../ezs-common/src/model/server/usuario.model';
 
 export class PageUsuarioListaProps implements PageListaPropsInterface {
 
     columns = [
-        new CardTableColumn((item: UsuarioModel) => item.username, () => 'Username'),
-        new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.nome || '', () => 'Nome'),
-        new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('ALUNO') > -1 ? '<i class ="fa fa-check">' : '', () => 'Aluno'),
-        new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('PROFESSOR') > -1 ? '<i class ="fa fa-check">' : '', () => 'Professor'),
-        new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('ADMINISTRADOR') > -1 ? '<i class ="fa fa-check">' : '', () => 'Administrador'),
+        new CardTableColumn({
+            value: (item: UsuarioModel) => item.username,
+            label: () => 'Username'
+        }),
+        new CardTableColumn({
+            value: (item: UsuarioModel) => item.usuarioInfo.nome,
+            label: () => 'Nome'
+        }),
+        new CardTableColumn({
+            value: (item: UsuarioModel) => item.usuarioInfo.rg,
+            label: () => 'RG'
+        }),
+        new CardTableColumn({
+            value: (item: UsuarioModel) => item.usuarioInfo.email,
+            label: () => 'Email'
+        }),
+        // new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('ALUNO') > -1 ? '<i class ="fa fa-check">' : '', () => 'Aluno'),
+        // new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('PROFESSOR') > -1 ? '<i class ="fa fa-check">' : '', () => 'Professor'),
+        // new CardTableColumn((item: UsuarioModel) => item.usuarioInfo && item.usuarioInfo.perfis.indexOf('ADMINISTRADOR') > -1 ? '<i class ="fa fa-check">' : '', () => 'Administrador'),
     ];
     menu = {
         row: [],
@@ -20,7 +34,7 @@ export class PageUsuarioListaProps implements PageListaPropsInterface {
     };
     routePathAdd = AppRouterPath.USUARIO_ADD;
     routePathUpdate = AppRouterPath.USUARIO_UPD;
-    query = Factory.UsuarioFactory.all;
-    queryRemove = Factory.UsuarioFactory.disable;
+    query = FACTORY_CONSTANT.UsuarioFactory.all;
+    queryRemove = FACTORY_CONSTANT.UsuarioFactory.disable;
 
 }

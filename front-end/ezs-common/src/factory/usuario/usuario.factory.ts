@@ -4,6 +4,7 @@ import { ProfessorModel } from './../../model/server/professor.model';
 import { AlunoModel } from './../../model/server/aluno.model';
 import { AutenticacaoModel } from './../../model/server/autenticacao.model';
 import { UsuarioInfoModel } from '../../model/server/usuario-info.model';
+import { InstituicaoModel } from '../../model/server/instituicao.model';
 
 export class Factory extends BaseFactory {
 
@@ -69,9 +70,55 @@ export class Factory extends BaseFactory {
         }
     }
 
+    public allByTermo = async (termo: string, onlyAluno: boolean, onlyProfessor: boolean) => {
+        try {
+            let result = await this.get('/api/usuario/by-termo', {
+                params: {
+                    termo: termo,
+                    onlyAluno: onlyAluno,
+                    onlyProfessor: onlyProfessor
+                }
+            }) as Array < UsuarioModel > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
     public me = async () => {
         try {
             let result = await this.get('/api/business/usuario/me') as UsuarioInfoModel;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public meInstituicao = async () => {
+        try {
+            let result = await this.get('/api/business/usuario/me/instituicao') as Array < InstituicaoModel > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public meAuthorizedView = async () => {
+        try {
+            let result = await this.get('/api/business/usuario/me/authorized-view') as Array < string > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public meAdmin = async () => {
+        try {
+            let result = await this.get('/api/business/usuario/me/admin') as boolean ;
             return result;
         }
         catch (error) {

@@ -1,0 +1,10 @@
+.dropdown {
+    position: relative;
+    max-width: 100%;
+    
+    ul {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+    }
+}

@@ -1,4 +1,3 @@
-
 import { AutenticaoServiceInterface } from '../service/autenticacao.service.interface';
 import { NetworkError } from '../error/network.error';
 import { RequestError } from '../error/request.error';
@@ -9,24 +8,29 @@ import _ from 'lodash';
 export class BaseFactory {
 
     private axios = axios.create();
+    private interceptorOnRequestSuccess;
+    private interceptorOnRequestError;
     protected authenticationService: AutenticaoServiceInterface;
 
     protected requestConfig: AxiosRequestConfig;
 
-    constructor(authenticationService: AutenticaoServiceInterface) {
+    constructor(authenticationService: AutenticaoServiceInterface, interceptorOnRequestSuccess: any, interceptorOnRequestError: any) {
         this.authenticationService = authenticationService;
         this.requestConfig = {};
         this.requestConfig.baseURL = process.env.API_URL;
         this.requestConfig.timeout = 60000;
-        this.requestConfig.headers = {  };
-        this.axios.interceptors.response.use(this.onRequestSuccess, this.onRequestError);
+        this.requestConfig.headers = {};
+        this.interceptorOnRequestSuccess = interceptorOnRequestSuccess;
+        // this.interceptorOnRequestError = interceptorOnRequestError;
+        // this.axios.interceptors.response.use(this.onRequestSuccess, this.onRequestError);
     }
 
     protected post = async (url: string, body: any, config?: any) => {
         try {
             let result = await this.axios.post(url, body, this.getRequestConfigAssigned(config));
             return result.data;
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
@@ -35,7 +39,8 @@ export class BaseFactory {
         try {
             let result = await this.axios.put(url, body, this.getRequestConfigAssigned(config));
             return result.data;
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
@@ -44,7 +49,8 @@ export class BaseFactory {
         try {
             let result = await this.axios.get(url, this.getRequestConfigAssigned(config));
             return result.data;
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
@@ -53,17 +59,28 @@ export class BaseFactory {
         try {
             let result = await this.axios.delete(url, this.getRequestConfigAssigned(config));
             return result.data;
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
 
     private onRequestSuccess = (response) => {
-        return response;
+        if (this.interceptorOnRequestSuccess) {
+            return this.interceptorOnRequestSuccess(response);
+        }
+        else {
+            return response;
+        }
     }
 
     private onRequestError = (response) => {
-        return Promise.reject(this.toError(response));
+        if (this.interceptorOnRequestSuccess) {
+            return this.interceptorOnRequestError(response);
+        }
+        else {
+            return Promise.reject(this.toError(response));
+        }
     }
 
     private remakeRequest = async (config: AxiosRequestConfig) => {
@@ -71,14 +88,15 @@ export class BaseFactory {
             let newConfig = Object.assign({}, config);
             let result = await axios.request(newConfig);
             return result;
-        } catch (error) {
+        }
+        catch (error) {
             throw error;
         }
     }
 
     private toError(error: any) {
         if (error.message === 'Network Error') {
-            return new NetworkError(error, error.config.url);
+            return new NetworkError('', error, error.config.url);
         }
         else {
             return new RequestError(error, error.config.url, error.statusCode, error.response.data);

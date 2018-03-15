@@ -3,6 +3,6 @@
         <slot></slot>
     </div>
     <ul class="card list-group" v-show="ui.visible">
-        <li class="list-group-item list-group-item-action text-left" v-for="item in itens" v-on:click="onSelect(item)">{{getLabelByDropDownItem(item)}}</li>
+        <li class="list-group-item list-group-item-action text-left" v-for="item in itens" v-on:click="onSelect(item)" v-html="getLabelByDropDownItem(item)">getLabelByDropDownItem(item)</li>
     </ul>
 </div>

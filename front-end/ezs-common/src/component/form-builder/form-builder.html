@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-body pt-3 pb-2">
+            <div class="row">
+                <div class="col-12 mb-2" v-bind:class="getInputClass(inputs,iInput)" v-for="(input,iInput) in inputs">
+                    <label class="control-label">{{input.description}}</label>
+                    <gp-selector v-if="util.isFormBuilderInputSelector(input) && input.query" v-model="data.values[input.key]" v-bind:placeholder="input.description" v-bind:query="input.query" v-bind:output-as="input.outputAs" v-bind:label="input.label" v-bind:name="input.name">
+                    </gp-selector>
+                    <gp-selector v-if="util.isFormBuilderInputSelector(input) && !input.query" v-model="data.values[input.key]" v-bind:placeholder="input.description" v-bind:itens="input.itens" v-bind:output-as="input.outputAs" v-bind:label="input.label" v-bind:name="input.name">
+                    </gp-selector>
+                    <gp-date-catcher v-if="util.isFormBuilderInputDateCatcher(input)" v-model="data.values[input.key]" v-bind:placeholder="input.description" v-bind:name="input.name" v-bind:label="input.label">
+                    </gp-date-catcher>
+                    <input class="form-control" v-if="util.isFormBuilderInputText(input)" v-model="data.values[input.key]" v-bind:placeholder="input.description">
+                </div>
+                <div class="col-12 col-md-1 mb-2">
+                    <label class="control-label invisible">Ocupar</label>
+                    <button class="btn btn-primary btn-block" v-on:click="submitData(data.values);">
+                        <span>{{submitLabel}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

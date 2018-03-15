@@ -2,28 +2,35 @@ import { PageListaPropsInterface } from '../page-lista/page-lista-props.interfac
 import { CardTableColumn, CardTableMenuEntry } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 import { AppRouterPath } from '../../../app.router.path';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { InstituicaoCategoriaModel } from '../../../../../ezs-common/src/model/server/instituicao-categoria.model';
 
 export class PageInstituicaoCategoriaListaProps implements PageListaPropsInterface {
 
     columns = [
-        new CardTableColumn((item: InstituicaoCategoriaModel) => item.nome, () => 'Nome'),
-        new CardTableColumn((item: InstituicaoCategoriaModel) => item.descricao, () => 'Descrição')
+        new CardTableColumn({
+            value: (item: InstituicaoCategoriaModel) => item.nome,
+            label: () => 'Nome'
+        }),
+        new CardTableColumn({
+            value: (item: InstituicaoCategoriaModel) => item.descricao,
+            label: () => 'Descrição'
+        })
     ];
     menu = {
         row: [
-            new CardTableMenuEntry(
-                (item) => AppRouter.push({ name: AppRouterPath.INSTITUICAO_CURSO, params: { id: item.id } }),
-                (item) => 'Gerenciar Cursos',
-                (item) => ['fa', 'fa-book'],
-                (item) => ['btn-primary']
-            )
-        ], main: []
+            new CardTableMenuEntry({
+                label: (item) => 'Gerenciar Cursos',
+                method: (item) => AppRouter.push({ name: AppRouterPath.INSTITUICAO_CURSO, params: { id: item.id } }),
+                btnClass: (item) => ['fa', 'fa-book'],
+                iconClass: (item) => ['btn-primary']
+            })
+        ],
+        main: []
     };
     routePathAdd = AppRouterPath.INSTITUICAO_CATEGORIA_ADD;
     routePathUpdate = AppRouterPath.INSTITUICAO_CATEGORIA_UPD;
-    query = Factory.InstituicaoCategoriaFactory.all;
-    queryRemove = Factory.InstituicaoCategoriaFactory.disable;
+    query = FACTORY_CONSTANT.InstituicaoCategoriaFactory.all;
+    queryRemove = FACTORY_CONSTANT.InstituicaoCategoriaFactory.disable;
 
 }

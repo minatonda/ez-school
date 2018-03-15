@@ -1,7 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { AutenticacaoService } from '../../../module/service/autenticacao.service';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { UsuarioModel } from '../../../../../ezs-common/src/model/server/usuario.model';
 
 @Component({
@@ -21,7 +21,7 @@ export class PageAutenticacaoComponent extends Vue {
     public async autenticar() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            let retorno = await Factory.UsuarioFactory.autenticar(this.model);
+            let retorno = await FACTORY_CONSTANT.UsuarioFactory.autenticar(this.model);
             AutenticacaoService.autenticar(retorno);
         }
         catch (e) {

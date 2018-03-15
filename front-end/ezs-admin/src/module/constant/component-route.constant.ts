@@ -21,6 +21,10 @@ import { PageInstituicaoCursoOcorrenciaComponent } from '../../components/page/p
 import { PageInstituicaoCursoOcorrenciaListaProps } from '../../components/page/page-instituicao-curso-ocorrencia/page-instituicao-curso-ocorrencia.lista-props';
 import { PageCategoriaProfissionalListaProps } from '../../components/page/page-categoria-profissional/page-categoria-profissional.lista-props';
 import { PageCategoriaProfissionalComponent } from '../../components/page/page-categoria-profissional/index';
+import { PageInstituicaoColaboradorComponent } from '../../components/page/page-instituicao-colaborador';
+import { PageInstituicaoColaboradorListaProps } from '../../components/page/page-instituicao-colaborador/page-instituicao-colaborador.lista-props';
+import { PageInstituicaoColaboradorPerfilComponent } from '../../components/page/page-instituicao-colaborador-perfil';
+import { PageInstituicaoColaboradorPerfilListaProps } from '../../components/page/page-instituicao-colaborador-perfil/page-instituicao-colaborador-perfil.lista-props';
 
 export const COMPONENT_ROUTE_CONSTANT: Array < BaseRouteConfig > = [
     { menu: true, type: RouterPathType.otr, path: AppRouterPath.ROOT, name: AppRouterPath.ROOT, component: PageHomeComponent, alias: 'Home' },
@@ -50,6 +54,14 @@ export const COMPONENT_ROUTE_CONSTANT: Array < BaseRouteConfig > = [
     { menu: true, type: RouterPathType.list, path: AppRouterPath.INSTITUICAO_CATEGORIA, name: AppRouterPath.INSTITUICAO_CATEGORIA, component: PageListaComponent, alias: 'Categorias de Instituição', props: new PageInstituicaoCategoriaListaProps() },
     { menu: false, type: RouterPathType.add, path: AppRouterPath.INSTITUICAO_CATEGORIA_ADD, name: AppRouterPath.INSTITUICAO_CATEGORIA_ADD, component: PageInstituicaoCategoriaComponent, alias: 'Categorias de Instituição' },
     { menu: false, type: RouterPathType.upd, path: AppRouterPath.INSTITUICAO_CATEGORIA_UPD, name: AppRouterPath.INSTITUICAO_CATEGORIA_UPD, component: PageInstituicaoCategoriaComponent, alias: 'Categorias de Instituição' },
+
+    { menu: false, type: RouterPathType.list, path: AppRouterPath.INSTITUICAO_COLABORADOR, name: AppRouterPath.INSTITUICAO_COLABORADOR, component: PageListaComponent, alias: 'Colaboradores por Instituição', props: new PageInstituicaoColaboradorListaProps() },
+    { menu: false, type: RouterPathType.add, path: AppRouterPath.INSTITUICAO_COLABORADOR_ADD, name: AppRouterPath.INSTITUICAO_COLABORADOR_ADD, component: PageInstituicaoColaboradorComponent, alias: 'Colaborador por Instituição' },
+    { menu: false, type: RouterPathType.upd, path: AppRouterPath.INSTITUICAO_COLABORADOR_UPD, name: AppRouterPath.INSTITUICAO_COLABORADOR_UPD, component: PageInstituicaoColaboradorComponent, alias: 'Colaborador por Instituição' },
+
+    { menu: false, type: RouterPathType.list, path: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL, name: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL, component: PageListaComponent, alias: 'Perfil de Colaboradores por Instituição', props: new PageInstituicaoColaboradorPerfilListaProps() },
+    { menu: false, type: RouterPathType.add, path: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_ADD, name: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_ADD, component: PageInstituicaoColaboradorPerfilComponent, alias: 'Perfil de Colaborador por Instituição' },
+    { menu: false, type: RouterPathType.upd, path: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_UPD, name: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_UPD, component: PageInstituicaoColaboradorPerfilComponent, alias: 'Perfil de Colaborador por Instituição' },
 
     { menu: false, type: RouterPathType.list, path: AppRouterPath.INSTITUICAO_CURSO, name: AppRouterPath.INSTITUICAO_CURSO, component: PageListaComponent, alias: 'Cursos por Instituição', props: new PageInstituicaoCursoListaProps() },
     { menu: false, type: RouterPathType.add, path: AppRouterPath.INSTITUICAO_CURSO_ADD, name: AppRouterPath.INSTITUICAO_CURSO_ADD, component: PageInstituicaoCursoComponent, alias: 'Curso por Instituição' },

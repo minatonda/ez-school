@@ -7,11 +7,15 @@ import { AppRouterPath } from './app.router.path';
 import { COMPONENT_ROUTE_CONSTANT } from './module/constant/component-route.constant';
 import { AutenticaoServiceInterface } from '../../ezs-common/src/service/autenticacao.service.interface';
 import { BaseRouter } from '../../ezs-common/src/base.router';
+import { I18NUtil } from '../../ezs-common/src/util/i18n/i18n.util';
+import { I18N_ERROR_GENERIC } from '../../ezs-common/src/constant/i18n-template-messages.contant';
+import { ApplicationService } from './module/service/application.service';
+import { NotifyUtil } from '../../ezs-common/src/util/notify/notify.util';
 
 class Router extends BaseRouter {
 
-    constructor(config: Array<BaseRouteConfig>, AutenticacaoService: AutenticaoServiceInterface) {
-        super(config, AutenticacaoService);
+    constructor(config: Array < BaseRouteConfig > ) {
+        super(config);
         this.afterEach(this.onAfterEach);
         this.beforeEach(this.onBeforeEach);
     }
@@ -20,63 +24,75 @@ class Router extends BaseRouter {
         AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
     }
 
-    private onBeforeEach = (to, from, next) => {
-        try {
-            AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            if (this.isPermitido(to.path)) {
-                next();
+    private onBeforeEach = async (to, from, next) => {
+
+
+        AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
+
+        setImmediate(async () => {
+            try {
+
+                if (AutenticacaoService.isAutenticado() && !ApplicationService.isReady() && !ApplicationService.isLoading()) {
+                    ApplicationService.configureDefaults();
+                }
+
+                while (AutenticacaoService.isAutenticado() && !ApplicationService.isReady() && ApplicationService.isLoading()) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
+                if (AutenticacaoService.isAutenticado() && this.isRoutePermitidoWhenAutenticado(to.name, to.params)) {
+                    next();
+                }
+                else if (AutenticacaoService.isAutenticado()) {
+                    let template = I18NUtil.getTemplateMessageGeneric(I18N_ERROR_GENERIC.ACESSO_NEGADO, ApplicationService.getLanguage());
+                    throw new BaseError('unauthorized', template.title, template.message);
+                }
+                else if (this.isRoutePermitidoWhenNotAutenticado(to.name)) {
+                    next();
+                }
+            }
+            catch (error) {
+
+                console.error(error);
+                switch ((error.constructor)) {
+                    case (RedirectError):
+                        {
+                            this.push((error as RedirectError).url);
+                            break;
+                        }
+                    default:
+                        {
+                            NotifyUtil.error((error as BaseError).title, (error as BaseError).message);
+                            break;
+                        }
+                }
+
+                next(false);
                 AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
+
             }
-            else {
-                throw new BaseError('Acesso Negado', 'Você não possui privilégios para acessar este recurso');
-            }
-        }
-        catch (error) {
-            next(false);
-            AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
-            switch ((error.constructor)) {
-                case (RedirectError):
-                    {
-                        this.push((error as RedirectError).url);
-                        break;
-                    }
-                default:
-                    {
-                        this.push('erro-na-aplicacao');
-                        break;
-                    }
-            }
-        }
+
+        });
+
+
+
     }
 
-    private isPermitido = (path) => {
-        switch (this.autenticacaoService.isAutenticado()) {
-            case (true):
-                {
-                    return this.isRoutePermitidoWhenAutenticado(path);
-                }
-            case (false):
-                {
-                    return this.isRoutePermitidoWhenNotAutenticado(path);
-                }
-        }
-    }
 
-    private isRoutePermitidoWhenAutenticado = (path) => {
+    private isRoutePermitidoWhenAutenticado = (path, params) => {
         switch (path) {
-            case (AppRouterPath.AUTENTICACAO):
+            case (AppRouterPath.AULA_GERENCIAMENTO_NOTA):
                 {
-                    throw new RedirectError('usuario está autenticado', '/');
+                    return ApplicationService.isAdmin() || ApplicationService.getInstituicaoBusinessAulasByProfessor().find(x => x.id.toString() === params.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString());
                 }
             default:
                 {
-                    return true;
+                    return true || ApplicationService.isAdmin() || ApplicationService.getViews().indexOf(path) > -1;
                 }
         }
     }
 
     private isRoutePermitidoWhenNotAutenticado = (path) => {
-        let _message = 'usuário não autenticado.';
         switch (path) {
             case (AppRouterPath.AUTENTICACAO):
                 {
@@ -84,11 +100,12 @@ class Router extends BaseRouter {
                 }
             default:
                 {
-                    throw new RedirectError(_message, AppRouterPath.AUTENTICACAO);
+                    let template = I18NUtil.getTemplateMessageGeneric(I18N_ERROR_GENERIC.JA_AUTENTICADO, ApplicationService.getLanguage());
+                    throw new RedirectError(template.title, template.message, AppRouterPath.AUTENTICACAO);
                 }
         }
     }
 
 }
 
-export const AppRouter = new Router(COMPONENT_ROUTE_CONSTANT, AutenticacaoService);
+export const AppRouter = new Router(COMPONENT_ROUTE_CONSTANT);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Api.Common.Base;
 using Api.CursoApi;
 using Api.UsuarioApi;
@@ -15,17 +16,23 @@ namespace Api.InstituicaoApi {
 
         private InstituicaoService _instituicaoService;
 
-        public InstituicaoBusinessController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
+        public InstituicaoBusinessController(InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository, UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository, instituicaoRepository, cursoRepository) {
             this._instituicaoService = new InstituicaoService(instituicaoRepository, cursoRepository);
         }
 
         [HttpPost("instituicao-curso-ocorrencia-notas/{idInstituicaoCursoOcorrenciaPeriodoProfessor}/save")]
         public void SaveInstituicaoCursoOcorrenciaNotas(long idInstituicaoCursoOcorrenciaPeriodoProfessor, [FromBody] List<InstituicaoCursoOcorrenciaNotaVM> instituicaoCursoOcorrenciaNotas) {
+            if (this.GetInstituicaoCursoOcorrenciaPeriodoProfessorOfAuthenticated().Select(x => x.ID).Contains(idInstituicaoCursoOcorrenciaPeriodoProfessor)) {
+                throw new BaseUnauthorizedException();
+            }
             this._instituicaoService.SaveInstituicaoCursoOcorrenciaNotas(instituicaoCursoOcorrenciaNotas, idInstituicaoCursoOcorrenciaPeriodoProfessor);
         }
 
         [HttpPost("formula-nota-final/{idInstituicaoCursoOcorrenciaPeriodoProfessor}/save")]
         public void SaveFormulaNotaFinal(long idInstituicaoCursoOcorrenciaPeriodoProfessor, [FromBody] string[] formulaNotaFinal) {
+            if (this.GetInstituicaoCursoOcorrenciaPeriodoProfessorOfAuthenticated().Select(x => x.ID).Contains(idInstituicaoCursoOcorrenciaPeriodoProfessor)) {
+                throw new BaseUnauthorizedException();
+            }
             this._instituicaoService.SaveFormulaNotaFinal(String.Join(',', formulaNotaFinal), idInstituicaoCursoOcorrenciaPeriodoProfessor);
         }
 

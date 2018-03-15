@@ -1,7 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { AppRouter } from '../../../app.router';
 import { AppRouterPath } from '../../../app.router.path';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { ApplicationService } from '../../../module/service/application.service';
 import { InstituicaoBusinessAulaModel } from '../../../../../ezs-common/src/model/server/instituicao-business-aula.model';
 import { InstituicaoBusinessAulaDetalheAlunoModel } from '../../../../../ezs-common/src/model/server/instituicao-business-aula-detalhe-aluno.model';
@@ -9,6 +9,8 @@ import { CursoModel } from '../../../../../ezs-common/src/model/server/curso.mod
 import { InstituicaoModel } from '../../../../../ezs-common/src/model/server/instituicao.model';
 import { DateUtil } from '../../../../../ezs-common/src/util/date/date.util';
 import * as lodash from 'lodash';
+import { NotifyUtil } from '../../../../../ezs-common/src/util/notify/notify.util';
+import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 
 interface UI {
     instituicaoBusinessAulasByProfessor: Array < InstituicaoBusinessAulaModel > ;
@@ -39,8 +41,17 @@ export class PageHomeComponent extends Vue {
     };
 
     async mounted() {
-        this.ui.instituicaoBusinessAulasByProfessor = await Factory.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(ApplicationService.getUsuarioInfo().id);
-        this.ui.instituicaoBusinessAulasByAluno = await Factory.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id);
+        try {
+            AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
+            this.ui.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(ApplicationService.getUsuarioInfo().id);
+            this.ui.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id);
+        }
+        catch (e) {
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
+        }
+        finally {
+            AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
+        }
     }
 
     getUiQueryKeysFromInstituicaoBusinessAulas(instituicaoBusinessAulas: Array < InstituicaoBusinessAulaModel > ) {

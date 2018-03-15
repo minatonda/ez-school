@@ -1,4 +1,4 @@
-<div class="row" v-if="isAutenticado()">
+<div class="row">
     <nav class="navbar navbar-dark bg-primary w-100">
         <div class="row form-inline w-100">
             <div class="col-12 col-md-7 align-self-stretch p-hidden-md-down">
@@ -11,9 +11,11 @@
                 <selector v-bind:itens="getRotas()" placeholder="Buscar" v-bind:label="getRotasLabel" v-on:change="aoSelecionarRota" v-bind:clear-after="true"></selector>
             </div>
             <div class="col-3 col-md-1 d-flex align-self-stretch justify-content-end">
-                <button class="btn btn-primary h-100" type="submit">
-                    <i class="fa fa-bars"></i>
-                </button>
+                <dropdown v-model="ui.showUserDropdown" v-bind:itens="ui.userDropdownItens" class="d-inline-block w-100 text-right">
+                    <button class="btn btn-primary h-100">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </dropdown>
             </div>
         </div>
     </nav>

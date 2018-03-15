@@ -47,13 +47,13 @@ namespace Api.InstituicaoApi {
             this._instituicaoRepository.SaveChanges();
         }
 
-        public void AddInstituicaoCursoOcorrencia(long id, InstituicaoCursoOcorrenciaVM instituicaoCurso) {
-            var model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCurso, true);
+        public void AddInstituicaoCursoOcorrencia(long id, InstituicaoCursoOcorrenciaVM instituicaoCursoOcorrencia) {
+            var model = InstituicaoCursoOcorrenciaAdapter.ToModel(instituicaoCursoOcorrencia, true);
             model.InstituicaoCurso = this._instituicaoRepository.GetInstituicaoCurso(id);
             model.DataInicio = model.DataInicio.HasValue ? model.DataInicio : DateTime.Now;
             this._instituicaoRepository.AddInstituicaoCursoOcorrencia(model);
 
-            instituicaoCurso.InstituicaoCursoOcorrenciaPeriodos.ForEach(x => {
+            instituicaoCursoOcorrencia.InstituicaoCursoOcorrenciaPeriodos.ForEach(x => {
                 var modelInstituicaoCursoOcorrenciaPeriodo = InstituicaoCursoOcorrenciaPeriodoAdapter.ToModel(x, true);
                 modelInstituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia = model;
 
@@ -61,7 +61,7 @@ namespace Api.InstituicaoApi {
 
                 x.InstituicaoCursoOcorrenciaPeriodoAlunos.ForEach(y => {
                     var modelInstituicaoCursoOcorrenciaPeriodoAluno = InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToModel(y, true);
-                    modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(instituicaoCurso, y.Aluno);
+                    modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(instituicaoCursoOcorrencia, y.Aluno);
                     modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo = modelInstituicaoCursoOcorrenciaPeriodo;
 
                     this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoAluno(modelInstituicaoCursoOcorrenciaPeriodoAluno);
@@ -82,6 +82,20 @@ namespace Api.InstituicaoApi {
                 });
             });
 
+            this._instituicaoRepository.SaveChanges();
+        }
+
+        public void AddInstituicaoColaborador(long id, InstituicaoColaboradorVM instituicaoColaborador) {
+            var model = InstituicaoColaboradorAdapter.ToModel(instituicaoColaborador, true);
+            model.Instituicao = this._instituicaoRepository.Get(id);
+            this._instituicaoRepository.AddInstituicaoColaborador(model);
+            this._instituicaoRepository.SaveChanges();
+        }
+
+        public void AddInstituicaoColaboradorPerfil(long id, InstituicaoColaboradorPerfilVM instituicaoColaboradorPerfil) {
+            var model = InstituicaoColaboradorPerfilAdapter.ToModel(instituicaoColaboradorPerfil, true);
+            model.Instituicao = this._instituicaoRepository.Get(id);
+            this._instituicaoRepository.AddInstituicaoColaboradorPerfil(model);
             this._instituicaoRepository.SaveChanges();
         }
 
@@ -207,6 +221,20 @@ namespace Api.InstituicaoApi {
             this._instituicaoRepository.SaveChanges();
         }
 
+        public void UpdateInstituicaoColaborador(long id, InstituicaoColaboradorVM instituicaoColaborador) {
+            var model = InstituicaoColaboradorAdapter.ToModel(instituicaoColaborador, true);
+            model.Instituicao = this._instituicaoRepository.Get(id);
+            this._instituicaoRepository.UpdateInstituicaoColaborador(model);
+            this._instituicaoRepository.SaveChanges();
+        }
+
+        public void UpdateInstituicaoColaboradorPerfil(long id, InstituicaoColaboradorPerfilVM instituicaoColaboradorPerfil) {
+            var model = InstituicaoColaboradorPerfilAdapter.ToModel(instituicaoColaboradorPerfil, true);
+            model.Instituicao = this._instituicaoRepository.Get(id);
+            this._instituicaoRepository.UpdateInstituicaoColaboradorPerfil(model);
+            this._instituicaoRepository.SaveChanges();
+        }
+
         public void SaveFormulaNotaFinal(string formulaNotaFinal, long idInstituicaoCursoOcorrenciaPeriodoProfessor) {
             var instituicaoCursoOcorrenciaPeriodoProfessor = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor);
             instituicaoCursoOcorrenciaPeriodoProfessor.FormulaNotaFinal = formulaNotaFinal;
@@ -256,7 +284,43 @@ namespace Api.InstituicaoApi {
         public List<InstituicaoCursoVM> AllInstituicaoCurso(long id) {
             return this._instituicaoRepository
             .GetAllInstituicaoCursoByInstituicao(id, true)
-            .Select(x => InstituicaoCursoAdapter.ToViewModel(x, false))
+            .Select(x => InstituicaoCursoAdapter.ToViewModel(x, true))
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorVM> AllInstituicaoColaborador(long id) {
+            return this._instituicaoRepository
+            .GetAllInstituicaoColaboradorByInstituicao(id, true)
+            .Select(x => InstituicaoColaboradorAdapter.ToViewModel(x, true))
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorPerfilVM> AllInstituicaoColaboradorPerfil(long id) {
+            return this._instituicaoRepository
+            .GetAllInstituicaoColaboradorPerfilByInstituicao(id, true)
+            .Select(x => InstituicaoColaboradorPerfilAdapter.ToViewModel(x, true))
+            .ToList();
+        }
+
+        public List<InstituicaoColaboradorPerfilVM> AllInstituicaoColaboradorPerfilByUsuario(string id, long idInstituicao) {
+            return this._instituicaoRepository
+            .GetAllInstituicaoColaboradorPerfilByUsuario(id, idInstituicao, true)
+            .Select(x => InstituicaoColaboradorPerfilAdapter.ToViewModel(x, true))
+            .ToList();
+        }
+
+
+        public List<InstituicaoColaboradorPerfilVM> AllInstituicaoColaboradorPerfilByUsuario(string id) {
+            return this._instituicaoRepository
+            .GetAllInstituicaoColaboradorPerfilByUsuario(id, true)
+            .Select(x => InstituicaoColaboradorPerfilAdapter.ToViewModel(x, true))
+            .ToList();
+        }
+
+         public List<InstituicaoVM> AllInstituicaoByUsuario(string id) {
+            return this._instituicaoRepository
+            .AllInstituicaoByUsuario(id, true)
+            .Select(x => InstituicaoAdapter.ToViewModel(x, true))
             .ToList();
         }
 
@@ -284,6 +348,16 @@ namespace Api.InstituicaoApi {
         public List<InstituicaoCursoOcorrenciaPeriodoAlunoVM> AllInstituicaoCursoOcorrenciaPeriodoAlunoByInstituicaoCursoOCorrenciaPeriodoProfessor(long id) {
             var instituicaoCursoOcorrenciaPeriodoProfessor = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoProfessor(id);
             return this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByInstituicaoCursoOcorrenciaPeriodo(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo.ID, true).Select(x => InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToViewModel(x, true)).ToList();
+        }
+
+        public List<InstituicaoCursoOcorrenciaPeriodoAlunoVM> AllInstituicaoCursoOcorrenciaPeriodoAlunoByAluno(string id) {
+            var instituicaoCursoOcorrenciaPeriodoAlunos = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByAluno(id, true);
+            return instituicaoCursoOcorrenciaPeriodoAlunos.Select(x => InstituicaoCursoOcorrenciaPeriodoAlunoAdapter.ToViewModel(x, true)).ToList();
+        }
+
+        public List<InstituicaoCursoOcorrenciaPeriodoProfessorVM> AllInstituicaoCursoOcorrenciaPeriodoProfessorByProfessor(string id) {
+            var instituicaoCursoOcorrenciaPeriodoProfessores = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByProfessor(id, true);
+            return instituicaoCursoOcorrenciaPeriodoProfessores.Select(x => InstituicaoCursoOcorrenciaPeriodoProfessorAdapter.ToViewModel(x, true)).ToList();
         }
 
         public List<InstituicaoBusinessAulaVM> AllInstituicaoBusinessAulaByProfessor(string id) {
@@ -317,7 +391,7 @@ namespace Api.InstituicaoApi {
             var turmas = this._instituicaoRepository.GetAllInstituicaoCursoTurmaByInstituicaoCurso(id, true);
             var periodos = this._instituicaoRepository.GetAllInstituicaoCursoPeriodoByInstituicaoCurso(id, true);
 
-            var instituicaoCursoVM = InstituicaoCursoAdapter.ToViewModel(this._instituicaoRepository.GetInstituicaoCurso(id), false);
+            var instituicaoCursoVM = InstituicaoCursoAdapter.ToViewModel(instituicaoCurso, false);
             instituicaoCursoVM.Periodos = periodos.Select(x => InstituicaoCursoPeriodoAdapter.ToViewModel(x, true)).ToList();
             instituicaoCursoVM.Turmas = turmas.Select(x => InstituicaoCursoTurmaAdapter.ToViewModel(x, true)).ToList();
 
@@ -351,13 +425,25 @@ namespace Api.InstituicaoApi {
             return instituicaoCursoOcorrenciaVM;
         }
 
+        public InstituicaoColaboradorVM DetailInstituicaoColaborador(long id) {
+            var instituicaoColaborador = this._instituicaoRepository.GetInstituicaoColaborador(id);
+            var instituicaoColaboradorVM = InstituicaoColaboradorAdapter.ToViewModel(instituicaoColaborador, true);
+            return instituicaoColaboradorVM;
+        }
+
+        public InstituicaoColaboradorPerfilVM DetailInstituicaoColaboradorPerfil(long id) {
+            var instituicaoColaboradorPerfil = this._instituicaoRepository.GetInstituicaoColaboradorPerfil(id);
+            var instituicaoColaboradorPerfilVM = InstituicaoColaboradorPerfilAdapter.ToViewModel(instituicaoColaboradorPerfil, true);
+            return instituicaoColaboradorPerfilVM;
+        }
+
         public string GetFormulaNotaFinal(long idInstituicaoCursoOcorrenciaPeriodoProfessor) {
             return this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor).FormulaNotaFinal;
         }
 
         public double? GetNotaFinalByAluno(long idInstituicaoCursoOcorrenciaPeriodoProfessor, string idAluno) {
             var formulaNotaFinalWithValues = this._instituicaoRepository.GetFormulaNotaFinalWithValuesByAluno(idInstituicaoCursoOcorrenciaPeriodoProfessor, idAluno);
-            if (formulaNotaFinalWithValues.Length == 0) { 
+            if (formulaNotaFinalWithValues.Length == 0) {
                 return null;
             } else {
                 return Double.Parse(new Expression(formulaNotaFinalWithValues).Evaluate().ToString());

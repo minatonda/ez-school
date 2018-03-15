@@ -33,6 +33,14 @@ export enum AppRouterPath {
         INSTITUICAO_CURSO_ADD = '/instituicao/:id/curso/add',
         INSTITUICAO_CURSO_UPD = '/instituicao/:id/curso/:idInstituicaoCurso/upd',
 
+        INSTITUICAO_COLABORADOR = '/instituicao/:id/colaborador',
+        INSTITUICAO_COLABORADOR_ADD = '/instituicao/:id/colaborador/add',
+        INSTITUICAO_COLABORADOR_UPD = '/instituicao/:id/colaborador/:idInstituicaoColaborador/upd',
+        
+        INSTITUICAO_COLABORADOR_PERFIL = '/instituicao/:id/colaborador-perfil',
+        INSTITUICAO_COLABORADOR_PERFIL_ADD = '/instituicao/:id/colaborador-perfil/add',
+        INSTITUICAO_COLABORADOR_PERFIL_UPD = '/instituicao/:id/colaborador-perfil/:idInstituicaoColaboradorPerfil/upd',
+
         INSTITUICAO_CURSO_OCORRENCIA = '/instituicao/:id/curso/:idInstituicaoCurso/ocorrencia',
         INSTITUICAO_CURSO_OCORRENCIA_ADD = '/instituicao/:id/curso/:idInstituicaoCurso/ocorrencia/add',
         INSTITUICAO_CURSO_OCORRENCIA_UPD = '/instituicao/:id/curso/:idInstituicaoCurso/ocorrencia/:idInstituicaoCursoOcorrencia/upd',

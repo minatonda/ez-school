@@ -1,158 +1,339 @@
 import { Vue } from 'vue-property-decorator';
 import { Prop, Component, Model, Watch } from 'vue-property-decorator';
 
+interface Data {
+    value: any;
+    itens: Array < any > ;
+    text: string;
+    enabled: boolean;
+    canDisable: boolean;
+    pointer: number;
+    loading: boolean;
+}
+
 @Component({
     template: require('./selector.html')
 })
 export class SelectorComponent extends Vue {
 
-    open: boolean = false;
-    close: boolean = false;
-    text: string = '';
-    pointer = 0;
-    internalValue: any = false;
-    queryItens: Array < any > = [];
+    data: Data = {
+        value: undefined,
+        itens: new Array < any > (),
+        text: undefined,
+        enabled: false,
+        canDisable: true,
+        pointer: 0,
+        loading: false
+    };
 
-    @Prop()
+    @Prop([String, Object, Array, Number, Boolean])
+    value: any;
+
+    @Prop({ type: Array })
     itens: Array < any > ;
-    @Prop({ default: null })
-    value;
-    @Prop(String)
-    placeholder: string;
+
+    @Prop({ type: Function })
+    query: Function;
+
     @Prop([String, Function])
     label: any;
-    @Prop({ type: Boolean })
-    disabled: false ;
-    @Prop({ type: Function })
-    change: Function;
+
     @Prop({ type: Boolean, default: false })
     clear: boolean;
     @Prop({ type: Boolean, default: false })
     clearAfter: boolean;
-    @Prop({ type: Function, default: undefined })
-    query: Function;
+    @Prop({ type: Boolean, default: false })
+    nullable: boolean;
+    @Prop({ type: Boolean, default: false })
+    onlyAutoComplete: boolean;
 
-    created() {
-        this.internalValue = this.value;
+    @Prop(String)
+    outputAs: string;
+
+    @Prop(String)
+    name: string;
+
+    @Prop(String)
+    inputLabel: string;
+
+    @Prop(String)
+    placeholder: string;
+
+
+    @Prop(Number)
+    limit: number;
+
+    async mounted() {
+        this.selectItem(this.value);
+        if (this.itens) {
+            this.data.itens = this.itens;
+        }
+        else if (this.query) {
+            this.doQuery(this.data.text);
+        }
     }
 
-    public isOpen() {
-        return this.open;
-    }
-
-    public isSelected(item) {
-        if (item) {
-            return this.internalValue === item;
+    @Watch('value')
+    onValueChange(val) {
+        if (this.outputAs) {
+            this.selectItem(this.data.itens.find(x => x[this.outputAs] === val));
         }
         else {
-            return !!this.internalValue;
+            this.selectItem(val);
         }
     }
 
-    public isDisabled() {
-        return !!this.disabled;
+    @Watch('query')
+    async onQueryChange(val) {
+        this.selectItem(undefined);
+        this.doQuery(this.data.text);
     }
 
-    public isPointer(index) {
-        return this.pointer === index;
+    @Watch('itens')
+    onItensChange(val) {
+        if (val) {
+            this.data.itens = val;
+        }
+        else {
+            this.data.itens = new Array < any > ();
+        }
     }
 
-    public isCloseEnabled() {
-        return this.close;
+    @Watch('clear')
+    onValueClear(val) {
+        if (this.clear) {
+            this.selectItem(undefined);
+        }
     }
 
-    public pointerForward() {
+    async doQuery(val) {
+        this.data.loading = true;
+        this.data.itens = await this.query(val);
+        this.data.loading = false;
+    }
 
-        if (this.getItens(this.text).length - 1 > this.pointer) {
-            this.pointer++;
+    onTextChanged(val) {
+        // Caso tenha apagado o texto, irá resetar o campo
+        if (!val) {
+            this.selectItem(undefined);
+        }
+        else {
+            if (this.query) {
+                this.doQuery(val);
+            }
+            if (this.isOnlyAutoComplete()) {
+                this.selectItem(this.data.text);
+            }
+        }
+    }
+
+    onTextFieldBlur() {
+        if (this.canDisable()) {
+            this.disable();
+        }
+    }
+
+    isEnabled() {
+        return this.data.enabled;
+    }
+
+    canDisable() {
+        return this.data.canDisable;
+    }
+
+    canDeselect() {
+        return !this.isOnlyAutoComplete() && this.isNullable();
+    }
+
+    isNullable() {
+        return this.nullable;
+    }
+
+    isOnlyAutoComplete() {
+        return this.onlyAutoComplete;
+    }
+
+    isPointerAt(index) {
+        return this.data.pointer === index;
+    }
+
+    isItemSelected(item) {
+        return this.data.value === item;
+    }
+
+    isAnyItemSelected() {
+        return !!this.data.value;
+    }
+
+    enable() {
+        this.data.enabled = true;
+    }
+
+    disable() {
+        this.data.enabled = false;
+        this.enableDisable();
+    }
+
+    enableDisable() {
+        this.data.canDisable = true;
+    }
+
+    disableDisable() {
+        this.data.canDisable = false;
+    }
+
+    setInternalValue(item) {
+        if (item && this.outputAs && this.isTypeOf(item, ['string'])) {
+            this.data.value = this.itens.find(x => x[this.outputAs] === item);
+            this.data.text = this.getItemLabel(item);
+            this.$emit('input', this.data.value);
+        }
+        else if (item && this.outputAs) {
+            this.data.value = item;
+            this.data.text = this.getItemLabel(item);
+            this.$emit('input', this.data.value[this.outputAs]);
+        }
+        else {
+            this.data.value = item;
+            this.$emit('input', this.data.value);
+        }
+    }
+
+    selectItem(item ? ) {
+        if (this.isOnlyAutoComplete() && item && !this.isTypeOf(item, ['string', 'number', 'boolean'])) {
+            let autoCompleteItem = this.getItemLabel(item, false);
+            this.data.text = autoCompleteItem;
+            this.setInternalValue(autoCompleteItem);
+            this.$emit('change', this.data.text, item);
+        }
+        else if (this.isOnlyAutoComplete()) {
+            this.setInternalValue(this.data.text);
+            this.$emit('change', this.data.text);
+        }
+        else if (item && !this.isTypeOf(item, ['string', 'number', 'boolean', String, Number, Boolean])) {
+            this.data.text = this.getItemLabel(item, false);
+            this.setInternalValue(item);
+            this.$emit('change', item);
+        }
+        else {
+            this.data.text = '';
+            this.setInternalValue(item);
+            this.getPlaceholder();
+            this.$emit('change', item);
+        }
+    }
+
+    selectItemByIndex(index) {
+        this.selectItem(this.getItensByText(this.data.text)[index]);
+    }
+
+    pointerForward() {
+        if (this.getItensByText(this.data.text).length - 1 > this.data.pointer) {
+            this.data.pointer++;
         }
         this.$forceUpdate();
     }
 
-    public pointerBackward() {
-        if (-1 < this.pointer) {
-            this.pointer--;
+    pointerBackward() {
+        if (-1 < this.data.pointer) {
+            this.data.pointer--;
         }
         this.$forceUpdate();
     }
 
-    public activate() {
-        this.open = true;
-    }
-
-    public deactivate() {
-        this.open = false;
-        this.text = '';
-        this.pointer = -1;
-    }
-
-    public enableClose() {
-        this.close = true;
-    }
-
-    public disableClose() {
-        this.close = false;
-    }
-
-    public select(item) {
-        if (!this.clearAfter) {
-            this.internalValue = item;
-            this.$emit('input', item);
+    getItensByText(text: string) {
+        if (this.limit) {
+            return this.filter(text, this.data.itens).slice(0, this.limit);
         }
-        this.$emit('change', item);
-        this.deactivate();
+        return this.filter(text, this.data.itens);
     }
 
-    public selectByIndex(index) {
-        this.select(this.getItens(this.text)[index]);
-    }
-
-    public getPlaceholder() {
-        if (this.internalValue && this.internalValue) {
-            return this.getItemLabel(this.internalValue);
+    getPlaceholder() {
+        if (this.data.value) {
+            return this.getItemLabel(this.data.value);
         }
         else {
             return this.placeholder;
         }
     }
 
-    public getItens(text) {
-        let itens = this.query ? this.queryItens : this.itens;
-        return this.filter(text, itens);
+    getItemLabel(item, highlight?: boolean) {
+        let labelResult: any;
+        if (!item) {
+            return '';
+        }
+        else if (this.label === undefined) {
+            return item;
+        }
+        else if (this.isTypeOf(this.label, [String, 'string'])) {
+            labelResult = item[this.label as string];
+            return highlight ? this.highlight(labelResult, this.data.text) : labelResult;
+        }
+        else {
+            labelResult = this.label(item);
+            if (this.isTypeOf(labelResult, [String, 'string'])) {
+                return highlight ? this.highlight(labelResult, this.data.text) : labelResult;
+            }
+            else {
+                return highlight ? this.highlight(labelResult.label, this.data.text) : labelResult.key;
+            }
+        }
     }
 
-    public filter(text, itens) {
+    // Retorna TRUE se o tipo do item for qualquer um dos tipos passado no array
+    isTypeOf(item: any, types: Array < any > ) {
+        let isTypeOf = false;
+
+        types.forEach(type => {
+            // verifica se o tipo é primitivo ou objeto
+            if (typeof type === 'function') {
+
+                // Se for "objeto", valida com instanceof
+                if (item instanceof type) {
+                    isTypeOf = true;
+                }
+
+                // Se for "primitivo", valida com typeof
+            }
+            else if (typeof item === type) {
+                isTypeOf = true;
+            }
+        });
+        return isTypeOf;
+    }
+
+    filter(text: string, itens: Array < any > ) {
         if (itens && text) {
-            let filtered = itens.filter(x => this.prepareCompare(this.getItemLabel(x, true)).indexOf(this.prepareCompare(text)) > -1);
-            filtered = filtered.sort(x => this.prepareCompare(this.getItemLabel(x, true)).indexOf(this.prepareCompare(text)));
-            return filtered;
+            let filtered = itens
+                .filter(x => {
+                    return this.prepareCompare(this.getItemLabel(x, true)).indexOf(this.prepareCompare(text)) > -1;
+                })
+                .sort((x, y) => {
+                    return this.prepareCompare(this.getItemLabel(x, false)).indexOf(this.prepareCompare(text)) - this.prepareCompare(this.getItemLabel(y, false)).indexOf(this.prepareCompare(text));
+                });
+            return this.sortInputFirst(text, filtered, (x) => this.getItemLabel(x, true));
+
         }
         else {
             return itens;
         }
     }
 
-    public getItemLabel(item, highlight?: boolean) {
-        let labelResult: any;
-        if (this.label === undefined) {
-            return item;
-        }
-        else if (this.label instanceof String || ((typeof this.label) === 'string')) {
-            labelResult = item[this.label as string];
-            return highlight ? this.highlight(labelResult, this.text) : labelResult;
-        }
-        else {
-            labelResult = this.label(item);
-            if (labelResult instanceof String || ((typeof labelResult) === 'string')) {
-                return highlight ? this.highlight(labelResult, this.text) : labelResult;
+    sortInputFirst(input: string, data: Array < any > , label) {
+        let first = [];
+        let others = [];
+        for (let i = 0; i < data.length; i++) {
+            if (this.prepareCompare(label(data[i])).indexOf(this.prepareCompare(input)) === 0) {
+                first.push(data[i]);
             }
             else {
-                return highlight ? this.highlight(labelResult.label, this.text) : labelResult.key;
+                others.push(data[i]);
             }
         }
+        return (first.concat(others));
     }
 
-    public highlight(label, query, subStringStart ? ) {
+    highlight(label, query, subStringStart ? ) {
         if (!label || !query) {
             return label;
         }
@@ -177,7 +358,7 @@ export class SelectorComponent extends Vue {
         }
     }
 
-    public isInsideTag(text, start) {
+    isInsideTag(text, start) {
         let endTag = undefined;
         let startCount = start;
         while (startCount <= text.length) {
@@ -194,44 +375,22 @@ export class SelectorComponent extends Vue {
         return endTag;
     }
 
-    public prepareCompare(str) {
-        if (!str) {
+    prepareCompare(text) {
+        if (!text) {
             return '';
         }
-        return this.removeAccents(str).toLowerCase().trim();
+        return this.removeAccents(text).toLowerCase().trim();
     }
 
-    public removeAccents(str) {
-        if (!str) {
+    removeAccents(text) {
+        if (!text) {
             return '';
         }
-        if (str) {
+        else if (text) {
             let helperRemoveAccents_map = { 'Ã': 'A', 'Â': 'A', 'Á': 'A', 'ã': 'a', 'â': 'a', 'á': 'a', 'à': 'a', 'É': 'E', 'Ê': 'E', 'È': 'E', 'é': 'e', 'ê': 'e', 'è': 'e', 'Í': 'I', 'Î': 'I', 'Ì': 'I', 'î': 'I', 'í': 'i', 'ì': 'i', 'Ô': 'O', 'Õ': 'O', 'Ó': 'O', 'Ò': 'O', 'ô': 'o', 'õ': 'o', 'ó': 'o', 'ò': 'o', 'Ú': 'U', 'Ù': 'U', 'ú': 'u', 'ù': 'u', 'ç': 'c' };
-            return str.replace(/[^A-Za-z0-9\[\] ]/g, function(a) {
+            return text.replace(/[^A-Za-z0-9\[\] ]/g, function(a) {
                 return helperRemoveAccents_map[a] || a;
             });
-        }
-        else {
-            return str;
-        }
-    }
-
-    @Watch('value')
-    public onValueChange(val) {
-        this.internalValue = val;
-    }
-
-    @Watch('clear')
-    public onValueClear(val) {
-        if (this.clear) {
-            this.select(undefined);
-        }
-    }
-
-    @Watch('text')
-    public async onTextChanged(val) {
-        if (this.query) {
-            this.queryItens = await this.query(val);
         }
     }
 

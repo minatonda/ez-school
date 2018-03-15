@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Api.Common.Base;
+using Domain.CursoDomain;
+using Domain.InstituicaoDomain;
 using Domain.UsuarioDomain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,54 +13,56 @@ namespace Api.UsuarioApi {
 
         private UsuarioService usuarioService;
 
-        public UsuarioController(UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository) : base(usuarioRepository, areaInteresseRepository) {
+        public UsuarioController(UsuarioRepository usuarioRepository, AreaInteresseRepository areaInteresseRepository, InstituicaoRepository instituicaoRepository, CursoRepository cursoRepository) : base(usuarioRepository, areaInteresseRepository, instituicaoRepository, cursoRepository) {
             this.usuarioService = new UsuarioService(usuarioRepository, areaInteresseRepository);
         }
 
         [HttpPut("add")]
         public void Add([FromBody] UsuarioVM viewModel) {
+            if (!this.IsAuthorized(BaseRole.ADD_USUARIO)) {
+                throw new BaseUnauthorizedException(BaseRole.ADD_USUARIO);
+            }
             this.usuarioService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] UsuarioVM viewModel) {
+            if (!this.IsAuthorized(BaseRole.EDIT_USUARIO)) {
+                throw new BaseUnauthorizedException(BaseRole.EDIT_USUARIO);
+            }
             this.usuarioService.Update(viewModel);
-        }
-
-        [HttpPost("{id}/aluno/update")]
-        public void UpdateAluno([FromBody] AlunoVM viewModel) {
-            this.usuarioService.UpdateAluno(viewModel);
-        }
-
-        [HttpPost("{id}/professor/update")]
-        public void UpdateProfessor([FromBody] ProfessorVM viewModel) {
-            this.usuarioService.UpdateProfessor(viewModel);
         }
 
         [HttpDelete("disable")]
         public void Disable(string id) {
+            if (!this.IsAuthorized(BaseRole.DISABLE_USUARIO)) {
+                throw new BaseUnauthorizedException(BaseRole.DISABLE_USUARIO);
+            }
             this.usuarioService.Disable(id);
         }
 
         [HttpGet("{id}")]
         public UsuarioVM Detail(string id, [FromQuery]string termo) {
-            var x = this.getLogged();
+            var x = this.GetUsuarioInfoAuthenticated();
             return this.usuarioService.Detail(id);
-        }
-
-        [HttpGet("{id}/aluno")]
-        public AlunoVM DetailAluno(string id) {
-            return this.usuarioService.DetailAluno(id);
-        }
-
-        [HttpGet("{id}/professor")]
-        public ProfessorVM DetailProfessor(string id) {
-            return this.usuarioService.DetailProfessor(id);
         }
 
         [HttpGet]
         public List<UsuarioVM> All() {
             return this.usuarioService.All();
+        }
+
+        [HttpGet("by-termo")]
+        public List<UsuarioInfoVM> AllByTermo([FromQuery] string termo, [FromQuery] bool onlyAluno = false, [FromQuery] bool onlyProfessor = false) {
+            if (termo == null) {
+                termo = "";
+            }
+            return this.usuarioService.GetAllByTermo(termo, onlyAluno, onlyProfessor);
+        }
+
+        [HttpGet("roles")]
+        public Array AllRoles() {
+            return Enum.GetValues(typeof(BaseRole));
         }
 
 

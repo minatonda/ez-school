@@ -1,7 +1,20 @@
-<div class="selector" v-bind:class="{selected:isSelected()}">
-    <input class="form-control w-100" v-bind:disabled="isDisabled()" v-model="text" v-bind:placeholder="getPlaceholder()" v-on:focus="activate()" v-on:focus.prevent="activate()" v-on:blur="isCloseEnabled()?deactivate():activate()" v-on:blur.prevent="isCloseEnabled()?deactivate():activate()" v-on:keydown="activate()" v-on:keydown.down.prevent="pointerForward()" v-on:keyup.enter="$event.target.nextElementSibling.focus()" v-on:keydown.up.prevent="pointerBackward()" v-on:keydown.enter.tab.stop.self="selectByIndex(0)" v-on:keydown.enter.prevent.stop.self="selectByIndex(pointer)">
-    <i class="fa fa-remove" v-show="isSelected()" v-on:click="select(undefined)"></i>
-    <ul class="list-group" v-show="isOpen()" v-on:mouseover="disableClose()" v-on:mouseout="enableClose()">
-        <li class="list-group-item list-group-item-action" v-for="(item, index) in getItens(text)" v-bind:class="{'list-group-item-primary':isSelected(item),'active':isPointer(index)}" v-on:click.prevent="select(item)" v-html="getItemLabel(item,true)"></li>
+<div class="selector" v-bind:class="{selected:isAnyItemSelected()}">
+    <input class="form-control w-100" 
+        v-model="data.text" 
+        v-bind:name="name" 
+        v-bind:placeholder="getPlaceholder()" 
+        v-on:keyup="onTextChanged(data.text);enable();" 
+        v-on:focus="enable()" 
+        v-on:blur="onTextFieldBlur()" 
+        v-on:keydown.down.prevent="pointerForward()" 
+        v-on:keyup.enter="$event.target.nextElementSibling.focus()" 
+        v-on:keydown.up.prevent="pointerBackward()" 
+        v-on:keydown.enter.prevent.stop.self="selectItemByIndex(data.pointer)" 
+        v-on:keydown.tab.self="disable()">
+    
+    <i class="fa fa-remove" v-show="canDeselect()" v-on:click="selectItem(undefined);disable();"></i>
+    <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="data.loading "></i>
+    <ul class="card list-group" v-show="isEnabled()" v-on:mouseover="disableDisable()" v-on:mouseout="enableDisable()"va>
+        <li class="list-group-item list-group-item-action" v-for="(item, index) in getItensByText(data.text)" v-bind:class="{'list-group-item-primary':isItemSelected(item),'active':isPointerAt(index)}" v-on:click.prevent="selectItem(item);disable();" v-html="getItemLabel(item,true)"></li>
     </ul>
 </div>

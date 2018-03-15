@@ -3,11 +3,11 @@ import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 import { RouterPathType } from '../../../../../ezs-common/src/model/client/router-path-type.model';
 import { AppRouter } from '../../../app.router';
-import { Factory } from '../../../module/constant/factory.constant';
+import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { MateriaModel } from '../../../../../ezs-common/src/model/server/materia.model';
 import { MateriaRelacionamentoModel } from '../../../../../ezs-common/src/model/server/materia-relacionamento.model';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
-import { I18N_MESSAGE } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 
 interface UI {
@@ -40,12 +40,12 @@ export class PageMateriaComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             if (this.operation === RouterPathType.upd) {
-                this.model = await Factory.MateriaFactory.detail(this.$route.params.id); 
+                this.model = await FACTORY_CONSTANT.MateriaFactory.detail(this.$route.params.id); 
             }
-            this.ui.materias = await Factory.MateriaFactory.all();
+            this.ui.materias = await FACTORY_CONSTANT.MateriaFactory.all();
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.CONSULTAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
             AppRouter.back();
         }
         finally {
@@ -58,18 +58,18 @@ export class PageMateriaComponent extends Vue {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             switch (this.operation) {
                 case (RouterPathType.add): {
-                    await Factory.MateriaFactory.add(this.model);
+                    await FACTORY_CONSTANT.MateriaFactory.add(this.model);
                     break;
                 }
                 case (RouterPathType.upd): {
-                    await Factory.MateriaFactory.update(this.model);
+                    await FACTORY_CONSTANT.MateriaFactory.update(this.model);
                     break;
                 }
             }
-            NotifyUtil.notifyI18N(I18N_MESSAGE.MODELO_SALVAR, ApplicationService.getLanguage(), NOTIFY_TYPE.SUCCESS);
+            NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
         }
         catch (e) {
-            NotifyUtil.notifyI18NError(I18N_MESSAGE.MODELO_SALVAR_FALHA, ApplicationService.getLanguage(), NOTIFY_TYPE.ERROR, e);
+            NotifyUtil.exception(e, ApplicationService.getLanguage());
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
@@ -82,7 +82,10 @@ export class PageMateriaComponent extends Vue {
 
     public getColumns() {
         return [
-            new CardTableColumn((item: MateriaRelacionamentoModel) => item.materiaPai.descricao, () => 'Materias Relacionadas'),
+            new CardTableColumn({
+                value: (item: MateriaRelacionamentoModel) => item.materiaPai.descricao,
+                label: () => 'Matéria'
+            })
         ];
     }
 
@@ -93,12 +96,12 @@ export class PageMateriaComponent extends Vue {
     public getMenu() {
         let menu = new CardTableMenu();
         menu.row = [
-            new CardTableMenuEntry(
-                (item) => this.removeMateriaRelacionada(item),
-                (item) => 'Remover',
-                (item) => ['fa', 'fa-times'],
-                (item) => ['btn-danger']
-            )
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: this.removeMateriaRelacionada,
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
         ];
         return menu;
     }
