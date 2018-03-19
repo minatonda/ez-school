@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Domain;
 using Domain.AreaInteresseDomain;
 using Domain.Common;
+using Domain.EnderecoDomain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -20,6 +21,17 @@ namespace Domain.UsuarioDomain {
 
         public void Add(Usuario model) {
             model.UsuarioInfo.ID = model.ID;
+
+            this.db.Enderecos.Add(model.UsuarioInfo.Endereco);
+
+            if (model.UsuarioInfo.Pai != null) {
+                model.UsuarioInfo.Pai = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.UsuarioInfo.Pai.ID);
+            }
+
+            if (model.UsuarioInfo.Mae != null) {
+                model.UsuarioInfo.Mae = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.UsuarioInfo.Mae.ID);
+            }
+
             this.db.UsuariosInfo.Add(model.UsuarioInfo);
 
             var aluno = new Aluno();
@@ -32,31 +44,58 @@ namespace Domain.UsuarioDomain {
             aluno.UsuarioInfo = model.UsuarioInfo;
             this.db.Professores.Add(professor);
 
+
             this.db.Usuarios.Add(model);
         }
 
         public void Update(Usuario model) {
-            if (model.UsuarioInfo != null) {
-                this.db.Attach(model.UsuarioInfo);
-            }
-
-            var attachedUsuario = this.db.Usuarios.Find(model.ID);
+            var attachedUsuario = this.db.Usuarios.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuario.Username = model.Username;
             attachedUsuario.Password = model.Password;
 
+            this.UpdateEndereco(model.UsuarioInfo.Endereco);
             this.UpdateUsuarioInfo(model.UsuarioInfo);
+
             this.db.Usuarios.Update(attachedUsuario);
         }
 
         public void UpdateUsuarioInfo(UsuarioInfo model) {
-            var attachedUsuarioInfo = this.db.UsuariosInfo.Find(model.ID);
+            var attachedUsuarioInfo = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuarioInfo.Nome = model.Nome;
             attachedUsuarioInfo.DataNascimento = model.DataNascimento;
             attachedUsuarioInfo.CPF = model.CPF;
             attachedUsuarioInfo.RG = model.RG;
             attachedUsuarioInfo.Roles = model.Roles;
+            attachedUsuarioInfo.Genero = model.Genero;
+            attachedUsuarioInfo.EstadoCivil = model.EstadoCivil;
+
+            if (model.Pai != null) {
+                attachedUsuarioInfo.Pai = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.Pai.ID);
+            } else {
+                attachedUsuarioInfo.Pai = null;
+            }
+
+            if (model.Mae != null) {
+                attachedUsuarioInfo.Mae = this.db.UsuariosInfo.SingleOrDefault(x => x.ID == model.Mae.ID);
+            } else {
+                attachedUsuarioInfo.Mae = null;
+            }
 
             this.db.UsuariosInfo.Update(attachedUsuarioInfo);
+        }
+
+        public void UpdateEndereco(Endereco model) {
+            var attachedEndereco = this.db.Enderecos.SingleOrDefault(x => x.ID == model.ID);
+            attachedEndereco.Rua = model.Rua;
+            attachedEndereco.Complemento = model.Complemento;
+            attachedEndereco.Numero = model.Numero;
+            attachedEndereco.Bairro = model.Bairro;
+            attachedEndereco.Cidade = model.Cidade;
+            attachedEndereco.Estado = model.Estado;
+            attachedEndereco.Lat = model.Lat;
+            attachedEndereco.Lon = model.Lon;
+
+            this.db.Enderecos.Update(attachedEndereco);
         }
 
         public void UpdateAluno(Aluno model) {
@@ -79,12 +118,20 @@ namespace Domain.UsuarioDomain {
             return this.db.Usuarios
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Endereco)
+            .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Pai)
+            .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Mae)
             .SingleOrDefault(x => x.ID == ID);
         }
 
         public UsuarioInfo GetUsuarioInfo(string ID) {
             return this.db.UsuariosInfo
             .AsNoTracking()
+            .Include(i => i.Endereco)
+            .Include(i => i.Pai)
+            .Include(i => i.Mae)
             .SingleOrDefault(x => x.ID == ID);
         }
 
@@ -98,6 +145,7 @@ namespace Domain.UsuarioDomain {
         public UsuarioInfo GetInfoByRG(string rg) {
             return this.db.UsuariosInfo
             .AsNoTracking()
+            .Include(i => i.Endereco)
             .SingleOrDefault(x => x.RG == rg);
         }
 

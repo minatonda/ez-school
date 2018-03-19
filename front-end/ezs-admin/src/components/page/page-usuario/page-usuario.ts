@@ -16,6 +16,8 @@ import { ENUM_CONTANT } from '../../../../../ezs-common/src/constant/enum.contan
 interface UI {
     areaInteresse: AreaInteresseModel;
     categoriaProfissionais: Array < CategoriaProfissionalModel > ;
+    query: any;
+    usuarioInfoLabel: any;
 }
 
 @Component({
@@ -30,7 +32,19 @@ export class PageUsuarioComponent extends Vue {
 
     ui: UI = {
         categoriaProfissionais: undefined,
-        areaInteresse: new AreaInteresseModel()
+        areaInteresse: new AreaInteresseModel(),
+        
+        query: async (term) => {
+            let itens = await FACTORY_CONSTANT.UsuarioFactory.allByTermo(term, false, false);
+            return itens;
+        },
+
+        usuarioInfoLabel: (item: UsuarioInfoModel) => {
+            let labelObj = {} as any;
+            labelObj.key = item.label;
+            labelObj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.rg}</span><span style="float:right;">${item.cpf}</span></div>`;
+            return labelObj;
+        },
     };
 
     model: UsuarioModel = new UsuarioModel();

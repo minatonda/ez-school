@@ -1,6 +1,7 @@
 using Domain.AreaInteresseDomain;
 using Domain.CategoriaProfissionalDomain;
 using Domain.CursoDomain;
+using Domain.EnderecoDomain;
 using Domain.InstituicaoDomain;
 using Domain.MateriaDomain;
 using Domain.UsuarioDomain;
@@ -44,6 +45,7 @@ namespace Domain.Common {
         public DbSet<InstituicaoCursoTurma> InstituicaoCursoTurmas { get; set; }
         public DbSet<AreaInteresse> AreaInteresse { get; set; }
         public DbSet<MateriaRelacionamento> MateriaRelacionamento { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
 
     }
 }

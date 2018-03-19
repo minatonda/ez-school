@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Domain.CategoriaProfissionalDomain;
 using Domain.CursoDomain;
+using Domain.EnderecoDomain;
 using Domain.InstituicaoDomain;
 using Domain.MateriaDomain;
 using Domain.UsuarioDomain;
@@ -199,7 +200,8 @@ namespace Domain.Common {
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 Roles = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38",
                 CPF = "42187917835",
-                RG = "421920816"
+                RG = "421920816",
+                Endereco = new Endereco()
             };
             carvalho.UsuarioInfo = carvalhoInfo;
 
@@ -214,7 +216,8 @@ namespace Domain.Common {
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 Roles = "",
                 CPF = "42187917835",
-                RG = "421920816"
+                RG = "421920816",
+                Endereco = new Endereco()
             };
             marcal.UsuarioInfo = marcalInfo;
 
@@ -229,7 +232,8 @@ namespace Domain.Common {
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 Roles = "",
                 CPF = "52176819820",
-                RG = "510984128"
+                RG = "510984128",
+                Endereco = new Endereco()
             };
             thais.UsuarioInfo = thaisInfo;
 
@@ -244,7 +248,8 @@ namespace Domain.Common {
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 Roles = "",
                 CPF = "768309116406",
-                RG = "760942814"
+                RG = "760942814",
+                Endereco = new Endereco()
             };
             barbara.UsuarioInfo = barbaraInfo;
 

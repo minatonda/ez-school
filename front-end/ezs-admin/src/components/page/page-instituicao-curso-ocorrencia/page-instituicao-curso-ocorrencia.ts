@@ -14,12 +14,11 @@ import { InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel, DayOfWeekMo
 import { DayOfWeekEnumLabel } from '../../../module/constant/enum-label.constant';
 import { CursoGradeMateriaModel } from '../../../../../ezs-common/src/model/server/curso-grade-materia.model';
 import { EnumLabel } from '../../../../../ezs-common/src/model/client/enum-label.model';
-
-import * as moment from 'moment';
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
+import * as moment from 'moment';
 
 enum ModalOperation {
     add = 0,

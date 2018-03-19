@@ -18,6 +18,21 @@
                                 <label class="control-label">Password</label>
                                 <input class="form-control" type="password" placeholder="Password" v-model="model.password">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Dados Pessoais</legend>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Nome</label>
                                 <input class="form-control" type="text" placeholder="Nome" v-model="model.usuarioInfo.nome">
@@ -33,6 +48,61 @@
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">CPF</label>
                                 <input class="form-control" type="text" placeholder="CPF" v-model="model.usuarioInfo.cpf">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Gênero</label>
+                                <input class="form-control" type="text" placeholder="Gênero" v-model="model.usuarioInfo.genero">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Estado Cívil</label>
+                                <input class="form-control" type="text" placeholder="Estado Cívil" v-model="model.usuarioInfo.estadoCivil">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Pai</label>
+                                <selector v-model="model.usuarioInfo.pai" v-bind:query="ui.query" placeholder="Pai" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Mãe</label>
+                                <selector v-model="model.usuarioInfo.mae" v-bind:query="ui.query" placeholder="Mãe" v-bind:label="ui.usuarioInfoLabel"></selector>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Dados de Endereço</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 form-group">
+                                <label class="control-label">Rua</label>
+                                <input class="form-control" type="text" placeholder="Rua" v-model="model.usuarioInfo.endereco.rua">
+                            </div>
+                            <div class="col-12 col-md-1 form-group">
+                                <label class="control-label">Número</label>
+                                <input class="form-control" type="text" placeholder="Número" v-model="model.usuarioInfo.endereco.numero">
+                            </div>
+                            <div class="col-12 col-md-2 form-group">
+                                <label class="control-label">Complemento</label>
+                                <input class="form-control" type="text" placeholder="Complemento" v-model="model.usuarioInfo.endereco.complemento">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Bairro</label>
+                                <input class="form-control" type="text" placeholder="Bairro" v-model="model.usuarioInfo.endereco.bairro">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Cidade</label>
+                                <input class="form-control" type="text" placeholder="Cidade" v-model="model.usuarioInfo.endereco.cidade">
+                            </div>
+                            <div class="col-12 col-md-3 form-group">
+                                <label class="control-label">Estado</label>
+                                <input class="form-control" type="text" placeholder="Estado" v-model="model.usuarioInfo.endereco.estado">
                             </div>
                         </div>
                     </div>
