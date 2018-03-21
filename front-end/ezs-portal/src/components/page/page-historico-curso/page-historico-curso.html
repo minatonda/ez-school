@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <h3>Histórico do Curso</h3>
+                <hr>
+                <div class="card">
+                    <div class="card-header">
+                        <b>{{getUiQueryKeysFromInstituicaoBusinessAulas(ui.instituicaoBusinessAulasByAluno)[0].curso.label}}</b>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <small>{{getUiQueryKeysFromInstituicaoBusinessAulas(ui.instituicaoBusinessAulasByAluno)[0].instituicao.label}}</small>
+                            </div>
+                        </div>
+                        <div class="row" v-for="uiQueryKey in getUiQueryKeysFromInstituicaoBusinessAulas(ui.instituicaoBusinessAulasByAluno)">
+                            <div class="col-12">
+                                <div class="col-12 text-right">
+                                    <b>{{uiQueryKey.periodoSequencia}}º Período - {{uiQueryKey.dataInicio | getDateFormatted('DD/MM/YYYY')}} até {{uiQueryKey.dataExpiracao | getDateFormatted('DD/MM/YYYY')}}</b>
+                                </div>
+                                <hr>
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th v-for="instituicaoBusinessAula in getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey,ui.instituicaoBusinessAulasByAluno)" class="text-center">{{instituicaoBusinessAula.materia.label}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>Media Atual</th>
+                                            <td v-bind:data-column-name="instituicaoBusinessAula.materia.label" v-for="instituicaoBusinessAula in getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey,ui.instituicaoBusinessAulasByAluno)">
+                                                <b class="d-block px-2 text-white w-100 rounded text-center" v-bind:class="getNotaBackgroundClass(instituicaoBusinessAula.nota)">{{instituicaoBusinessAula.nota}}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ausências</th>
+                                            <td v-bind:data-column-name="instituicaoBusinessAula.materia.label" v-for="instituicaoBusinessAula in getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey,ui.instituicaoBusinessAulasByAluno)">
+                                                <b class="bg-success d-block px-2 text-white w-100 rounded text-center">{{instituicaoBusinessAula.ausencias}}</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

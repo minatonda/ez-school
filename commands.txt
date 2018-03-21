@@ -1,0 +1,2 @@
+\=================docker install mysql-base=================/
+docker run -p 3306:3306 --name ezs -e MYSQL_ROOT_PASSWORD=ezs -e MYSQL_DATABASE=ezs -d mysql

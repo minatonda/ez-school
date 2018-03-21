@@ -26,8 +26,7 @@
     "test:debug": "cross-env NODE_ENV=development karma start karma.debug.js",
     "test:watch": "cross-env NODE_ENV=development karma start karma.unit.js --singleRun=false --auto-watch"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "webpack": "3.10.0",
     "webpack-dev-server": "2.7.1",

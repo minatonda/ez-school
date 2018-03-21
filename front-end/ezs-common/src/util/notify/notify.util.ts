@@ -48,9 +48,15 @@ class Util {
         toastr.warning(template.message, template.title);
     }
 
-    public exception = (exception, lang: I18N_LANG) => {
+    public exception = (exception, lang: I18N_LANG, codeFallback?: I18N_ERROR_GENERIC) => {
         let template = I18NUtil.resolveException(exception, lang);
-        toastr.error(template.message, template.title, { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        if (template) {
+            toastr.error(template.message, template.title, { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        }
+        else {
+            let template = I18NUtil.getTemplateMessageGeneric(codeFallback, lang);
+            toastr.warning(template.message, template.title);
+        }
     }
 
 }

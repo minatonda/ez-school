@@ -10,9 +10,9 @@ class Service {
 
     private language: I18N_LANG = I18N_LANG.ptBR;
     private usuarioInfo: UsuarioInfoModel;
-    private instituicaoBusinessAulasByProfessor: Array < InstituicaoBusinessAulaModel > ;
-    private instituicaoBusinessAulasByAluno: Array < InstituicaoBusinessAulaDetalheAlunoModel > ;
-    private views: Array < string > ;
+    private instituicaoBusinessAulasByProfessor: Array<InstituicaoBusinessAulaModel>;
+    private instituicaoBusinessAulasByAluno: Array<InstituicaoBusinessAulaDetalheAlunoModel>;
+    private views: Array<string>;
     private admin: boolean;
     private loading: boolean = false;
 
@@ -32,7 +32,7 @@ class Service {
         return this.usuarioInfo;
     }
 
-    setViews(views: Array < string > ) {
+    setViews(views: Array<string>) {
         this.views = views;
     }
 
@@ -52,7 +52,7 @@ class Service {
         return this.loading;
     }
 
-    setInstituicaoBusinessAulasByProfessor(instituicaoBusinessAulasByProfessor: Array < InstituicaoBusinessAulaModel > ) {
+    setInstituicaoBusinessAulasByProfessor(instituicaoBusinessAulasByProfessor: Array<InstituicaoBusinessAulaModel>) {
         this.instituicaoBusinessAulasByProfessor = instituicaoBusinessAulasByProfessor;
     }
 
@@ -60,7 +60,7 @@ class Service {
         return this.instituicaoBusinessAulasByProfessor;
     }
 
-    setInstituicaoBusinessAulasByAluno(instituicaoBusinessAulasByAluno: Array < InstituicaoBusinessAulaDetalheAlunoModel > ) {
+    setInstituicaoBusinessAulasByAluno(instituicaoBusinessAulasByAluno: Array<InstituicaoBusinessAulaDetalheAlunoModel>) {
         this.instituicaoBusinessAulasByAluno = instituicaoBusinessAulasByAluno;
     }
 
@@ -89,7 +89,7 @@ class Service {
         this.usuarioInfo = await FACTORY_CONSTANT.UsuarioFactory.me();
         this.views = await FACTORY_CONSTANT.UsuarioFactory.meAuthorizedView();
         this.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(this.usuarioInfo.id);
-        this.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(this.usuarioInfo.id);
+        this.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(this.usuarioInfo.id, false);
         this.admin = await FACTORY_CONSTANT.UsuarioFactory.meAdmin();
         this.setLoading(false);
     }

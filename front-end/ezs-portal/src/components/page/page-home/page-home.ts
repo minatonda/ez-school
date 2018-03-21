@@ -13,8 +13,8 @@ import { NotifyUtil } from '../../../../../ezs-common/src/util/notify/notify.uti
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
 
 interface UI {
-    instituicaoBusinessAulasByProfessor: Array < InstituicaoBusinessAulaModel > ;
-    instituicaoBusinessAulasByAluno: Array < InstituicaoBusinessAulaDetalheAlunoModel > ;
+    instituicaoBusinessAulasByProfessor: Array<InstituicaoBusinessAulaModel>;
+    instituicaoBusinessAulasByAluno: Array<InstituicaoBusinessAulaDetalheAlunoModel>;
     uiQueryKeyProfessor: UIQueryKey;
     uiQUeryKeyAluno: UIQueryKey;
 }
@@ -22,6 +22,7 @@ interface UI {
 interface UIQueryKey {
     curso: CursoModel;
     instituicao: InstituicaoModel;
+    idInstituicaoCursoOcorrencia: number;
     periodoSequencia: number;
     dataInicio: string;
     dataExpiracao: string;
@@ -44,7 +45,7 @@ export class PageHomeComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             this.ui.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(ApplicationService.getUsuarioInfo().id);
-            this.ui.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id);
+            this.ui.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id, true);
         }
         catch (e) {
             NotifyUtil.exception(e, ApplicationService.getLanguage());
@@ -54,11 +55,12 @@ export class PageHomeComponent extends Vue {
         }
     }
 
-    getUiQueryKeysFromInstituicaoBusinessAulas(instituicaoBusinessAulas: Array < InstituicaoBusinessAulaModel > ) {
+    getUiQueryKeysFromInstituicaoBusinessAulas(instituicaoBusinessAulas: Array<InstituicaoBusinessAulaModel>) {
         return lodash.unionBy(instituicaoBusinessAulas, x => x.idInstituicaoCursoOcorrencia).map(x => {
             let uiQueryKey: UIQueryKey = {
                 curso: x.curso,
                 instituicao: x.instituicao,
+                idInstituicaoCursoOcorrencia: x.idInstituicaoCursoOcorrencia,
                 periodoSequencia: x.periodoSequencia,
                 dataInicio: x.dataInicio,
                 dataExpiracao: x.dataExpiracao
@@ -67,7 +69,7 @@ export class PageHomeComponent extends Vue {
         });
     }
 
-    getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey: UIQueryKey, instituicaoBusinessAulas: Array < InstituicaoBusinessAulaModel > ) {
+    getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey: UIQueryKey, instituicaoBusinessAulas: Array<InstituicaoBusinessAulaModel>) {
         return instituicaoBusinessAulas.filter(x => x.instituicao.id === uiQueryKey.instituicao.id && x.curso.id === uiQueryKey.curso.id);
     }
 
@@ -81,6 +83,14 @@ export class PageHomeComponent extends Vue {
 
     doGoToAulaGerenciamentoNota(id: number) {
         AppRouter.push({ name: AppRouterPath.AULA_GERENCIAMENTO_NOTA, params: { idInstituicaoCursoOcorrenciaPeriodoProfessor: id.toString() } });
+    }
+
+    doGoToAulaGerenciamentoAusencia(id: number) {
+        AppRouter.push({ name: AppRouterPath.AULA_GERENCIAMENTO_AUSENCIA, params: { idInstituicaoCursoOcorrenciaPeriodoProfessor: id.toString() } });
+    }
+
+    doGoToHistoricoCurso(id: number) {
+        AppRouter.push({ name: AppRouterPath.HISTORICO_CURSO, params: { idInstituicaoCursoOcorrencia: id.toString() } });
     }
 
     getNotaBackgroundClass(valor: number) {

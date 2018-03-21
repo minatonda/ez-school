@@ -8,6 +8,7 @@ import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { InstituicaoCursoOcorrenciaPeriodoAlunoModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-periodo-aluno.model';
 import { InstituicaoCursoOcorrenciaNotaModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-nota.model';
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
+import { AppRouterPath } from '../../../app.router.path';
 
 
 interface UI {
@@ -59,6 +60,10 @@ export class PageAulaGerenciamentoNotaComponent extends Vue {
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
         }
+    }
+
+    doBack() {
+        AppRouter.push(AppRouterPath.ROOT);
     }
 
     addIdTag(idTag: string) {

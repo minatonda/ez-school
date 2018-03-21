@@ -14,7 +14,7 @@ import { NotifyUtil } from '../../ezs-common/src/util/notify/notify.util';
 
 class Router extends BaseRouter {
 
-    constructor(config: Array < BaseRouteConfig > ) {
+    constructor(config: Array<BaseRouteConfig>) {
         super(config);
         this.afterEach(this.onAfterEach);
         this.beforeEach(this.onBeforeEach);
@@ -74,16 +74,17 @@ class Router extends BaseRouter {
 
         });
 
-
-
     }
-
 
     private isRoutePermitidoWhenAutenticado = (path, params) => {
         switch (path) {
             case (AppRouterPath.AULA_GERENCIAMENTO_NOTA):
+            case (AppRouterPath.AULA_GERENCIAMENTO_AUSENCIA):
                 {
-                    return ApplicationService.isAdmin() || ApplicationService.getInstituicaoBusinessAulasByProfessor().find(x => x.id.toString() === params.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString());
+                    console.log(ApplicationService.getInstituicaoBusinessAulasByProfessor());
+                    console.log(params.idInstituicaoCursoOcorrenciaPeriodoProfessor);
+
+                    return ApplicationService.isAdmin() || !!ApplicationService.getInstituicaoBusinessAulasByProfessor().find(x => x.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString() === params.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString());
                 }
             default:
                 {
