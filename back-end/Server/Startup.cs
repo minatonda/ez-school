@@ -53,10 +53,11 @@ namespace Server {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddDbContext<BaseContext>(opt => opt.UseInMemoryDatabase("devDB"));
-            // services.AddDbContext<BaseContext>(options =>
-            //     options.UseMySql(connectionStringOptions[nameof(ConnectionStringOptions.BaseConnection)])
-            // );
+            if (Environment.IsDevelopment()) {
+                services.AddDbContext<BaseContext>(opt => opt.UseInMemoryDatabase("devDB"));
+            } else {
+                services.AddDbContext<BaseContext>(opt => opt.UseMySql(connectionStringOptions[nameof(ConnectionStringOptions.BaseConnection)]));
+            }
 
             services.AddCors();
             services.AddMvcWithPolicy();
@@ -75,10 +76,7 @@ namespace Server {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, BaseContext context) {
-            // if (Environment.IsDevelopment()) {
-            //     app.UseDeveloperExceptionPage();
-            // }
-
+            
             app.UseExceptionMiddleware();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
