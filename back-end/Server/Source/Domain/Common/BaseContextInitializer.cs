@@ -366,15 +366,13 @@ namespace Domain.Common {
                     InstituicaoCursoOcorrenciaAluno = instituicaoCursoOcorrenciaAlunos[0],
                     InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[0],
                     InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
-                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
-                    Confirmado = true
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0]
                 },
                 new InstituicaoCursoOcorrenciaPeriodoAluno(){
                     InstituicaoCursoOcorrenciaAluno = instituicaoCursoOcorrenciaAlunos[0],
                     InstituicaoCursoOcorrenciaPeriodo = instituicaoCursoOcorrenciaPeriodos[1],
                     InstituicaoCursoPeriodo = instituicaoCursoPeriodos[0],
-                    InstituicaoCursoTurma = instituicaoCursoTurmas[0],
-                    Confirmado = true
+                    InstituicaoCursoTurma = instituicaoCursoTurmas[0]
                 }
             };
         }

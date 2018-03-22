@@ -40,7 +40,7 @@ namespace Api.CategoriaProfissionalApi {
             this._categoriaProfissionalService.Disable(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public CategoriaProfissionalVM Detail(long id) {
             return this._categoriaProfissionalService.Detail(id);
         }

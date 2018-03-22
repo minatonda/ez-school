@@ -52,7 +52,7 @@ export class Factory extends BaseFactory {
 
     public detail = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/usuario/${id}`) as UsuarioModel;
+            let result = await this.get(`/api/usuario/detail/${id}`) as UsuarioModel;
             return result;
         }
         catch (error) {

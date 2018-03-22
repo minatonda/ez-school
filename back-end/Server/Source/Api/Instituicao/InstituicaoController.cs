@@ -126,27 +126,27 @@ namespace Api.InstituicaoApi {
             this._instituicaoService.DisableInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public InstituicaoVM Detail(long id) {
             return this._instituicaoService.Detail(id);
         }
 
-        [HttpGet("{id}/instituicao-colaborador/{idInstituicaoCurso}")]
+        [HttpGet("detail/{id}/instituicao-colaborador/detail/{idInstituicaoCurso}")]
         public InstituicaoColaboradorVM DetailInstituicaoColaborador(long id, long idInstituicaoColaborador) {
             return this._instituicaoService.DetailInstituicaoColaborador(idInstituicaoColaborador);
         }
 
-        [HttpGet("{id}/instituicao-colaborador-perfil/{idInstituicaoCurso}")]
+        [HttpGet("detail/{id}/instituicao-colaborador-perfil/detail/{idInstituicaoCurso}")]
         public InstituicaoColaboradorPerfilVM DetailInstituicaoColaboradorPerfil(long id, long idInstituicaoColaboradorPerfil) {
             return this._instituicaoService.DetailInstituicaoColaboradorPerfil(idInstituicaoColaboradorPerfil);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}")]
         public InstituicaoCursoVM DetailInstituicaoCurso(long id, long idInstituicaoCurso) {
             return this._instituicaoService.DetailInstituicaoCurso(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/{idInstituicaoCursoOcorrencia}")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}/instituicao-curso-ocorrencia/detail/{idInstituicaoCursoOcorrencia}")]
         public InstituicaoCursoOcorrenciaVM DetailInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, long idInstituicaoCursoOcorrencia) {
             return this._instituicaoService.DetailInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
         }
@@ -156,37 +156,37 @@ namespace Api.InstituicaoApi {
             return this._instituicaoService.All();
         }
 
-        [HttpGet("{id}/instituicao-colaborador")]
+        [HttpGet("detail/{id}/instituicao-colaborador")]
         public List<InstituicaoColaboradorVM> AllInstituicaoColaborador(long id) {
             return this._instituicaoService.AllInstituicaoColaborador(id);
         }
 
-        [HttpGet("{id}/instituicao-colaborador-perfil")]
+        [HttpGet("detail/{id}/instituicao-colaborador-perfil")]
         public List<InstituicaoColaboradorPerfilVM> AllInstituicaoColaboradorPerfil(long id) {
             return this._instituicaoService.AllInstituicaoColaboradorPerfil(id);
         }
 
-        [HttpGet("{id}/instituicao-curso")]
+        [HttpGet("detail/{id}/instituicao-curso")]
         public List<InstituicaoCursoVM> AllInstituicaoCurso(long id) {
             return this._instituicaoService.AllInstituicaoCurso(id);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}/instituicao-curso-ocorrencia")]
         public List<InstituicaoCursoOcorrenciaVM> AllInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllInstituicaoCursoOcorrencia(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-periodo")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}/instituicao-curso-periodo")]
         public List<InstituicaoCursoPeriodoVM> AllInstituicaoCursoPeriodo(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllInstituicaoCursoPeriodo(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-turma")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}/instituicao-curso-turma")]
         public List<InstituicaoCursoTurmaVM> AllInstituicaoCursoTurma(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllInstituicaoCursoTurma(idInstituicaoCurso);
         }
 
-        [HttpGet("{id}/instituicao-curso/{idInstituicaoCurso}/curso-grade-materia")]
+        [HttpGet("detail/{id}/instituicao-curso/detail/{idInstituicaoCurso}/curso-grade-materia")]
         public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllCursoGradeMateria(idInstituicaoCurso);
         }

@@ -41,7 +41,7 @@ namespace Api.UsuarioApi {
             this.usuarioService.Disable(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public UsuarioVM Detail(string id, [FromQuery]string termo) {
             var x = this.GetUsuarioInfoAuthenticated();
             return this.usuarioService.Detail(id);

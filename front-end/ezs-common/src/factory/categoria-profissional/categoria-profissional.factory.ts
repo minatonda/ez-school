@@ -37,7 +37,7 @@ export class Factory extends BaseFactory {
 
     public detail = async (id:  number | string) => {
         try {
-            let result = await this.get(`/api/categoria-profissional/${id}`) as CategoriaProfissionalModel;
+            let result = await this.get(`/api/categoria-profissional/detail/${id}`) as CategoriaProfissionalModel;
             return result;
         }
         catch (error) {

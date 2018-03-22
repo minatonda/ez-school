@@ -41,7 +41,7 @@ namespace Api.CursoApi {
             this._cursoService.Disable(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public CursoVM Detail(long id) {
             return this._cursoService.Detail(id);
         }
@@ -51,12 +51,12 @@ namespace Api.CursoApi {
             return this._cursoService.All();
         }
 
-        [HttpGet("{id}/curso-grade")]
+        [HttpGet("detail/{id}/curso-grade")]
         public List<CursoGradeVM> AllCursoGrade(long id) {
             return this._cursoService.Detail(id).Grades;
         }
 
-        [HttpGet("{id}/grade/{idCursoGrade}/curso-grade-materia")]
+        [HttpGet("detail/{id}/grade/detail/{idCursoGrade}/curso-grade-materia")]
         public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idCursoGrade) {
             return this._cursoService.Detail(id).Grades.Find(x => x.ID == idCursoGrade).Materias;
         }

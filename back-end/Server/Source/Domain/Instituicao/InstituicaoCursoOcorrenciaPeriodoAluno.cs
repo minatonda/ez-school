@@ -13,7 +13,7 @@ namespace Domain.InstituicaoDomain {
         public InstituicaoCursoOcorrenciaAluno InstituicaoCursoOcorrenciaAluno { get; set; }
         public InstituicaoCursoPeriodo InstituicaoCursoPeriodo { get; set; }
         public InstituicaoCursoTurma InstituicaoCursoTurma { get; set; }
-        public bool Confirmado { get; set; }
+        public DateTime? DataConfirmacao { get; set; }
         public DateTime? Ativo { get; set; } = null;
 
     }

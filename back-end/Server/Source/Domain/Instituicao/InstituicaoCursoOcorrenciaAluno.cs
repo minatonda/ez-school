@@ -12,7 +12,6 @@ namespace Domain.InstituicaoDomain {
         public InstituicaoCursoOcorrencia InstituicaoCursoOcorrencia { get; set; }
         public ExpiracaoMotivo ExpiracaoMotivo { get; set; }
         public UsuarioInfo Aluno { get; set; }
-        public bool Confirmado { get; set; }
         public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
         public DateTime? Ativo { get; set; } = null;

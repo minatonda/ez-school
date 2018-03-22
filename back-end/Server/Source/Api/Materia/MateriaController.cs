@@ -42,7 +42,7 @@ namespace Api.MateriaApi {
             this._materiaService.Disable(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public MateriaVM Detail(long id) {
             return this._materiaService.Detail(id);
         }

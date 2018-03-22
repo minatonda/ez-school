@@ -149,7 +149,7 @@ export class Factory extends BaseFactory {
 
     public detail = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}`) as InstituicaoModel;
+            let result = await this.get(`/api/instituicao/detail/${id}`) as InstituicaoModel;
             return result;
         }
         catch (error) {
@@ -159,7 +159,7 @@ export class Factory extends BaseFactory {
 
     public detailInstituicaoColaborador = async (id: number | string, idInstituicaoColaborador: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador/${idInstituicaoColaborador}`) as InstituicaoColaboradorModel;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-colaborador/detail/${idInstituicaoColaborador}`) as InstituicaoColaboradorModel;
             return result;
         }
         catch (error) {
@@ -169,7 +169,7 @@ export class Factory extends BaseFactory {
 
     public detailInstituicaoColaboradorPerfil = async (id: number | string, idInstituicaoColaboradorPerfil: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador-perfil/${idInstituicaoColaboradorPerfil}`) as InstituicaoColaboradorPerfilModel;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-colaborador-perfil/detail/${idInstituicaoColaboradorPerfil}`) as InstituicaoColaboradorPerfilModel;
             return result;
         }
         catch (error) {
@@ -179,7 +179,7 @@ export class Factory extends BaseFactory {
 
     public detailInstituicaoCurso = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}`) as InstituicaoCursoModel;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}`) as InstituicaoCursoModel;
             return result;
         }
         catch (error) {
@@ -189,7 +189,7 @@ export class Factory extends BaseFactory {
 
     public detailInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string, idInstituicaoCursoOcorrencia: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia/${idInstituicaoCursoOcorrencia}`) as InstituicaoCursoOcorrenciaModel;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}/instituicao-curso-ocorrencia/detail/${idInstituicaoCursoOcorrencia}`) as InstituicaoCursoOcorrenciaModel;
             return result;
         }
         catch (error) {
@@ -209,7 +209,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoColaborador = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador`) as Array<InstituicaoColaboradorModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-colaborador`) as Array<InstituicaoColaboradorModel>;
             return result;
         }
         catch (error) {
@@ -219,7 +219,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoColaboradorPerfil = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-colaborador-perfil`) as Array<InstituicaoColaboradorPerfilModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-colaborador-perfil`) as Array<InstituicaoColaboradorPerfilModel>;
             return result;
         }
         catch (error) {
@@ -229,7 +229,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoCurso = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso`) as Array<InstituicaoCursoModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso`) as Array<InstituicaoCursoModel>;
             return result;
         }
         catch (error) {
@@ -239,7 +239,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoCursoPeriodo = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-periodo`) as Array<InstituicaoCursoPeriodoModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}/instituicao-curso-periodo`) as Array<InstituicaoCursoPeriodoModel>;
             return result;
         }
         catch (error) {
@@ -249,7 +249,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoCursoTurma = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-turma`) as Array<InstituicaoCursoTurmaModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}/instituicao-curso-turma`) as Array<InstituicaoCursoTurmaModel>;
             return result;
         }
         catch (error) {
@@ -259,7 +259,7 @@ export class Factory extends BaseFactory {
 
     public allCursoGradeMaterias = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/curso-grade-materia`) as Array<CursoGradeMateriaModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}/curso-grade-materia`) as Array<CursoGradeMateriaModel>;
             return result;
         }
         catch (error) {
@@ -269,7 +269,7 @@ export class Factory extends BaseFactory {
 
     public allInstituicaoCursoOcorrencia = async (id: number | string, idInstituicaoCurso: number | string) => {
         try {
-            let result = await this.get(`/api/instituicao/${id}/instituicao-curso/${idInstituicaoCurso}/instituicao-curso-ocorrencia`) as Array<InstituicaoCursoOcorrenciaModel>;
+            let result = await this.get(`/api/instituicao/detail/${id}/instituicao-curso/detail/${idInstituicaoCurso}/instituicao-curso-ocorrencia`) as Array<InstituicaoCursoOcorrenciaModel>;
             return result;
         }
         catch (error) {
@@ -300,16 +300,6 @@ export class Factory extends BaseFactory {
     public allInstituicaoCursoOcorrenciaAusenciaByInstituicaoCursoOcorrenciaPeriodoProfessorAndDataAusencia = async (id: number | string, dataAusencia: string) => {
         try {
             let result = await this.get(`api/business/instituicao/instituicao-curso-ocorrencia-ausencias/by-instituicao-curso-ocorrencia-periodo-professor/${id}/${dataAusencia}`) as Array<InstituicaoCursoOcorrenciaAusenciaModel>;
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-    public allInstituicaoCursoOcorrenciaPeriodoByProfessor = async (id: number | string) => {
-        try {
-            let result = await this.get(`/all-instituicao-curso-ocorrencia-periodo-by-professor/${id}`) as Array<InstituicaoCursoOcorrenciaPeriodoModel>;
             return result;
         }
         catch (error) {
