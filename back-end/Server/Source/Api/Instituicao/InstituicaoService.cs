@@ -174,7 +174,7 @@ namespace Api.InstituicaoApi {
                     modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno = InstituicaoCursoOcorrenciaAlunoAdapter.ToModel(instituicaoCurso, y.Aluno);
                     modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo = modelInstituicaoCursoOcorrenciaPeriodo;
 
-                    if (instituicaoCursoOcorrenciaPeriodoAlunosAttached.FirstOrDefault(z => z.InstituicaoCursoOcorrenciaAluno.Aluno.ID == modelInstituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno.Aluno.ID) == null) {
+                    if (instituicaoCursoOcorrenciaPeriodoAlunosAttached.FirstOrDefault(z => z.ID == modelInstituicaoCursoOcorrenciaPeriodoAluno.ID) == null) {
                         this._instituicaoRepository.AddInstituicaoCursoOcorrenciaPeriodoAluno(modelInstituicaoCursoOcorrenciaPeriodoAluno);
                     } else {
                         this._instituicaoRepository.UpdateInstituicaoCursoOcorrenciaPeriodoAluno(modelInstituicaoCursoOcorrenciaPeriodoAluno);

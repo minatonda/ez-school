@@ -22,20 +22,20 @@ export class PageInstituicaoListaProps implements PageListaPropsInterface {
             new CardTableMenuEntry({
                 label: (item) => 'Gerenciar Cursos',
                 method: (item) => AppRouter.push({ name: AppRouterPath.INSTITUICAO_CURSO, params: { id: item.id } }),
-                btnClass: (item) => ['fa', 'fa-book'],
-                iconClass: (item) => ['btn-primary']
+                btnClass: (item) => ['btn-primary'],
+                iconClass: (item) => ['fa', 'fa-book']
             }),
             new CardTableMenuEntry({
                 label: (item) => 'Gerenciar Colaboradores',
                 method: (item) => AppRouter.push({ name: AppRouterPath.INSTITUICAO_COLABORADOR, params: { id: item.id } }),
-                btnClass: (item) => ['fa', 'fa-users'],
-                iconClass: (item) => ['btn-primary']
+                btnClass: (item) => ['btn-primary'],
+                iconClass: (item) => ['fa', 'fa-users']
             }),
             new CardTableMenuEntry({
                 label: (item) => 'Gerenciar Perfis',
                 method: (item) => AppRouter.push({ name: AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL, params: { id: item.id } }),
-                btnClass: (item) => ['fa', 'fa-cubes'],
-                iconClass: (item) => ['btn-primary']
+                btnClass: (item) => ['btn-primary'],
+                iconClass: (item) => ['fa', 'fa-cubes']
             })
         ],
         main: []

@@ -1,12 +1,14 @@
 <div class="date-catcher" v-bind:class="{selected:isAnyItemSelected()}">
-    <input class="form-control w-100" v-bind:class="inputClass" v-bind:readonly="disableText" v-model="ui.text" v-bind:name="name" v-bind:placeholder="getPlaceholder()" v-on:keyup="onTextChanged(ui.text);enable();" v-mask="getMask(label)" v-on:focus="enable()" v-on:blur="onTextFieldBlur" v-on:keydown.down.prevent="pointerForward()" v-on:keyup.enter="$event.target.nextElementSibling.focus()" v-on:keydown.up.prevent="pointerBackward()" v-on:keydown.enter.tab.stop.self="selectItemByIndex(0)" v-on:keydown.enter.prevent.stop.self="selectItemByIndex(ui.pointer)">
-    <i class="fa fa-remove" v-show="canDeselect()" v-on:click="selectItem(undefined);disable();"></i>
-    <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="ui.loading "></i>
-    <div class="card date-catcher-calendar" v-show="isEnabled()" style="display:inline-block;position:absolute;z-index:99;" v-on:mouseover="disableDisable()" v-on:mouseout="enableDisable()" v-bind:class="getListClass()">
+    <input class="form-control w-100" v-bind:class="inputClass" v-bind:readonly="disableText" v-model="ui.text" v-bind:name="name" v-bind:placeholder="getPlaceholder()" v-on:keyup="onTextChanged(ui.text);enable();" v-mask="getMask(label)" v-on:focus="enable()"
+        v-on:blur="onTextFieldBlur(ui.text)" v-on:keydown.down.prevent="pointerForward()" v-on:keyup.enter="$event.target.nextElementSibling.focus()" v-on:keydown.up.prevent="pointerBackward()" v-on:keydown.tab.top.self="disable()">
+
+    <i class="fa fa-remove" v-show="canDeselect()" v-on:click="select(undefined);disable();"></i>
+    <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="ui.loading"></i>
+    <div class="card date-catcher-calendar" v-show="isEnabled()" v-bind:style="ui.containerStyle" v-on:mouseover="disableDisable()" v-on:mouseout="enableDisable()" v-bind:class="getListClass()">
         <div class="row">
             <div class="col-12 text-center">
-                <table style="width:100%;">
-                    <tr>
+                <table class="date-catcher-calendar-table date-catcher-calendar-table-title">
+                    <tr class="date-cc-tt-row">
                         <td class="text-left p-1">
                             <button class="btn btn-light p-2" style="min-width:initial;" v-on:click="doDecreaseDate()">
                                 <i class="fa fa-chevron-left"></i>
@@ -38,17 +40,15 @@
         </div>
         <div class="row" v-show="isViewType('DAY')">
             <div class="col-12">
-                <table style="width:100%;">
+                <table class="date-catcher-calendar-table date-catcher-calendar-table-days">
                     <tr>
-                        <td v-for="chained in getDaysOfWeek()">
-                            <div class="card card-body p-2 m-1 text-center">
-                                {{chained}}
-                            </div>
+                        <td v-for="chained in getDaysOfWeek()" class="date-cc-td-week-col">
+                            {{chained}}
                         </td>
                     </tr>
                     <tr v-for="dateArray in chain(getDates(),7)">
                         <td v-for="date in dateArray">
-                            <div class="card card-body p-2 m-1 text-center" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
+                            <div class="date-cc-td-day" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
                                 {{date.format('DD')}}
                             </div>
                         </td>
@@ -58,10 +58,10 @@
         </div>
         <div class="row" v-show="isViewType('MONTH')">
             <div class="col-12">
-                <table style="width:100%;">
+                <table class="date-catcher-calendar-table date-catcher-calendar-table-month">
                     <tr v-for="dateArray in chain(getMonths(),3)">
                         <td v-for="date in dateArray">
-                            <div class="card card-body p-2 m-1 text-center" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
+                            <div class="date-cc-tm-col" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
                                 {{getMonthName(date)}}
                             </div>
                         </td>
@@ -71,10 +71,10 @@
         </div>
         <div class="row" v-show="isViewType('YEAR')">
             <div class="col-12">
-                <table style="width:100%;">
+                <table class="date-catcher-calendar-table date-catcher-calendar-table-year">
                     <tr v-for="dateArray in chain(getYears(),3)">
                         <td v-for="date in dateArray">
-                            <div class="card card-body p-2 m-1 text-center" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
+                            <div class="date-cc-ty-col" v-bind:class="getDateClass(date)" v-on:click.prevent="select(date);disable();">
                                 {{date.format('YYYY')}}
                             </div>
                         </td>

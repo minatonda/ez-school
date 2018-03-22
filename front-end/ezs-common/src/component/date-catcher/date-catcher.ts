@@ -2,17 +2,19 @@ import { Vue } from 'vue-property-decorator';
 import { Prop, Component, Model, Watch } from 'vue-property-decorator';
 import { fail } from 'assert';
 import { DateUtil } from '../../util/date/date.util';
-import { TimeUtil } from '../../util/time/time.util';
-import { NumberUtil } from '../../util/number/number.util';
-import { ArrayUtil } from '../../util/array/array.util';
+import { TimeUtil } from '../../util//time/time.util';
+import { NumberUtil } from '../../util//number/number.util';
+import { ArrayUtil } from '../../util//array/array.util';
 import moment, { Moment, months } from 'moment';
 
 interface UI {
-    internalValue: any;
+    value: any;
     enabled: boolean;
     canDisable: boolean;
     dateMain: moment.Moment;
     viewType: ViewType;
+    containerStyle: any;
+    text: string;
 }
 
 enum RenderType {
@@ -29,20 +31,22 @@ enum ViewType {
 
 @Component({
     template: require('./date-catcher.html'),
-    filters: Object.assign({}, DateUtil, TimeUtil, NumberUtil) as any
+    filters: Object.assign({}, DateUtil, TimeUtil, NumberUtil) as any,
 })
 export class DateCatcherComponent extends Vue {
 
     ui: UI = {
-        internalValue: undefined,
+        value: undefined,
         enabled: false,
-        canDisable: false,
+        canDisable: true,
         dateMain: undefined,
-        viewType: ViewType.DAY
+        viewType: ViewType.DAY,
+        containerStyle: {},
+        text: undefined
     };
 
     @Prop([String, Date])
-    value: any;
+    value: string | Date;
 
     @Prop({ type: String, default: 'YYYY-MM-DD' })
     label: any;
@@ -55,9 +59,6 @@ export class DateCatcherComponent extends Vue {
 
     @Prop({ type: Boolean, default: false })
     onlyAutoComplete: boolean;
-
-    @Prop({ default: () => { return { rules: {} }; } })
-    validate: Object;
 
     @Prop({ type: String, default: 'top-to-bottom' })
     renderType: string;
@@ -87,23 +88,18 @@ export class DateCatcherComponent extends Vue {
     disableText: boolean;
 
     created() {
-        this.select(moment(this.value || this.startDate));
+        this.select(this.value ? moment(this.value) : undefined);
     }
 
     @Watch('value')
     onValueChange(val) {
-        if (this.ui.internalValue !== val) {
-            this.select(moment(val || this.startDate));
+        if (!(val instanceof Date) || (val instanceof Date && !moment(val).isSame(moment(this.ui.value)))) {
+            this.select(val ? moment(val) : undefined);
         }
     }
 
     async onTextChanged(val) {
-        if (val) {
-            this.select(this.dateFromText(val));
-            setImmediate(() => {
-                this.$forceUpdate();
-            });
-        }
+        this.select(val ? this.dateFromText(val) : undefined);
     }
 
     dateFromText(text: string) {
@@ -149,9 +145,9 @@ export class DateCatcherComponent extends Vue {
             count++;
         }
 
-        let day = text.substring(dayStart, dayEnd + 1) || moment(this.ui.internalValue).format('DD');
-        let month = text.substring(monthStart, monthEnd + 1) || moment(this.ui.internalValue).format('MM');
-        let year = text.substring(yearStart, yearEnd + 1) || moment(this.ui.internalValue).format('YYYY');
+        let day = text.substring(dayStart, dayEnd + 1) || moment(this.ui.dateMain.toDate()).format('DD');
+        let month = text.substring(monthStart, monthEnd + 1) || moment(this.ui.dateMain.toDate()).format('MM');
+        let year = text.substring(yearStart, yearEnd + 1) || moment(this.ui.dateMain.toDate()).format('YYYY');
 
         let mmnt = moment();
         mmnt.date(parseInt(day)).month(parseInt(month) - 1).year(parseInt(year));
@@ -159,7 +155,10 @@ export class DateCatcherComponent extends Vue {
         return mmnt;
     }
 
-    onTextFieldBlur() {
+    onTextFieldBlur(val) {
+        if (val) {
+            this.ui.text = this.dateFromText(val).format(this.label);
+        }
         if (this.canDisable()) {
             this.disable();
         }
@@ -167,10 +166,16 @@ export class DateCatcherComponent extends Vue {
 
     enable() {
         this.ui.enabled = true;
+        setImmediate(() => {
+            this.doEnableContainerPositionFix();
+        });
     }
 
     disable() {
         this.ui.enabled = false;
+        setImmediate(() => {
+            this.doDisableContainerPositionFix();
+        });
     }
 
     enableDisable() {
@@ -245,6 +250,18 @@ export class DateCatcherComponent extends Vue {
         this.$forceUpdate();
     }
 
+    doEnableContainerPositionFix() {
+        let element = this.$el.querySelector('.date-catcher-calendar');
+        let widthscreen = screen.width;
+        if (element.getBoundingClientRect().right > screen.width) {
+            this.ui.containerStyle = { 'margin-left': `${this.$el.getBoundingClientRect().right - element.getBoundingClientRect().right}px` };
+        }
+    }
+
+    doDisableContainerPositionFix() {
+        this.ui.containerStyle = {};
+    }
+
     select(date: moment.Moment) {
         this.setInternalValue(date);
     }
@@ -258,15 +275,15 @@ export class DateCatcherComponent extends Vue {
     }
 
     isAnyItemSelected() {
-        return !!this.ui.internalValue;
+        return !!this.ui.value;
     }
 
     isDateSelected(date: moment.Moment) {
         if (this.modelAsDate) {
-            return date.format(this.format) === moment(this.ui.internalValue).format(this.format);
+            return date.format(this.format) === moment(this.ui.value).format(this.format);
         }
         else {
-            return date.format(this.format) === this.ui.internalValue;
+            return date.format(this.format) === this.ui.value;
         }
     }
 
@@ -279,7 +296,7 @@ export class DateCatcherComponent extends Vue {
     }
 
     canDeselect() {
-        return this.isNullable();
+        return this.isNullable() && this.isAnyItemSelected();
     }
 
     canDisable() {
@@ -287,15 +304,25 @@ export class DateCatcherComponent extends Vue {
     }
 
     setInternalValue(item: moment.Moment) {
-        if (this.modelAsDate) {
-            this.ui.internalValue = item.toDate();
+        if (item && this.modelAsDate) {
+            item.second(0);
+            item.minute(0);
+            item.hour(0);
+            item.millisecond(0);
+            this.ui.value = item.toDate();
+            this.ui.dateMain = item;
+        }
+        else if (item) {
+            this.ui.value = item.format(this.format);
+            this.ui.dateMain = item;
         }
         else {
-            this.ui.internalValue = item.format(this.format);
+            let standardItem = moment(this.startDate, this.format);
+            this.ui.dateMain = standardItem;
+            this.ui.value = null;
         }
-        this.ui.dateMain = item;
-        this.$emit('change', this.ui.internalValue);
-        this.$emit('input', this.ui.internalValue);
+        this.$emit('change', this.ui.value);
+        this.$emit('input', this.ui.value);
     }
 
     setViewType(viewType: ViewType) {
@@ -386,7 +413,7 @@ export class DateCatcherComponent extends Vue {
     }
 
     getPlaceholder() {
-        if (this.ui.internalValue) {
+        if (this.ui.value) {
             return this.ui.dateMain.format(this.label);
         }
         else {
