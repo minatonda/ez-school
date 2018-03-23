@@ -56,11 +56,15 @@
             </div>
         </div>
     </div>
-    <b-modal ref="modal-curso-grade" size="lg" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
+    <b-modal ref="modal-curso-grade" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-3">
                 <label class="control-label">Descrição</label>
                 <input class="form-control" placeholder="Descrição" v-model="ui.cursoGrade.descricao"></input>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="control-label">Instituição</label>
+                <selector v-model="ui.cursoGrade.instituicao" placeholder="Instituição" v-bind:itens="ui.instituicoes" label="label"></selector>
             </div>
         </div>
         <div class="row">
@@ -69,11 +73,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-3">
                 <label class="control-label">Materia</label>
                 <selector v-model="ui.cursoGradeMateria.materia" placeholder="Materia" v-bind:itens="ui.materias" label="label"></selector>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
+                <label class="control-label">Nome de Exibição</label>
+                <input class="form-control" placeholder="Nome de Exibição" v-model="ui.cursoGradeMateria.nomeExibicao"></input>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="control-label">Grupo</label>
+                <input class="form-control" placeholder="Grupo" v-model="ui.cursoGradeMateria.grupo"></input>
+            </div>
+            <div class="col-12 col-md-3">
                 <label class="control-label invisible">Ocupar</label>
                 <button class="btn btn-primary btn-block" v-on:click="addCursoGradeMateria(ui.cursoGradeMateria)">Adicionar</button>
             </div>
@@ -84,19 +96,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
-                <div class="card card-body w-100 p-2 mb-2" v-for="cursoGradeMateria in ui.cursoGrade.materias">
-                    <div class="row">
-                        <div class="col-12 col-md-8 align-self-center">
-                            <b>Descrição: </b><span>{{cursoGradeMateria.materia.label}}</span>
-                        </div>
-                        <div class="col-12 col-md-4 align-self-center text-right">
-                            <button class="btn btn-danger" v-on:click="removeCursoGradeMateria(cursoGradeMateria)">
-                                Excluir
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-12 form-group">
+                <card-table v-bind:columns="getTableCursoGradeMateria().columns" v-bind:itens="ui.cursoGrade.materias" v-bind:menu="getTableCursoGradeMateria().menu"></card-table>
             </div>
         </div>
         <div class="row">

@@ -48,7 +48,7 @@ export class Factory extends BaseFactory {
 
     public all = async () => {
         try {
-            let result = await this.get('/api/curso') as Array < CursoModel > ;
+            let result = await this.get('/api/curso') as Array<CursoModel>;
             return result;
         }
         catch (error) {
@@ -58,7 +58,17 @@ export class Factory extends BaseFactory {
 
     public allCursoGrade = async (id: number | string) => {
         try {
-            let result = await this.get(`/api/curso/detail/${id}/curso-grade`) as Array < CursoGradeModel > ;
+            let result = await this.get(`/api/curso/detail/${id}/curso-grade`) as Array<CursoGradeModel>;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public allCursoGradeByInstituicao = async (id: number | string, idInstituicao: number | string) => {
+        try {
+            let result = await this.get(`/api/curso/detail/${id}/curso-grade/by-instituicao/${idInstituicao}`) as Array<CursoGradeModel>;
             return result;
         }
         catch (error) {
@@ -68,7 +78,7 @@ export class Factory extends BaseFactory {
 
     public allCursoGradeMateria = async (id: number | string, idCursoGrade: number | string) => {
         try {
-            let result = await this.get(`/api/curso/detail/${id}/curso-grade/detail/${idCursoGrade}/curso-grade-materia`) as Array < CursoGradeModel > ;
+            let result = await this.get(`/api/curso/detail/${id}/curso-grade/detail/${idCursoGrade}/curso-grade-materia`) as Array<CursoGradeModel>;
             return result;
         }
         catch (error) {

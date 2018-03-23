@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Api.Common.Base;
 using Api.CursoApi;
@@ -131,12 +132,12 @@ namespace Api.InstituicaoApi {
             return this._instituicaoService.Detail(id);
         }
 
-        [HttpGet("detail/{id}/instituicao-colaborador/detail/{idInstituicaoCurso}")]
+        [HttpGet("detail/{id}/instituicao-colaborador/detail/{idInstituicaoColaborador}")]
         public InstituicaoColaboradorVM DetailInstituicaoColaborador(long id, long idInstituicaoColaborador) {
             return this._instituicaoService.DetailInstituicaoColaborador(idInstituicaoColaborador);
         }
 
-        [HttpGet("detail/{id}/instituicao-colaborador-perfil/detail/{idInstituicaoCurso}")]
+        [HttpGet("detail/{id}/instituicao-colaborador-perfil/detail/{idInstituicaoColaboradorPerfil}")]
         public InstituicaoColaboradorPerfilVM DetailInstituicaoColaboradorPerfil(long id, long idInstituicaoColaboradorPerfil) {
             return this._instituicaoService.DetailInstituicaoColaboradorPerfil(idInstituicaoColaboradorPerfil);
         }
@@ -190,6 +191,24 @@ namespace Api.InstituicaoApi {
         public List<CursoGradeMateriaVM> AllCursoGradeMateria(long id, long idInstituicaoCurso) {
             return this._instituicaoService.AllCursoGradeMateria(idInstituicaoCurso);
         }
+
+        [HttpGet("roles")]
+        public List<BaseRole> AllRoles() {
+            return new List<BaseRole>(){
+                BaseRole.OWNER_INSTITUICAO,
+                BaseRole.ADD_INSTITUICAO_CURSO,
+                BaseRole.EDIT_INSTITUICAO_CURSO,
+                BaseRole.DISABLE_INSTITUICAO_CURSO,
+                BaseRole.DETAIL_INSTITUICAO_CURSO,
+                BaseRole.LIST_INSTITUICAO_CURSO,
+                BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA,
+                BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA,
+                BaseRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA,
+                BaseRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA,
+                BaseRole.LIST_INSTITUICAO_CURSO_OCORRENCIA,
+            };
+        }
+
 
     }
 }

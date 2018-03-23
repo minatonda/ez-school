@@ -222,31 +222,37 @@ export class DateCatcherComponent extends Vue {
 
     doIncreaseMonth() {
         this.ui.dateMain.add(1, 'month');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 
     doDecreaseMonth() {
         this.ui.dateMain.add(-1, 'month');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 
     doIncreaseYear() {
         this.ui.dateMain.add(1, 'year');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 
     doDecreaseYear() {
         this.ui.dateMain.add(-1, 'year');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 
     doIncreaseDecade() {
         this.ui.dateMain.add(10, 'year');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 
     doDecreaseDecade() {
         this.ui.dateMain.add(-10, 'year');
+        this.select(this.ui.dateMain);
         this.$forceUpdate();
     }
 

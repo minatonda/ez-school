@@ -15,9 +15,11 @@ import { ENUM_CONTANT } from '../../../../../ezs-common/src/constant/enum.contan
 
 interface UI {
     areaInteresse: AreaInteresseModel;
-    categoriaProfissionais: Array < CategoriaProfissionalModel > ;
+    categoriaProfissionais: Array<CategoriaProfissionalModel>;
     query: any;
     usuarioInfoLabel: any;
+    rolesLabel: any;
+    roles: Array<number>;
 }
 
 @Component({
@@ -33,7 +35,15 @@ export class PageUsuarioComponent extends Vue {
     ui: UI = {
         categoriaProfissionais: undefined,
         areaInteresse: new AreaInteresseModel(),
-        
+
+        roles: undefined,
+
+        rolesLabel(item: number) {
+            return ApplicationService.getEnumLabels(ENUM_CONTANT.BASE_ROLE).find(x => {
+                return x.value === parseInt(item.toString());
+            }).label;
+        },
+
         query: async (term) => {
             let itens = await FACTORY_CONSTANT.UsuarioFactory.allByTermo(term, false, false);
             return itens;
@@ -61,6 +71,7 @@ export class PageUsuarioComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             this.ui.categoriaProfissionais = await FACTORY_CONSTANT.CategoriaProfissionalFactory.all();
+            this.ui.roles = await FACTORY_CONSTANT.UsuarioFactory.allRoles();
             if (this.operation === RouterPathType.upd) {
                 this.model = await FACTORY_CONSTANT.UsuarioFactory.detail(this.$route.params.id);
             }
@@ -104,13 +115,19 @@ export class PageUsuarioComponent extends Vue {
         this.$forceUpdate();
     }
 
-    addRole(enumerable: any) {
-        this.model.usuarioInfo.roles.push(enumerable.value.toString());
+    removeAreaInteresse(item) {
+        this.model.usuarioInfo.areaInteresses.splice(this.model.usuarioInfo.areaInteresses.indexOf(item), 1);
         this.$forceUpdate();
     }
 
-    getRoles() {
-        return ApplicationService.getEnumLabels(ENUM_CONTANT.BASE_ROLE);
+    addRole(enumerable: any) {
+        this.model.usuarioInfo.roles.push(enumerable);
+        this.$forceUpdate();
+    }
+
+    removeRole(item) {
+        this.model.usuarioInfo.roles.splice(this.model.usuarioInfo.roles.indexOf(item), 1);
+        this.$forceUpdate();
     }
 
     getTableAreaInteresse() {
@@ -145,22 +162,12 @@ export class PageUsuarioComponent extends Vue {
         let columns = [
             new CardTableColumn({
                 value: (item: number) => {
-                    return this.getRoles().find(x => x.value.toString() === item.toString()).label;
+                    return this.ui.rolesLabel(item);
                 },
                 label: () => 'Regra'
             })
         ];
         return { columns: columns, menu: menu };
-    }
-
-    removeAreaInteresse(item) {
-        this.model.usuarioInfo.areaInteresses.splice(this.model.usuarioInfo.areaInteresses.indexOf(item), 1);
-        this.$forceUpdate();
-    }
-
-    removeRole(item) {
-        this.model.usuarioInfo.roles.splice(this.model.usuarioInfo.roles.indexOf(item), 1);
-        this.$forceUpdate();
     }
 
 }

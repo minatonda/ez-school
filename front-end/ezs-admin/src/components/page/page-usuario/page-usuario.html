@@ -146,7 +146,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-3">
-                                <selector v-bind:itens="getRoles()" placeholder="Permissões" label="label" v-model="ui.role"></selector>
+                                <selector v-bind:itens="ui.roles" placeholder="Permissões" v-bind:label="ui.rolesLabel" v-model="ui.role"></selector>
                             </div>
                             <div class="col-12 col-md-2 form-group text-left">
                                 <button class="btn btn-primary" v-on:click="addRole(ui.role)">Adicionar</button>

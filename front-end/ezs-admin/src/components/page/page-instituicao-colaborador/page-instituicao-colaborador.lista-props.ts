@@ -12,10 +12,6 @@ export class PageInstituicaoColaboradorListaProps implements PageListaPropsInter
         new CardTableColumn({
             value: (item: InstituicaoColaboradorModel) => item.usuario.nome,
             label: () => 'Nome'
-        }),
-        new CardTableColumn({
-            value: (item: InstituicaoColaboradorModel) => item.usuario.roles.join(' '),
-            label: () => 'Perfis'
         })
     ];
     menu = { row: [], main: [] };

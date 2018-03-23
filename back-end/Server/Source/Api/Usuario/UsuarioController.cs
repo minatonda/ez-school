@@ -61,8 +61,35 @@ namespace Api.UsuarioApi {
         }
 
         [HttpGet("roles")]
-        public Array AllRoles() {
-            return Enum.GetValues(typeof(BaseRole));
+        public List<BaseRole> AllRoles() {
+            return new List<BaseRole>(){
+                BaseRole.ADMIN,
+                BaseRole.ADD_MATERIA,
+                BaseRole.EDIT_MATERIA,
+                BaseRole.DISABLE_MATERIA,
+                BaseRole.DETAIL_MATERIA,
+                BaseRole.LIST_MATERIA,
+                BaseRole.ADD_USUARIO,
+                BaseRole.EDIT_USUARIO,
+                BaseRole.DISABLE_USUARIO,
+                BaseRole.DETAIL_USUARIO,
+                BaseRole.LIST_USUARIO,
+                BaseRole.ADD_CURSO,
+                BaseRole.EDIT_CURSO,
+                BaseRole.DISABLE_CURSO,
+                BaseRole.DETAIL_CURSO,
+                BaseRole.LIST_CURSO,
+                BaseRole.ADD_CATEGORIA_PROFISSIONAL,
+                BaseRole.EDIT_CATEGORIA_PROFISSIONAL,
+                BaseRole.DISABLE_CATEGORIA_PROFISSIONAL,
+                BaseRole.DETAIL_CATEGORIA_PROFISSIONAL,
+                BaseRole.LIST_CATEGORIA_PROFISSIONAL,
+                BaseRole.ADD_INSTITUICAO,
+                BaseRole.EDIT_INSTITUICAO,
+                BaseRole.DISABLE_INSTITUICAO,
+                BaseRole.DETAIL_INSTITUICAO,
+                BaseRole.LIST_INSTITUICAO,
+            };
         }
 
 

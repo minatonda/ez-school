@@ -3,7 +3,7 @@ import { Prop, Component, Model, Watch } from 'vue-property-decorator';
 
 interface Data {
     value: any;
-    itens: Array < any > ;
+    itens: Array<any>;
     text: string;
     enabled: boolean;
     canDisable: boolean;
@@ -18,7 +18,7 @@ export class SelectorComponent extends Vue {
 
     data: Data = {
         value: undefined,
-        itens: new Array < any > (),
+        itens: new Array<any>(),
         text: undefined,
         enabled: false,
         canDisable: true,
@@ -30,7 +30,7 @@ export class SelectorComponent extends Vue {
     value: any;
 
     @Prop({ type: Array })
-    itens: Array < any > ;
+    itens: Array<any>;
 
     @Prop({ type: Function })
     query: Function;
@@ -95,7 +95,7 @@ export class SelectorComponent extends Vue {
             this.data.itens = val;
         }
         else {
-            this.data.itens = new Array < any > ();
+            this.data.itens = new Array<any>();
         }
     }
 
@@ -183,12 +183,12 @@ export class SelectorComponent extends Vue {
     }
 
     setInternalValue(item) {
-        if (item && this.outputAs && this.isTypeOf(item, ['string'])) {
+        if ((item !== undefined && item !== null) && this.outputAs && this.isTypeOf(item, ['string'])) {
             this.data.value = this.itens.find(x => x[this.outputAs] === item);
             this.data.text = this.getItemLabel(item);
             this.$emit('input', this.data.value);
         }
-        else if (item && this.outputAs) {
+        else if ((item !== undefined && item !== null) && this.outputAs) {
             this.data.value = item;
             this.data.text = this.getItemLabel(item);
             this.$emit('input', this.data.value[this.outputAs]);
@@ -199,8 +199,8 @@ export class SelectorComponent extends Vue {
         }
     }
 
-    selectItem(item ? ) {
-        if (this.isOnlyAutoComplete() && item && !this.isTypeOf(item, ['string', 'number', 'boolean'])) {
+    selectItem(item?) {
+        if (this.isOnlyAutoComplete() && (item !== undefined && item !== null)) {
             let autoCompleteItem = this.getItemLabel(item, false);
             this.data.text = autoCompleteItem;
             this.setInternalValue(autoCompleteItem);
@@ -210,7 +210,7 @@ export class SelectorComponent extends Vue {
             this.setInternalValue(this.data.text);
             this.$emit('change', this.data.text);
         }
-        else if (item && !this.isTypeOf(item, ['string', 'number', 'boolean', String, Number, Boolean])) {
+        else if ((item !== undefined && item !== null)) {
             this.data.text = this.getItemLabel(item, false);
             this.setInternalValue(item);
             this.$emit('change', item);
@@ -259,7 +259,7 @@ export class SelectorComponent extends Vue {
 
     getItemLabel(item, highlight?: boolean) {
         let labelResult: any;
-        if (!item) {
+        if ((item === undefined || item === null)) {
             return '';
         }
         else if (this.label === undefined) {
@@ -274,14 +274,22 @@ export class SelectorComponent extends Vue {
             if (this.isTypeOf(labelResult, [String, 'string'])) {
                 return highlight ? this.highlight(labelResult, this.data.text) : labelResult;
             }
-            else {
-                return highlight ? this.highlight(labelResult.label, this.data.text) : labelResult.key;
+            else if (highlight) {
+                if (this.highlight(labelResult.label, this.data.text)) {
+                    return this.highlight(labelResult.label, this.data.text);
+                }
+                else {
+                    return labelResult.key;
+                }
+            }
+            else if ((labelResult !== undefined && labelResult !== null)) {
+                return labelResult.key || labelResult;
             }
         }
     }
 
     // Retorna TRUE se o tipo do item for qualquer um dos tipos passado no array
-    isTypeOf(item: any, types: Array < any > ) {
+    isTypeOf(item: any, types: Array<any>) {
         let isTypeOf = false;
 
         types.forEach(type => {
@@ -302,7 +310,7 @@ export class SelectorComponent extends Vue {
         return isTypeOf;
     }
 
-    filter(text: string, itens: Array < any > ) {
+    filter(text: string, itens: Array<any>) {
         if (itens && text) {
             let filtered = itens
                 .filter(x => {
@@ -319,7 +327,7 @@ export class SelectorComponent extends Vue {
         }
     }
 
-    sortInputFirst(input: string, data: Array < any > , label) {
+    sortInputFirst(input: string, data: Array<any>, label) {
         let first = [];
         let others = [];
         for (let i = 0; i < data.length; i++) {
@@ -333,7 +341,7 @@ export class SelectorComponent extends Vue {
         return (first.concat(others));
     }
 
-    highlight(label, query, subStringStart ? ) {
+    highlight(label, query, subStringStart?) {
         if (!label || !query) {
             return label;
         }
@@ -388,7 +396,7 @@ export class SelectorComponent extends Vue {
         }
         else if (text) {
             let helperRemoveAccents_map = { 'Ã': 'A', 'Â': 'A', 'Á': 'A', 'ã': 'a', 'â': 'a', 'á': 'a', 'à': 'a', 'É': 'E', 'Ê': 'E', 'È': 'E', 'é': 'e', 'ê': 'e', 'è': 'e', 'Í': 'I', 'Î': 'I', 'Ì': 'I', 'î': 'I', 'í': 'i', 'ì': 'i', 'Ô': 'O', 'Õ': 'O', 'Ó': 'O', 'Ò': 'O', 'ô': 'o', 'õ': 'o', 'ó': 'o', 'ò': 'o', 'Ú': 'U', 'Ù': 'U', 'ú': 'u', 'ù': 'u', 'ç': 'c' };
-            return text.replace(/[^A-Za-z0-9\[\] ]/g, function(a) {
+            return text.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
                 return helperRemoveAccents_map[a] || a;
             });
         }

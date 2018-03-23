@@ -14,7 +14,7 @@ import { NotifyUtil } from '../../ezs-common/src/util/notify/notify.util';
 
 class Router extends BaseRouter {
 
-    constructor(config: Array < BaseRouteConfig > ) {
+    constructor(config: Array<BaseRouteConfig>) {
         super(config);
         this.afterEach(this.onAfterEach);
         this.beforeEach(this.onBeforeEach);
@@ -74,8 +74,6 @@ class Router extends BaseRouter {
 
         });
 
-
-
     }
 
 
@@ -125,6 +123,12 @@ class Router extends BaseRouter {
                     throw new RedirectError(template.title, template.message, AppRouterPath.USUARIO_AUTENTICACAO);
                 }
         }
+    }
+
+    public getMenuPermitido = () => {
+        return this.configs.filter(x => {
+            return x.menu && ApplicationService.getViews().indexOf(x.path) > -1;
+        });
     }
 
 }

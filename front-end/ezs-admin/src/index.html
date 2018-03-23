@@ -11,7 +11,7 @@
 <body class="bg-thirdy">
 
   <div id="app-main" class="container-fluid" v-cloak>
-    <navbar-component v-if="isAutenticado()"></navbar-component>
+    <navbar-component v-if="isShowNavbar()"></navbar-component>
     <div class="row">
       <div class="col-12">
         <router-view class="p-padding-top-10 p-padding-bottom-10" style="min-height: calc(100vh - 47px);"></router-view>

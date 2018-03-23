@@ -8,7 +8,7 @@ import { BaseRouteConfig } from '../../../../../ezs-common/src/model/client/base
 export class PageHomeComponent extends Vue {
 
     public getRotas() {
-        return AppRouter.getMenu();
+        return AppRouter.getMenuPermitido();
     }
 
     public getRotasLabel(route: BaseRouteConfig) {

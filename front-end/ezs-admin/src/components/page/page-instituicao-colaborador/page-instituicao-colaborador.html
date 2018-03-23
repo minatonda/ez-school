@@ -20,6 +20,32 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12 col-md-12 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <legend>Perfis</legend>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-3 form-group">
+                                <selector v-bind:itens="ui.instituicaoColaboradorPerfis" placeholder="Perfil" label="nome" v-model="ui.instituicaoColaboradorPerfil" output-as="id"></selector>
+                            </div>
+                            <div class="col-12 col-md-2 form-group text-left">
+                                <button class="btn btn-primary" v-on:click="addInstituicaoColaboradorPerfil(ui.instituicaoColaboradorPerfil)">Adicionar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <card-table v-bind:columns="getTableInstituicaoColaboradorPerfil().columns" v-bind:itens="model.perfis" v-bind:menu="getTableInstituicaoColaboradorPerfil().menu"></card-table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 form-group text-right">
                 <button class="btn btn-primary" v-on:click="save()">Salvar</button>
             </div>

@@ -11,6 +11,7 @@ import { MateriaModel } from '../../../../../ezs-common/src/model/server/materia
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
+import { InstituicaoModel } from '../../../../../ezs-common/src/model/server/instituicao.model';
 
 enum ModalOperation {
     add = 0,
@@ -20,6 +21,7 @@ enum ModalOperation {
 interface UI {
     materias: Array<MateriaModel>;
     cursoGrade: CursoGradeModel;
+    instituicoes: Array<InstituicaoModel>;
     cursoGradeMateria: CursoGradeMateriaModel;
     dialogCursoGradeOperation: ModalOperation;
 }
@@ -40,6 +42,7 @@ export class PageCursoComponent extends Vue {
         materias: undefined,
         cursoGrade: new CursoGradeModel(),
         cursoGradeMateria: new CursoGradeMateriaModel(),
+        instituicoes: undefined,
         dialogCursoGradeOperation: ModalOperation.add
     };
 
@@ -55,6 +58,7 @@ export class PageCursoComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             this.ui.materias = await FACTORY_CONSTANT.MateriaFactory.all();
+            this.ui.instituicoes = await FACTORY_CONSTANT.InstituicaoFactory.all();
             if (this.operation === RouterPathType.upd) {
                 this.model = await FACTORY_CONSTANT.CursoFactory.detail(this.$route.params.id);
             }
@@ -138,6 +142,40 @@ export class PageCursoComponent extends Vue {
         this.ui.dialogCursoGradeOperation = ModalOperation.update;
         this.ui.cursoGrade = cursoGrade;
         this.openDialogCursoGrade();
+    }
+
+    getTableCursoGradeMateria() {
+
+        let columns = [
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.nomeExibicao,
+                label: () => 'Nome de Exibição'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.descricao,
+                label: () => 'Descrição'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.materia.label,
+                label: () => 'Matéria'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.grupo,
+                label: () => 'Grupo'
+            })
+        ];
+
+        let menu = new CardTableMenu();
+        menu.row = [
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removeCursoGradeMateria(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-remove']
+            })
+        ];
+
+        return { columns: columns, menu: menu };
     }
 
 }

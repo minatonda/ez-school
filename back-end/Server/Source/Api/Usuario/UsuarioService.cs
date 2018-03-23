@@ -101,104 +101,150 @@ namespace Api.UsuarioApi {
 
             roles.ForEach(x => {
 
-                if (x == ((int)BaseRole.ADD_MATERIA).ToString()) {
-                    views.Add(ViewAlias.MATERIA_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_MATERIA).ToString()) {
-                    views.Add(ViewAlias.MATERIA_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_MATERIA).ToString()) {
-                    views.Add(ViewAlias.MATERIA_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_MATERIA).ToString()) {
-                    views.Add(ViewAlias.MATERIA);
-                }
+                if (roles.Contains((((int)BaseRole.ADMIN).ToString()))) {
 
-                if (x == ((int)BaseRole.ADD_USUARIO).ToString()) {
-                    views.Add(ViewAlias.USUARIO_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_USUARIO).ToString()) {
-                    views.Add(ViewAlias.USUARIO_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_USUARIO).ToString()) {
-                    views.Add(ViewAlias.USUARIO_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_USUARIO).ToString()) {
-                    views.Add(ViewAlias.USUARIO);
-                }
+                    if (x == ((int)BaseRole.ADMIN).ToString()) {
 
-                if (x == ((int)BaseRole.ADD_CURSO).ToString()) {
-                    views.Add(ViewAlias.CURSO_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_CURSO).ToString()) {
-                    views.Add(ViewAlias.CURSO_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_CURSO).ToString()) {
-                    views.Add(ViewAlias.CURSO_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_CURSO).ToString()) {
-                    views.Add(ViewAlias.CURSO);
-                }
+                        views.Add(ViewAlias.MATERIA_ADD);
+                        views.Add(ViewAlias.MATERIA_UPD);
+                        views.Add(ViewAlias.MATERIA);
+                        views.Add(ViewAlias.USUARIO_ADD);
+                        views.Add(ViewAlias.USUARIO_UPD);
+                        views.Add(ViewAlias.USUARIO);
+                        views.Add(ViewAlias.CURSO_ADD);
+                        views.Add(ViewAlias.CURSO_UPD);
+                        views.Add(ViewAlias.CURSO);
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
+                        views.Add(ViewAlias.INSTITUICAO_UPD);
+                        views.Add(ViewAlias.INSTITUICAO);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
+                        
+                    }
 
-                if (x == ((int)BaseRole.ADD_CATEGORIA_PROFISSIONAL).ToString()) {
-                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_CATEGORIA_PROFISSIONAL).ToString()) {
-                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_CATEGORIA_PROFISSIONAL).ToString()) {
-                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_CATEGORIA_PROFISSIONAL).ToString()) {
-                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
-                }
+                } else {
 
-                if (x == ((int)BaseRole.ADD_INSTITUICAO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_INSTITUICAO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_INSTITUICAO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_INSTITUICAO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO);
-                }
+                    if (x == ((int)BaseRole.ADD_MATERIA).ToString()) {
+                        views.Add(ViewAlias.MATERIA_ADD);
+                    }
+                    if (x == ((int)BaseRole.EDIT_MATERIA).ToString()) {
+                        views.Add(ViewAlias.MATERIA_UPD);
+                    }
+                    if (x == ((int)BaseRole.DETAIL_MATERIA).ToString()) {
+                        views.Add(ViewAlias.MATERIA_UPD);
+                    }
+                    if (x == ((int)BaseRole.LIST_MATERIA).ToString()) {
+                        views.Add(ViewAlias.MATERIA);
+                    }
 
-                if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO);
-                }
+                    if (x == ((int)BaseRole.ADD_USUARIO).ToString()) {
+                        views.Add(ViewAlias.USUARIO_ADD);
+                    }
+                    if (x == ((int)BaseRole.EDIT_USUARIO).ToString()) {
+                        views.Add(ViewAlias.USUARIO_UPD);
+                    }
+                    if (x == ((int)BaseRole.DETAIL_USUARIO).ToString()) {
+                        views.Add(ViewAlias.USUARIO_UPD);
+                    }
+                    if (x == ((int)BaseRole.LIST_USUARIO).ToString()) {
+                        views.Add(ViewAlias.USUARIO);
+                    }
 
-                if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
-                }
-                if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                }
-                if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                }
-                if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
-                }
+                    if (x == ((int)BaseRole.ADD_CURSO).ToString()) {
+                        views.Add(ViewAlias.CURSO_ADD);
+                    }
+                    if (x == ((int)BaseRole.EDIT_CURSO).ToString()) {
+                        views.Add(ViewAlias.CURSO_UPD);
+                    }
+                    if (x == ((int)BaseRole.DETAIL_CURSO).ToString()) {
+                        views.Add(ViewAlias.CURSO_UPD);
+                    }
+                    if (x == ((int)BaseRole.LIST_CURSO).ToString()) {
+                        views.Add(ViewAlias.CURSO);
+                    }
 
-                if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA).ToString()) {
+                    if (x == ((int)BaseRole.ADD_CATEGORIA_PROFISSIONAL).ToString()) {
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
+                    }
+                    if (x == ((int)BaseRole.EDIT_CATEGORIA_PROFISSIONAL).ToString()) {
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
+                    }
+                    if (x == ((int)BaseRole.DETAIL_CATEGORIA_PROFISSIONAL).ToString()) {
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
+                    }
+                    if (x == ((int)BaseRole.LIST_CATEGORIA_PROFISSIONAL).ToString()) {
+                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
+                    }
 
+                    if (roles.Contains((((int)BaseRole.OWNER_INSTITUICAO).ToString()))) {
+                        if (x == ((int)BaseRole.OWNER_INSTITUICAO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_UPD);
+                            views.Add(ViewAlias.INSTITUICAO);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
+                        }
+                    } else {
+
+                        if (x == ((int)BaseRole.ADD_INSTITUICAO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_ADD);
+                        }
+                        if (x == ((int)BaseRole.EDIT_INSTITUICAO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_UPD);
+                        }
+                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_UPD);
+                        }
+                        if (x == ((int)BaseRole.LIST_INSTITUICAO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO);
+                        }
+
+                        if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
+                        }
+                        if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                        }
+                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                        }
+                        if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO);
+                        }
+
+                        if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
+                        }
+                        if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                        }
+                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                        }
+                        if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
+                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
+                        }
+
+                    }
+
+                    if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA).ToString()) {
+
+                    }
+                    if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA).ToString()) {
+
+                    }
                 }
-                if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA).ToString()) {
-
-                }
-
             });
 
             return views;

@@ -341,6 +341,16 @@ export class Factory extends BaseFactory {
         }
     }
 
+    public allRoles = async () => {
+        try {
+            let result = await this.get('/api/instituicao/roles') as Array < number > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
     public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/instituicao/disable', { params: { id: id } });

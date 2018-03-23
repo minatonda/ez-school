@@ -8,8 +8,8 @@ class Service {
 
     private language: I18N_LANG = I18N_LANG.ptBR;
     private usuarioInfo: UsuarioInfoModel;
-    private instituicoes: Array < InstituicaoModel > ;
-    private views: Array < string > ;
+    private instituicoes: Array<InstituicaoModel>;
+    private views: Array<string>;
     private admin: boolean;
     private loading: boolean = false;
 
@@ -29,7 +29,7 @@ class Service {
         return this.usuarioInfo;
     }
 
-    setViews(views: Array < string > ) {
+    setViews(views: Array<string>) {
         this.views = views;
     }
 
@@ -37,7 +37,7 @@ class Service {
         return this.views;
     }
 
-    setInstituicoes(instituicoes: Array < InstituicaoModel > ) {
+    setInstituicoes(instituicoes: Array<InstituicaoModel>) {
         this.instituicoes = instituicoes;
     }
 
@@ -72,6 +72,13 @@ class Service {
         this.usuarioInfo = await FACTORY_CONSTANT.UsuarioFactory.me();
         this.admin = await FACTORY_CONSTANT.UsuarioFactory.meAdmin();
         this.setLoading(false);
+    }
+
+    resetDefaults() {
+        this.views = undefined;
+        this.instituicoes = undefined;
+        this.usuarioInfo = undefined;
+        this.admin = undefined;
     }
 
 }

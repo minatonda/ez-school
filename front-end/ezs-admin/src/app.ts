@@ -29,7 +29,7 @@ export class AppComponent extends Vue {
     async beforeMount() {
 
     }
- 
+
     registerBroadcastEvents() {
         AppBroadcastEventBus.$on(AppBroadcastEvent.EXIBIR_LOADER, () => {
             this.showLoader = true;
@@ -45,12 +45,14 @@ export class AppComponent extends Vue {
             }
             catch (e) {
                 AutenticacaoService.desautenticar();
+                ApplicationService.resetDefaults();
             }
             finally {
             }
         });
 
         AppBroadcastEventBus.$on(AppBroadcastEvent.DESAUTENTICADO, () => {
+            ApplicationService.resetDefaults();
             AppRouter.push(AppRouterPath.USUARIO_AUTENTICACAO);
         });
     }
@@ -68,6 +70,8 @@ export class AppComponent extends Vue {
         return style;
     }
 
-    isAutenticado = AutenticacaoService.isAutenticado;
+    isShowNavbar() {
+        return AutenticacaoService.isAutenticado() && ApplicationService.isReady();
+    }
 
 }

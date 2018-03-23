@@ -86,6 +86,16 @@ export class Factory extends BaseFactory {
         }
     }
 
+    public allRoles = async () => {
+        try {
+            let result = await this.get('/api/usuario/roles') as Array < number > ;
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
     public me = async () => {
         try {
             let result = await this.get('/api/business/usuario/me') as UsuarioInfoModel;

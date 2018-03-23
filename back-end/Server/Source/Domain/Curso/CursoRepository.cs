@@ -21,6 +21,11 @@ namespace Domain.CursoDomain {
 
         public void AddCursoGrade(CursoGrade cursoGrade) {
             cursoGrade.Curso = this.db.Crs.Find(cursoGrade.Curso.ID);
+
+            if (cursoGrade.Instituicao != null) {
+                cursoGrade.Instituicao = this.db.Ittc.Find(cursoGrade.Instituicao.ID);
+            }
+
             this.db.CrsGrd.Add(cursoGrade);
         }
 
@@ -42,13 +47,25 @@ namespace Domain.CursoDomain {
             model.Curso = this.db.Crs.Find(cursoGrade.Curso.ID);
             model.Descricao = cursoGrade.Descricao;
             model.DataCriacao = cursoGrade.DataCriacao;
+
+            if (cursoGrade.Instituicao != null) {
+                model.Instituicao = this.db.Ittc.Find(cursoGrade.Instituicao.ID);
+            } else {
+                model.Instituicao = null;
+            }
+
             this.db.CrsGrd.Update(model);
         }
 
         public void UpdateCursoGradeMateria(CursoGradeMateria cursoGradeMateria) {
             var model = this.db.CrsGrdMtr.Find(cursoGradeMateria.ID);
             model.CursoGrade = this.db.CrsGrd.Find(cursoGradeMateria.CursoGrade.ID);
+            model.Materia = this.db.Mtr.Find(cursoGradeMateria.Materia.ID);
             model.Descricao = cursoGradeMateria.Descricao;
+            model.Tags = cursoGradeMateria.Tags;
+            model.NomeExibicao = cursoGradeMateria.NomeExibicao;
+            model.NumeroAulas = cursoGradeMateria.NumeroAulas;
+            model.Grupo = cursoGradeMateria.Grupo;
             this.db.CrsGrdMtr.Update(model);
         }
 
@@ -102,6 +119,7 @@ namespace Domain.CursoDomain {
             return this.db.CrsGrd
             .AsNoTracking()
             .Include(i => i.Curso)
+            .Include(i => i.Instituicao)
             .Where(x => x.Curso.ID == id && x.Ativo.HasValue == !ativo)
             .ToList();
         }

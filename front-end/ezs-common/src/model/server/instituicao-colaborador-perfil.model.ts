@@ -1,9 +1,14 @@
 import { BaseModel } from './base.model';
 import { UsuarioModel } from './usuario.model';
 
-export class InstituicaoColaboradorPerfilModel extends BaseModel < number > {
+export class InstituicaoColaboradorPerfilModel extends BaseModel<number> {
+
+    constructor() {
+        super();
+        this.roles = new Array<string>();
+    }
 
     nome: string;
-    roles: Array < string > ;
+    roles: Array<string>;
 
 }

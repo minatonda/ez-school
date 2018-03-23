@@ -1,0 +1,185 @@
+$color-grey-200: #EEEEEE;
+$color-grey-400:#BDBDBD;
+$color-grey-500: #9E9E9E;
+$color-blue-A200: #448AFF;
+$color-blue-grey-400:#78909C;
+$color-blue-grey-800: #37474F;
+$color-white: #ffffff;
+
+.date-catcher {
+    position: relative;
+
+    input {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .date-catcher-calendar {
+        min-width: 100%;
+        padding: 8px;
+        position: absolute;
+        transition: all 0.2s;
+        z-index: 1;
+    }
+
+    .date-catcher-calendar.bottom-to-top {
+        bottom: 38px;
+    }
+
+    .date-catcher-calendar.full-screen {
+        min-width: 50%;
+        height: 50%;
+        top: 50%;
+        left: 50%;
+        position: fixed;
+        overflow-y: scroll;
+        transform: translate(-50%, -50%);
+    }
+
+    .date-out-of-month {
+        color: $color-grey-400;
+        font-size: 14px;
+    }
+
+    .date-today {
+        color: $color-blue-A200 !important;
+        font-weight: 500;
+        background-color: $color-grey-200;
+    }
+
+    .date-selected {
+        color: $color-white !important;
+        background-color: $color-blue-A200;
+    }
+
+    >i {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        opacity: 0.4;
+
+        &.fa-circle-o-notch {
+            top: 11px;
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &.selected {
+        input::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            color: $textfield-color;
+        }
+        input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: $textfield-color;
+            opacity: 1;
+        }
+        input::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: $textfield-color;
+            opacity: 1;
+        }
+        input:-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: $textfield-color;
+        }
+        input::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: $textfield-color;
+        }
+    } // CONTROLES DO CALENDÁRIO
+    .date-catcher-calendar-nextprev {
+        color: $color-blue-grey-400;
+        font-size: 14px;
+    }
+
+    .date-catcher-calendar-table {
+        width: 100%;
+
+        tr {
+            td {
+                cursor: pointer;
+            }
+        }
+    } // TÍTULO CALENDÁRIO
+    .date-catcher-calendar-table-title {
+        .date-cc-tt-row {
+            color: $color-white;
+            border-bottom: 1px solid $color-grey-200;
+
+            .date-cc-tt-col {
+                color: $color-blue-grey-400;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: center;
+                text-transform: uppercase;
+                padding: 8px 0 12px;
+
+                &.date-cc-tt-col-day {
+                    width: 52px;
+                }
+            }
+        }
+    } // DIAS
+    .date-catcher-calendar-table-days {
+        padding: 8px;
+
+        .date-cc-td-week-col {
+            font-weight: 500;
+            color: $color-blue-grey-400;
+            margin: 8px;
+            padding: 8px 8px;
+            cursor: default;
+
+            &:first-child,
+            &:last-child {
+                color: $color-blue-grey-800;
+            }
+        }
+
+        .date-cc-td-day {
+            color: $color-grey-500;
+            font-size: 16px;
+            text-align: center;
+            padding: 8px;
+            margin: 4px;
+
+            &:hover {
+                // color: $color-blue-A200;
+                color: $color-blue-grey-800;
+                background-color: $color-grey-200;
+                cursor: pointer;
+                transition: all .2s;
+            }
+
+            &.date-out-of-month {
+                font-size: 14px;
+                color: $color-grey-400;
+            }
+        }
+    } // MESES
+    .date-catcher-calendar-table-month {
+        .date-cc-tm-col {
+            text-align: left;
+            font-weight: 500;
+            text-transform: uppercase;
+            padding: 12px 8px;
+            margin: 8px;
+        }
+    } // ANOS
+    .date-catcher-calendar-table-year {
+        .date-cc-ty-col {
+            text-align: center;
+            font-weight: 500;
+            padding: 8px;
+            margin: 8px;
+        }
+    }
+
+}

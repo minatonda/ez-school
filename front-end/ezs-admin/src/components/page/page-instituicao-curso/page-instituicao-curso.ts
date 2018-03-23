@@ -14,13 +14,14 @@ import { CursoGradeModel } from '../../../../../ezs-common/src/model/server/curs
 import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/notify/notify.util';
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
+import { CursoGradeMateriaModel } from '../../../../../ezs-common/src/model/server/curso-grade-materia.model';
 
 interface UI {
-    cursos: Array < CursoModel > ;
-    cursoGrades: Array < CursoGradeModel > ;
+    cursos: Array<CursoModel>;
+    cursoGrades: Array<CursoGradeModel>;
     instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel;
     instituicaoCursoTurma: InstituicaoCursoTurmaModel;
-    instituicaoButtons: Array < any > ;
+    instituicaoButtons: Array<any>;
 }
 
 @Component({
@@ -95,7 +96,18 @@ export class PageInstituicaoCursoComponent extends Vue {
         }
     }
 
-    public getTablePeriodo() {
+    async onCursoChanged(curso) {
+        this.clearCursoGrade = true;
+        setImmediate(() => { this.clearCursoGrade = false; });
+        if (curso) {
+            this.ui.cursoGrades = await FACTORY_CONSTANT.CursoFactory.allCursoGradeByInstituicao(curso.id, this.$route.params.id);
+        }
+        else {
+            this.ui.cursoGrades = [];
+        }
+    }
+
+    getTablePeriodo() {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry({
@@ -127,16 +139,16 @@ export class PageInstituicaoCursoComponent extends Vue {
         ];
         return { itens: this.model.periodos, columns: columns, menu: menu };
     }
-    public addPeriodo(periodo: InstituicaoCursoPeriodoModel) {
+    addPeriodo(periodo: InstituicaoCursoPeriodoModel) {
         let periodoAdd = Object.assign({}, periodo);
         periodoAdd.diaSemana = periodo.diaSemana.slice();
         this.model.periodos.push(periodoAdd);
     }
-    public removePeriodo(item: InstituicaoCursoPeriodoModel) {
+    removePeriodo(item: InstituicaoCursoPeriodoModel) {
         this.model.periodos.splice(this.model.periodos.indexOf(item), 1);
     }
 
-    public getTableTurma() {
+    getTableTurma() {
         let menu = new CardTableMenu();
         menu.row = [
             new CardTableMenuEntry({
@@ -158,14 +170,14 @@ export class PageInstituicaoCursoComponent extends Vue {
         ];
         return { itens: this.model.turmas, columns: columns, menu: menu };
     }
-    public addTurma(item: InstituicaoCursoTurmaModel) {
+    addTurma(item: InstituicaoCursoTurmaModel) {
         this.model.turmas.push(Object.assign({}, item));
     }
-    public removeTurma(item: InstituicaoCursoTurmaModel) {
+    removeTurma(item: InstituicaoCursoTurmaModel) {
         this.model.turmas.splice(this.model.turmas.indexOf(item), 1);
     }
 
-    public toggleDiaSemana(dia: DayOfWeekModel, periodo: InstituicaoCursoPeriodoModel) {
+    toggleDiaSemana(dia: DayOfWeekModel, periodo: InstituicaoCursoPeriodoModel) {
         if (this.isDiaSemanaSelected(dia, periodo)) {
             periodo.diaSemana.splice(periodo.diaSemana.indexOf(dia), 1);
         }
@@ -174,19 +186,45 @@ export class PageInstituicaoCursoComponent extends Vue {
         }
     }
 
-    public isDiaSemanaSelected(dia: DayOfWeekModel, periodo: InstituicaoCursoPeriodoModel) {
+    isDiaSemanaSelected(dia: DayOfWeekModel, periodo: InstituicaoCursoPeriodoModel) {
         return periodo.diaSemana.indexOf(dia) > -1;
     }
 
-    public async onCursoChanged(curso) {
-        this.clearCursoGrade = true;
-        setImmediate(() => { this.clearCursoGrade = false; });
-        if (curso) {
-            this.ui.cursoGrades = await FACTORY_CONSTANT.CursoFactory.allCursoGrade(curso.id);
-        }
-        else {
-            this.ui.cursoGrades = [];
-        }
+    openDialogCursoGrade() {
+        (this.$refs['modal-curso-grade'] as any).show();
+    }
+
+    closeDialogCursoGrade() {
+        (this.$refs['modal-curso-grade'] as any).hide();
+    }
+
+    getTableCursoGradeMateria() {
+
+        let columns = [
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.nomeExibicao,
+                label: () => 'Nome de Exibição'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.descricao,
+                label: () => 'Descrição'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.materia.label,
+                label: () => 'Matéria'
+            }),
+            new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.grupo,
+                label: () => 'Grupo'
+            })
+        ];
+
+        let menu = new CardTableMenu();
+        menu.row = [
+
+        ];
+
+        return { columns: columns, menu: menu };
     }
 
 }

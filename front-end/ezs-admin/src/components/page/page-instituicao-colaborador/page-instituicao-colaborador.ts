@@ -8,15 +8,18 @@ import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-
 import { ApplicationService } from '../../../module/service/application.service';
 import { InstituicaoColaboradorModel } from '../../../../../ezs-common/src/model/server/instituicao-colaborador.model';
 import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
+import { InstituicaoColaboradorPerfilModel } from '../../../../../ezs-common/src/model/server/instituicao-colaborador-perfil.model';
+import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 
 enum ModalOperation {
     add = 0,
-        update = 1
+    update = 1
 }
 
 interface UI {
     queryUsuario: any;
     usuarioInfoLabel: any;
+    instituicaoColaboradorPerfis: Array<InstituicaoColaboradorPerfilModel>;
 }
 
 @Component({
@@ -41,6 +44,8 @@ export class PageInstituicaoColaboradorComponent extends Vue {
             labelObj.label = `<div><span>${item.label}</span><div><div><span style="float:left;">${item.rg}</span><span style="float:right;">${item.cpf}</span></div>`;
             return labelObj;
         },
+
+        instituicaoColaboradorPerfis: undefined
     };
 
     model: InstituicaoColaboradorModel = new InstituicaoColaboradorModel();
@@ -56,6 +61,7 @@ export class PageInstituicaoColaboradorComponent extends Vue {
     async mounted() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
+            this.ui.instituicaoColaboradorPerfis = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoColaboradorPerfil(AppRouter.app.$route.params.id);
             if (this.operation === RouterPathType.upd) {
                 this.model = await FACTORY_CONSTANT.InstituicaoFactory.detailInstituicaoColaborador(this.$route.params.id, this.$route.params.idInstituicaoColaborador);
             }
@@ -92,6 +98,37 @@ export class PageInstituicaoColaboradorComponent extends Vue {
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
         }
+    }
+
+    addInstituicaoColaboradorPerfil(idPerfil: number) {
+        this.model.perfis.push(idPerfil.toString());
+        this.$forceUpdate();
+    }
+
+    removeInstituicaoColaboradorPerfil(idPerfil: number) {
+        this.model.perfis.splice(this.model.perfis.indexOf(idPerfil.toString()), 1);
+        this.$forceUpdate();
+    }
+
+    getTableInstituicaoColaboradorPerfil() {
+        let menu = new CardTableMenu();
+        menu.row = [
+            new CardTableMenuEntry({
+                label: (item) => 'Remover',
+                method: (item) => this.removeInstituicaoColaboradorPerfil(item),
+                btnClass: (item) => ['btn-danger'],
+                iconClass: (item) => ['fa', 'fa-times']
+            })
+        ];
+        let columns = [
+            new CardTableColumn({
+                value: (item: string) => {
+                    return this.ui.instituicaoColaboradorPerfis.find(x => x.id === parseInt(item)).nome;
+                },
+                label: () => 'Perfil'
+            })
+        ];
+        return { columns: columns, menu: menu };
     }
 
 }

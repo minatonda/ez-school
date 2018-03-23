@@ -16,11 +16,16 @@
                             </div>
                             <div class="col-12 form-group">
                                 <label class="control-label">Grade</label>
-                                <selector v-model="model.cursoGrade" v-bind:itens="ui.cursoGrades" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
+                                <div class="input-group">
+                                    <selector class="w-100" v-model="model.cursoGrade" v-bind:itens="ui.cursoGrades" placeholder="Grade" label="label" v-bind:clear="clearCursoGrade"></selector>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" v-bind:disabled="!model.cursoGrade" v-on:click="openDialogCursoGrade()">Ver Grade</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12 form-group">
                                 <label class="control-label">Data de Início</label>
-                                <input class="form-control" type="date" v-model="model.dataInicio" placeholder="Data de Início">
+                                <date-catcher v-model="model.dataInicio" placeholder="Data de início" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
                         </div>
                     </div>
@@ -37,19 +42,19 @@
                         <div class="row">
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Início</label>
-                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.inicio" placeholder="Início hh:mm">
+                                <input class="form-control" type="text" v-mask="'##:##'" v-model="ui.instituicaoCursoPeriodo.inicio" placeholder="Início hh:mm">
                             </div>
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Início da Pausa</label>
-                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.pausaInicio" placeholder="Início hh:mm">
+                                <input class="form-control" type="text" v-mask="'##:##'" v-model="ui.instituicaoCursoPeriodo.pausaInicio" placeholder="Início hh:mm">
                             </div>
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Fim da Pausa</label>
-                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.pausaFim" placeholder="Início hh:mm">
+                                <input class="form-control" type="text" v-mask="'##:##'" v-model="ui.instituicaoCursoPeriodo.pausaFim" placeholder="Início hh:mm">
                             </div>
                             <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Fim</label>
-                                <input class="form-control" type="text" v-model="ui.instituicaoCursoPeriodo.fim" placeholder="Fim hh:mm">
+                                <input class="form-control" type="text" v-mask="'##:##'" v-model="ui.instituicaoCursoPeriodo.fim" placeholder="Fim hh:mm">
                             </div>
                             <div class="col-12 col-md-9 form-group">
                                 <label class="control-label invisible">Ocupar</label>
@@ -117,4 +122,16 @@
             </div>
         </div>
     </div>
+    <b-modal ref="modal-curso-grade" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
+        <div class="row" v-if="model.cursoGrade">
+            <div class="col-12 form-group">
+                <card-table v-bind:columns="getTableCursoGradeMateria().columns" v-bind:itens="model.cursoGrade.materias" v-bind:menu="getTableCursoGradeMateria().menu"></card-table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" v-on:click="closeDialogCursoGrade()">Sair</button>
+            </div>
+        </div>
+    </b-modal>
 </div>

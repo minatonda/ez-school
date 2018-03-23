@@ -29,6 +29,20 @@ namespace Api.InstituicaoApi {
         public void AddInstituicaoCurso(long id, InstituicaoCursoVM instituicaoCurso) {
             var model = InstituicaoCursoAdapter.ToModel(instituicaoCurso, true);
             model.Instituicao = this._instituicaoRepository.Get(id);
+
+            if (this._cursoRespository.GetCursoGrade(model.CursoGrade.ID) == null) {
+                var cursoGrade = model.CursoGrade;
+                cursoGrade.Curso = model.Curso;
+                cursoGrade.Instituicao = model.Instituicao;
+                this._cursoRespository.AddCursoGrade(model.CursoGrade);
+
+                instituicaoCurso.CursoGrade.Materias.ForEach(y => {
+                    var modelCursoGradeMateria = CursoGradeMateriaAdapter.ToModel(y, true);
+                    modelCursoGradeMateria.CursoGrade = cursoGrade;
+                    this._cursoRespository.AddCursoGradeMateria(modelCursoGradeMateria);
+                });
+            }
+
             this._instituicaoRepository.AddInstituicaoCurso(model);
 
             var periodos = InstituicaoCursoAdapter.InstituicaoCursoPeriodoFromVM(instituicaoCurso);

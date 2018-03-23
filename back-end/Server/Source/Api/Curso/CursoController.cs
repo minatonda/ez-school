@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Api.Common.Base;
 using Api.InstituicaoApi;
 using Domain.CursoDomain;
@@ -54,6 +55,11 @@ namespace Api.CursoApi {
         [HttpGet("detail/{id}/curso-grade")]
         public List<CursoGradeVM> AllCursoGrade(long id) {
             return this._cursoService.Detail(id).Grades;
+        }
+
+        [HttpGet("detail/{id}/curso-grade/by-instituicao/{idInstituicao}")]
+        public List<CursoGradeVM> AllCursoGradeByInstituicao(long id, long idInstituicao) {
+            return this._cursoService.Detail(id).Grades.Where(x => x.Instituicao != null && x.Instituicao.ID == idInstituicao).ToList();
         }
 
         [HttpGet("detail/{id}/grade/detail/{idCursoGrade}/curso-grade-materia")]

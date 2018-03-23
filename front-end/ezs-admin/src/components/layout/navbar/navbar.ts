@@ -3,9 +3,10 @@ import { AutenticacaoService } from '../../../module/service/autenticacao.servic
 import { AppRouter } from '../../../app.router';
 import { BaseRouteConfig } from '../../../../../ezs-common/src/model/client/base-route-config.model';
 import { DropDownItem } from '../../../../../ezs-common/src/component/dropdown/dropdown';
+import { AppBroadcastEvent, AppBroadcastEventBus } from '../../../app.broadcast-event-bus';
 
 interface UI {
-    userDropdownItens: Array < DropDownItem > ;
+    userDropdownItens: Array<DropDownItem>;
 }
 
 @Component({
@@ -25,7 +26,7 @@ export class NavbarComponent extends Vue {
     }
 
     public getRotas() {
-        return AppRouter.getMenu();
+        return AppRouter.getMenuPermitido();
     }
 
     public getRotasLabel(route: BaseRouteConfig) {

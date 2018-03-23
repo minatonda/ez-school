@@ -10,27 +10,27 @@
                 <table class="date-catcher-calendar-table date-catcher-calendar-table-title">
                     <tr class="date-cc-tt-row">
                         <td class="text-left p-1">
-                            <button class="btn btn-light p-2" style="min-width:initial;" v-on:click="doDecreaseDate()">
+                            <button class="btn btn-light p-2 btn-block" style="min-width:initial;height:32px;" v-on:click="doDecreaseDate()">
                                 <i class="fa fa-chevron-left"></i>
                             </button>
                         </td>
                         <td class="p-1">
-                            <div class="card card-body d-inline-flex p-2 w-100" v-on:click="setViewType('DAY')">
+                            <div class="card card-body d-inline-flex p-2 w-100 bg-primary" v-on:click="setViewType('DAY')">
                                 <span>{{ui.dateMain.format('DD')}}</span>
                             </div>
                         </td>
                         <td class="p-1">
-                            <div class="card card-body d-inline-flex p-2 w-100" v-on:click="setViewType('MONTH')">
+                            <div class="card card-body d-inline-flex p-2 w-100 bg-primary" v-on:click="setViewType('MONTH')">
                                 <span>{{getMonthName(ui.dateMain)}}</span>
                             </div>
                         </td>
                         <td class="p-1">
-                            <div class="card card-body d-inline-flex p-2 w-100" v-on:click="setViewType('YEAR')">
+                            <div class="card card-body d-inline-flex p-2 w-100 bg-primary" v-on:click="setViewType('YEAR')">
                                 <span>{{getYear(ui.dateMain)}}</span>
                             </div>
                         </td>
                         <td class="text-right p-1">
-                            <button class="btn btn-light p-2" style="min-width:initial;" v-on:click="doIncreaseDate()">
+                            <button class="btn btn-light p-2 btn-block" style="min-width:initial;height:32px;" v-on:click="doIncreaseDate()">
                                 <i class="fa fa-chevron-right"></i>
                             </button>
                         </td>
@@ -42,7 +42,7 @@
             <div class="col-12">
                 <table class="date-catcher-calendar-table date-catcher-calendar-table-days">
                     <tr>
-                        <td v-for="chained in getDaysOfWeek()" class="date-cc-td-week-col">
+                        <td v-for="chained in getDaysOfWeek()" class="date-cc-td-week-col text-center">
                             {{chained}}
                         </td>
                     </tr>
