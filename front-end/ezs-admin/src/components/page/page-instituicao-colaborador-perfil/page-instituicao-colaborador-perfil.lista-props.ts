@@ -12,17 +12,13 @@ export class PageInstituicaoColaboradorPerfilListaProps implements PageListaProp
         new CardTableColumn({
             value: (item: InstituicaoColaboradorPerfilModel) => item.nome,
             label: () => 'Nome'
-        }),
-        new CardTableColumn({
-            value: (item: InstituicaoColaboradorPerfilModel) => item.roles.join(' '),
-            label: () => 'Regra'
-        }),
+        })
     ];
     menu = { row: [], main: [] };
     routePathAdd = AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_ADD;
     routePathUpdate = AppRouterPath.INSTITUICAO_COLABORADOR_PERFIL_UPD;
     query = async () => await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoColaboradorPerfil(AppRouter.app.$route.params.id);
-    queryRemove = FACTORY_CONSTANT.InstituicaoFactory.disable;
+    queryRemove = async (id) => await FACTORY_CONSTANT.InstituicaoFactory.disableInstituicaoColaboradorPerfil(AppRouter.app.$route.params.id, id);
     queryAdd = (path) => AppRouter.push({ name: path, params: { id: AppRouter.app.$route.params.id } });
     queryUpdate = (item, path) => AppRouter.push({ name: path, params: { id: AppRouter.app.$route.params.id, idInstituicaoColaboradorPerfil: item.id } });
 

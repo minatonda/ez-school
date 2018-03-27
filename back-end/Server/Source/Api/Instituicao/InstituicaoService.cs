@@ -308,6 +308,16 @@ namespace Api.InstituicaoApi {
             this._instituicaoRepository.SaveChanges();
         }
 
+        public void DisableInstituicaoColaborador(long id) {
+            this._instituicaoRepository.DisableInstituicaoColaborador(id);
+            this._instituicaoRepository.SaveChanges();
+        }
+
+        public void DisableInstituicaoColaboradorPerfil(long id) {
+            this._instituicaoRepository.DisableInstituicaoColaboradorPerfil(id);
+            this._instituicaoRepository.SaveChanges();
+        }
+
         public void DisableInstituicaoCursoOcorrencia(long id) {
             this._instituicaoRepository.DisableInstituicaoCursoOcorrencia(id);
             this._instituicaoRepository.SaveChanges();

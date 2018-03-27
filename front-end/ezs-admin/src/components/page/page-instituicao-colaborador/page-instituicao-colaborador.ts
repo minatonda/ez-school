@@ -10,6 +10,8 @@ import { InstituicaoColaboradorModel } from '../../../../../ezs-common/src/model
 import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
 import { InstituicaoColaboradorPerfilModel } from '../../../../../ezs-common/src/model/server/instituicao-colaborador-perfil.model';
 import { CardTableMenu, CardTableMenuEntry, CardTableColumn } from '../../../../../ezs-common/src/component/card-table/card-table.types';
+import { TreeViewModel } from '../../../../../ezs-common/src/model/server/tree-view.model';
+import { AppRouterPath } from '../../../app.router.path';
 
 enum ModalOperation {
     add = 0,
@@ -67,7 +69,7 @@ export class PageInstituicaoColaboradorComponent extends Vue {
             }
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
             AppRouter.back();
         }
         finally {
@@ -91,44 +93,23 @@ export class PageInstituicaoColaboradorComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
+            AppRouter.push({ name: AppRouterPath.INSTITUICAO_COLABORADOR, params: { id: this.$route.params.id } });
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
         }
     }
 
-    addInstituicaoColaboradorPerfil(idPerfil: number) {
-        this.model.perfis.push(idPerfil.toString());
-        this.$forceUpdate();
-    }
-
-    removeInstituicaoColaboradorPerfil(idPerfil: number) {
-        this.model.perfis.splice(this.model.perfis.indexOf(idPerfil.toString()), 1);
-        this.$forceUpdate();
-    }
-
-    getTableInstituicaoColaboradorPerfil() {
-        let menu = new CardTableMenu();
-        menu.row = [
-            new CardTableMenuEntry({
-                label: (item) => 'Remover',
-                method: (item) => this.removeInstituicaoColaboradorPerfil(item),
-                btnClass: (item) => ['btn-danger'],
-                iconClass: (item) => ['fa', 'fa-times']
-            })
-        ];
-        let columns = [
-            new CardTableColumn({
-                value: (item: string) => {
-                    return this.ui.instituicaoColaboradorPerfis.find(x => x.id === parseInt(item)).nome;
-                },
-                label: () => 'Perfil'
-            })
-        ];
-        return { columns: columns, menu: menu };
+    getInstituicaoColaboradorAsTreeViewModel() {
+        return this.ui.instituicaoColaboradorPerfis.map(x => {
+            let treeview = new TreeViewModel<string>();
+            treeview.id = x.id.toString();
+            treeview.label = x.nome;
+            return treeview;
+        });
     }
 
 }

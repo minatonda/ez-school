@@ -12,6 +12,9 @@ import { ApplicationService } from '../../../module/service/application.service'
 import { CardTableColumn, CardTableMenu, CardTableMenuEntry } from '../../../../../ezs-common/src/component/card-table/card-table.types';
 import { AreaInteresseModel } from '../../../../../ezs-common/src/model/server/area-interesse.model';
 import { ENUM_CONTANT } from '../../../../../ezs-common/src/constant/enum.contant';
+import { TreeViewModel } from '../../../../../ezs-common/src/model/server/tree-view.model';
+import { BaseModel } from '../../../../../ezs-common/src/model/server/base.model';
+import { AppRouterPath } from '../../../app.router.path';
 
 interface UI {
     areaInteresse: AreaInteresseModel;
@@ -19,7 +22,7 @@ interface UI {
     query: any;
     usuarioInfoLabel: any;
     rolesLabel: any;
-    roles: Array<number>;
+    roles: Array<TreeViewModel<string>>;
 }
 
 @Component({
@@ -38,9 +41,9 @@ export class PageUsuarioComponent extends Vue {
 
         roles: undefined,
 
-        rolesLabel(item: number) {
+        rolesLabel(item: BaseModel<string>) {
             return ApplicationService.getEnumLabels(ENUM_CONTANT.BASE_ROLE).find(x => {
-                return x.value === parseInt(item.toString());
+                return x.value === item.id;
             }).label;
         },
 
@@ -77,7 +80,7 @@ export class PageUsuarioComponent extends Vue {
             }
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
             AppRouter.back();
         }
         finally {
@@ -101,9 +104,10 @@ export class PageUsuarioComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
+            AppRouter.push(AppRouterPath.USUARIO);
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
@@ -117,16 +121,6 @@ export class PageUsuarioComponent extends Vue {
 
     removeAreaInteresse(item) {
         this.model.usuarioInfo.areaInteresses.splice(this.model.usuarioInfo.areaInteresses.indexOf(item), 1);
-        this.$forceUpdate();
-    }
-
-    addRole(enumerable: any) {
-        this.model.usuarioInfo.roles.push(enumerable);
-        this.$forceUpdate();
-    }
-
-    removeRole(item) {
-        this.model.usuarioInfo.roles.splice(this.model.usuarioInfo.roles.indexOf(item), 1);
         this.$forceUpdate();
     }
 
@@ -145,27 +139,6 @@ export class PageUsuarioComponent extends Vue {
                 value: (item: AreaInteresseModel) => item.categoriaProfissional.descricao,
                 label: () => 'Aréa de Interesse'
             }),
-        ];
-        return { columns: columns, menu: menu };
-    }
-
-    getTableRole() {
-        let menu = new CardTableMenu();
-        menu.row = [
-            new CardTableMenuEntry({
-                label: (item) => 'Remover',
-                method: (item) => this.removeRole(item),
-                btnClass: (item) => ['btn-danger'],
-                iconClass: (item) => ['fa', 'fa-times']
-            })
-        ];
-        let columns = [
-            new CardTableColumn({
-                value: (item: number) => {
-                    return this.ui.rolesLabel(item);
-                },
-                label: () => 'Regra'
-            })
         ];
         return { columns: columns, menu: menu };
     }

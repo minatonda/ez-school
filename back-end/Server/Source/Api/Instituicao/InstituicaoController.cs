@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Api.Common;
 using Api.Common.Base;
 using Api.CursoApi;
 using Domain.Common;
@@ -21,108 +22,146 @@ namespace Api.InstituicaoApi {
 
         [HttpPut("add")]
         public void Add([FromBody] InstituicaoVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.ADD_INSTITUICAO)) {
-                throw new BaseUnauthorizedException();
-            }
+            this.Authorize(BaseRole.ADD_INSTITUICAO);
             this._instituicaoService.Add(viewModel);
         }
 
         [HttpPut("{id}/instituicao-colaborador/add")]
         public void AddInstituicaoColaborador(long id, [FromBody] InstituicaoColaboradorVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_COLABORADOR);
             }
             this._instituicaoService.AddInstituicaoColaborador(id, viewModel);
         }
 
         [HttpPut("{id}/instituicao-colaborador-perfil/add")]
         public void AddInstituicaoColaboradorPerfil(long id, [FromBody] InstituicaoColaboradorPerfilVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_COLABORADOR_PERFIL);
             }
             this._instituicaoService.AddInstituicaoColaboradorPerfil(id, viewModel);
         }
 
         [HttpPut("{id}/instituicao-curso/add")]
         public void AddInstituicaoCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(id, BaseRole.ADD_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.ADD_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_CURSO);
             }
             this._instituicaoService.AddInstituicaoCurso(id, viewModel);
         }
 
         [HttpPut("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/add")]
         public void AddInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(id, BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_CURSO_OCORRENCIA);
             }
             this._instituicaoService.AddInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] InstituicaoVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.EDIT_INSTITUICAO)) {
-                if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.OWNER_INSTITUICAO)) {
-                    throw new BaseUnauthorizedInstituicaoException(BaseRole.OWNER_INSTITUICAO, viewModel.ID);
-                } else {
-                    throw new BaseUnauthorizedException(BaseRole.EDIT_INSTITUICAO);
-                }
+            try {
+                this.Authorize(BaseRole.EDIT_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(viewModel.ID, InstituicaoRole.OWNER_INSTITUICAO);
             }
             this._instituicaoService.Update(viewModel);
         }
 
         [HttpPost("{id}/instituicao-colaborador/update")]
         public void UpdateInstituicaoColaborador(long id, [FromBody] InstituicaoColaboradorVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR);
             }
             this._instituicaoService.UpdateInstituicaoColaborador(id, viewModel);
         }
 
         [HttpPost("{id}/instituicao-colaborador-perfil/update")]
         public void UpdateInstituicaoColaboradorPerfil(long id, [FromBody] InstituicaoColaboradorPerfilVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR_PERFIL);
             }
             this._instituicaoService.UpdateInstituicaoColaboradorPerfil(id, viewModel);
         }
 
         [HttpPost("{id}/instituicao-curso/update")]
         public void UpdateInstituicaoCurso(long id, [FromBody] InstituicaoCursoVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_CURSO);
             }
             this._instituicaoService.UpdateInstituicaoCurso(id, viewModel);
         }
 
         [HttpPost("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/update")]
         public void UpdateInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromBody] InstituicaoCursoOcorrenciaVM viewModel) {
-            if (!this.IsAuthorizedInstituicao(viewModel.ID, BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA);
             }
             this._instituicaoService.UpdateInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id) {
-            if (!this.IsAuthorizedInstituicao(id, BaseRole.DISABLE_INSTITUICAO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.DISABLE_INSTITUICAO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.Authorize(BaseRole.DISABLE_INSTITUICAO);
             }
             this._instituicaoService.Disable(id);
         }
 
         [HttpDelete("{id}/instituicao-curso/disable")]
         public void DisableInstituicaoCurso(long id, [FromQuery]long idInstituicaoCurso) {
-            if (!this.IsAuthorizedInstituicao(id, BaseRole.DISABLE_INSTITUICAO_CURSO)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.DISABLE_INSTITUICAO_CURSO, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.DISABLE_INSTITUICAO_CURSO);
             }
             this._instituicaoService.DisableInstituicaoCurso(idInstituicaoCurso);
         }
 
+        [HttpDelete("{id}/instituicao-colaborador/disable")]
+        public void DisableInstituicaoColaborador(long id, [FromQuery]long idInstituicaoColaborador) {
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.DISABLE_INSTITUICAO_COLABORADOR);
+            }
+            this._instituicaoService.DisableInstituicaoColaborador(idInstituicaoColaborador);
+        }
+
+        [HttpDelete("{id}/instituicao-colaborador-perfil/disable")]
+        public void DisableInstituicaoColaboradorPerfil(long id, [FromQuery]long idInstituicaoColaboradorPerfil) {
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.DISABLE_INSTITUICAO_COLABORADOR_PERFIL);
+            }
+            this._instituicaoService.DisableInstituicaoColaboradorPerfil(idInstituicaoColaboradorPerfil);
+        }
+
         [HttpDelete("{id}/instituicao-curso/{idInstituicaoCurso}/instituicao-curso-ocorrencia/disable")]
         public void DisableInstituicaoCursoOcorrencia(long id, long idInstituicaoCurso, [FromQuery]long idInstituicaoCursoOcorrencia) {
-            if (!this.IsAuthorizedInstituicao(id, BaseRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA)) {
-                throw new BaseUnauthorizedInstituicaoException(BaseRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA, id);
+            try {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.OWNER_INSTITUICAO);
+            } catch (BaseException) {
+                this.IsAuthorizedInstituicao(id, InstituicaoRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA);
             }
             this._instituicaoService.DisableInstituicaoCursoOcorrencia(idInstituicaoCursoOcorrencia);
         }
@@ -193,20 +232,84 @@ namespace Api.InstituicaoApi {
         }
 
         [HttpGet("roles")]
-        public List<BaseRole> AllRoles() {
-            return new List<BaseRole>(){
-                BaseRole.OWNER_INSTITUICAO,
-                BaseRole.ADD_INSTITUICAO_CURSO,
-                BaseRole.EDIT_INSTITUICAO_CURSO,
-                BaseRole.DISABLE_INSTITUICAO_CURSO,
-                BaseRole.DETAIL_INSTITUICAO_CURSO,
-                BaseRole.LIST_INSTITUICAO_CURSO,
-                BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA,
-                BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA,
-                BaseRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA,
-                BaseRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA,
-                BaseRole.LIST_INSTITUICAO_CURSO_OCORRENCIA,
+        public List<TreeViewVM<string>> AllRoles() {
+
+            var roles = new List<TreeViewVM<string>>(){
+                new TreeViewVM<string>(){
+                    ID = InstituicaoRole.OWNER_INSTITUICAO,
+                    ChildrenRequisite = false,
+                    Children = new List<TreeViewVM<string>>(){
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.ADD_INSTITUICAO_CURSO,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.EDIT_INSTITUICAO_CURSO,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DISABLE_INSTITUICAO_CURSO,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DETAIL_INSTITUICAO_CURSO,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.LIST_INSTITUICAO_CURSO,
+                            ChildrenRequisite = true,
+                            Children = new List<TreeViewVM<string>>(){
+                                new TreeViewVM<string>(){
+                                    ID = InstituicaoRole.ADD_INSTITUICAO_CURSO_OCORRENCIA,
+                                },
+                                new TreeViewVM<string>(){
+                                    ID = InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA,
+                                },
+                                new TreeViewVM<string>(){
+                                    ID = InstituicaoRole.DISABLE_INSTITUICAO_CURSO_OCORRENCIA,
+                                },
+                                new TreeViewVM<string>(){
+                                    ID = InstituicaoRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA,
+                                },
+                                new TreeViewVM<string>(){
+                                    ID = InstituicaoRole.LIST_INSTITUICAO_CURSO_OCORRENCIA,
+                                }
+                            }
+                        },
+
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.ADD_INSTITUICAO_COLABORADOR,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DISABLE_INSTITUICAO_COLABORADOR,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DETAIL_INSTITUICAO_COLABORADOR,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.LIST_INSTITUICAO_COLABORADOR,
+                        },
+
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.ADD_INSTITUICAO_COLABORADOR_PERFIL,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR_PERFIL,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DISABLE_INSTITUICAO_COLABORADOR_PERFIL,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.DETAIL_INSTITUICAO_COLABORADOR_PERFIL,
+                        },
+                        new TreeViewVM<string>(){
+                            ID = InstituicaoRole.LIST_INSTITUICAO_COLABORADOR_PERFIL,
+                        }
+                    }
+                },
+
             };
+
+            return roles;
         }
 
 

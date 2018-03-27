@@ -20,25 +20,19 @@ namespace Api.CursoApi {
 
         [HttpPut("add")]
         public void Add([FromBody] CursoVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.ADD_CURSO)) {
-                throw new BaseUnauthorizedException(BaseRole.ADD_CURSO);
-            }
+            this.Authorize(BaseRole.ADD_CURSO);
             this._cursoService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] CursoVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.EDIT_CURSO)) {
-                throw new BaseUnauthorizedException(BaseRole.EDIT_CURSO);
-            }
+            this.Authorize(BaseRole.EDIT_CURSO);
             this._cursoService.Update(viewModel);
         }
 
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id) {
-            if (!this.IsAuthorized(BaseRole.DISABLE_CURSO)) {
-                throw new BaseUnauthorizedException(BaseRole.DISABLE_CURSO);
-            }
+            this.Authorize(BaseRole.DISABLE_CURSO);
             this._cursoService.Disable(id);
         }
 

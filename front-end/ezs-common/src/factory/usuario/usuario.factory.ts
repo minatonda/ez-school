@@ -5,6 +5,7 @@ import { AlunoModel } from './../../model/server/aluno.model';
 import { AutenticacaoModel } from './../../model/server/autenticacao.model';
 import { UsuarioInfoModel } from '../../model/server/usuario-info.model';
 import { InstituicaoModel } from '../../model/server/instituicao.model';
+import { TreeViewModel } from '../../model/server/tree-view.model';
 
 export class Factory extends BaseFactory {
 
@@ -62,7 +63,7 @@ export class Factory extends BaseFactory {
 
     public all = async () => {
         try {
-            let result = await this.get('/api/usuario') as Array < UsuarioModel > ;
+            let result = await this.get('/api/usuario') as Array<UsuarioModel>;
             return result;
         }
         catch (error) {
@@ -78,7 +79,7 @@ export class Factory extends BaseFactory {
                     onlyAluno: onlyAluno,
                     onlyProfessor: onlyProfessor
                 }
-            }) as Array < UsuarioModel > ;
+            }) as Array<UsuarioModel>;
             return result;
         }
         catch (error) {
@@ -88,7 +89,7 @@ export class Factory extends BaseFactory {
 
     public allRoles = async () => {
         try {
-            let result = await this.get('/api/usuario/roles') as Array < number > ;
+            let result = await this.get('/api/usuario/roles') as Array<TreeViewModel<string>>;
             return result;
         }
         catch (error) {
@@ -108,7 +109,7 @@ export class Factory extends BaseFactory {
 
     public meInstituicao = async () => {
         try {
-            let result = await this.get('/api/business/usuario/me/instituicao') as Array < InstituicaoModel > ;
+            let result = await this.get('/api/business/usuario/me/instituicao') as Array<InstituicaoModel>;
             return result;
         }
         catch (error) {
@@ -118,7 +119,7 @@ export class Factory extends BaseFactory {
 
     public meAuthorizedView = async () => {
         try {
-            let result = await this.get('/api/business/usuario/me/authorized-view') as Array < string > ;
+            let result = await this.get('/api/business/usuario/me/authorized-view') as Array<string>;
             return result;
         }
         catch (error) {
@@ -128,7 +129,7 @@ export class Factory extends BaseFactory {
 
     public meAdmin = async () => {
         try {
-            let result = await this.get('/api/business/usuario/me/admin') as boolean ;
+            let result = await this.get('/api/business/usuario/me/admin') as boolean;
             return result;
         }
         catch (error) {

@@ -1,0 +1,12 @@
+<ul class="tree-view list-group">
+    <li v-for="item in itens" class="list-group-item">
+        <div class="row">
+            <div class="col-12">
+                <span>{{getLabel(item)}}</span>
+                <i class="fa fa-square pull-right" v-bind:class="{'fa-square':!isSelected(item), 'fa-check-square':isSelected(item)}" v-on:click="doToggleSelect(item)"></i>
+            </div>
+        </div>
+        <hr v-if="item.children && item.children.length"></hr>
+        <tree-view v-model="data.value" v-bind:itens="item.children" v-on:changed="onChildrenChanged" v-bind:label="label"></tree-view>
+    </li>
+</ul>

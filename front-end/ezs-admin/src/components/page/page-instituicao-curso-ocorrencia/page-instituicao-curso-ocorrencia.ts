@@ -19,6 +19,7 @@ import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-
 import { ApplicationService } from '../../../module/service/application.service';
 import { UsuarioInfoModel } from '../../../../../ezs-common/src/model/server/usuario-info.model';
 import * as moment from 'moment';
+import { AppRouterPath } from '../../../app.router.path';
 
 enum ModalOperation {
     add = 0,
@@ -135,7 +136,7 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
             this.ui.instituicaoCursoPeriodos = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoCursoPeriodo(this.$route.params.id, this.$route.params.idInstituicaoCurso);
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
             AppRouter.back();
         }
         finally {
@@ -159,9 +160,10 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
+            AppRouter.push(AppRouterPath.INSTITUICAO_CURSO_OCORRENCIA);
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);

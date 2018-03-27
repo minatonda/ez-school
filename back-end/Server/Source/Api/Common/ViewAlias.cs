@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.Common.Base {
+namespace Api.Common {
     public class ViewAlias {
 
         public static string ROOT = "/";
@@ -43,6 +43,7 @@ namespace Api.Common.Base {
         public static string INSTITUICAO_COLABORADOR = "/instituicao/:id/colaborador";
         public static string INSTITUICAO_COLABORADOR_ADD = "/instituicao/:id/colaborador/add";
         public static string INSTITUICAO_COLABORADOR_UPD = "/instituicao/:id/colaborador/:idInstituicaoColaborador/upd";
+        
         public static string INSTITUICAO_COLABORADOR_PERFIL = "/instituicao/:id/colaborador-perfil";
         public static string INSTITUICAO_COLABORADOR_PERFIL_ADD = "/instituicao/:id/colaborador-perfil/add";
         public static string INSTITUICAO_COLABORADOR_PERFIL_UPD = "/instituicao/:id/colaborador-perfil/:idInstituicaoColaboradorPerfil/upd";

@@ -42,15 +42,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-2 form-group">
                                 <label class="control-label">Data de Ínicio</label>
                                 <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataInicio" placeholder="Data de início" v-bind:model-as-date="true"></date-catcher>
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-2 form-group">
                                 <label class="control-label">Data de Expiração</label>
                                 <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataExpiracao" placeholder="Data de Finalização" v-bind:model-as-date="true"></date-catcher>
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-2 form-group">
                                 <label class="control-label invisible">Ocupar</label>
                                 <button class="btn btn-primary btn-block" v-on:click="saveInstituicaoCursoOcorrenciaPeriodo(ui.instituicaoCursoOcorrenciaPeriodo)">Salvar</button>
                             </div>
@@ -70,6 +70,9 @@
                             <div class="col-12 col-md-4 align-self-center">
                                 <b>Data de Finalização: </b><span>{{getDateTimeLabel(instituicaoCursoOcorrenciaPeriodo.dataExpiracao)}}</span>
                             </div>
+                            <div class="col-12 d-md-none">
+                                <hr></hr>
+                            </div>
                             <div class="col-12 col-md-4 align-self-center text-right">
                                 <button class="btn btn-primary" v-on:click="toggleCollapseInstituicaoCursoOcorrenciaPeriodo(index)">
                                     Expandir
@@ -87,11 +90,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-4 form-group">
                                 <label class="control-label">Data de ínicio</label>
                                 <date-catcher v-model="instituicaoCursoOcorrenciaPeriodo.dataInicio" placeholder="Data de início" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-4 form-group">
                                 <label class="control-label">Data de Finalização</label>
                                 <date-catcher v-model="instituicaoCursoOcorrenciaPeriodo.dataExpiracao" placeholder="Data de Finalização" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>

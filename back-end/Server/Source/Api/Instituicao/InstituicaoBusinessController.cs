@@ -23,7 +23,16 @@ namespace Api.InstituicaoApi {
         [HttpPost("instituicao-curso-ocorrencia-notas/{idInstituicaoCursoOcorrenciaPeriodoProfessor}/save")]
         public void SaveInstituicaoCursoOcorrenciaNotas(long idInstituicaoCursoOcorrenciaPeriodoProfessor, [FromBody] List<InstituicaoCursoOcorrenciaNotaVM> instituicaoCursoOcorrenciaNotas) {
             if (!this.GetInstituicaoCursoOcorrenciaPeriodoProfessorOfAuthenticated().Select(x => x.ID).Contains(idInstituicaoCursoOcorrenciaPeriodoProfessor)) {
-                throw new BaseUnauthorizedException();
+                throw new BaseException() {
+                    Code = BaseExceptionCode.UNAUTHORIZED,
+                    Infos = new List<BaseExceptionFieldInfo>() {
+                        new BaseExceptionFieldInfo(){
+                            Field=BaseExceptionField.PROFESSOR_ID,
+                            Code=BaseExceptionCode.UNAUTHORIZED,
+                            Value=idInstituicaoCursoOcorrenciaPeriodoProfessor.ToString()
+                        }
+                    }
+                };
             }
             this._instituicaoService.SaveInstituicaoCursoOcorrenciaNotas(instituicaoCursoOcorrenciaNotas, idInstituicaoCursoOcorrenciaPeriodoProfessor);
         }
@@ -31,7 +40,16 @@ namespace Api.InstituicaoApi {
         [HttpPost("instituicao-curso-ocorrencia-ausencias/{idInstituicaoCursoOcorrenciaPeriodoProfessor}/{dataAusencia}/save")]
         public void SaveInstituicaoCursoOcorrenciaAusencias(long idInstituicaoCursoOcorrenciaPeriodoProfessor, DateTime dataAusencia, [FromBody] List<InstituicaoCursoOcorrenciaAusenciaVM> instituicaoCursoOcorrenciaAusencias) {
             if (!this.GetInstituicaoCursoOcorrenciaPeriodoProfessorOfAuthenticated().Select(x => x.ID).Contains(idInstituicaoCursoOcorrenciaPeriodoProfessor)) {
-                throw new BaseUnauthorizedException();
+                throw new BaseException() {
+                    Code = BaseExceptionCode.UNAUTHORIZED,
+                    Infos = new List<BaseExceptionFieldInfo>() {
+                        new BaseExceptionFieldInfo(){
+                            Field=BaseExceptionField.PROFESSOR_ID,
+                            Code=BaseExceptionCode.UNAUTHORIZED,
+                            Value=idInstituicaoCursoOcorrenciaPeriodoProfessor.ToString()
+                        }
+                    }
+                };
             }
             this._instituicaoService.SaveInstituicaoCursoOcorrenciaAusencias(instituicaoCursoOcorrenciaAusencias, idInstituicaoCursoOcorrenciaPeriodoProfessor, dataAusencia);
         }
@@ -39,7 +57,16 @@ namespace Api.InstituicaoApi {
         [HttpPost("formula-nota-final/{idInstituicaoCursoOcorrenciaPeriodoProfessor}/save")]
         public void SaveFormulaNotaFinal(long idInstituicaoCursoOcorrenciaPeriodoProfessor, [FromBody] string[] formulaNotaFinal) {
             if (!this.GetInstituicaoCursoOcorrenciaPeriodoProfessorOfAuthenticated().Select(x => x.ID).Contains(idInstituicaoCursoOcorrenciaPeriodoProfessor)) {
-                throw new BaseUnauthorizedException();
+               throw new BaseException() {
+                    Code = BaseExceptionCode.UNAUTHORIZED,
+                    Infos = new List<BaseExceptionFieldInfo>() {
+                        new BaseExceptionFieldInfo(){
+                            Field=BaseExceptionField.PROFESSOR_ID,
+                            Code=BaseExceptionCode.UNAUTHORIZED,
+                            Value=idInstituicaoCursoOcorrenciaPeriodoProfessor.ToString()
+                        }
+                    }
+                };
             }
             this._instituicaoService.SaveFormulaNotaFinal(String.Join(',', formulaNotaFinal), idInstituicaoCursoOcorrenciaPeriodoProfessor);
         }

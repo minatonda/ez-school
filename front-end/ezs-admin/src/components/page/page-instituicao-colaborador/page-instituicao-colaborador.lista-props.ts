@@ -18,7 +18,7 @@ export class PageInstituicaoColaboradorListaProps implements PageListaPropsInter
     routePathAdd = AppRouterPath.INSTITUICAO_COLABORADOR_ADD;
     routePathUpdate = AppRouterPath.INSTITUICAO_COLABORADOR_UPD;
     query = async () => await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoColaborador(AppRouter.app.$route.params.id);
-    queryRemove = FACTORY_CONSTANT.InstituicaoFactory.disable;
+    queryRemove = async (id) => await FACTORY_CONSTANT.InstituicaoFactory.disableInstituicaoColaborador(AppRouter.app.$route.params.id, id);
     queryAdd = (path) => AppRouter.push({ name: path, params: { id: AppRouter.app.$route.params.id } });
     queryUpdate = (item, path) => AppRouter.push({ name: path, params: { id: AppRouter.app.$route.params.id, idInstituicaoColaborador: item.id } });
 

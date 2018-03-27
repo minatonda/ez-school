@@ -20,25 +20,19 @@ namespace Api.MateriaApi {
 
         [HttpPut("add")]
         public void Add([FromBody] MateriaVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.ADD_MATERIA)) {
-                throw new BaseUnauthorizedException(BaseRole.ADD_MATERIA);
-            }
+             this.Authorize(BaseRole.ADD_MATERIA);
             this._materiaService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] MateriaVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.EDIT_MATERIA)) {
-                throw new BaseUnauthorizedException(BaseRole.EDIT_MATERIA);
-            }
+            this.Authorize(BaseRole.EDIT_MATERIA);
             this._materiaService.Update(viewModel);
         }
 
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id) {
-            if (!this.IsAuthorized(BaseRole.DISABLE_CATEGORIA_PROFISSIONAL)) {
-                throw new BaseUnauthorizedException(BaseRole.DISABLE_CATEGORIA_PROFISSIONAL);
-            }
+            this.Authorize(BaseRole.DISABLE_MATERIA);
             this._materiaService.Disable(id);
         }
 

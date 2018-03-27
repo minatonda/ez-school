@@ -12,6 +12,7 @@ import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/noti
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 import { InstituicaoModel } from '../../../../../ezs-common/src/model/server/instituicao.model';
+import { AppRouterPath } from '../../../app.router.path';
 
 enum ModalOperation {
     add = 0,
@@ -64,7 +65,7 @@ export class PageCursoComponent extends Vue {
             }
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
             AppRouter.back();
         }
         finally {
@@ -88,9 +89,10 @@ export class PageCursoComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
+            AppRouter.push(AppRouterPath.CURSO);
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);

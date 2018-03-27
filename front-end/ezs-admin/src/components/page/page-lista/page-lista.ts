@@ -110,7 +110,7 @@ export class PageListaComponent extends Vue {
             // };
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER, true);
@@ -147,14 +147,16 @@ export class PageListaComponent extends Vue {
                 AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER, true);
                 await this.queryRemove(item.id);
 
-                NotifyUtil.success('Registro removido com êxito', this.alias);
+                NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_DESATIVAR, ApplicationService.getLanguage());
+
+                let path = this.$route.path;
                 AppRouter.push(AppRouterPath.ROOT);
                 setImmediate(() => {
-                    AppRouter.push(this.$route.path);
+                    AppRouter.push(path);
                 });
             }
-            catch (error) {
-
+            catch (e) {
+                NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_DESATIVAR_FALHA);
             }
             finally {
                 AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER, true);

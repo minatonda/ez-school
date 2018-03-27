@@ -15,6 +15,7 @@ import { NotifyUtil, NOTIFY_TYPE } from '../../../../../ezs-common/src/util/noti
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { ApplicationService } from '../../../module/service/application.service';
 import { CursoGradeMateriaModel } from '../../../../../ezs-common/src/model/server/curso-grade-materia.model';
+import { AppRouterPath } from '../../../app.router.path';
 
 interface UI {
     cursos: Array<CursoModel>;
@@ -63,7 +64,7 @@ export class PageInstituicaoCursoComponent extends Vue {
             }
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
             AppRouter.back();
         }
         finally {
@@ -87,9 +88,10 @@ export class PageInstituicaoCursoComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
+            AppRouter.push({ name: AppRouterPath.INSTITUICAO_CURSO, params: { id: this.$route.params.id } });
         }
         catch (e) {
-            NotifyUtil.exception(e, ApplicationService.getLanguage());
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
         }
         finally {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
@@ -98,13 +100,22 @@ export class PageInstituicaoCursoComponent extends Vue {
 
     async onCursoChanged(curso) {
         this.clearCursoGrade = true;
-        setImmediate(() => { this.clearCursoGrade = false; });
-        if (curso) {
-            this.ui.cursoGrades = await FACTORY_CONSTANT.CursoFactory.allCursoGradeByInstituicao(curso.id, this.$route.params.id);
-        }
-        else {
-            this.ui.cursoGrades = [];
-        }
+        setImmediate(async () => {
+            this.clearCursoGrade = false;
+            if (curso) {
+                try {
+                    this.ui.cursoGrades = await FACTORY_CONSTANT.CursoFactory.allCursoGradeByInstituicao(curso.id, this.$route.params.id);
+                }
+                catch (e) {
+                    this.ui.cursoGrades = [];
+                    NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.CONSULTAR_FALHA);
+                }
+            }
+            else {
+                this.ui.cursoGrades = [];
+            }
+        });
+
     }
 
     getTablePeriodo() {

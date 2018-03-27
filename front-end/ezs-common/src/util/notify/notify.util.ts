@@ -5,9 +5,9 @@ import { BaseError } from '../../error/base.error';
 
 export enum NOTIFY_TYPE {
     SUCCESS = 'SUCCESS',
-        ERROR = 'ERROR',
-        INFO = 'INFO',
-        WARNING = 'WARNING'
+    ERROR = 'ERROR',
+    INFO = 'INFO',
+    WARNING = 'WARNING'
 }
 
 class Util {
@@ -29,33 +29,47 @@ class Util {
     }
 
     public errorG = (code: I18N_ERROR_GENERIC, lang: I18N_LANG) => {
-        let template = I18NUtil.getTemplateMessageGeneric(code, lang);
-        toastr.error(template.message, template.title, { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        try {
+            let template = I18NUtil.getTemplateMessageGeneric(code, lang);
+            toastr.error(template.message, template.title, { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        } catch (error) {
+            toastr.error('Não há template configurado para esse erro', 'Erro sem template', { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        }
     }
 
     public successG = (code: I18N_ERROR_GENERIC, lang: I18N_LANG) => {
-        let template = I18NUtil.getTemplateMessageGeneric(code, lang);
-        toastr.success(template.message, template.title);
+        try {
+            let template = I18NUtil.getTemplateMessageGeneric(code, lang);
+            toastr.success(template.message, template.title);
+        } catch (error) {
+            toastr.error('Não há template configurado para esse erro', 'Erro sem template', { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        }
     }
 
     public infoG = (code: I18N_ERROR_GENERIC, lang: I18N_LANG) => {
-        let template = I18NUtil.getTemplateMessageGeneric(code, lang);
-        toastr.info(template.message, template.title);
+        try {
+            let template = I18NUtil.getTemplateMessageGeneric(code, lang);
+            toastr.info(template.message, template.title);
+        } catch (error) {
+            toastr.error('Não há template configurado para esse erro', 'Erro sem template', { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        }
     }
 
     public warningG = (code: I18N_ERROR_GENERIC, lang: I18N_LANG) => {
-        let template = I18NUtil.getTemplateMessageGeneric(code, lang);
-        toastr.warning(template.message, template.title);
+        try {
+            let template = I18NUtil.getTemplateMessageGeneric(code, lang);
+            toastr.warning(template.message, template.title);
+        } catch (error) {
+            toastr.error('Não há template configurado para esse erro', 'Erro sem template', { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
+        }
     }
 
     public exception = (exception, lang: I18N_LANG, codeFallback?: I18N_ERROR_GENERIC) => {
-        let template = I18NUtil.resolveException(exception, lang);
-        if (template) {
+        try {
+            let template = I18NUtil.resolveException(exception, lang);
             toastr.error(template.message, template.title, { closeButton: true, timeOut: 0, extendedTimeOut: 0 });
-        }
-        else {
-            let template = I18NUtil.getTemplateMessageGeneric(codeFallback, lang);
-            toastr.warning(template.message, template.title);
+        } catch (error) {
+            this.errorG(codeFallback, lang);
         }
     }
 

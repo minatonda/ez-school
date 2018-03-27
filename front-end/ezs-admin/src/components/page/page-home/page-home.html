@@ -1,6 +1,27 @@
 <div class="row">
     <div class="col-12 col-md-8">
-
+        <h3>Instituições</h3>
+        <hr>
+        <div class="card text-left mb-2" style="cursor:pointer;" v-for="instituicao in getInstituicaoFromUser()">
+            <div class="card-header p-2">
+                <div class="row">
+                    <div class="col-8 align-self-center">
+                        <span>{{instituicao.nome}}</span>
+                    </div>
+                    <div class="col-4 text-right">
+                        <button class="btn btn-primary btn-sm mr-2" title="Gerenciar Cursos" v-on:click="doGoGerenciamentoCursos(instituicao)">
+                            <i class="fa fa-book"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm mr-2" title="Gerenciar Colaboradores"  v-on:click="doGoGerenciamentoColaboradores(instituicao)">
+                            <i class="fa fa-users"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm mr-2" title="Gerenciar Perfis" v-on:click="doGoGerenciamentoPerfil(instituicao)">
+                            <i class="fa fa-cubes"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-12 col-md-4">
         <h3>Menu</h3>

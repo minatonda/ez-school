@@ -18,25 +18,19 @@ namespace Api.CategoriaProfissionalApi {
 
         [HttpPut("add")]
         public void Add([FromBody] CategoriaProfissionalVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.ADD_CATEGORIA_PROFISSIONAL)) {
-                throw new BaseUnauthorizedException(BaseRole.ADD_CATEGORIA_PROFISSIONAL);
-            }
+            this.Authorize(BaseRole.ADD_CATEGORIA_PROFISSIONAL);
             this._categoriaProfissionalService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] CategoriaProfissionalVM viewModel) {
-            if (!this.IsAuthorized(BaseRole.EDIT_CATEGORIA_PROFISSIONAL )) {
-                throw new BaseUnauthorizedException(BaseRole.EDIT_CATEGORIA_PROFISSIONAL);
-            }
+            this.Authorize(BaseRole.EDIT_CATEGORIA_PROFISSIONAL);
             this._categoriaProfissionalService.Update(viewModel);
         }
 
         [HttpDelete("disable")]
         public void Disable([FromQuery] long id) {
-            if (!this.IsAuthorized(BaseRole.DISABLE_CATEGORIA_PROFISSIONAL)) {
-                throw new BaseUnauthorizedException(BaseRole.DISABLE_CATEGORIA_PROFISSIONAL);
-            }
+            this.Authorize(BaseRole.DISABLE_CATEGORIA_PROFISSIONAL);
             this._categoriaProfissionalService.Disable(id);
         }
 

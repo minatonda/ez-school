@@ -35,7 +35,7 @@ namespace Api.UsuarioApi {
 
         [HttpGet("me/admin")]
         public bool MeAdmin() {
-            return this.GetAllRolesFromUsuario().Contains(((long)BaseRole.ADMIN).ToString());
+            return this.GetAllRolesFromUsuario().Contains(BaseRole.ADMIN);
         }
 
     }

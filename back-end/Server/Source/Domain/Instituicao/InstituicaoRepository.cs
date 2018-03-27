@@ -236,7 +236,7 @@ namespace Domain.InstituicaoDomain {
             model.Perfis = instituicaoColaborador.Perfis;
             model.Instituicao = this.db.Ittc.Find(instituicaoColaborador.Instituicao.ID);
             model.Usuario = this.db.UsrInf.Find(instituicaoColaborador.Usuario.ID);
-            this.db.IttcClbd.Add(model);
+            this.db.IttcClbd.Update(model);
         }
 
         public void UpdateInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfil instituicaoColaboradorPerfil) {
@@ -251,6 +251,18 @@ namespace Domain.InstituicaoDomain {
             var model = this.db.Ittc.Find(id);
             model.Ativo = DateTime.Now;
             this.db.Ittc.Update(model);
+        }
+
+        public void DisableInstituicaoColaborador(long id) {
+            var model = this.db.IttcClbd.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.IttcClbd.Update(model);
+        }
+
+         public void DisableInstituicaoColaboradorPerfil(long id) {
+            var model = this.db.IttcClbdPrf.Find(id);
+            model.Ativo = DateTime.Now;
+            this.db.IttcClbdPrf.Update(model);
         }
 
         public void DisableInstituicaoCurso(long id) {

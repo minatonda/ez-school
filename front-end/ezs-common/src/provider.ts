@@ -12,7 +12,7 @@ import { DateCatcherComponent } from './component/date-catcher/date-catcher';
 import { DropdownComponent } from './component/dropdown/dropdown';
 import { FormBuilderComponent } from './component/form-builder/form-builder';
 import { FlaggerComponent } from './component/flagger/flagger';
-
+import { TreeViewComponent } from './component/tree-view/tree-view';
 
 export class Provider {
     public static retrieveFactories(autenticacaoService: AutenticaoServiceInterface, interceptorOnRequestSuccess: any, interceptorOnRequestError: any) {
@@ -34,7 +34,8 @@ export class Provider {
             { alias: 'date-catcher', component: DateCatcherComponent },
             { alias: 'dropdown', component: DropdownComponent },
             { alias: 'flagger', component: FlaggerComponent },
-            { alias: 'form-builder', component: FormBuilderComponent }
+            { alias: 'form-builder', component: FormBuilderComponent },
+            { alias: 'tree-view', component: TreeViewComponent }
         ];
     }
 }

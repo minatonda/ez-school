@@ -1,54 +1,40 @@
 namespace Api.Common.Base {
 
-    public enum BaseRole {
+    public static class BaseRole {
 
-        ADMIN,
+        public static readonly string ADMIN = "ADMIN";
 
-        ADD_MATERIA,
-        EDIT_MATERIA,
-        DISABLE_MATERIA,
-        DETAIL_MATERIA,
-        LIST_MATERIA,
+        public static readonly string ADD_MATERIA = "ADD_MATERIA";
+        public static readonly string EDIT_MATERIA = "EDIT_MATERIA";
+        public static readonly string DISABLE_MATERIA = "DISABLE_MATERIA";
+        public static readonly string DETAIL_MATERIA = "DETAIL_MATERIA";
+        public static readonly string LIST_MATERIA = "LIST_MATERIA";
 
-        ADD_USUARIO,
-        EDIT_USUARIO,
-        DISABLE_USUARIO,
-        DETAIL_USUARIO,
-        LIST_USUARIO,
+        public static readonly string ADD_USUARIO = "ADD_USUARIO";
+        public static readonly string EDIT_USUARIO = "EDIT_USUARIO";
+        public static readonly string DISABLE_USUARIO = "DISABLE_USUARIO";
+        public static readonly string DETAIL_USUARIO = "DETAIL_USUARIO";
+        public static readonly string LIST_USUARIO = "LIST_USUARIO";
 
-        ADD_CURSO,
-        EDIT_CURSO,
-        DISABLE_CURSO,
-        DETAIL_CURSO,
-        LIST_CURSO,
+        public static readonly string ADD_CURSO = "ADD_CURSO";
+        public static readonly string EDIT_CURSO = "EDIT_CURSO";
+        public static readonly string DISABLE_CURSO = "DISABLE_CURSO";
+        public static readonly string DETAIL_CURSO = "DETAIL_CURSO";
+        public static readonly string LIST_CURSO = "LIST_CURSO";
 
-        ADD_CATEGORIA_PROFISSIONAL,
-        EDIT_CATEGORIA_PROFISSIONAL,
-        DISABLE_CATEGORIA_PROFISSIONAL,
-        DETAIL_CATEGORIA_PROFISSIONAL,
-        LIST_CATEGORIA_PROFISSIONAL,
+        public static readonly string ADD_CATEGORIA_PROFISSIONAL = "ADD_CATEGORIA_PROFISSIONAL";
+        public static readonly string EDIT_CATEGORIA_PROFISSIONAL = "EDIT_CATEGORIA_PROFISSIONAL";
+        public static readonly string DISABLE_CATEGORIA_PROFISSIONAL = "DISABLE_CATEGORIA_PROFISSIONAL";
+        public static readonly string DETAIL_CATEGORIA_PROFISSIONAL = "DETAIL_CATEGORIA_PROFISSIONAL";
+        public static readonly string LIST_CATEGORIA_PROFISSIONAL = "LIST_CATEGORIA_PROFISSIONAL";
 
-        ADD_INSTITUICAO,
-        EDIT_INSTITUICAO,
-        DISABLE_INSTITUICAO,
-        DETAIL_INSTITUICAO,
-        LIST_INSTITUICAO,
-        OWNER_INSTITUICAO,
+        public static readonly string ADD_INSTITUICAO = "ADD_INSTITUICAO";
+        public static readonly string EDIT_INSTITUICAO = "EDIT_INSTITUICAO";
+        public static readonly string DISABLE_INSTITUICAO = "DISABLE_INSTITUICAO";
+        public static readonly string DETAIL_INSTITUICAO = "DETAIL_INSTITUICAO";
+        public static readonly string LIST_INSTITUICAO = "LIST_INSTITUICAO";
 
-        ADD_INSTITUICAO_CURSO,
-        EDIT_INSTITUICAO_CURSO,
-        DISABLE_INSTITUICAO_CURSO,
-        DETAIL_INSTITUICAO_CURSO,
-        LIST_INSTITUICAO_CURSO,
 
-        ADD_INSTITUICAO_CURSO_OCORRENCIA,
-        EDIT_INSTITUICAO_CURSO_OCORRENCIA,
-        DISABLE_INSTITUICAO_CURSO_OCORRENCIA,
-        DETAIL_INSTITUICAO_CURSO_OCORRENCIA,
-        LIST_INSTITUICAO_CURSO_OCORRENCIA,
-
-        EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA,
-        EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA
 
     }
 

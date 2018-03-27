@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Api.AreaInteresseApi;
+using Api.InstituicaoApi;
 using Api.CategoriaProfissionalApi;
+using Api.Common;
 using Api.Common.Base;
 using Domain.AreaInteresseDomain;
 using Domain.UsuarioDomain;
@@ -96,158 +98,170 @@ namespace Api.UsuarioApi {
             return this._usuarioRepository.GetAllByTermo(termo, onlyAluno, onlyProfessor).Select(x => UsuarioAdapter.ToViewModel(x, true)).ToList();
         }
 
+        public UsuarioVM Autenticar(UsuarioVM usuario) {
+            var attachedUsuario = this._usuarioRepository.Query(x => x.Username == usuario.Username && x.Password == usuario.Password).SingleOrDefault();
+            if (attachedUsuario != null) {
+                return UsuarioAdapter.ToViewModel(attachedUsuario, false);
+            }
+            if (attachedUsuario == null && this._usuarioRepository.Query(x => x.Username == usuario.Username).SingleOrDefault() == null) {
+                throw new BaseException() {
+                    Code = BaseExceptionCode.USER_WRONG_USERNAME,
+                    Infos = new List<BaseExceptionFieldInfo>() {
+                        new BaseExceptionFieldInfo(){
+                            Field=BaseExceptionField.USUARIO_USERNAME,
+                            Code=BaseExceptionCode.USER_WRONG_USERNAME
+                        }
+                    }
+                };
+            } else {
+                throw new BaseException() {
+                    Code = BaseExceptionCode.USER_WRONG_PASSWORD,
+                    Infos = new List<BaseExceptionFieldInfo>() {
+                        new BaseExceptionFieldInfo(){
+                            Field=BaseExceptionField.USUARIO_PASSWORD,
+                            Code=BaseExceptionCode.USER_WRONG_PASSWORD
+                        }
+                    }
+                };
+            }
+        }
+
         public List<string> GetAllAuthorizedViewByRoles(List<string> roles) {
             List<string> views = new List<string>();
 
             roles.ForEach(x => {
 
-                if (roles.Contains((((int)BaseRole.ADMIN).ToString()))) {
 
-                    if (x == ((int)BaseRole.ADMIN).ToString()) {
-
-                        views.Add(ViewAlias.MATERIA_ADD);
-                        views.Add(ViewAlias.MATERIA_UPD);
-                        views.Add(ViewAlias.MATERIA);
-                        views.Add(ViewAlias.USUARIO_ADD);
-                        views.Add(ViewAlias.USUARIO_UPD);
-                        views.Add(ViewAlias.USUARIO);
-                        views.Add(ViewAlias.CURSO_ADD);
-                        views.Add(ViewAlias.CURSO_UPD);
-                        views.Add(ViewAlias.CURSO);
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
-                        views.Add(ViewAlias.INSTITUICAO_UPD);
-                        views.Add(ViewAlias.INSTITUICAO);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                        views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
-                        
-                    }
-
-                } else {
-
-                    if (x == ((int)BaseRole.ADD_MATERIA).ToString()) {
-                        views.Add(ViewAlias.MATERIA_ADD);
-                    }
-                    if (x == ((int)BaseRole.EDIT_MATERIA).ToString()) {
-                        views.Add(ViewAlias.MATERIA_UPD);
-                    }
-                    if (x == ((int)BaseRole.DETAIL_MATERIA).ToString()) {
-                        views.Add(ViewAlias.MATERIA_UPD);
-                    }
-                    if (x == ((int)BaseRole.LIST_MATERIA).ToString()) {
-                        views.Add(ViewAlias.MATERIA);
-                    }
-
-                    if (x == ((int)BaseRole.ADD_USUARIO).ToString()) {
-                        views.Add(ViewAlias.USUARIO_ADD);
-                    }
-                    if (x == ((int)BaseRole.EDIT_USUARIO).ToString()) {
-                        views.Add(ViewAlias.USUARIO_UPD);
-                    }
-                    if (x == ((int)BaseRole.DETAIL_USUARIO).ToString()) {
-                        views.Add(ViewAlias.USUARIO_UPD);
-                    }
-                    if (x == ((int)BaseRole.LIST_USUARIO).ToString()) {
-                        views.Add(ViewAlias.USUARIO);
-                    }
-
-                    if (x == ((int)BaseRole.ADD_CURSO).ToString()) {
-                        views.Add(ViewAlias.CURSO_ADD);
-                    }
-                    if (x == ((int)BaseRole.EDIT_CURSO).ToString()) {
-                        views.Add(ViewAlias.CURSO_UPD);
-                    }
-                    if (x == ((int)BaseRole.DETAIL_CURSO).ToString()) {
-                        views.Add(ViewAlias.CURSO_UPD);
-                    }
-                    if (x == ((int)BaseRole.LIST_CURSO).ToString()) {
-                        views.Add(ViewAlias.CURSO);
-                    }
-
-                    if (x == ((int)BaseRole.ADD_CATEGORIA_PROFISSIONAL).ToString()) {
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
-                    }
-                    if (x == ((int)BaseRole.EDIT_CATEGORIA_PROFISSIONAL).ToString()) {
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
-                    }
-                    if (x == ((int)BaseRole.DETAIL_CATEGORIA_PROFISSIONAL).ToString()) {
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
-                    }
-                    if (x == ((int)BaseRole.LIST_CATEGORIA_PROFISSIONAL).ToString()) {
-                        views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
-                    }
-
-                    if (roles.Contains((((int)BaseRole.OWNER_INSTITUICAO).ToString()))) {
-                        if (x == ((int)BaseRole.OWNER_INSTITUICAO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_UPD);
-                            views.Add(ViewAlias.INSTITUICAO);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
-                        }
-                    } else {
-
-                        if (x == ((int)BaseRole.ADD_INSTITUICAO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_ADD);
-                        }
-                        if (x == ((int)BaseRole.EDIT_INSTITUICAO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_UPD);
-                        }
-                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_UPD);
-                        }
-                        if (x == ((int)BaseRole.LIST_INSTITUICAO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO);
-                        }
-
-                        if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
-                        }
-                        if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                        }
-                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
-                        }
-                        if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO);
-                        }
-
-                        if (x == ((int)BaseRole.ADD_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
-                        }
-                        if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                        }
-                        if (x == ((int)BaseRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
-                        }
-                        if (x == ((int)BaseRole.LIST_INSTITUICAO_CURSO_OCORRENCIA).ToString()) {
-                            views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
-                        }
-
-                    }
-
-                    if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA).ToString()) {
-
-                    }
-                    if (x == ((int)BaseRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA).ToString()) {
-
-                    }
+                if (x == BaseRole.ADD_MATERIA || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.MATERIA_ADD);
                 }
+                if (x == BaseRole.EDIT_MATERIA || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.MATERIA_UPD);
+                }
+                if (x == BaseRole.DETAIL_MATERIA || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.MATERIA_UPD);
+                }
+                if (x == BaseRole.LIST_MATERIA || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.MATERIA);
+                }
+
+                if (x == BaseRole.ADD_USUARIO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.USUARIO_ADD);
+                }
+                if (x == BaseRole.EDIT_USUARIO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.USUARIO_UPD);
+                }
+                if (x == BaseRole.DETAIL_USUARIO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.USUARIO_UPD);
+                }
+                if (x == BaseRole.LIST_USUARIO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.USUARIO);
+                }
+
+                if (x == BaseRole.ADD_CURSO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CURSO_ADD);
+                }
+                if (x == BaseRole.EDIT_CURSO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CURSO_UPD);
+                }
+                if (x == BaseRole.DETAIL_CURSO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CURSO_UPD);
+                }
+                if (x == BaseRole.LIST_CURSO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CURSO);
+                }
+
+                if (x == BaseRole.ADD_CATEGORIA_PROFISSIONAL || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_ADD);
+                }
+                if (x == BaseRole.EDIT_CATEGORIA_PROFISSIONAL || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
+                }
+                if (x == BaseRole.DETAIL_CATEGORIA_PROFISSIONAL || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL_UPD);
+                }
+                if (x == BaseRole.LIST_CATEGORIA_PROFISSIONAL || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.CATEGORIA_PROFISSIONAL);
+                }
+
+
+
+                if (x == BaseRole.ADD_INSTITUICAO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.INSTITUICAO_ADD);
+                }
+                if (x == BaseRole.EDIT_INSTITUICAO || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_UPD);
+                }
+                if (x == BaseRole.DETAIL_INSTITUICAO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.INSTITUICAO_UPD);
+                }
+                if (x == BaseRole.LIST_INSTITUICAO || x == BaseRole.ADMIN) {
+                    views.Add(ViewAlias.INSTITUICAO);
+                }
+
+                if (x == InstituicaoRole.ADD_INSTITUICAO_CURSO || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_ADD);
+                }
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_CURSO || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                }
+                if (x == InstituicaoRole.DETAIL_INSTITUICAO_CURSO || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_UPD);
+                }
+                if (x == InstituicaoRole.LIST_INSTITUICAO_CURSO || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO);
+                }
+
+                if (x == InstituicaoRole.ADD_INSTITUICAO_COLABORADOR || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_ADD);
+                }
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_UPD);
+                }
+                if (x == InstituicaoRole.DETAIL_INSTITUICAO_COLABORADOR || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_UPD);
+                }
+                if (x == InstituicaoRole.LIST_INSTITUICAO_COLABORADOR || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR);
+                }
+
+                if (x == InstituicaoRole.ADD_INSTITUICAO_COLABORADOR_PERFIL || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_PERFIL_ADD);
+                }
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR_PERFIL || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_PERFIL_UPD);
+                }
+                if (x == InstituicaoRole.DETAIL_INSTITUICAO_COLABORADOR_PERFIL || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_PERFIL_UPD);
+                }
+                if (x == InstituicaoRole.LIST_INSTITUICAO_COLABORADOR_PERFIL || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_COLABORADOR_PERFIL);
+                }
+
+                if (x == InstituicaoRole.ADD_INSTITUICAO_CURSO_OCORRENCIA || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_ADD);
+                }
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                }
+                if (x == InstituicaoRole.DETAIL_INSTITUICAO_CURSO_OCORRENCIA || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA_UPD);
+                }
+                if (x == InstituicaoRole.LIST_INSTITUICAO_CURSO_OCORRENCIA || x == BaseRole.ADMIN || x == InstituicaoRole.OWNER_INSTITUICAO) {
+                    views.Add(ViewAlias.INSTITUICAO_CURSO_OCORRENCIA);
+                }
+
+
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA) {
+
+                }
+                if (x == InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA) {
+
+                }
+
             });
 
-            return views;
+            return views.GroupBy(x => x).Select(x => x.First()).ToList();
         }
 
     }

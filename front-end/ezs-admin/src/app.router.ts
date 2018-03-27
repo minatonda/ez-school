@@ -62,7 +62,7 @@ class Router extends BaseRouter {
                         }
                     default:
                         {
-                            NotifyUtil.error((error as BaseError).title, (error as BaseError).message);
+                            NotifyUtil.error((error as BaseError).message, (error as BaseError).title);
                             break;
                         }
                 }

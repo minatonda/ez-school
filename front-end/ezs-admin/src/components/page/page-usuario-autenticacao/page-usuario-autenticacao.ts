@@ -3,6 +3,9 @@ import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-
 import { AutenticacaoService } from '../../../module/service/autenticacao.service';
 import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
 import { UsuarioModel } from '../../../../../ezs-common/src/model/server/usuario.model';
+import { NotifyUtil } from '../../../../../ezs-common/src/util/notify/notify.util';
+import { ApplicationService } from '../../../module/service/application.service';
+import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 
 @Component({
     template: require('./page-usuario-autenticacao.html')
@@ -10,7 +13,7 @@ import { UsuarioModel } from '../../../../../ezs-common/src/model/server/usuario
 export class PageUsuarioAutenticacaoComponent extends Vue {
 
     public model = new UsuarioModel();
-    
+
     constructor() {
         super();
     }
@@ -26,6 +29,7 @@ export class PageUsuarioAutenticacaoComponent extends Vue {
             AutenticacaoService.autenticar(retorno);
         }
         catch (e) {
+            NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.AUTENTICAR_FALHA);
             AppBroadcastEventBus.$emit(AppBroadcastEvent.ESCONDER_LOADER);
         }
     }

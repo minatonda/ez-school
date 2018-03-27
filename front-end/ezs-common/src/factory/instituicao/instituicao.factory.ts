@@ -4,6 +4,7 @@ import { InstituicaoCursoModel } from './../../model/server/instituicao-curso.mo
 import { InstituicaoCursoOcorrenciaModel } from './../../model/server/instituicao-curso-ocorrencia.model';
 import { InstituicaoCursoPeriodoModel } from './../../model/server/instituicao-curso-periodo.model';
 import { CursoGradeMateriaModel } from './../../model/server/curso-grade-materia.model';
+import { TreeViewModel } from './../../model/server/tree-view.model';
 import { InstituicaoCursoTurmaModel } from './../../model/server/instituicao-curso-turma.model';
 import { InstituicaoCursoOcorrenciaPeriodoModel } from '../../model/server/instituicao-curso-ocorrencia-periodo.model';
 import { InstituicaoBusinessAulaModel } from '../../model/server/instituicao-business-aula.model';
@@ -74,7 +75,7 @@ export class Factory extends BaseFactory {
 
     public updateInstituicaoColaborador = async (id: number | string, model: InstituicaoColaboradorModel) => {
         try {
-            await this.post(`/api/instituicao/${id}/instituicao-colaborador/add`, model);
+            await this.post(`/api/instituicao/${id}/instituicao-colaborador/update`, model);
         }
         catch (error) {
             throw error;
@@ -83,7 +84,7 @@ export class Factory extends BaseFactory {
 
     public updateInstituicaoColaboradorPerfil = async (id: number | string, model: InstituicaoColaboradorPerfilModel) => {
         try {
-            await this.post(`/api/instituicao/${id}/instituicao-colaborador-perfil/add`, model);
+            await this.post(`/api/instituicao/${id}/instituicao-colaborador-perfil/update`, model);
         }
         catch (error) {
             throw error;
@@ -343,7 +344,7 @@ export class Factory extends BaseFactory {
 
     public allRoles = async () => {
         try {
-            let result = await this.get('/api/instituicao/roles') as Array < number > ;
+            let result = await this.get('/api/instituicao/roles') as TreeViewModel<string>;
             return result;
         }
         catch (error) {
@@ -354,6 +355,26 @@ export class Factory extends BaseFactory {
     public disable = async (id: number | string) => {
         try {
             let result = await this.delete('/api/instituicao/disable', { params: { id: id } });
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public disableInstituicaoColaborador = async (id: number | string, idInstituicaoColaborador: number | string) => {
+        try {
+            let result = await this.delete(`/api/instituicao/${id}/instituicao-colaborador/disable`, { params: { idInstituicaoColaborador: idInstituicaoColaborador } });
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+
+    public disableInstituicaoColaboradorPerfil = async (id: number | string, idInstituicaoColaboradorPerfil: number | string) => {
+        try {
+            let result = await this.delete(`/api/instituicao/${id}/instituicao-colaborador-perfil/disable`, { params: { idInstituicaoColaboradorPerfil: idInstituicaoColaboradorPerfil } });
             return result;
         }
         catch (error) {

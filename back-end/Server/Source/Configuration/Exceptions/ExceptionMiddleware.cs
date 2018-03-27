@@ -20,17 +20,8 @@ namespace Configuration.Exceptions {
             context.Response.ContentType = @"application/json";
             try {
                 await _next(context);
-            } catch (BaseFieldInvalidException ex) {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(BaseExceptionAdapter.ToBaseFieldInvalidExceptionViewModel(ex)));
-            } catch (BaseUnauthorizedInstituicaoException ex) {
-                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(BaseExceptionAdapter.ToBaseUnauthorizedInstituicaoException(ex)));
-            } catch (BaseUnauthorizedException ex) {
-                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(BaseExceptionAdapter.ToBaseUnauthorizedException(ex)));
             } catch (BaseException ex) {
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.StatusCode = (int)ex.HttpStatusCode;
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(BaseExceptionAdapter.ToBaseExceptionViewModel(ex)));
                 return;
             }

@@ -16,9 +16,20 @@ export enum I18N_ERROR_GENERIC {
 }
 
 export enum I18N_ERROR_SERVER {
-    UNAUTHORIZED,
-    UNAUTHORIZED_INSTITUICAO,
-    INVALID_FIELD
+    UNAUTHORIZED = 'UNAUTHORIZED',
+    UNAUTHORIZED_INSTITUICAO = 'UNAUTHORIZED_INSTITUICAO',
+    INVALID_FIELD = 'INVALID_FIELD',
+    USER_WRONG_USERNAME = 'USER_WRONG_USERNAME',
+    USER_WRONG_PASSWORD = 'USER_WRONG_PASSWORD'
+}
+
+export enum I18N_ERROR_SERVER_FIELD {
+    BASE_ROLE = 'baseRole',
+    INSTITUICAO_ROLE = 'instituicaoRoles',
+    USUARIO_USERNAME = 'usuario.username',
+    USUARIO_PASSWORD = 'usuario.password',
+    PROFESSOR_ID = 'professor.id',
+    ALUNO_ID = 'aluno.id'
 }
 
 export enum I18N_LANG {
@@ -26,73 +37,86 @@ export enum I18N_LANG {
 }
 
 export const I18N_TEMPLATE_MESSAGE_GENERIC_CONSTANT = [
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.AUTENTICAR, title: 'Registro salvo com êxito !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.AUTENTICAR_FALHA, title: 'Falha ao salvar registro !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.DESAUTENTICAR, title: 'Autenticação com êxito !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.DESAUTENTICAR_FALHA, title: 'Falha ao autenticar !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_SALVAR, title: 'Registro salvo com êxito !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA, title: 'Falha ao salvar êxito !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_DESATIVAR, title: 'Registro desativado com êxito !', message: '' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.AUTENTICAR, title: 'Autenticado', message: 'Bem vindo' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.AUTENTICAR_FALHA, title: 'Falha', message: 'Verifique usuário e senha, ou entre em contato com o administrador.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.DESAUTENTICAR, title: '', message: '' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.DESAUTENTICAR_FALHA, title: 'Não foi possível efetuar logout', message: 'Entre em contato com o administrador.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_SALVAR, title: 'Êxito', message: 'Registro salvo com êxito.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA, title: 'Falha', message: 'Falha ao salvar registro.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_DESATIVAR, title: 'Êxito', message: 'Registro desativado com êxito.' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.MODELO_DESATIVAR_FALHA, title: 'Falha ao desativar registro', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.CONSULTAR, title: 'Registro obtido com êxito !', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.CONSULTAR_FALHA, title: 'Falha ao obter registro', message: '' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.ACESSO_NEGADO, title: 'Acesso negado', message: 'Você não possui acesso ao recurso !' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.JA_AUTENTICADO, title: 'Já Autenticado', message: 'Você já está autenticado !' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.CONSULTAR, title: 'Êxito', message: 'Registro obtido com êxito.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.CONSULTAR_FALHA, title: 'Falha', message: 'Falha ao obter registro.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.ACESSO_NEGADO, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.JA_AUTENTICADO, title: 'Falha', message: 'Você já está autenticado.' },
 ];
 
 export const I18N_TEMPLATE_MESSAGE_SERVER_CONSTANT = [
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED, title: 'Acesso negado', message: 'Você não possui acesso ao recurso "{{Role}}"' },
-
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED_INSTITUICAO, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_USERNAME, title: 'Nome de usuário inválido', message: 'Usuário não existe.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_PASSWORD, title: 'Senha inválida', message: 'Senha inválida.' },
 ];
 
 export const I18N_ENUM_LABELS_CONSTANTS = [
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Controle Total', value: 0 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Controle Total', value: 'ADMIN' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Matéria', value: 1 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Matéria', value: 2 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Matéria', value: 3 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Matéria', value: 4 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Matéria', value: 5 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Matéria', value: 'ADD_MATERIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Matéria', value: 'EDIT_MATERIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Matéria', value: 'DISABLE_MATERIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Matéria', value: 'DETAIL_MATERIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Matéria', value: 'LIST_MATERIA' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Usuário', value: 6 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Usuário', value: 7 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Usuário', value: 8 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Usuário', value: 9 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Usuário', value: 10 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Usuário', value: 'ADD_USUARIO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Usuário', value: 'EDIT_USUARIO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Usuário', value: 'DISABLE_USUARIO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Usuário', value: 'DETAIL_USUARIO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Usuário', value: 'LIST_USUARIO' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Curso', value: 11 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Curso', value: 12 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Curso', value: 13 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Curso', value: 14 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Curso', value: 15 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Curso', value: 'ADD_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Curso', value: 'EDIT_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Curso', value: 'DISABLE_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Curso', value: 'DETAIL_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Curso', value: 'LIST_CURSO' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Categoria Profissional', value: 16 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Categoria Profissional', value: 17 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Categoria Profissional', value: 18 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Categoria Profissional', value: 19 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Categoria Profissional', value: 20 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Categoria Profissional', value: 'ADD_CATEGORIA_PROFISSIONAL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Categoria Profissional', value: 'EDIT_CATEGORIA_PROFISSIONAL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Categoria Profissional', value: 'DISABLE_CATEGORIA_PROFISSIONAL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Categoria Profissional', value: 'DETAIL_CATEGORIA_PROFISSIONAL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Categoria Profissional', value: 'LIST_CATEGORIA_PROFISSIONAL' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Instituição', value: 21 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Instituição', value: 22 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Instituição', value: 23 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Instituição', value: 24 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Instituição', value: 25 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Administração Total de Instituição', value: 26 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Instituição', value: 'ADD_INSTITUICAO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Instituição', value: 'EDIT_INSTITUICAO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Instituição', value: 'DISABLE_INSTITUICAO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Instituição', value: 'DETAIL_INSTITUICAO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Instituição', value: 'LIST_INSTITUICAO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Administração Total de Instituição', value: 'OWNER_INSTITUICAO' },
 
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Cursos por Instituiçao', value: 'ADD_INSTITUICAO_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Cursos por Instituiçao', value: 'EDIT_INSTITUICAO_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Cursos por Instituiçao', value: 'DISABLE_INSTITUICAO_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Cursos por Instituiçao', value: 'DETAIL_INSTITUICAO_CURSO' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Cursos por Instituiçao', value: 'LIST_INSTITUICAO_CURSO' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Cursos por Instituiçao', value: 27 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Cursos por Instituiçao', value: 28 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Cursos por Instituiçao', value: 29 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Cursos por Instituiçao', value: 30 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Cursos por Instituiçao', value: 31 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Colaboradores por Instituiçao', value: 'ADD_INSTITUICAO_COLABORADOR' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Colaboradores por Instituiçao', value: 'EDIT_INSTITUICAO_COLABORADOR' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Colaboradores por Instituiçao', value: 'DISABLE_INSTITUICAO_COLABORADOR' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Colaboradores por Instituiçao', value: 'DETAIL_INSTITUICAO_COLABORADOR' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Colaboradores por Instituiçao', value: 'LIST_INSTITUICAO_COLABORADOR' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Ocorrencias de Cursos por Instituiçao', value: 32 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Ocorrencias de Cursos por Instituiçao', value: 33 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Ocorrencias Cursos de por Instituiçao', value: 34 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Ocorrencias Cursos de por Instituiçao', value: 35 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Ocorrencias Cursos de por Instituiçao', value: 36 },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Perfís de Colaboradores por Instituiçao', value: 'ADD_INSTITUICAO_COLABORADOR_PERFIL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Perfís de Colaboradores por Instituiçao', value: 'EDIT_INSTITUICAO_COLABORADOR_PERFIL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Perfís de Colaboradores por Instituiçao', value: 'DISABLE_INSTITUICAO_COLABORADOR_PERFIL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Perfís de Colaboradores por Instituiçao', value: 'DETAIL_INSTITUICAO_COLABORADOR_PERFIL' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Perfís de Colaboradores por Instituiçao', value: 'LIST_INSTITUICAO_COLABORADOR_PERFIL' },
 
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Gerenciar Notas', value: 37 },
-    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Gerenciar Faltas', value: 38 }
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Adicionar Ocorrencias de Cursos por Instituiçao', value: 'ADD_INSTITUICAO_CURSO_OCORRENCIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Editar Ocorrencias de Cursos por Instituiçao', value: 'EDIT_INSTITUICAO_CURSO_OCORRENCIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Desativar Ocorrencias Cursos de por Instituiçao', value: 'DISABLE_INSTITUICAO_CURSO_OCORRENCIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Detalhe Ocorrencias Cursos de por Instituiçao', value: 'DETAIL_INSTITUICAO_CURSO_OCORRENCIA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Listar Ocorrencias Cursos de por Instituiçao', value: 'LIST_INSTITUICAO_CURSO_OCORRENCIA' },
+
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Gerenciar Notas', value: 'EDIT_INSTITUICAO_CURSO_OCORRENCIA_NOTA' },
+    { enumerable: ENUM_CONTANT.BASE_ROLE, lang: I18N_LANG.ptBR, label: 'Gerenciar Faltas', value: 'EDIT_INSTITUICAO_CURSO_OCORRENCIA_FALTA' }
 
 ];

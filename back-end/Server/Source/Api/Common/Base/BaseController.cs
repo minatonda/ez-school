@@ -26,7 +26,7 @@ namespace Api.Common.Base {
         }
 
         public UsuarioInfoVM GetUsuarioInfoAuthenticated() {
-            var usuarioId = this.User.FindFirst(x => x.Type == "usuario-info-id").Value;
+            var usuarioId = this.User.FindFirst(x => x.Type == "IdUsuarioInfo").Value;
             return this.usuarioService.Detail(usuarioId).UsuarioInfo;
         }
 
@@ -49,21 +49,42 @@ namespace Api.Common.Base {
             return this.instituicaoService.AllInstituicaoByUsuario(this.GetUsuarioInfoAuthenticated().ID);
         }
 
-        public bool IsAuthorized(BaseRole role) {
-            if (this.GetUsuarioInfoAuthenticated().Roles.Contains(((int)BaseRole.ADMIN).ToString())) {
-                return true;
-            } else {
-                return this.GetUsuarioInfoAuthenticated().Roles.Contains(((int)role).ToString());
+        public void Authorize(string role) {
+            if (!this.GetUsuarioInfoAuthenticated().Roles.Contains(BaseRole.ADMIN) && !this.GetUsuarioInfoAuthenticated().Roles.Contains(role)) {
+                throw new BaseException() {
+                    HttpStatusCode = HttpStatusCode.Unauthorized,
+                    Code = BaseExceptionCode.UNAUTHORIZED,
+                    Infos = new List<BaseExceptionFieldInfo>(){
+                        new BaseExceptionFieldInfo(){
+                            Code=BaseExceptionCode.UNAUTHORIZED,
+                            Field=BaseExceptionField.BASE_ROLE,
+                            Value=role
+                        }
+                    }
+                };
             }
         }
 
-        public bool IsAuthorizedInstituicao(long idInstituicao, BaseRole role) {
-            if (this.IsAuthorized(role)) {
-                return true;
-            } else {
-                return this.instituicaoService
+        public void IsAuthorizedInstituicao(long idInstituicao, string role) {
+            var isAuthorizedInstituicao = this.instituicaoService
                 .AllInstituicaoColaboradorPerfilByUsuario(this.GetUsuarioInfoAuthenticated().ID, idInstituicao)
-                .Any(x => x.Roles.Contains(((int)role).ToString()));
+                .Any(x => x.Roles.Contains(role));
+            if (!isAuthorizedInstituicao) {
+                try {
+                    this.Authorize(BaseRole.ADMIN);
+                } catch (BaseException) {
+                    throw new BaseException() {
+                        HttpStatusCode = HttpStatusCode.Unauthorized,
+                        Code = BaseExceptionCode.UNAUTHORIZED,
+                        Infos = new List<BaseExceptionFieldInfo>(){
+                            new BaseExceptionFieldInfo(){
+                                Code=BaseExceptionCode.UNAUTHORIZED,
+                                Field=BaseExceptionField.INSTITUICAO_ROLE,
+                                Value=role
+                            }
+                        }
+                    };
+                }
             }
         }
 

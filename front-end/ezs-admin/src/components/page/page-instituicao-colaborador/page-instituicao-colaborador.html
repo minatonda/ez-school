@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-12 col-md-12 form-group">
+            <div class="col-12 col-md-8 form-group">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -10,7 +10,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-3 form-group">
+                            <div class="col-12 form-group">
                                 <label class="control-label">Usuario</label>
                                 <selector v-model="model.usuario" v-bind:query="ui.queryUsuario" placeholder="Usuário" v-bind:label="ui.usuarioInfoLabel"></selector>
                             </div>
@@ -18,9 +18,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-12 form-group">
+            <div class="col-12 col-md-4 form-group">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -29,16 +27,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-3 form-group">
-                                <selector v-bind:itens="ui.instituicaoColaboradorPerfis" placeholder="Perfil" label="nome" v-model="ui.instituicaoColaboradorPerfil" output-as="id"></selector>
-                            </div>
-                            <div class="col-12 col-md-2 form-group text-left">
-                                <button class="btn btn-primary" v-on:click="addInstituicaoColaboradorPerfil(ui.instituicaoColaboradorPerfil)">Adicionar</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 form-group">
-                                <card-table v-bind:columns="getTableInstituicaoColaboradorPerfil().columns" v-bind:itens="model.perfis" v-bind:menu="getTableInstituicaoColaboradorPerfil().menu"></card-table>
+                            <div class="col-12">
+                                <tree-view v-model="model.perfis" v-bind:itens="getInstituicaoColaboradorAsTreeViewModel()" label="label"></tree-view>
                             </div>
                         </div>
                     </div>

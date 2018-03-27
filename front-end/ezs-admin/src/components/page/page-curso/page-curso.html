@@ -10,11 +10,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-3 form-group">
+                            <div class="col-12 col-md-3 form-group form-group">
                                 <label class="control-label">Nome</label>
                                 <input class="form-control" type="text" placeholder="Nome" v-model="model.nome">
                             </div>
-                            <div class="col-12 col-md-3 form-group">
+                            <div class="col-12 col-md-3 form-group form-group">
                                 <label class="control-label">Descrição</label>
                                 <input class="form-control" type="text" placeholder="Descrição" v-model="model.descricao">
                             </div>
@@ -38,6 +38,9 @@
                         <div class="col-12 col-md-8 align-self-center">
                             <b>Descrição: </b><span>{{cursoGrade.label}}</span>
                         </div>
+                        <div class="col-12 d-md-none">
+                            <hr></hr>
+                        </div>
                         <div class="col-12 col-md-4 align-self-center text-right">
                             <button class="btn btn-primary" v-on:click="openDialogCursoGradeUpdate(cursoGrade)">
                                 Editar
@@ -58,11 +61,11 @@
     </div>
     <b-modal ref="modal-curso-grade" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
         <div class="row">
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 form-group">
                 <label class="control-label">Descrição</label>
                 <input class="form-control" placeholder="Descrição" v-model="ui.cursoGrade.descricao"></input>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 form-group">
                 <label class="control-label">Instituição</label>
                 <selector v-model="ui.cursoGrade.instituicao" placeholder="Instituição" v-bind:itens="ui.instituicoes" label="label"></selector>
             </div>
@@ -73,19 +76,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 form-group">
                 <label class="control-label">Materia</label>
                 <selector v-model="ui.cursoGradeMateria.materia" placeholder="Materia" v-bind:itens="ui.materias" label="label"></selector>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 form-group">
                 <label class="control-label">Nome de Exibição</label>
                 <input class="form-control" placeholder="Nome de Exibição" v-model="ui.cursoGradeMateria.nomeExibicao"></input>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 form-group">
                 <label class="control-label">Grupo</label>
                 <input class="form-control" placeholder="Grupo" v-model="ui.cursoGradeMateria.grupo"></input>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 form-group">
                 <label class="control-label invisible">Ocupar</label>
                 <button class="btn btn-primary btn-block" v-on:click="addCursoGradeMateria(ui.cursoGradeMateria)">Adicionar</button>
             </div>
@@ -101,7 +104,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
+                <button class="btn btn-danger" v-on:click="closeDialogCursoGrade">Cancelar</button>
+            </div>
+            <div class="col-6 text-right">
                 <button class="btn btn-primary" v-on:click="saveCursoGrade(ui.cursoGrade)">Salvar</button>
             </div>
         </div>
