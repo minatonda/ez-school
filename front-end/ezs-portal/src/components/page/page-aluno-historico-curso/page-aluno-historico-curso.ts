@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { AppRouter } from '../../../app.router';
 import { AppRouterPath } from '../../../app.router.path';
 import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
@@ -20,16 +20,20 @@ interface UI {
 interface UIQueryKey {
     curso: CursoModel;
     instituicao: InstituicaoModel;
+    idInstituicaoCursoOcorrencia: number;
     periodoSequencia: number;
     dataInicio: string;
     dataExpiracao: string;
 }
 
 @Component({
-    template: require('./page-historico-curso.html'),
+    template: require('./page-aluno-historico-curso.html'),
     filters: Object.assign({}, DateUtil) as any
 })
-export class PageHistoricoCursoComponent extends Vue {
+export class PageAlunoHistoricoCursoComponent extends Vue {
+
+    @Prop()
+    alias: string;
 
     ui: UI = {
         instituicaoBusinessAulasByAluno: undefined,
@@ -50,10 +54,17 @@ export class PageHistoricoCursoComponent extends Vue {
     }
 
     getUiQueryKeysFromInstituicaoBusinessAulas(instituicaoBusinessAulas: Array<InstituicaoBusinessAulaModel>) {
-        return lodash.unionBy(instituicaoBusinessAulas, x => x.idInstituicaoCursoOcorrencia).map(x => {
+        return lodash.unionBy(instituicaoBusinessAulas, x => x.idInstituicaoCursoOcorrencia + '-' + x.periodoSequencia).sort((a, b) => {
+            let sorteableA = a.idInstituicaoCursoOcorrencia + '-' + a.periodoSequencia;
+            let sorteableB = b.idInstituicaoCursoOcorrencia + '-' + b.periodoSequencia;
+            if (sorteableA < sorteableB) return -1;
+            if (sorteableA > sorteableB) return 1;
+            return 0;
+        }).map(x => {
             let uiQueryKey: UIQueryKey = {
                 curso: x.curso,
                 instituicao: x.instituicao,
+                idInstituicaoCursoOcorrencia: x.idInstituicaoCursoOcorrencia,
                 periodoSequencia: x.periodoSequencia,
                 dataInicio: x.dataInicio,
                 dataExpiracao: x.dataExpiracao
@@ -63,7 +74,7 @@ export class PageHistoricoCursoComponent extends Vue {
     }
 
     getInstituicaoBusinessAulasByUiQueryKeys(uiQueryKey: UIQueryKey, instituicaoBusinessAulas: Array<InstituicaoBusinessAulaModel>) {
-        return instituicaoBusinessAulas.filter(x => x.instituicao.id === uiQueryKey.instituicao.id && x.curso.id === uiQueryKey.curso.id);
+        return instituicaoBusinessAulas.filter(x => x.instituicao.id === uiQueryKey.instituicao.id && x.curso.id === uiQueryKey.curso.id && x.periodoSequencia === uiQueryKey.periodoSequencia);
     }
 
     getNotaBackgroundClass(valor: number) {

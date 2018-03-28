@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { AppRouter } from '../../../app.router';
 import { AppRouterPath } from '../../../app.router.path';
 import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
@@ -8,14 +8,12 @@ import { InstituicaoBusinessAulaDetalheAlunoModel } from '../../../../../ezs-com
 import { CursoModel } from '../../../../../ezs-common/src/model/server/curso.model';
 import { InstituicaoModel } from '../../../../../ezs-common/src/model/server/instituicao.model';
 import { DateUtil } from '../../../../../ezs-common/src/util/date/date.util';
-import * as lodash from 'lodash';
 import { NotifyUtil } from '../../../../../ezs-common/src/util/notify/notify.util';
 import { AppBroadcastEventBus, AppBroadcastEvent } from '../../../app.broadcast-event-bus';
+import * as lodash from 'lodash';
 
 interface UI {
-    instituicaoBusinessAulasByProfessor: Array<InstituicaoBusinessAulaModel>;
     instituicaoBusinessAulasByAluno: Array<InstituicaoBusinessAulaDetalheAlunoModel>;
-    uiQueryKeyProfessor: UIQueryKey;
     uiQUeryKeyAluno: UIQueryKey;
 }
 
@@ -29,22 +27,22 @@ interface UIQueryKey {
 }
 
 @Component({
-    template: require('./page-home.html'),
+    template: require('./page-aluno-feed.html'),
     filters: Object.assign({}, DateUtil) as any
 })
-export class PageHomeComponent extends Vue {
+export class PageAlunoFeedComponent extends Vue {
+
+    @Prop()
+    alias: string;
 
     ui: UI = {
         instituicaoBusinessAulasByAluno: undefined,
-        instituicaoBusinessAulasByProfessor: undefined,
-        uiQueryKeyProfessor: undefined,
         uiQUeryKeyAluno: undefined
     };
 
     async mounted() {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
-            this.ui.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(ApplicationService.getUsuarioInfo().id);
             this.ui.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id, true);
         }
         catch (e) {
@@ -87,18 +85,6 @@ export class PageHomeComponent extends Vue {
 
     selectUiQUeryKeyAluno(uiQueryKey: UIQueryKey) {
         this.ui.uiQUeryKeyAluno = uiQueryKey;
-    }
-
-    selectUiQUeryKeyProfessor(uiQueryKey: UIQueryKey) {
-        this.ui.uiQueryKeyProfessor = uiQueryKey;
-    }
-
-    doGoToAulaGerenciamentoNota(id: number) {
-        AppRouter.push({ name: AppRouterPath.PROFESSOR_AULA_GERENCIAMENTO_NOTA, params: { idInstituicaoCursoOcorrenciaPeriodoProfessor: id.toString() } });
-    }
-
-    doGoToAulaGerenciamentoAusencia(id: number) {
-        AppRouter.push({ name: AppRouterPath.PROFESSOR_AULA_GERENCIAMENTO_AUSENCIA, params: { idInstituicaoCursoOcorrenciaPeriodoProfessor: id.toString() } });
     }
 
     doGoToHistoricoCurso(id: number) {

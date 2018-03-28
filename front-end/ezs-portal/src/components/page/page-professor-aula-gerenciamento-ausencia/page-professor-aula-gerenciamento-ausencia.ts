@@ -9,8 +9,8 @@ import { InstituicaoCursoOcorrenciaPeriodoAlunoModel } from '../../../../../ezs-
 import { InstituicaoCursoOcorrenciaNotaModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-nota.model';
 import { I18N_ERROR_GENERIC } from '../../../../../ezs-common/src/constant/i18n-template-messages.contant';
 import { InstituicaoCursoOcorrenciaAusenciaModel } from '../../../../../ezs-common/src/model/server/instituicao-curso-ocorrencia-ausencia.model';
-import * as moment from 'moment';
 import { AppRouterPath } from '../../../app.router.path';
+import * as moment from 'moment';
 
 interface UI {
     alunos: Array<InstituicaoCursoOcorrenciaPeriodoAlunoModel>;
@@ -25,9 +25,9 @@ interface AlunoAusenciaTotal {
 }
 
 @Component({
-    template: require('./page-aula-gerenciamento-ausencia.html')
+    template: require('./page-professor-aula-gerenciamento-ausencia.html')
 })
-export class PageAulaGerenciamentoAusenciaComponent extends Vue {
+export class PageProfessorAulaGerenciamentoAusenciaComponent extends Vue {
 
     ui: UI = {
         alunos: [],

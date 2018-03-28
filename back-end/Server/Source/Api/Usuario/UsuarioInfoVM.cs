@@ -20,6 +20,8 @@ namespace Api.UsuarioApi {
         public string CPF { get; set; }
         public string Genero { get; set; }
         public string EstadoCivil { get; set; }
+        public string Email { get; set; }
+        public string Telefone { get; set; }
         public List<string> Roles { get; set; }
         public AlunoVM Aluno { get; set; }
         public ProfessorVM Professor { get; set; }

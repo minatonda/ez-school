@@ -21,12 +21,16 @@ namespace Api.UsuarioApi {
         [HttpPut("add")]
         public void Add([FromBody] UsuarioVM viewModel) {
             this.Authorize(BaseRole.ADD_USUARIO);
+            this.usuarioService.ValidateUsuario(viewModel, true);
             this.usuarioService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] UsuarioVM viewModel) {
-            this.Authorize(BaseRole.EDIT_USUARIO);
+            if (viewModel.ID != this.GetUsuarioInfoAuthenticated().ID) {
+                this.Authorize(BaseRole.EDIT_USUARIO);
+            }
+            this.usuarioService.ValidateUsuario(viewModel);
             this.usuarioService.Update(viewModel);
         }
 

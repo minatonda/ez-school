@@ -50,7 +50,16 @@ export class AppComponent extends Vue {
             }
         });
 
+        AppBroadcastEventBus.$on(AppBroadcastEvent.ATIVAR_MODO_PROFESSOR, async () => {
+            AppRouter.push(AppRouterPath.ROOT);
+        });
+
+        AppBroadcastEventBus.$on(AppBroadcastEvent.ATIVAR_MODO_ALUNO, async () => {
+            AppRouter.push(AppRouterPath.ROOT);
+        });
+
         AppBroadcastEventBus.$on(AppBroadcastEvent.DESAUTENTICADO, () => {
+            ApplicationService.resetDefaults();
             AppRouter.push(AppRouterPath.AUTENTICACAO);
         });
     }

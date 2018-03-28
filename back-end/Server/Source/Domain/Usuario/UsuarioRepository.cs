@@ -51,8 +51,9 @@ namespace Domain.UsuarioDomain {
         public void Update(Usuario model) {
             var attachedUsuario = this.db.Usr.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuario.Username = model.Username;
-            attachedUsuario.Password = model.Password;
-
+            if (model.Password != null && model.Password.Trim() != "" && model.Password.Trim() != "********") {
+                attachedUsuario.Password = model.Password;
+            }
             this.UpdateEndereco(model.UsuarioInfo.Endereco);
             this.UpdateUsuarioInfo(model.UsuarioInfo);
 
@@ -63,6 +64,8 @@ namespace Domain.UsuarioDomain {
             var attachedUsuarioInfo = this.db.UsrInf.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuarioInfo.Nome = model.Nome;
             attachedUsuarioInfo.DataNascimento = model.DataNascimento;
+            attachedUsuarioInfo.Email = model.Email;
+            attachedUsuarioInfo.Telefone = model.Telefone;
             attachedUsuarioInfo.CPF = model.CPF;
             attachedUsuarioInfo.RG = model.RG;
             attachedUsuarioInfo.Roles = model.Roles;
@@ -108,8 +111,8 @@ namespace Domain.UsuarioDomain {
             this.db.Prf.Update(professor);
         }
 
-        public void Disable(string ID) {
-            var usuario = this.db.Usr.Find(ID);
+        public void Disable(string id) {
+            var usuario = this.db.Usr.Find(id);
             usuario.Ativo = DateTime.Now;
             this.db.Usr.Update(usuario);
         }
@@ -126,13 +129,25 @@ namespace Domain.UsuarioDomain {
             .SingleOrDefault(x => x.ID == ID);
         }
 
-        public UsuarioInfo GetUsuarioInfo(string ID) {
+        public Usuario GetByUsernameOrRgOrCPForEmail(string username, string rg, string cpf, string email) {
+            return this.db.Usr
+            .AsNoTracking()
+            .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Endereco)
+            .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Pai)
+            .Include(i => i.UsuarioInfo)
+            .ThenInclude(i => i.Mae)
+            .SingleOrDefault(x => x.Username == username || x.UsuarioInfo.RG == rg || x.UsuarioInfo.CPF == cpf || x.UsuarioInfo.Email == email);
+        }
+
+        public UsuarioInfo GetUsuarioInfo(string id) {
             return this.db.UsrInf
             .AsNoTracking()
             .Include(i => i.Endereco)
             .Include(i => i.Pai)
             .Include(i => i.Mae)
-            .SingleOrDefault(x => x.ID == ID);
+            .SingleOrDefault(x => x.ID == id);
         }
 
         public Usuario GetByRG(string rg) {

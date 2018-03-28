@@ -18,18 +18,27 @@ export enum I18N_ERROR_GENERIC {
 export enum I18N_ERROR_SERVER {
     UNAUTHORIZED = 'UNAUTHORIZED',
     UNAUTHORIZED_INSTITUICAO = 'UNAUTHORIZED_INSTITUICAO',
-    INVALID_FIELD = 'INVALID_FIELD',
+    RESOURCE_REFUSED = 'RESOURCE_REFUSED',
+    FIELD_INVALID = 'FIELD_INVALID',
+    FIELD_REQUIRED = 'FIELD_REQUIRED',
     USER_WRONG_USERNAME = 'USER_WRONG_USERNAME',
-    USER_WRONG_PASSWORD = 'USER_WRONG_PASSWORD'
+    USER_WRONG_PASSWORD = 'USER_WRONG_PASSWORD',
+    REGISTER_WITH_SAME_VALUE_EXISTS = 'REGISTER_WITH_SAME_VALUE_EXISTS',
 }
 
 export enum I18N_ERROR_SERVER_FIELD {
     BASE_ROLE = 'baseRole',
-    INSTITUICAO_ROLE = 'instituicaoRoles',
+    INSTITUICAO_ROLE = 'instituicaoRole',
     USUARIO_USERNAME = 'usuario.username',
     USUARIO_PASSWORD = 'usuario.password',
+    USUARIO_USUARIO_INFO_NOME = 'usuario.usuarioInfo.nome',
+    USUARIO_USUARIO_INFO_DATA_NASCIMENTO = 'usuario.usuarioInfo.dataNascimento',
+    USUARIO_USUARIO_INFO_EMAIL = 'usuario.usuarioInfo.email',
+    USUARIO_USUARIO_INFO_TELEFONE = 'usuario.usuarioInfo.telefone',
+    USUARIO_USUARIO_INFO_RG = 'usuario.usuarioInfo.rg',
+    USUARIO_USUARIO_INFO_CPF = 'usuario.usuarioInfo.cpf',
     PROFESSOR_ID = 'professor.id',
-    ALUNO_ID = 'aluno.id'
+    ALUNO_ID = 'aluno.id',
 }
 
 export enum I18N_LANG {
@@ -54,8 +63,27 @@ export const I18N_TEMPLATE_MESSAGE_GENERIC_CONSTANT = [
 export const I18N_TEMPLATE_MESSAGE_SERVER_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED_INSTITUICAO, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_USERNAME, title: 'Nome de usuário inválido', message: 'Usuário não existe.' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_PASSWORD, title: 'Senha inválida', message: 'Senha inválida.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_USERNAME, title: 'Nome de usuário inválido', message: 'O usuário não existe.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_PASSWORD, title: 'Senha inválida', message: 'A senha digita é inválida.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_REQUIRED, title: 'Campo Obrigatório', message: 'O campo {{field}} é obrigatório.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_INVALID, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é inválido.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.RESOURCE_REFUSED, title: 'Recurso Recusado', message: 'O Recurso enviado é inválido.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.REGISTER_WITH_SAME_VALUE_EXISTS, title: 'Registro já existente', message: 'O Registro com o campo {{field}} com o mesmo valor {{value}} já existe.' },
+];
+
+export const I18N_FIELD_LABELS_CONSTANT = [
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.ALUNO_ID, label: 'ID' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.PROFESSOR_ID, label: 'ID' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.BASE_ROLE, label: 'Regra Base' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_ROLE, label: 'Regra de Instituição' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USERNAME, label: 'Nome de Usuário' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_PASSWORD, label: 'Senha' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_NOME, label: 'Nome' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_DATA_NASCIMENTO, label: 'Data de Nascimento' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_EMAIL, label: 'Email' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_TELEFONE, label: 'Telefone' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_RG, label: 'RG' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_CPF, label: 'CPF' },
 ];
 
 export const I18N_ENUM_LABELS_CONSTANTS = [

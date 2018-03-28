@@ -12,22 +12,38 @@ import { AppRouterPath } from '../../../app.router.path';
 
 
 interface UI {
-    alunos: Array < InstituicaoCursoOcorrenciaPeriodoAlunoModel > ;
-    idTags: Array < string > ;
-    instituicaoCursoOcorrenciaNotas: Array < InstituicaoCursoOcorrenciaNotaModel > ;
-    formulaNotaFinal: Array < string > ;
+    alunos: Array<InstituicaoCursoOcorrenciaPeriodoAlunoModel>;
+    idTags: Array<string>;
+    instituicaoCursoOcorrenciaNotas: Array<InstituicaoCursoOcorrenciaNotaModel>;
+    formulaNotaFinal: Array<string>;
+    characterButtons: Array<CharacterButton>;
+}
+
+interface CharacterButton {
+    character: string;
+    blockedByPrevious?: Array<string>;
+    permitedByPrevious?: Array<string>;
 }
 
 @Component({
-    template: require('./page-aula-gerenciamento-nota.html')
+    template: require('./page-professor-aula-gerenciamento-nota.html')
 })
-export class PageAulaGerenciamentoNotaComponent extends Vue {
+export class PageProfessorAulaGerenciamentoNotaComponent extends Vue {
 
     ui: UI = {
         alunos: [],
         idTags: [],
         instituicaoCursoOcorrenciaNotas: [],
-        formulaNotaFinal: []
+        formulaNotaFinal: [],
+        characterButtons: [
+            { character: '(', blockedByPrevious: [')'], permitedByPrevious: ['(', '+', '-', '/', '*'] },
+            { character: ')', blockedByPrevious: ['('] },
+            { character: '+', blockedByPrevious: ['(', '+', '-', '/', '*'] },
+            { character: '-', blockedByPrevious: ['(', '+', '-', '/', '*'] },
+            { character: '/', blockedByPrevious: ['(', '+', '-', '/', '*'] },
+            { character: '*', blockedByPrevious: ['(', '+', '-', '/', '*'] },
+            { character: '#', permitedByPrevious: ['(', '+', '-', '/', '*'] },
+        ]
     };
 
     async created() {
@@ -47,7 +63,7 @@ export class PageAulaGerenciamentoNotaComponent extends Vue {
         }
     }
 
-    async doSaveNotas(instituicaoCursoOcorrenciaNotas: Array < InstituicaoCursoOcorrenciaNotaModel > , formulaNotaFinal: Array < string > ) {
+    async doSaveNotas(instituicaoCursoOcorrenciaNotas: Array<InstituicaoCursoOcorrenciaNotaModel>, formulaNotaFinal: Array<string>) {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             await FACTORY_CONSTANT.InstituicaoFactory.saveInstituicaoCursoOcorrenciaNotas(AppRouter.app.$route.params.idInstituicaoCursoOcorrenciaPeriodoProfessor, instituicaoCursoOcorrenciaNotas);
@@ -71,6 +87,11 @@ export class PageAulaGerenciamentoNotaComponent extends Vue {
         this.ui.instituicaoCursoOcorrenciaNotas = this.generateInstituicaoCursoOcorrenciaNotas(this.ui.idTags, this.ui.alunos);
     }
 
+    removeIdTag(idTag: string) {
+        this.ui.idTags = this.ui.idTags.filter(x => x !== idTag);
+        this.ui.instituicaoCursoOcorrenciaNotas = this.generateInstituicaoCursoOcorrenciaNotas(this.ui.idTags, this.ui.alunos);
+    }
+
     incrementFormulaNotaFinal(value) {
         this.ui.formulaNotaFinal.push(value);
     }
@@ -79,12 +100,25 @@ export class PageAulaGerenciamentoNotaComponent extends Vue {
         this.ui.formulaNotaFinal.pop();
     }
 
-    getFormulaNotaFinalAsText() {
-        return this.ui.formulaNotaFinal.join('');
+    isCharacterDisabled(character: string, stringArray: Array<string>) {
+        let charButton = this.ui.characterButtons.find(x => x.character === character);
+        let lastStringArrayChar = stringArray[stringArray.length - 1];
+        let blocked = false;
+        if (lastStringArrayChar && charButton.blockedByPrevious && charButton.blockedByPrevious.some(x => x === lastStringArrayChar)) {
+            blocked = true;
+        }
+        if (lastStringArrayChar && !blocked && charButton.permitedByPrevious && !charButton.permitedByPrevious.some(x => x === lastStringArrayChar)) {
+            blocked = true;
+        }
+        return blocked;
     }
 
-    generateInstituicaoCursoOcorrenciaNotas(idTags: Array < string > , alunos: Array < InstituicaoCursoOcorrenciaPeriodoAlunoModel > ) {
-        let instituicaoCursoOcorrenciaNotas = new Array < InstituicaoCursoOcorrenciaNotaModel > ();
+    getFormulaNotaFinalAsText() {
+        return this.ui.formulaNotaFinal.join(' ');
+    }
+
+    generateInstituicaoCursoOcorrenciaNotas(idTags: Array<string>, alunos: Array<InstituicaoCursoOcorrenciaPeriodoAlunoModel>) {
+        let instituicaoCursoOcorrenciaNotas = new Array<InstituicaoCursoOcorrenciaNotaModel>();
         alunos.forEach(aluno => {
             idTags.forEach(idTag => {
                 let instituicaoCursoOcorrenciaNota = new InstituicaoCursoOcorrenciaNotaModel();

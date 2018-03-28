@@ -3,9 +3,11 @@ import { AutenticacaoService } from '../../../module/service/autenticacao.servic
 import { AppRouter } from '../../../app.router';
 import { BaseRouteConfig } from '../../../../../ezs-common/src/model/client/base-route-config.model';
 import { DropDownItem } from '../../../../../ezs-common/src/component/dropdown/dropdown';
+import { ApplicationService, ApplicationMode } from '../../../module/service/application.service';
+import { AppRouterPath } from '../../../app.router.path';
 
 interface UI {
-    userDropdownItens: Array < DropDownItem > ;
+    userDropdownItens: Array<DropDownItem>;
 }
 
 @Component({
@@ -14,25 +16,51 @@ interface UI {
 export class NavbarComponent extends Vue {
 
     ui: UI = {
-        userDropdownItens: [{
-            text: 'Logoff',
-            item: this.desautenticar
-        }]
+        userDropdownItens: [
+            {
+                text: 'Logoff',
+                item: this.desautenticar
+            },
+            {
+                text: 'Modo Professor',
+                item: this.ativarModoProfessor
+            },
+            {
+                text: 'Modo Aluno',
+                item: this.ativarModoAluno
+            },
+            {
+                text: 'Minha Conta',
+                item: this.goToUsuarioConta
+            },
+        ]
     };
 
-    public desautenticar() {
+    desautenticar() {
         AutenticacaoService.desautenticar();
     }
 
-    public getRotas() {
+    ativarModoProfessor() {
+        ApplicationService.setApplicationMode(ApplicationMode.PROFESSOR);
+    }
+
+    ativarModoAluno() {
+        ApplicationService.setApplicationMode(ApplicationMode.ALUNO);
+    }
+
+    goToUsuarioConta() {
+        AppRouter.push(AppRouterPath.USUARIO_CONTA);
+    }
+
+    getRotas() {
         return AppRouter.getMenu();
     }
 
-    public getRotasLabel(route: BaseRouteConfig) {
+    getRotasLabel(route: BaseRouteConfig) {
         return route.alias;
     }
 
-    public aoSelecionarRota(route: BaseRouteConfig) {
+    aoSelecionarRota(route: BaseRouteConfig) {
         if (route) {
             AppRouter.push(route.path);
         }

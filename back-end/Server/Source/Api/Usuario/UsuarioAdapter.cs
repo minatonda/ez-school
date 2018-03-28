@@ -25,7 +25,8 @@ namespace Api.UsuarioApi {
             var vm = new UsuarioInfoVM();
             vm.ID = model.ID;
             vm.Nome = model.Nome;
-            vm.Label = model.Nome;
+            vm.Email = model.Email;
+            vm.Telefone = model.Telefone;
             vm.CPF = model.CPF;
             vm.RG = model.RG;
             vm.DataNascimento = model.DataNascimento;
@@ -50,6 +51,7 @@ namespace Api.UsuarioApi {
                 vm.Roles = new List<string>();
             }
 
+            vm.Label = model.Nome;
 
             return vm;
         }
@@ -72,6 +74,8 @@ namespace Api.UsuarioApi {
             var model = new UsuarioInfo();
             model.ID = vm.ID;
             model.Nome = vm.Nome;
+            model.Email = vm.Email;
+            model.Telefone = vm.Telefone;
             model.CPF = vm.CPF;
             model.RG = vm.RG;
             model.Genero = vm.Genero;
@@ -98,7 +102,7 @@ namespace Api.UsuarioApi {
             var vm = new UsuarioVM();
             vm.ID = model.ID;
             vm.Username = model.Username;
-            vm.Password = model.Password;
+            vm.Password = "********";
 
             if (model.UsuarioInfo != null && deep) {
                 vm.UsuarioInfo = UsuarioAdapter.ToViewModel(model.UsuarioInfo, false);

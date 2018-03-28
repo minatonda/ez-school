@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { AppRouter } from '../../../app.router';
 import { AppRouterPath } from '../../../app.router.path';
 import { FACTORY_CONSTANT } from '../../../module/constant/factory.constant';
@@ -29,10 +29,13 @@ interface UIQueryKey {
 }
 
 @Component({
-    template: require('./page-home.html'),
+    template: require('./page-professor-feed.html'),
     filters: Object.assign({}, DateUtil) as any
 })
-export class PageHomeComponent extends Vue {
+export class PageProfessorFeedComponent extends Vue {
+    
+    @Prop()
+    alias: string;
 
     ui: UI = {
         instituicaoBusinessAulasByAluno: undefined,
@@ -45,7 +48,6 @@ export class PageHomeComponent extends Vue {
         try {
             AppBroadcastEventBus.$emit(AppBroadcastEvent.EXIBIR_LOADER);
             this.ui.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(ApplicationService.getUsuarioInfo().id);
-            this.ui.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(ApplicationService.getUsuarioInfo().id, true);
         }
         catch (e) {
             NotifyUtil.exception(e, ApplicationService.getLanguage());
@@ -85,10 +87,6 @@ export class PageHomeComponent extends Vue {
         }).filter(x => x.instituicao.id === uiQueryKey.instituicao.id && x.curso.id === uiQueryKey.curso.id);
     }
 
-    selectUiQUeryKeyAluno(uiQueryKey: UIQueryKey) {
-        this.ui.uiQUeryKeyAluno = uiQueryKey;
-    }
-
     selectUiQUeryKeyProfessor(uiQueryKey: UIQueryKey) {
         this.ui.uiQueryKeyProfessor = uiQueryKey;
     }
@@ -99,28 +97,6 @@ export class PageHomeComponent extends Vue {
 
     doGoToAulaGerenciamentoAusencia(id: number) {
         AppRouter.push({ name: AppRouterPath.PROFESSOR_AULA_GERENCIAMENTO_AUSENCIA, params: { idInstituicaoCursoOcorrenciaPeriodoProfessor: id.toString() } });
-    }
-
-    doGoToHistoricoCurso(id: number) {
-        AppRouter.push({ name: AppRouterPath.ALUNO_HISTORICO_CURSO, params: { idInstituicaoCursoOcorrencia: id.toString() } });
-    }
-
-    getNotaBackgroundClass(valor: number) {
-        if (valor === null) {
-            return [];
-        }
-        else if (valor < 2.5) {
-            return ['bg-danger'];
-        }
-        else if (valor < 5.0) {
-            return ['bg-warning'];
-        }
-        else if (valor < 7.5) {
-            return ['bg-info'];
-        }
-        else {
-            return ['bg-success'];
-        }
     }
 
 }

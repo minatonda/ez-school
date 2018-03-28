@@ -18,10 +18,10 @@ namespace Api.InstituicaoApi {
             return vm;
         }
 
-        public static InstituicaoBusinessAulaDetalheAlunoVM ToInstituicaoBusinessAulaDetalheAlunoViewModel(InstituicaoCursoOcorrenciaPeriodoProfessor instituicaoCursoOcorrenciaPeriodoProfessor, long sequencia, double? nota) {
+        public static InstituicaoBusinessAulaDetalheAlunoVM ToInstituicaoBusinessAulaDetalheAlunoViewModel(InstituicaoCursoOcorrenciaPeriodoProfessor instituicaoCursoOcorrenciaPeriodoProfessor, long sequencia, long ausencias, double? nota) {
             var vm = InstituicaoBusinessAdapter.ToIInstituicaoBusinessAulaViewModel(instituicaoCursoOcorrenciaPeriodoProfessor, new InstituicaoBusinessAulaDetalheAlunoVM(), sequencia) as InstituicaoBusinessAulaDetalheAlunoVM;
             vm.Nota = nota;
-            vm.Ausencias = 0;
+            vm.Ausencias = ausencias;
             return vm;
         }
 

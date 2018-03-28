@@ -4,6 +4,7 @@ using Api.Common.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Configuration.Exceptions {
 
@@ -22,7 +23,11 @@ namespace Configuration.Exceptions {
                 await _next(context);
             } catch (BaseException ex) {
                 context.Response.StatusCode = (int)ex.HttpStatusCode;
-                await context.Response.WriteAsync(JsonConvert.SerializeObject(BaseExceptionAdapter.ToBaseExceptionViewModel(ex)));
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(
+                    BaseExceptionAdapter.ToBaseExceptionViewModel(ex),
+                    new JsonSerializerSettings {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }));
                 return;
             }
         }

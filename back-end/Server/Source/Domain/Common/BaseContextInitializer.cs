@@ -48,7 +48,7 @@ namespace Domain.Common {
 
                 var listProfessores = BaseContextInitializer.getBaseProfessores(listUsuario);
                 context.Prf.AddRange(listProfessores);
-                context.SaveChanges();                
+                context.SaveChanges();
 
                 var listInstituicaoCurso = BaseContextInitializer.getBaseInstituicaoCursos(listCursoGrade, listInstituicoes);
                 context.IttcCrs.AddRange(listInstituicaoCurso);
@@ -90,7 +90,7 @@ namespace Domain.Common {
                 context.CtgPrfsn.AddRange(listCategoriaProfissional);
 
                 context.SaveChanges();
-                
+
             }
         }
 
@@ -216,11 +216,11 @@ namespace Domain.Common {
             var carvalho = new Usuario() {
                 Username = "dev",
                 Password = "dev",
-                Email = "dev@ezschool.com",
             };
             var carvalhoInfo = new UsuarioInfo() {
                 ID = carvalho.ID,
                 Nome = "Matheus Carvalho",
+                Email = "dev@ezschool.com",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
                 Roles = "ADMIN",
                 CPF = "42187917835",
@@ -231,31 +231,31 @@ namespace Domain.Common {
 
             var marcal = new Usuario() {
                 Username = "qa",
-                Password = "qa",
-                Email = "qa@ezschool.com"
+                Password = "qa"
             };
             var marcalInfo = new UsuarioInfo() {
                 ID = marcal.ID,
                 Nome = "Matheus Marçal",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Email = "qa@ezschool.com",
                 Roles = "",
-                CPF = "42187917835",
-                RG = "421920816",
+                CPF = "45779768030",
+                RG = "421920820",
                 Endereco = new Endereco()
             };
             marcal.UsuarioInfo = marcalInfo;
 
             var thais = new Usuario() {
                 Username = "thsmimi",
-                Password = "12345678",
-                Email = "tha_araujo@hotmail.com"
+                Password = "12345678"
             };
             var thaisInfo = new UsuarioInfo() {
                 ID = thais.ID,
                 Nome = "Thais Araújo Santos",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Email = "tha_araujo@hotmail.com",
                 Roles = "",
-                CPF = "52176819820",
+                CPF = "58576832895",
                 RG = "510984128",
                 Endereco = new Endereco()
             };
@@ -263,15 +263,15 @@ namespace Domain.Common {
 
             var barbara = new Usuario() {
                 Username = "anabarbara",
-                Password = "12345678",
-                Email = "ana_barbara@hotmail.com"
+                Password = "12345678"
             };
             var barbaraInfo = new UsuarioInfo() {
                 ID = barbara.ID,
                 Nome = "Ana Bárbara",
                 DataNascimento = DateTime.ParseExact("1994-12-19", "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+                Email = "ana_barbara@hotmail.com",
                 Roles = "",
-                CPF = "768309116406",
+                CPF = "46356227974",
                 RG = "760942814",
                 Endereco = new Endereco()
             };

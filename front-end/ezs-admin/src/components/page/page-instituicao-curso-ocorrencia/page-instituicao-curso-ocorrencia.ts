@@ -160,7 +160,14 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
                     }
             }
             NotifyUtil.successG(I18N_ERROR_GENERIC.MODELO_SALVAR, ApplicationService.getLanguage());
-            AppRouter.push(AppRouterPath.INSTITUICAO_CURSO_OCORRENCIA);
+            AppRouter.push({
+                name: AppRouterPath.INSTITUICAO_CURSO_OCORRENCIA,
+                params: {
+                    id: AppRouter.app.$route.params.id,
+                    idInstituicaoCurso: AppRouter.app.$route.params.idInstituicaoCurso.toString(),
+                    dataInicio: AppRouter.app.$route.params.dataInicio
+                }
+            });
         }
         catch (e) {
             NotifyUtil.exception(e, ApplicationService.getLanguage(), I18N_ERROR_GENERIC.MODELO_SALVAR_FALHA);
@@ -245,7 +252,7 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
     removeInstituicaoCursoOcorrenciaPeriodoAluno(instituicaoCursoOcorrenciaPeriodoAluno: InstituicaoCursoOcorrenciaPeriodoAlunoModel, instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodoModel) {
         instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.splice(instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.indexOf(instituicaoCursoOcorrenciaPeriodoAluno), 1);
     }
-    
+
 
     addInstituicaoCursoOcorrenciaPeriodoProfessor(instituicaoCursoOcorrenciaPeriodoProfessor: InstituicaoCursoOcorrenciaPeriodoProfessorModel) {
         this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodoProfessorModel(), instituicaoCursoOcorrenciaPeriodoProfessor));

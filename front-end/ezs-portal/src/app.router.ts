@@ -9,7 +9,7 @@ import { AutenticaoServiceInterface } from '../../ezs-common/src/service/autenti
 import { BaseRouter } from '../../ezs-common/src/base.router';
 import { I18NUtil } from '../../ezs-common/src/util/i18n/i18n.util';
 import { I18N_ERROR_GENERIC } from '../../ezs-common/src/constant/i18n-template-messages.contant';
-import { ApplicationService } from './module/service/application.service';
+import { ApplicationService, ApplicationMode } from './module/service/application.service';
 import { NotifyUtil } from '../../ezs-common/src/util/notify/notify.util';
 
 class Router extends BaseRouter {
@@ -78,18 +78,28 @@ class Router extends BaseRouter {
 
     private isRoutePermitidoWhenAutenticado = (path, params) => {
         switch (path) {
-            case (AppRouterPath.AULA_GERENCIAMENTO_NOTA):
-            case (AppRouterPath.AULA_GERENCIAMENTO_AUSENCIA):
+            case (AppRouterPath.PROFESSOR_AULA_GERENCIAMENTO_NOTA):
+            case (AppRouterPath.PROFESSOR_AULA_GERENCIAMENTO_AUSENCIA):
                 {
-                    console.log(ApplicationService.getInstituicaoBusinessAulasByProfessor());
-                    console.log(params.idInstituicaoCursoOcorrenciaPeriodoProfessor);
-
                     return ApplicationService.isAdmin() || !!ApplicationService.getInstituicaoBusinessAulasByProfessor().find(x => x.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString() === params.idInstituicaoCursoOcorrenciaPeriodoProfessor.toString());
+                }
+            case (AppRouterPath.ROOT):
+                {
+                    this.redirectFeed(path, params);
                 }
             default:
                 {
-                    return true || ApplicationService.isAdmin() || ApplicationService.getViews().indexOf(path) > -1;
+                    return ApplicationService.isAdmin() || ApplicationService.getViews().indexOf(path) > -1;
                 }
+        }
+    }
+
+    private redirectFeed = (path, params) => {
+        if (ApplicationService.isApplicationMode(ApplicationMode.ALUNO)) {
+            throw new RedirectError('Modo Aluno Ativado', 'Redirecionando para feed de alunos', AppRouterPath.ALUNO_FEED);
+        }
+        else if (ApplicationService.isApplicationMode(ApplicationMode.PROFESSOR)) {
+            throw new RedirectError('Modo Professor Ativado', 'Redirecionando para feed de professores', AppRouterPath.PROFESSOR_FEED);
         }
     }
 

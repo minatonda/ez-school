@@ -250,7 +250,7 @@ namespace Api.InstituicaoApi {
 
         public void SaveFormulaNotaFinal(string formulaNotaFinal, long idInstituicaoCursoOcorrenciaPeriodoProfessor) {
             var instituicaoCursoOcorrenciaPeriodoProfessor = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor);
-            instituicaoCursoOcorrenciaPeriodoProfessor.FormulaNotaFinal = formulaNotaFinal;
+            instituicaoCursoOcorrenciaPeriodoProfessor.FormulaNotaFinal = formulaNotaFinal; instituicaoCursoOcorrenciaPeriodoProfessor.FormulaNotaFinal = formulaNotaFinal;
             this._instituicaoRepository.UpdateInstituicaoCursoOcorrenciaPeriodoProfessor(instituicaoCursoOcorrenciaPeriodoProfessor);
             this._instituicaoRepository.SaveChanges();
         }
@@ -259,6 +259,12 @@ namespace Api.InstituicaoApi {
 
             var attachedNotas = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaNotaByInstituicaoCursoOcorrenciaProfessorPeriodo(idInstituicaoCursoOcorrenciaPeriodoProfessor);
             var attachedInstituicaoCursoOcorrenciaPeriodoProfessor = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor);
+
+            var attachedNotasRemove = attachedNotas.Where(y => !notas.Select(x => x.ID).Contains(y.ID)).ToList();
+
+            attachedNotasRemove.ForEach((x) => {
+                this._instituicaoRepository.DisableInstituicaoCursoOcorrenciaNota(x.ID);
+            });
 
             notas.ForEach(x => {
                 var nota = InstituicaoCursoOcorrenciaNotaAdapter.ToModel(x, true);
@@ -413,16 +419,18 @@ namespace Api.InstituicaoApi {
         public List<InstituicaoBusinessAulaDetalheAlunoVM> AllInstituicaoBusinessAulaByAluno(string id, bool emCurso) {
             return this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByAluno(id, emCurso, true).Select(x => {
                 var sequence = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoSequence(x.InstituicaoCursoOcorrenciaPeriodo.ID);
+                var ausencias = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaAusenciaByInstituicaoCursoOcorrenciaProfessorPeriodo(x.ID).Count;
                 var notaFinal = this.GetNotaFinalByAluno(x.ID, id);
-                return InstituicaoBusinessAdapter.ToInstituicaoBusinessAulaDetalheAlunoViewModel(x, sequence, notaFinal);
+                return InstituicaoBusinessAdapter.ToInstituicaoBusinessAulaDetalheAlunoViewModel(x, sequence, ausencias, notaFinal);
             }).ToList();
         }
 
         public List<InstituicaoBusinessAulaDetalheAlunoVM> AllInstituicaoBusinessAulaByAlunoAndInstituicaoCursoOcorrencia(string idAluno, long idInstituicaoCursoOcorrencia) {
             return this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByAlunoAndInstituicaoCursoOcorrencia(idAluno, idInstituicaoCursoOcorrencia, true).Select(x => {
                 var sequence = this._instituicaoRepository.GetInstituicaoCursoOcorrenciaPeriodoSequence(x.InstituicaoCursoOcorrenciaPeriodo.ID);
+                var ausencias = this._instituicaoRepository.GetAllInstituicaoCursoOcorrenciaAusenciaByInstituicaoCursoOcorrenciaProfessorPeriodo(x.ID).Count;
                 var notaFinal = this.GetNotaFinalByAluno(x.ID, idAluno);
-                return InstituicaoBusinessAdapter.ToInstituicaoBusinessAulaDetalheAlunoViewModel(x, sequence, notaFinal);
+                return InstituicaoBusinessAdapter.ToInstituicaoBusinessAulaDetalheAlunoViewModel(x, sequence, ausencias, notaFinal);
             }).ToList();
         }
 

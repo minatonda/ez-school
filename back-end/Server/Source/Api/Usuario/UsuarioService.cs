@@ -7,6 +7,7 @@ using Api.Common;
 using Api.Common.Base;
 using Domain.AreaInteresseDomain;
 using Domain.UsuarioDomain;
+using System.Net;
 
 namespace Api.UsuarioApi {
 
@@ -262,6 +263,116 @@ namespace Api.UsuarioApi {
             });
 
             return views.GroupBy(x => x).Select(x => x.First()).ToList();
+        }
+
+        public void ValidateUsuario(UsuarioVM usuario) {
+            this.ValidateUsuario(usuario, false);
+        }
+
+        public void ValidateUsuario(UsuarioVM usuario, bool validatePassword) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (usuario.Username == null || usuario.Username.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USERNAME,
+                });
+            }
+
+            if (validatePassword && (usuario.Password == null || usuario.Password.Trim() == "")) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_PASSWORD,
+                });
+            }
+
+            if (usuario.UsuarioInfo.Nome == null || usuario.UsuarioInfo.Nome.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_NOME,
+                });
+            }
+
+            if (usuario.UsuarioInfo.Email == null || usuario.UsuarioInfo.Email.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_EMAIL,
+                });
+            }
+
+            if (usuario.UsuarioInfo.Telefone == null || usuario.UsuarioInfo.Telefone.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_TELEFONE,
+                });
+            }
+
+            if (usuario.UsuarioInfo.DataNascimento == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_DATA_NASCIMENTO,
+                });
+            }
+
+            if (usuario.UsuarioInfo.RG == null || usuario.UsuarioInfo.RG.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_RG,
+                });
+            }
+
+            if (usuario.UsuarioInfo.CPF == null || usuario.UsuarioInfo.CPF.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_CPF,
+                });
+            }
+
+            if (usuario.UsuarioInfo.RG != null && usuario.UsuarioInfo.Email != null && usuario.UsuarioInfo.CPF != null) {
+                var usuarioFoundByRgOrCpfOrEmail = this._usuarioRepository.GetByUsernameOrRgOrCPForEmail(usuario.Username, usuario.UsuarioInfo.RG, usuario.UsuarioInfo.CPF, usuario.UsuarioInfo.Email);
+                if (usuarioFoundByRgOrCpfOrEmail.Username != null && usuarioFoundByRgOrCpfOrEmail != null && usuario.ID != usuarioFoundByRgOrCpfOrEmail.ID) {
+
+                    if (usuarioFoundByRgOrCpfOrEmail.Username == usuario.Username) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.USUARIO_USERNAME,
+                            Value = usuario.Username
+                        });
+                    }
+
+                    if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.Email == usuario.UsuarioInfo.Email) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_EMAIL,
+                            Value = usuario.UsuarioInfo.Email
+                        });
+                    }
+
+                    if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.RG == usuario.UsuarioInfo.RG) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_RG,
+                            Value = usuario.UsuarioInfo.RG
+                        });
+                    }
+
+                    if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.CPF == usuario.UsuarioInfo.CPF) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_CPF,
+                            Value = usuario.UsuarioInfo.CPF
+                        });
+                    }
+
+                }
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
         }
 
     }

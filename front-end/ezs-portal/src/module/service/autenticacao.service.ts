@@ -45,4 +45,5 @@ class Service extends Vue implements AutenticaoServiceInterface {
     }
 
 }
+
 export const AutenticacaoService = new Service();

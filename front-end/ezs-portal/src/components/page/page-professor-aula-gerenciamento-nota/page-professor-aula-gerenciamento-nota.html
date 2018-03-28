@@ -14,7 +14,7 @@
                                 <label class="control-label">Atividade</label>
                                 <input class="form-control" placeholder="Atividade" v-model="ui.idTag">
                             </div>
-                            <div class="col-12 col-md-2 form-group">
+                            <div class="col-12 col-md-3 form-group">
                                 <label class="control-label invisible">Ocupar</label>
                                 <button class="btn btn-primary btn-block" v-on:click="addIdTag(ui.idTag)">Adicionar</button>
                             </div>
@@ -25,7 +25,7 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th v-for="idTag in ui.idTags">{{idTag}}</th>
+                                            <th v-for="idTag in ui.idTags" style="font-size:16px;"><b>{{idTag}}</b><i class="fa fa-times-circle ml-2" style="color:red;" v-on:click="removeIdTag(idTag)"></i></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,21 +52,23 @@
                         </div>
                         <div class="row">
                             <div class="col-12 form-group">
-                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('(')"><b>(</b></button>
-                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal(')')"><b>)</b></button>
-                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('+')"><b>+</b></button>
-                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('-')"><b>-</b></button>
-                                <button class="btn btn-float btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('*')"><b>*</b></button>
-                                <button class="btn btn-float btn-primary mr-4" type="button" v-on:click="incrementFormulaNotaFinal('/')"><b>/</b></button>
-                                <button class="btn btn-secondary mr-4">
+                                <div class="btn-group" data-toggle="buttons" role="group">
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('(')" v-bind:disabled="isCharacterDisabled('(',ui.formulaNotaFinal)"><b class="">(</b></button>
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal(')')" v-bind:disabled="isCharacterDisabled(')',ui.formulaNotaFinal)"><b class="">)</b></button>
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('+')" v-bind:disabled="isCharacterDisabled('+',ui.formulaNotaFinal)"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('-')" v-bind:disabled="isCharacterDisabled('-',ui.formulaNotaFinal)"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('*')" v-bind:disabled="isCharacterDisabled('*',ui.formulaNotaFinal)"><i class="fa fa-asterisk"></i></button>
+                                    <button class="btn btn-primary" type="button" v-on:click="incrementFormulaNotaFinal('/')" v-bind:disabled="isCharacterDisabled('/',ui.formulaNotaFinal)"><b class="">/</b></button>
+                                    <button class="btn btn-secondary">
                                         <input type="number" class="form-control d-inline-block" v-model="ui.number" style="width:70px;">
-                                        <button class="btn btn-float btn-primary btn-sm" type="button" v-on:click="incrementFormulaNotaFinal(ui.number)"> <i class="fa fa-hashtag"></i></button>
-                                </button>
-                                <button class="btn btn-float btn-primary mr-1 btn-sm" type="button" v-for="idTag in ui.idTags" v-on:click="incrementFormulaNotaFinal(idTag)"><b>{{idTag}}</b></button>
-                                <button class="btn btn-float btn-primary ml-3 btn-sm" type="button" v-on:click="decrementFormulaNotaFinal()"><i class="fa fa-undo"></i></button>
+                                        <button class="btn btn-primary btn-sm" type="button" v-on:click="incrementFormulaNotaFinal(ui.number)" v-bind:disabled="isCharacterDisabled('#',ui.formulaNotaFinal)" style="min-width: initial;"> <i class="fa fa-hashtag"></i></button>
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" type="button" v-for="idTag in ui.idTags" v-on:click="incrementFormulaNotaFinal(idTag)" v-bind:disabled="isCharacterDisabled('#',ui.formulaNotaFinal)"><b>{{idTag}}</b></button>
+                                    <button class="btn btn-primary btn-sm" type="button" v-on:click="decrementFormulaNotaFinal()"><i class="fa fa-undo"></i></button>
+                                </div>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
-                                <input class="form-control" v-bind:value="getFormulaNotaFinalAsText()" disabled>
+                            <div class="col-12 form-group">
+                                <span class="badge badge-primary p-1">Resultado : {{getFormulaNotaFinalAsText(ui.formulaNotaFinal)}}</span>
                             </div>
                         </div>
                     </div>

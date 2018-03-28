@@ -5,10 +5,18 @@ import { InstituicaoModel } from '../../../../ezs-common/src/model/server/instit
 import { FACTORY_CONSTANT } from '../constant/factory.constant';
 import { InstituicaoBusinessAulaModel } from '../../../../ezs-common/src/model/server/instituicao-business-aula.model';
 import { InstituicaoBusinessAulaDetalheAlunoModel } from '../../../../ezs-common/src/model/server/instituicao-business-aula-detalhe-aluno.model';
+import { AppBroadcastEventBus, AppBroadcastEvent } from '../../app.broadcast-event-bus';
+import { Vue, Component } from 'vue-property-decorator';
+
+export enum ApplicationMode {
+    PROFESSOR,
+    ALUNO
+}
 
 class Service {
 
     private language: I18N_LANG = I18N_LANG.ptBR;
+    private applicationMode = ApplicationMode.ALUNO;
     private usuarioInfo: UsuarioInfoModel;
     private instituicaoBusinessAulasByProfessor: Array<InstituicaoBusinessAulaModel>;
     private instituicaoBusinessAulasByAluno: Array<InstituicaoBusinessAulaDetalheAlunoModel>;
@@ -22,6 +30,25 @@ class Service {
 
     getLanguage() {
         return this.language;
+    }
+
+    setApplicationMode(mode: ApplicationMode) {
+        switch (mode) {
+            case (ApplicationMode.ALUNO): {
+                AppBroadcastEventBus.$emit(AppBroadcastEvent.ATIVAR_MODO_ALUNO);
+            }
+            case (ApplicationMode.PROFESSOR): {
+                AppBroadcastEventBus.$emit(AppBroadcastEvent.ATIVAR_MODO_PROFESSOR);
+            }
+            default: {
+                this.applicationMode = mode;
+            }
+        }
+
+    }
+
+    isApplicationMode(mode: ApplicationMode) {
+        return this.applicationMode === mode;
     }
 
     setUsuarioInfo(usuarioInfo: UsuarioInfoModel) {
@@ -91,7 +118,16 @@ class Service {
         this.instituicaoBusinessAulasByProfessor = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByProfessor(this.usuarioInfo.id);
         this.instituicaoBusinessAulasByAluno = await FACTORY_CONSTANT.InstituicaoFactory.allInstituicaoBusinessAulaByAluno(this.usuarioInfo.id, false);
         this.admin = await FACTORY_CONSTANT.UsuarioFactory.meAdmin();
+        this.applicationMode = this.instituicaoBusinessAulasByProfessor.length ? ApplicationMode.PROFESSOR : ApplicationMode.ALUNO;
         this.setLoading(false);
+    }
+
+    resetDefaults() {
+        this.usuarioInfo = undefined;
+        this.views = undefined;
+        this.instituicaoBusinessAulasByProfessor = undefined;
+        this.instituicaoBusinessAulasByAluno = undefined;
+        this.admin = undefined;
     }
 
 }

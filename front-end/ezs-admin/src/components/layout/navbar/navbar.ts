@@ -21,19 +21,19 @@ export class NavbarComponent extends Vue {
         }]
     };
 
-    public desautenticar() {
+    desautenticar() {
         AutenticacaoService.desautenticar();
     }
 
-    public getRotas() {
+    getRotas() {
         return AppRouter.getMenuPermitido();
     }
 
-    public getRotasLabel(route: BaseRouteConfig) {
+    getRotasLabel(route: BaseRouteConfig) {
         return route.alias;
     }
 
-    public aoSelecionarRota(route: BaseRouteConfig) {
+    aoSelecionarRota(route: BaseRouteConfig) {
         if (route) {
             AppRouter.push(route.path);
         }

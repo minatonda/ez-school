@@ -9,16 +9,16 @@ export class PageUsuarioListaProps implements PageListaPropsInterface {
 
     columns = [
         new CardTableColumn({
-            value: (item: UsuarioModel) => item.username,
-            label: () => 'Username'
-        }),
-        new CardTableColumn({
             value: (item: UsuarioModel) => item.usuarioInfo.nome,
             label: () => 'Nome'
         }),
         new CardTableColumn({
             value: (item: UsuarioModel) => item.usuarioInfo.rg,
             label: () => 'RG'
+        }),
+        new CardTableColumn({
+            value: (item: UsuarioModel) => item.username,
+            label: () => 'Username'
         }),
         new CardTableColumn({
             value: (item: UsuarioModel) => item.usuarioInfo.email,
