@@ -35,19 +35,11 @@ namespace Domain.MateriaDomain {
         }
         public void Update(Materia materia) {
             var model = this.db.Mtr.Find(materia.ID);
-
             model.Nome = materia.Nome;
             model.Descricao = materia.Descricao;
-
             this.db.Mtr.Update(model);
         }
-        public void Update(Materia model, List<Materia> Materias) {
-            this.db.Mtr.Find(model.ID).Nome = model.Nome;
-            this.db.Mtr.Find(model.ID).Descricao = model.Descricao;
-            this.db.Mtr.Update(this.db.Mtr.Find(model.ID));
-            this.db.MtrRlc.AddRange(Materias.Select(x => new MateriaRelacionamento() { MateriaPai = this.db.Mtr.Find(x.ID), MateriaPrincipal = model }));
-            this.db.SaveChanges();
-        }
+
         public void Disable(long id) {
             var model = this.db.Mtr.Find(id);
             model.Ativo = DateTime.Now;
@@ -59,16 +51,28 @@ namespace Domain.MateriaDomain {
             model.Ativo = DateTime.Now;
             this.db.MtrRlc.Update(model);
         }
-        public Materia Get(long ID) => this.db.Mtr.Find(ID);
+
+        public Materia Get(long id) {
+            return this.db.Mtr
+            .AsNoTracking()
+            .SingleOrDefault(x => x.ID == id);
+        }
+
+        public Materia GetByNome(string nome) {
+            return this.db.Mtr
+            .AsNoTracking()
+            .FirstOrDefault(x => x.Nome == nome && !x.Ativo.HasValue);
+        }
+
         public List<Materia> GetAll(bool ativo) {
-            if (ativo) {
-                return this.db.Mtr.Where(x => !x.Ativo.HasValue).ToList();
-            } else {
-                return this.db.Mtr.ToList();
-            }
+            return this.db.Mtr
+            .AsNoTracking()
+            .Where(x => x.Ativo.HasValue == !ativo)
+            .ToList();
         }
         public List<MateriaRelacionamento> GetRelacionadas(long ID, bool ativo) {
             return this.db.MtrRlc
+            .AsNoTracking()
             .Include(x => x.MateriaPai)
             .Include(x => x.MateriaPrincipal)
             .Where(x => x.MateriaPrincipal.ID == ID && x.Ativo.HasValue == !ativo)
@@ -83,6 +87,7 @@ namespace Domain.MateriaDomain {
         public void SaveChanges() {
             this.db.SaveChanges();
         }
+
     }
 
 }

@@ -37,6 +37,7 @@ export enum I18N_ERROR_SERVER_FIELD {
     USUARIO_USUARIO_INFO_TELEFONE = 'usuario.usuarioInfo.telefone',
     USUARIO_USUARIO_INFO_RG = 'usuario.usuarioInfo.rg',
     USUARIO_USUARIO_INFO_CPF = 'usuario.usuarioInfo.cpf',
+    MATERIA_NOME = 'materia.nome',
     PROFESSOR_ID = 'professor.id',
     ALUNO_ID = 'aluno.id',
 }
@@ -76,6 +77,7 @@ export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.PROFESSOR_ID, label: 'ID' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.BASE_ROLE, label: 'Regra Base' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_ROLE, label: 'Regra de Instituição' },
+
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USERNAME, label: 'Nome de Usuário' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_PASSWORD, label: 'Senha' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_NOME, label: 'Nome' },
@@ -84,6 +86,8 @@ export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_TELEFONE, label: 'Telefone' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_RG, label: 'RG' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_CPF, label: 'CPF' },
+    
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.MATERIA_NOME, label: 'Nome' },
 ];
 
 export const I18N_ENUM_LABELS_CONSTANTS = [

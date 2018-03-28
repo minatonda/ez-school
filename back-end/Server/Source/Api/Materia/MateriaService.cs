@@ -1,6 +1,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Api.Common.Base;
 using Domain.MateriaDomain;
 
 namespace Api.MateriaApi {
@@ -63,6 +65,39 @@ namespace Api.MateriaApi {
 
         public List<MateriaVM> All() {
             return this._materiaRepository.GetAll(true).Select(x => MateriaAdapter.ToViewModel(x, true)).ToList();
+        }
+
+        public void ValidateMateria(MateriaVM materia) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (materia.Nome == null || materia.Nome.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.MATERIA_NOME,
+                });
+            }
+
+            if (materia.Nome != null) {
+                var materiaByNome = this._materiaRepository.GetByNome(materia.Nome);
+                if (materia.Nome != null && materiaByNome != null && materiaByNome.ID != materia.ID) {
+
+                    if (materiaByNome.Nome == materia.Nome) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.MATERIA_NOME,
+                            Value = materia.Nome
+                        });
+                    }
+
+                }
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
         }
     }
 }

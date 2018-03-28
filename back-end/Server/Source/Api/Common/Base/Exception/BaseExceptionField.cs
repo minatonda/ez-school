@@ -16,6 +16,7 @@ namespace Api.Common.Base {
         public static readonly string USUARIO_USUARIO_INFO_CPF = "usuario.usuarioInfo.cpf";
         public static readonly string USUARIO_USUARIO_INFO_EMAIL = "usuario.usuarioInfo.email";
         public static readonly string USUARIO_USUARIO_INFO_TELEFONE = "usuario.usuarioInfo.telefone";
+        public static readonly string MATERIA_NOME = "materia.nome";
         public static readonly string PROFESSOR_ID = "professor.id";
         public static readonly string ALUNO_ID = "aluno.id";
 

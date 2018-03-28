@@ -20,13 +20,15 @@ namespace Api.MateriaApi {
 
         [HttpPut("add")]
         public void Add([FromBody] MateriaVM viewModel) {
-             this.Authorize(BaseRole.ADD_MATERIA);
+            this.Authorize(BaseRole.ADD_MATERIA);
+            this._materiaService.ValidateMateria(viewModel);
             this._materiaService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] MateriaVM viewModel) {
             this.Authorize(BaseRole.EDIT_MATERIA);
+            this._materiaService.ValidateMateria(viewModel);
             this._materiaService.Update(viewModel);
         }
 
