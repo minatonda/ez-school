@@ -23,6 +23,7 @@ namespace Api.InstituicaoApi {
         [HttpPut("add")]
         public void Add([FromBody] InstituicaoVM viewModel) {
             this.Authorize(BaseRole.ADD_INSTITUICAO);
+            this._instituicaoService.ValidateInstituicao(viewModel);
             this._instituicaoService.Add(viewModel);
         }
 
@@ -73,6 +74,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(viewModel.ID, InstituicaoRole.OWNER_INSTITUICAO);
             }
+            this._instituicaoService.ValidateInstituicao(viewModel);
             this._instituicaoService.Update(viewModel);
         }
 

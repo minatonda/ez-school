@@ -160,8 +160,6 @@ namespace Api.CursoApi {
                 throw exception;
             }
         }
-
-
-
+        
     }
 }

@@ -332,6 +332,12 @@ namespace Domain.InstituicaoDomain {
             .SingleOrDefault(x => x.ID == id);
         }
 
+        public Instituicao GetByCNPJ(string CNPJ) {
+            return this.db.Ittc
+            .AsNoTracking()
+            .FirstOrDefault(x => x.CNPJ.ToLower() == CNPJ.ToLower() && !x.Ativo.HasValue);
+        }
+
         public InstituicaoCurso GetInstituicaoCurso(long id) {
             return this.db.IttcCrs
             .AsNoTracking()

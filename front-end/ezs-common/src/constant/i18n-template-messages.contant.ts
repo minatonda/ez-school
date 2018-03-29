@@ -43,11 +43,14 @@ export enum I18N_ERROR_SERVER_FIELD {
     
     MATERIA_NOME = 'materia.nome',
     
+    INSTITUICAO_NOME = 'instituicao.nome',
+    INSTITUICAO_CNPJ = 'instituicao.cnpj',
+
     CURSO_NOME = 'curso.nome',
     CURSO_DESCRICAO = 'curso.descricao',
 
-    CURSO_GRADE_MATERIA_NOME_EXIBICAO = "cursoGradeMateria.nomeExibicao",
-    CURSO_GRADE_MATERIA_DESCRICAO = "cursoGradeMateria.Descricao",
+    CURSO_GRADE_MATERIA_NOME_EXIBICAO = 'cursoGradeMateria.nomeExibicao',
+    CURSO_GRADE_MATERIA_DESCRICAO = 'cursoGradeMateria.Descricao',
     
     PROFESSOR_ID = 'professor.id',
     ALUNO_ID = 'aluno.id',
@@ -86,7 +89,7 @@ export const I18N_TEMPLATE_MESSAGE_SERVER_CONSTANT = [
 export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.ALUNO_ID, label: 'ID' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.PROFESSOR_ID, label: 'ID' },
-    
+
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.BASE_ROLE, label: 'Regra Base' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_ROLE, label: 'Regra de Instituição' },
 
@@ -100,6 +103,9 @@ export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_CPF, label: 'CPF' },
     
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.MATERIA_NOME, label: 'Nome' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_NOME, label: 'Nome' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CNPJ, label: 'CNPJ' },
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_NOME, label: 'Nome' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_DESCRICAO, label: 'Descrição' },

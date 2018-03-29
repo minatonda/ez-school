@@ -115,7 +115,10 @@ export class PageInstituicaoCursoComponent extends Vue {
                 this.ui.cursoGrades = [];
             }
         });
+    }
 
+    async onCursoGradeChanged(cursoGrade){
+        this.$forceUpdate();
     }
 
     getTablePeriodo() {

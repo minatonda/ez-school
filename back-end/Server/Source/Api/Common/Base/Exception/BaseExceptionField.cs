@@ -21,9 +21,12 @@ namespace Api.Common.Base {
         public static readonly string CURSO_NOME = "curso.nome";
         public static readonly string CURSO_DESCRICAO = "curso.descricao";
 
+        public static readonly string INSTITUICAO_NOME = "instituicao.nome";
+        public static readonly string INSTITUICAO_CNPJ = "instituicao.cnpj";
+
         public static readonly string CURSO_GRADE_MATERIA_NOME_EXIBICAO = "cursoGradeMateria.nomeExibicao";
         public static readonly string CURSO_GRADE_MATERIA_DESCRICAO = "cursoGradeMateria.Descricao";
-        
+
         public static readonly string MATERIA_NOME = "materia.nome";
         public static readonly string PROFESSOR_ID = "professor.id";
         public static readonly string ALUNO_ID = "aluno.id";

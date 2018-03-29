@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Api.Common.Base;
 using Api.CursoApi;
 using Api.UsuarioApi;
 using Domain.CursoDomain;
@@ -513,6 +515,46 @@ namespace Api.InstituicaoApi {
                 return null;
             } else {
                 return Double.Parse(new Expression(formulaNotaFinalWithValues).Evaluate().ToString());
+            }
+        }
+
+        public void ValidateInstituicao(InstituicaoVM instituicao) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (instituicao.Nome == null || instituicao.Nome.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_NOME,
+                });
+            }
+
+            if (instituicao.CNPJ == null || instituicao.CNPJ.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CNPJ,
+                });
+            }
+
+            if (instituicao.Nome != null) {
+                var instituicaoByCnpj = this._instituicaoRepository.GetByCNPJ(instituicao.CNPJ);
+                if (instituicao.CNPJ != null && instituicaoByCnpj != null && instituicaoByCnpj.ID != instituicao.ID) {
+
+                    if (instituicaoByCnpj.CNPJ == instituicao.CNPJ) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.INSTITUICAO_CNPJ,
+                            Value = instituicao.CNPJ
+                        });
+                    }
+
+                }
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
             }
         }
 
