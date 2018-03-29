@@ -62,8 +62,8 @@
     <b-modal ref="modal-curso-grade" size=" mw-100" no-close-on-backdrop no-close-on-esc hide-header-close hide-footer title="Grade">
         <div class="row">
             <div class="col-12 col-md-3 form-group">
-                <label class="control-label">Descrição</label>
-                <input class="form-control" placeholder="Descrição" v-model="ui.cursoGrade.descricao"></input>
+                <label class="control-label">Descrição da Grade</label>
+                <input class="form-control" placeholder="Descrição da Grade" v-model="ui.cursoGrade.descricao"></input>
             </div>
             <div class="col-12 col-md-6 form-group">
                 <label class="control-label">Instituição</label>
@@ -85,10 +85,14 @@
                 <input class="form-control" placeholder="Nome de Exibição" v-model="ui.cursoGradeMateria.nomeExibicao"></input>
             </div>
             <div class="col-12 col-md-3 form-group">
+                <label class="control-label">Descrição</label>
+                <input class="form-control" placeholder="Descrição" v-model="ui.cursoGradeMateria.descricao"></input>
+            </div>
+            <div class="col-12 col-md-2 form-group">
                 <label class="control-label">Grupo</label>
                 <input class="form-control" placeholder="Grupo" v-model="ui.cursoGradeMateria.grupo"></input>
             </div>
-            <div class="col-12 col-md-3 form-group">
+            <div class="col-12 col-md-1 form-group">
                 <label class="control-label invisible">Ocupar</label>
                 <button class="btn btn-primary btn-block" v-on:click="addCursoGradeMateria(ui.cursoGradeMateria)">Adicionar</button>
             </div>

@@ -138,7 +138,7 @@ namespace Domain.UsuarioDomain {
             .ThenInclude(i => i.Pai)
             .Include(i => i.UsuarioInfo)
             .ThenInclude(i => i.Mae)
-            .FirstOrDefault(x => x.Username == username || x.UsuarioInfo.RG == rg || x.UsuarioInfo.CPF == cpf || x.UsuarioInfo.Email == email && !x.Ativo.HasValue);
+            .FirstOrDefault(x => x.Username.ToLower() == username.ToLower() || x.UsuarioInfo.RG.ToLower() == rg.ToLower() || x.UsuarioInfo.CPF.ToLower() == cpf.ToLower() || x.UsuarioInfo.Email.ToLower() == email.ToLower() && !x.Ativo.HasValue);
         }
 
         public UsuarioInfo GetUsuarioInfo(string id) {

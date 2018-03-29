@@ -27,17 +27,28 @@ export enum I18N_ERROR_SERVER {
 }
 
 export enum I18N_ERROR_SERVER_FIELD {
+    
     BASE_ROLE = 'baseRole',
     INSTITUICAO_ROLE = 'instituicaoRole',
+    
     USUARIO_USERNAME = 'usuario.username',
     USUARIO_PASSWORD = 'usuario.password',
-    USUARIO_USUARIO_INFO_NOME = 'usuario.usuarioInfo.nome',
-    USUARIO_USUARIO_INFO_DATA_NASCIMENTO = 'usuario.usuarioInfo.dataNascimento',
-    USUARIO_USUARIO_INFO_EMAIL = 'usuario.usuarioInfo.email',
-    USUARIO_USUARIO_INFO_TELEFONE = 'usuario.usuarioInfo.telefone',
-    USUARIO_USUARIO_INFO_RG = 'usuario.usuarioInfo.rg',
-    USUARIO_USUARIO_INFO_CPF = 'usuario.usuarioInfo.cpf',
+
+    USUARIO_INFO_NOME = 'usuarioInfo.nome',
+    USUARIO_INFO_DATA_NASCIMENTO = 'usuarioInfo.dataNascimento',
+    USUARIO_INFO_EMAIL = 'usuarioInfo.email',
+    USUARIO_INFO_TELEFONE = 'usuarioInfo.telefone',
+    USUARIO_INFO_RG = 'usuarioInfo.rg',
+    USUARIO_INFO_CPF = 'usuarioInfo.cpf',
+    
     MATERIA_NOME = 'materia.nome',
+    
+    CURSO_NOME = 'curso.nome',
+    CURSO_DESCRICAO = 'curso.descricao',
+
+    CURSO_GRADE_MATERIA_NOME_EXIBICAO = "cursoGradeMateria.nomeExibicao",
+    CURSO_GRADE_MATERIA_DESCRICAO = "cursoGradeMateria.Descricao",
+    
     PROFESSOR_ID = 'professor.id',
     ALUNO_ID = 'aluno.id',
 }
@@ -75,19 +86,26 @@ export const I18N_TEMPLATE_MESSAGE_SERVER_CONSTANT = [
 export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.ALUNO_ID, label: 'ID' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.PROFESSOR_ID, label: 'ID' },
+    
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.BASE_ROLE, label: 'Regra Base' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_ROLE, label: 'Regra de Instituição' },
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USERNAME, label: 'Nome de Usuário' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_PASSWORD, label: 'Senha' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_NOME, label: 'Nome' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_DATA_NASCIMENTO, label: 'Data de Nascimento' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_EMAIL, label: 'Email' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_TELEFONE, label: 'Telefone' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_RG, label: 'RG' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_USUARIO_INFO_CPF, label: 'CPF' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_NOME, label: 'Nome' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_DATA_NASCIMENTO, label: 'Data de Nascimento' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_EMAIL, label: 'Email' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_TELEFONE, label: 'Telefone' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_RG, label: 'RG' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_CPF, label: 'CPF' },
     
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.MATERIA_NOME, label: 'Nome' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_NOME, label: 'Nome' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_DESCRICAO, label: 'Descrição' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_GRADE_MATERIA_NOME_EXIBICAO, label: 'Nome de Exibição' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_GRADE_MATERIA_DESCRICAO, label: 'Descrição' },
 ];
 
 export const I18N_ENUM_LABELS_CONSTANTS = [

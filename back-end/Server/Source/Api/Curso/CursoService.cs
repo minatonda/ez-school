@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Api.Common.Base;
 using Domain.CursoDomain;
 
 namespace Api.CursoApi {
@@ -97,6 +99,66 @@ namespace Api.CursoApi {
 
         public List<CursoVM> All() {
             return this._cursoRepository.GetAll(true).Select(x => CursoAdapter.ToViewModel(x, true)).ToList();
+        }
+
+        public void ValidateCurso(CursoVM curso) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (curso.Nome == null || curso.Nome.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.CURSO_NOME,
+                });
+            }
+
+            if (curso.Descricao == null || curso.Descricao.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.CURSO_DESCRICAO,
+                });
+            }
+
+            if (curso.Nome != null) {
+                var cursoByNome = this._cursoRepository.GetByNome(curso.Nome);
+                if (curso.Nome != null && cursoByNome != null && cursoByNome.ID != curso.ID) {
+
+                    if (cursoByNome.Nome == curso.Nome) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
+                            Field = BaseExceptionField.CURSO_NOME,
+                            Value = curso.Nome
+                        });
+                    }
+
+                }
+            }
+
+            curso.Grades.ForEach(cursoGrade => {
+                cursoGrade.Materias.ForEach(cursoGradeMateria => {
+
+                    if (cursoGradeMateria.NomeExibicao == null || cursoGradeMateria.NomeExibicao.Trim() == "") {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.CURSO_GRADE_MATERIA_NOME_EXIBICAO,
+                        });
+                    }
+
+                    if (cursoGradeMateria.Descricao == null || cursoGradeMateria.Descricao.Trim() == "") {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.CURSO_GRADE_MATERIA_DESCRICAO,
+                        });
+                    }
+
+                });
+            });
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
         }
 
 

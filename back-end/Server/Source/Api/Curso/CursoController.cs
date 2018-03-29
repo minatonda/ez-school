@@ -21,12 +21,14 @@ namespace Api.CursoApi {
         [HttpPut("add")]
         public void Add([FromBody] CursoVM viewModel) {
             this.Authorize(BaseRole.ADD_CURSO);
+            this._cursoService.ValidateCurso(viewModel);
             this._cursoService.Add(viewModel);
         }
 
         [HttpPost("update")]
         public void Update([FromBody] CursoVM viewModel) {
             this.Authorize(BaseRole.EDIT_CURSO);
+            this._cursoService.ValidateCurso(viewModel);
             this._cursoService.Update(viewModel);
         }
 

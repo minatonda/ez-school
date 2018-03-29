@@ -93,6 +93,12 @@ namespace Domain.CursoDomain {
             .SingleOrDefault(x => x.ID == ID);
         }
 
+         public Curso GetByNome(string nome) {
+            return this.db.Crs
+            .AsNoTracking()
+            .FirstOrDefault(x => x.Nome.ToLower() == nome.ToLower() && !x.Ativo.HasValue);
+        }
+
         public CursoGrade GetCursoGrade(long id) {
             return this.db.CrsGrd
             .AsNoTracking()

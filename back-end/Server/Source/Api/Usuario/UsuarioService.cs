@@ -292,42 +292,42 @@ namespace Api.UsuarioApi {
             if (usuario.UsuarioInfo.Nome == null || usuario.UsuarioInfo.Nome.Trim() == "") {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_NOME,
+                    Field = BaseExceptionField.USUARIO_INFO_NOME,
                 });
             }
 
             if (usuario.UsuarioInfo.Email == null || usuario.UsuarioInfo.Email.Trim() == "") {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_EMAIL,
+                    Field = BaseExceptionField.USUARIO_INFO_EMAIL,
                 });
             }
 
             if (usuario.UsuarioInfo.Telefone == null || usuario.UsuarioInfo.Telefone.Trim() == "") {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_TELEFONE,
+                    Field = BaseExceptionField.USUARIO_INFO_TELEFONE,
                 });
             }
 
             if (usuario.UsuarioInfo.DataNascimento == null) {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_DATA_NASCIMENTO,
+                    Field = BaseExceptionField.USUARIO_INFO_DATA_NASCIMENTO,
                 });
             }
 
             if (usuario.UsuarioInfo.RG == null || usuario.UsuarioInfo.RG.Trim() == "") {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_RG,
+                    Field = BaseExceptionField.USUARIO_INFO_RG,
                 });
             }
 
             if (usuario.UsuarioInfo.CPF == null || usuario.UsuarioInfo.CPF.Trim() == "") {
                 exception.Infos.Add(new BaseExceptionFieldInfo() {
                     Code = BaseExceptionCode.FIELD_REQUIRED,
-                    Field = BaseExceptionField.USUARIO_USUARIO_INFO_CPF,
+                    Field = BaseExceptionField.USUARIO_INFO_CPF,
                 });
             }
 
@@ -346,7 +346,7 @@ namespace Api.UsuarioApi {
                     if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.Email == usuario.UsuarioInfo.Email) {
                         exception.Infos.Add(new BaseExceptionFieldInfo() {
                             Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
-                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_EMAIL,
+                            Field = BaseExceptionField.USUARIO_INFO_EMAIL,
                             Value = usuario.UsuarioInfo.Email
                         });
                     }
@@ -354,7 +354,7 @@ namespace Api.UsuarioApi {
                     if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.RG == usuario.UsuarioInfo.RG) {
                         exception.Infos.Add(new BaseExceptionFieldInfo() {
                             Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
-                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_RG,
+                            Field = BaseExceptionField.USUARIO_INFO_RG,
                             Value = usuario.UsuarioInfo.RG
                         });
                     }
@@ -362,7 +362,7 @@ namespace Api.UsuarioApi {
                     if (usuarioFoundByRgOrCpfOrEmail.UsuarioInfo.CPF == usuario.UsuarioInfo.CPF) {
                         exception.Infos.Add(new BaseExceptionFieldInfo() {
                             Code = BaseExceptionCode.REGISTER_WITH_SAME_VALUE_EXISTS,
-                            Field = BaseExceptionField.USUARIO_USUARIO_INFO_CPF,
+                            Field = BaseExceptionField.USUARIO_INFO_CPF,
                             Value = usuario.UsuarioInfo.CPF
                         });
                     }

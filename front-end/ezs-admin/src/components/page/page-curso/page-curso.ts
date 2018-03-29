@@ -118,7 +118,21 @@ export class PageCursoComponent extends Vue {
     }
 
     addCursoGradeMateria(cursoGradeMateria: CursoGradeMateriaModel) {
-        this.ui.cursoGrade.materias.push(Object.assign(new CursoGradeMateriaModel(), cursoGradeMateria));
+        if (!cursoGradeMateria.materia) {
+            NotifyUtil.error('Uma matéria deve ser selecionada.', 'Adicionar Matéria a Grade');
+        }
+        else {
+            if (!cursoGradeMateria.nomeExibicao) {
+                cursoGradeMateria.nomeExibicao = cursoGradeMateria.materia.nome;
+            }
+            if (!cursoGradeMateria.descricao) {
+                cursoGradeMateria.descricao = cursoGradeMateria.materia.descricao;
+            }
+            this.ui.cursoGrade.materias.push(Object.assign(new CursoGradeMateriaModel(), cursoGradeMateria));
+
+            cursoGradeMateria.nomeExibicao = undefined;
+            cursoGradeMateria.descricao = undefined;
+        }
     }
 
     removeCursoGradeMateria(cursoGradeMateria: CursoGradeMateriaModel) {
@@ -150,6 +164,10 @@ export class PageCursoComponent extends Vue {
 
         let columns = [
             new CardTableColumn({
+                value: (item: CursoGradeMateriaModel) => item.materia.label,
+                label: () => 'Matéria'
+            }),
+            new CardTableColumn({
                 value: (item: CursoGradeMateriaModel) => item.nomeExibicao,
                 label: () => 'Nome de Exibição'
             }),
@@ -157,10 +175,7 @@ export class PageCursoComponent extends Vue {
                 value: (item: CursoGradeMateriaModel) => item.descricao,
                 label: () => 'Descrição'
             }),
-            new CardTableColumn({
-                value: (item: CursoGradeMateriaModel) => item.materia.label,
-                label: () => 'Matéria'
-            }),
+
             new CardTableColumn({
                 value: (item: CursoGradeMateriaModel) => item.grupo,
                 label: () => 'Grupo'

@@ -61,7 +61,7 @@ namespace Domain.MateriaDomain {
         public Materia GetByNome(string nome) {
             return this.db.Mtr
             .AsNoTracking()
-            .FirstOrDefault(x => x.Nome == nome && !x.Ativo.HasValue);
+            .FirstOrDefault(x => x.Nome.ToLower() == nome.ToLower() && !x.Ativo.HasValue);
         }
 
         public List<Materia> GetAll(bool ativo) {
