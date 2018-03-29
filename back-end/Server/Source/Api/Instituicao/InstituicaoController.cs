@@ -54,6 +54,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_CURSO);
             }
+            this._instituicaoService.ValidateInstituicaoCurso(viewModel);
             this._instituicaoService.AddInstituicaoCurso(id, viewModel);
         }
 
@@ -105,6 +106,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_CURSO);
             }
+            this._instituicaoService.ValidateInstituicaoCurso(viewModel);
             this._instituicaoService.UpdateInstituicaoCurso(id, viewModel);
         }
 

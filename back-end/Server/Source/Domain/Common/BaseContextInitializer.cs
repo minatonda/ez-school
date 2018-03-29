@@ -30,16 +30,16 @@ namespace Domain.Common {
                 context.Mtr.AddRange(listMateria);
                 context.SaveChanges();
 
-                var listCursoGrade = BaseContextInitializer.getBaseCursoGrades(listCurso);
+                var listInstituicoes = BaseContextInitializer.getBaseInstituicoes();
+                context.Ittc.AddRange(listInstituicoes);
+                context.SaveChanges();
+
+                var listCursoGrade = BaseContextInitializer.getBaseCursoGrades(listCurso,listInstituicoes);
                 context.CrsGrd.AddRange(listCursoGrade);
                 context.SaveChanges();
 
                 var listCursoGradeMateria = BaseContextInitializer.getBaseCursoGradeMaterias(listCursoGrade, listMateria);
                 context.CrsGrdMtr.AddRange(listCursoGradeMateria);
-                context.SaveChanges();
-
-                var listInstituicoes = BaseContextInitializer.getBaseInstituicoes();
-                context.Ittc.AddRange(listInstituicoes);
                 context.SaveChanges();
 
                 var listAlunos = BaseContextInitializer.getBaseAlunos(listUsuario);
@@ -98,11 +98,11 @@ namespace Domain.Common {
             return new Instituicao[] {
                     new Instituicao () {
                             Nome = "ESCOLA TÉCNICA PROFESSOR EVERALDO PASSOS - ETEP",
-                                CNPJ = "4211213321321"
+                            CNPJ = "4211213321321"
                         },
                         new Instituicao () {
                             Nome = "FACULDADE DE TÉCNOLOGIA - FATEC",
-                                CNPJ = "4211213321321"
+                            CNPJ = "4211213321321"
                         },
                 };
         }
@@ -111,27 +111,27 @@ namespace Domain.Common {
             return new Materia[] {
                     new Materia () {
                             Nome = "Português Fundamental",
-                                Descricao = "Língua Portuguêsa"
+                            Descricao = "Língua Portuguêsa"
                         },
                         new Materia () {
                             Nome = "Matemática Fundamental",
-                                Descricao = "Matemática em geral."
+                            Descricao = "Matemática em geral."
                         },
                         new Materia () {
                             Nome = "Matemática Aplicada",
-                                Descricao = "Língua Portuguêsa"
+                            Descricao = "Língua Portuguêsa"
                         },
                         new Materia () {
                             Nome = "Matemática Financeira",
-                                Descricao = "Matemática para Calculos e Finanças"
+                            Descricao = "Matemática para Calculos e Finanças"
                         },
                         new Materia () {
                             Nome = "Desenvolvimento de Software",
-                                Descricao = "Desenvolvimento de Softwares"
+                            Descricao = "Desenvolvimento de Softwares"
                         },
                         new Materia () {
                             Nome = "Sistemas Operacionais",
-                                Descricao = "Sistemas Operacionais"
+                            Descricao = "Sistemas Operacionais"
                         },
                 };
         }
@@ -157,18 +157,20 @@ namespace Domain.Common {
                 };
         }
 
-        public static CursoGrade[] getBaseCursoGrades(Curso[] cursos) {
+        public static CursoGrade[] getBaseCursoGrades(Curso[] cursos, Instituicao[] instituicoes) {
             return new CursoGrade[] {
                     new CursoGrade () {
-                            Curso = cursos[0],
-                                DataCriacao = DateTime.Now,
-                                Descricao = "ETEP Faculdades"
-                        },
-                        new CursoGrade () {
-                            Curso = cursos[1],
-                                DataCriacao = DateTime.Now,
-                                Descricao = "ETEP Faculdades"
-                        }
+                        Curso = cursos[0],
+                        Instituicao = instituicoes[0],
+                        DataCriacao = DateTime.Now,
+                        Descricao = "Grade 1"
+                    },
+                    new CursoGrade () {
+                        Curso = cursos[1],
+                        Instituicao = instituicoes[1],
+                        DataCriacao = DateTime.Now,
+                        Descricao = "Grade 1"
+                    }
                 };
         }
 
@@ -177,36 +179,43 @@ namespace Domain.Common {
                     new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[2],
+                                NomeExibicao = materias[2].Nome,
                                 Descricao = materias[2].Nome
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[4],
+                                NomeExibicao = "Orientação a Objetos",
                                 Descricao = "Orientação a Objetos"
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[4],
+                                NomeExibicao = "Java",
                                 Descricao = "Java"
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[4],
+                                NomeExibicao = "C#",
                                 Descricao = "C#"
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[4],
+                                NomeExibicao = "Javascript",
                                 Descricao = "Javascript"
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[0],
                                 Materia = materias[5],
-                                Descricao = materias[2].Nome
+                                NomeExibicao = materias[5].Nome,
+                                Descricao = materias[5].Nome
                         },
                         new CursoGradeMateria () {
                             CursoGrade = cursoGrades[1],
                                 Materia = materias[2],
+                                NomeExibicao = materias[2].Nome,
                                 Descricao = materias[2].Nome
                         },
                 };

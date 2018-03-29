@@ -24,6 +24,19 @@ namespace Api.Common.Base {
         public static readonly string INSTITUICAO_NOME = "instituicao.nome";
         public static readonly string INSTITUICAO_CNPJ = "instituicao.cnpj";
 
+
+        public static readonly string INSTITUICAO_CURSO_CURSO = "instituicaoCurso.curso";
+        public static readonly string INSTITUICAO_CURSO_CURSO_GRADE = "instituicaoCurso.cursoGrade";
+        public static readonly string INSTITUICAO_CURSO_DATA_INICIO = "instituicaoCurso.dataInicio";
+
+        public static readonly string INSTITUICAO_CURSO_PERIODO_DIA_SEMANA = "instituicaoCursoPeriodo.diaSemana";
+        public static readonly string INSTITUICAO_CURSO_PERIODO_INICIO = "instituicaoCursoPeriodo.inicio";
+        public static readonly string INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO = "instituicaoCursoPeriodo.pausaInicio";
+        public static readonly string INSTITUICAO_CURSO_PERIODO_PAUSA_FIM = "instituicaoCursoPeriodo.pausaFim";
+        public static readonly string INSTITUICAO_CURSO_PERIODO_FIM = "instituicaoCursoPeriodo.fim";
+
+        public static readonly string INSTITUICAO_CURSO_TURMA_NOME = "instituicaoCursoTurma.nome";
+
         public static readonly string CURSO_GRADE_MATERIA_NOME_EXIBICAO = "cursoGradeMateria.nomeExibicao";
         public static readonly string CURSO_GRADE_MATERIA_DESCRICAO = "cursoGradeMateria.Descricao";
 

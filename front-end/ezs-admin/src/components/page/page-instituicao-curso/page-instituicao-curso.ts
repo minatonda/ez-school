@@ -61,6 +61,10 @@ export class PageInstituicaoCursoComponent extends Vue {
             this.ui.cursos = await FACTORY_CONSTANT.CursoFactory.all();
             if (this.operation === RouterPathType.upd) {
                 this.model = await FACTORY_CONSTANT.InstituicaoFactory.detailInstituicaoCurso(this.$route.params.id, this.$route.params.idInstituicaoCurso);
+                let cursoGrade = this.model.cursoGrade;
+                setImmediate(()=>{
+                    this.model.cursoGrade = cursoGrade;
+                })
             }
         }
         catch (e) {

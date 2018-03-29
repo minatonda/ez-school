@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using Api.Common.Base;
@@ -558,6 +559,212 @@ namespace Api.InstituicaoApi {
             }
         }
 
+        public void ValidateInstituicaoCurso(InstituicaoCursoVM instituicao) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (instituicao.Curso == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_CURSO,
+                });
+            }
+
+            if (instituicao.CursoGrade == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_CURSO_GRADE,
+                });
+            }
+
+            if (instituicao.DataInicio == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_DATA_INICIO,
+                });
+            }
+
+            if (instituicao.Periodos != null && instituicao.Periodos.Count > 0) {
+                instituicao.Periodos.ForEach(periodo => {
+
+                    if (periodo.DiaSemana.Count == 0) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_DIA_SEMANA,
+                        });
+                    }
+
+                    if (periodo.Inicio == null || periodo.Inicio.Trim() == "") {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_INICIO,
+                        });
+                    } else if (!this.isValidHour(periodo.Inicio)) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_HOUR_INVALID,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_INICIO,
+                            Value = periodo.Inicio
+                        });
+                    }
+
+                    if (periodo.Fim == null || periodo.Fim.Trim() == "") {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_FIM,
+                        });
+                    } else if (!this.isValidHour(periodo.Inicio)) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_HOUR_INVALID,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_FIM,
+                            Value = periodo.Inicio
+                        });
+                    }
+
+                    if (periodo.PausaInicio != null && periodo.PausaInicio.Trim() != "") {
+                        if (!this.isValidHour(periodo.PausaInicio)) {
+                            exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_HOUR_INVALID,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO,
+                                Value = periodo.Inicio
+                            });
+                        }
+                        if (periodo.PausaFim == null || periodo.PausaFim.Trim() == "") {
+                            exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_REQUIRED,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
+                            });
+                        } else if (!this.isValidHour(periodo.PausaFim)) {
+                            exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_HOUR_INVALID,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
+                                Value = periodo.Inicio
+                            });
+                        }
+                    }
+
+                    if ((periodo.Inicio != null && periodo.Inicio.Trim() != "" && this.isValidHour(periodo.Inicio)) &&
+                        (periodo.Fim != null && periodo.Fim.Trim() != "" && this.isValidHour(periodo.Fim))) {
+
+                        var baseExceptionFieldInfoInicio = new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_INICIO,
+                            Value = periodo.Inicio,
+                            References = new List<BaseExceptionFieldInfo>()
+                        };
+
+                        if ((periodo.PausaInicio != null && periodo.PausaInicio.Trim() != "" && this.isValidHour(periodo.PausaInicio)) && (periodo.PausaFim != null && periodo.PausaFim.Trim() != "" && this.isValidHour(periodo.PausaFim))) {
+
+                            if (TimeSpan.Parse(periodo.Inicio) >= TimeSpan.Parse(periodo.PausaInicio)) {
+                                baseExceptionFieldInfoInicio.References.Add(new BaseExceptionFieldInfo() {
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO,
+                                    Value = periodo.PausaInicio
+                                });
+
+                                if (!exception.Infos.Contains(baseExceptionFieldInfoInicio)) {
+                                    exception.Infos.Add(baseExceptionFieldInfoInicio);
+                                }
+                            }
+                            if (TimeSpan.Parse(periodo.Inicio) >= TimeSpan.Parse(periodo.PausaFim)) {
+                                baseExceptionFieldInfoInicio.References.Add(new BaseExceptionFieldInfo() {
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
+                                    Value = periodo.PausaFim
+                                });
+
+                                if (!exception.Infos.Contains(baseExceptionFieldInfoInicio)) {
+                                    exception.Infos.Add(baseExceptionFieldInfoInicio);
+                                }
+                            }
+
+                            if ((TimeSpan.Parse(periodo.PausaInicio) >= TimeSpan.Parse(periodo.PausaFim)) ||
+                                (TimeSpan.Parse(periodo.PausaInicio) >= TimeSpan.Parse(periodo.Fim))) {
+
+                                var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO,
+                                    Value = periodo.PausaInicio,
+                                    References = new List<BaseExceptionFieldInfo>()
+                                };
+
+                                if (TimeSpan.Parse(periodo.PausaInicio) >= TimeSpan.Parse(periodo.PausaFim)) {
+                                    baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                        Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
+                                        Value = periodo.PausaFim
+                                    });
+                                }
+
+                                if (TimeSpan.Parse(periodo.PausaInicio) >= TimeSpan.Parse(periodo.Fim)) {
+                                    baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                        Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_FIM,
+                                        Value = periodo.Fim
+                                    });
+                                }
+
+                                exception.Infos.Add(baseExceptionFieldInfo);
+
+                            };
+
+                            if (TimeSpan.Parse(periodo.PausaFim) >= TimeSpan.Parse(periodo.Fim)) {
+
+                                var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
+                                    Value = periodo.PausaFim,
+                                    References = new List<BaseExceptionFieldInfo>(){
+                                        new BaseExceptionFieldInfo() {
+                                            Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_FIM,
+                                            Value = periodo.Fim
+                                        }
+                                    }
+                                };
+
+                                exception.Infos.Add(baseExceptionFieldInfo);
+
+                            };
+
+
+
+                        }
+
+                        if (TimeSpan.Parse(periodo.Inicio) >= TimeSpan.Parse(periodo.Fim)) {
+                            baseExceptionFieldInfoInicio.References.Add(new BaseExceptionFieldInfo() {
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_FIM,
+                                Value = periodo.Fim
+                            });
+
+                            if (!exception.Infos.Contains(baseExceptionFieldInfoInicio)) {
+                                exception.Infos.Add(baseExceptionFieldInfoInicio);
+                            }
+                        }
+
+                    }
+
+                });
+            }
+
+            if (instituicao.Turmas != null && instituicao.Turmas.Count > 0) {
+                instituicao.Turmas.ForEach(turma => {
+
+                    if (turma.Nome == null || turma.Nome == "") {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_TURMA_NOME,
+                        });
+                    }
+
+                });
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
+        }
+
+        public bool isValidHour(string time) {
+            var timeSpanResult = new TimeSpan();
+            return TimeSpan.TryParse(time, System.Globalization.CultureInfo.InvariantCulture, out timeSpanResult);
+        }
 
     }
 }

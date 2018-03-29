@@ -18,7 +18,7 @@ namespace Domain.InstituicaoDomain {
         public CursoGrade CursoGrade { get; set; }
         public DateTime? Ativo { get; set; } = null;
 
-        public DateTime DataInicio { get; set; }
+        public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
 
     }

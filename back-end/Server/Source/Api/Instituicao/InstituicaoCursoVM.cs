@@ -16,7 +16,7 @@ namespace Api.InstituicaoApi {
         public List<InstituicaoCursoPeriodoVM> Periodos { get; set; }
         public List<InstituicaoCursoTurmaVM> Turmas { get; set; }
 
-        public DateTime DataInicio { get; set; }
+        public DateTime? DataInicio { get; set; }
         public DateTime? DataExpiracao { get; set; }
 
     }

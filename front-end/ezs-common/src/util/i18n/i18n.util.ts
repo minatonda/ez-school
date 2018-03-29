@@ -30,6 +30,20 @@ class Util {
                             subMessage = subMessage.replace('{{value}}', `<b>${x.value}</b>`);
                         }
 
+                        if (x.references && x.references.length > 0) {
+                            let references = x.references.map(y => {
+                                let fieldDef = this.getFieldLabel(y.field, lang);
+                                if (fieldDef) {
+                                    return `<li>${fieldDef.label} (<b>${y.value}</b>)</li>`;
+                                }
+                                else {
+                                    console.error(`I18N_FIELD_LABELS_CONSTANT not found : ${y.field}`);
+                                    return '';
+                                }
+                            }).join('');
+                            subMessage = subMessage.replace('{{references}}', `<ul>${references}</ul>`);
+                        }
+
                         message += subMessage;
                     }
                     else {

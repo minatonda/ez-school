@@ -8,6 +8,9 @@ namespace Api.Common.Base {
         public static readonly string RESOURCE_REFUSED = "RESOURCE_REFUSED";
         public static readonly string FIELD_INVALID = "FIELD_INVALID";
         public static readonly string FIELD_REQUIRED = "FIELD_REQUIRED";
+        public static readonly string FIELD_HOUR_INVALID = "FIELD_HOUR_INVALID";
+        public static readonly string FIELD_HOUR_MINOR_THAN = "FIELD_HOUR_MINOR_THAN";
+        public static readonly string FIELD_DATE_INVALID = "FIELD_DATE_INVALID";
         public static readonly string USER_WRONG_USERNAME = "USER_WRONG_USERNAME";
         public static readonly string USER_WRONG_PASSWORD = "USER_WRONG_PASSWORD";
         public static readonly string REGISTER_WITH_SAME_VALUE_EXISTS = "REGISTER_WITH_SAME_VALUE_EXISTS";
