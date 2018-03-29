@@ -117,7 +117,7 @@ export class PageInstituicaoCursoComponent extends Vue {
         });
     }
 
-    async onCursoGradeChanged(cursoGrade){
+    async onCursoGradeChanged(cursoGrade) {
         this.$forceUpdate();
     }
 
