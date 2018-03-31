@@ -61,7 +61,7 @@ class Util {
                                     }
                                 }).join('');
 
-                                referenceReplace += `<ul>${this.getReferenceLabelPrepend(lang).message + text}</ul>`;
+                                referenceReplace += `${this.getReferenceLabelPrepend(lang).message}<ul>${text}</ul>`;
                             }
 
                             subMessage = subMessage.replace('{{references}}', `${referenceReplace}`);
