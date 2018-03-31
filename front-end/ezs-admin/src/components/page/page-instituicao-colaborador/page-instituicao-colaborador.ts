@@ -47,7 +47,7 @@ export class PageInstituicaoColaboradorComponent extends Vue {
             return labelObj;
         },
 
-        instituicaoColaboradorPerfis: undefined
+        instituicaoColaboradorPerfis: []
     };
 
     model: InstituicaoColaboradorModel = new InstituicaoColaboradorModel();

@@ -5,13 +5,13 @@ import { UsuarioInfoModel } from './usuario-info.model';
 
 export class InstituicaoBusinessAulaModel extends BaseModel < number > {
 
-    idInstituicaoCursoOcorrencia: number;
-    idInstituicaoCursoOcorrenciaPeriodoProfessor: number;
-    instituicao: InstituicaoModel;
-    periodoSequencia: number;
-    dataInicio: string;
-    dataExpiracao: string;
-    curso: CursoModel;
-    professor: UsuarioInfoModel;
+    idInstituicaoCursoOcorrencia: number = null;
+    idInstituicaoCursoOcorrenciaPeriodoProfessor: number = null;
+    instituicao: InstituicaoModel = null;
+    periodoSequencia: number = null;
+    dataInicio: string = null;
+    dataExpiracao: string = null;
+    curso: CursoModel = null;
+    professor: UsuarioInfoModel = null;
 
 }

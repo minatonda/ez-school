@@ -12,20 +12,43 @@ export enum I18N_ERROR_GENERIC {
     CONSULTAR,
     CONSULTAR_FALHA,
     ACESSO_NEGADO,
-    JA_AUTENTICADO
+    JA_AUTENTICADO,
 }
 
 export enum I18N_ERROR_SERVER {
     UNAUTHORIZED = 'UNAUTHORIZED',
     UNAUTHORIZED_INSTITUICAO = 'UNAUTHORIZED_INSTITUICAO',
+
     RESOURCE_REFUSED = 'RESOURCE_REFUSED',
+
     FIELD_INVALID = 'FIELD_INVALID',
     FIELD_REQUIRED = 'FIELD_REQUIRED',
+
+    FIELD_LIST_LESS_THAN = 'FIELD_LIST_LESS_THAN',
+    FIELD_LIST_LESS_THAN_OR_EQUAL = 'FIELD_LIST_LESS_THAN_OR_EQUAL',
+    FIELD_LIST_GREATER_THAN = 'FIELD_LIST_GREATER_THAN',
+    FIELD_LIST_GREATER_THAN_OR_EQUAL = 'FIELD_LIST_GREATER_THAN_OR_EQUAL',
+
+    FIELD_LESS_THAN = 'FIELD_LESS_THAN',
+    FIELD_LESS_THAN_OR_EQUAL = 'FIELD_LESS_THAN_OR_EQUAL',
+    FIELD_GREATER_THAN = 'FIELD_GREATER_THAN',
+    FIELD_GREATER_THAN_OR_EQUAL = 'FIELD_GREATER_THAN_OR_EQUAL',
+
     FIELD_HOUR_INVALID = 'FIELD_HOUR_INVALID',
-    FIELD_HOUR_MINOR_THAN = 'FIELD_HOUR_MINOR_THAN',
+    FIELD_HOUR_LESS_THAN = 'FIELD_HOUR_LESS_THAN',
+    FIELD_HOUR_LESS_THAN_OR_EQUAL = 'FIELD_HOUR_LESS_THAN_OR_EQUAL',
+    FIELD_HOUR_GREATER_THAN = 'FIELD_HOUR_GREATER_THAN',
+    FIELD_HOUR_GREATER_THAN_OR_EQUAL = 'FIELD_HOUR_GREATER_THAN_OR_EQUAL',
+
     FIELD_DATE_INVALID = 'FIELD_DATE_INVALID',
+    FIELD_DATE_LESS_THAN = 'FIELD_DATE_LESS_THAN',
+    FIELD_DATE_LESS_THAN_OR_EQUAL = 'FIELD_DATE_LESS_THAN_OR_EQUAL',
+    FIELD_DATE_GREATER_THAN = 'FIELD_DATE_GREATER_THAN',
+    FIELD_DATE_GREATER_THAN_OR_EQUAL = 'FIELD_DATE_GREATER_THAN_OR_EQUAL',
+
     USER_WRONG_USERNAME = 'USER_WRONG_USERNAME',
     USER_WRONG_PASSWORD = 'USER_WRONG_PASSWORD',
+
     REGISTER_WITH_SAME_VALUE_EXISTS = 'REGISTER_WITH_SAME_VALUE_EXISTS',
 }
 
@@ -33,29 +56,60 @@ export enum I18N_ERROR_SERVER_FIELD {
 
     BASE_ROLE = 'baseRole',
     INSTITUICAO_ROLE = 'instituicaoRole',
+
     USUARIO_USERNAME = 'usuario.username',
     USUARIO_PASSWORD = 'usuario.password',
+
     USUARIO_INFO_NOME = 'usuarioInfo.nome',
     USUARIO_INFO_DATA_NASCIMENTO = 'usuarioInfo.dataNascimento',
     USUARIO_INFO_RG = 'usuarioInfo.rg',
     USUARIO_INFO_CPF = 'usuarioInfo.cpf',
     USUARIO_INFO_EMAIL = 'usuarioInfo.email',
     USUARIO_INFO_TELEFONE = 'usuarioInfo.telefone',
+
     CURSO_NOME = 'curso.nome',
     CURSO_DESCRICAO = 'curso.descricao',
+
     INSTITUICAO_NOME = 'instituicao.nome',
     INSTITUICAO_CNPJ = 'instituicao.cnpj',
+
+    INSTITUICAO_COLABORADOR_PERFIL_NOME = 'instituicaoColaboradorPerfil.nome',
+    INSTITUICAO_COLABORADOR_PERFIL_ROLES = 'instituicaoColaboradorPerfil.roles',
+
+    INSTITUICAO_COLABORADOR_USUARIO = 'instituicaoColaboradorPerfil.usuario',
+    INSTITUICAO_COLABORADOR_PERFIS = 'instituicaoColaboradorPerfil.perfis',
+
     INSTITUICAO_CURSO_CURSO = 'instituicaoCurso.curso',
     INSTITUICAO_CURSO_CURSO_GRADE = 'instituicaoCurso.cursoGrade',
     INSTITUICAO_CURSO_DATA_INICIO = 'instituicaoCurso.dataInicio',
+
     INSTITUICAO_CURSO_PERIODO_DIA_SEMANA = 'instituicaoCursoPeriodo.diaSemana',
     INSTITUICAO_CURSO_PERIODO_INICIO = 'instituicaoCursoPeriodo.inicio',
     INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO = 'instituicaoCursoPeriodo.pausaInicio',
     INSTITUICAO_CURSO_PERIODO_PAUSA_FIM = 'instituicaoCursoPeriodo.pausaFim',
     INSTITUICAO_CURSO_PERIODO_FIM = 'instituicaoCursoPeriodo.fim',
+
     INSTITUICAO_CURSO_TURMA_NOME = 'instituicaoCursoTurma.nome',
+
+    INSTITUICAO_CURSO_OCORRENCIA_COORDENADOR = 'instituicaoCursoOcorrencia.coordenador',
+    INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO = 'instituicaoCursoOcorrencia.dataInicio',
+    INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO = 'instituicaoCursoOcorrencia.dataExpiracao',
+
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO = 'instituicaoCursoOcorrenciaPeriodo.dataInicio',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO = 'instituicaoCursoOcorrenciaPeriodo.dataExpiracao',
+
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_ALUNO = 'instituicaoCursoOcorrenciaPeriodoAluno.aluno',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_PERIODO = 'instituicaoCursoOcorrenciaPeriodoAluno.cursoPeriodo',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_TURMA = 'instituicaoCursoOcorrenciaPeriodoAluno.cursoTurma',
+
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_PROFESSOR = 'instituicaoCursoOcorrenciaPeriodoProfessor.professor',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_PERIODO = 'instituicaoCursoOcorrenciaPeriodoProfessor.cursoPeriodo',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_TURMA = 'instituicaoCursoOcorrenciaPeriodoProfessor.cursoTurma',
+    INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_CURSO_GRADE_MATERIA = 'instituicaoCursoOcorrenciaPeriodoProfessor.cursoGradeMateria',
+
     CURSO_GRADE_MATERIA_NOME_EXIBICAO = 'cursoGradeMateria.nomeExibicao',
     CURSO_GRADE_MATERIA_DESCRICAO = 'cursoGradeMateria.Descricao',
+
     MATERIA_NOME = 'materia.nome',
     PROFESSOR_ID = 'professor.id',
     ALUNO_ID = 'aluno.id',
@@ -64,6 +118,15 @@ export enum I18N_ERROR_SERVER_FIELD {
 export enum I18N_LANG {
     ptBR = 0
 }
+
+
+export const I18N_LABEL_REFERENCES_PREPEND = [
+    { lang: I18N_LANG.ptBR, message: 'o(s) campo(s) : ' }
+];
+
+export const I18N_REFERENCES_PREPEND = [
+    { lang: I18N_LANG.ptBR, message: '' }
+];
 
 export const I18N_TEMPLATE_MESSAGE_GENERIC_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_GENERIC.AUTENTICAR, title: 'Autenticado', message: 'Bem vindo' },
@@ -85,13 +148,33 @@ export const I18N_TEMPLATE_MESSAGE_SERVER_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.UNAUTHORIZED_INSTITUICAO, title: 'Acesso negado', message: 'Você não possui acesso ao recurso.' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_USERNAME, title: 'Nome de usuário inválido', message: 'O usuário não existe.' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.USER_WRONG_PASSWORD, title: 'Senha inválida', message: 'A senha digita é inválida.' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_REQUIRED, title: 'Campo Obrigatório', message: 'O campo {{field}} é obrigatório.' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_INVALID, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é inválido.' },
+
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.RESOURCE_REFUSED, title: 'Recurso Recusado', message: 'O Recurso enviado é inválido.' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.REGISTER_WITH_SAME_VALUE_EXISTS, title: 'Registro já existente', message: 'O Registro com o campo {{field}} com o mesmo valor {{value}} já existe.' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_REQUIRED, title: 'Campo Obrigatório', message: 'O campo {{field}} é obrigatório.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_INVALID, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é inválido.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LESS_THAN, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LESS_THAN_OR_EQUAL, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é igual ou menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_GREATER_THAN, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é maior que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_GREATER_THAN_OR_EQUAL, title: 'Campo Inválido', message: 'O valor {{value}} fornecido para o campo {{field}} é igual ou maior que {{references}}' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LIST_LESS_THAN, title: 'Campo Inválido', message: 'O Número de registros de {{field}} é menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LIST_LESS_THAN_OR_EQUAL, title: 'Campo Inválido', message: 'O Número de registros de {{field}} é igual ou menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LIST_GREATER_THAN, title: 'Campo Inválido', message: 'O Número de registros de {{field}} é maior que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_LIST_GREATER_THAN_OR_EQUAL, title: 'Campo Inválido', message: 'O Número de registros de {{field}} é igual ou maior que {{references}}' },
+
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_DATE_INVALID, title: 'Data inválida', message: 'A data {{value}} fornecida para o campo {{field}} é inválida.' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_DATE_LESS_THAN, title: 'Data inválida', message: 'A data {{value}} fornecida para o campo {{field}} é menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_DATE_LESS_THAN_OR_EQUAL, title: 'Data inválida', message: 'A data {{value}} fornecida para o campo {{field}} é igual ou menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_DATE_GREATER_THAN, title: 'Data inválida', message: 'A data {{value}} fornecida para o campo {{field}} é maior que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_DATE_GREATER_THAN_OR_EQUAL, title: 'Data inválida', message: 'A data {{value}} fornecida para o campo {{field}} é igual ou maior que {{references}}' },
+
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_INVALID, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é inválida.' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_MINOR_THAN, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é menor que o(s) campo(s) : {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_LESS_THAN, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_LESS_THAN_OR_EQUAL, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é igual ou menor que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_GREATER_THAN, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é maior que {{references}}' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER.FIELD_HOUR_GREATER_THAN_OR_EQUAL, title: 'Hora inválida', message: 'A hora {{value}} fornecida para o campo {{field}} é igual ou maior que {{references}}' },
 ];
 
 export const I18N_FIELD_LABELS_CONSTANT = [
@@ -110,10 +193,16 @@ export const I18N_FIELD_LABELS_CONSTANT = [
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_RG, label: 'RG (Usuário)' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.USUARIO_INFO_CPF, label: 'CPF (Usuário)' },
 
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.MATERIA_NOME, label: ' - Nome (Matéria)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.MATERIA_NOME, label: 'Nome (Matéria)' },
 
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_NOME, label: ' - Nome (Instituição)' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CNPJ, label: ' - CNPJ (Instituição)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_NOME, label: 'Nome (Instituição)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CNPJ, label: 'CNPJ (Instituição)' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_COLABORADOR_USUARIO, label: 'Usuário (Colaborador por Instituição)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_COLABORADOR_PERFIS, label: 'Perfis (Colaborador por Instituição)' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_COLABORADOR_PERFIL_NOME, label: 'Nome (Perfil de Colaborador por Instituição)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_COLABORADOR_PERFIL_ROLES, label: 'Regras (Perfil de Colaborador por Instituição)' },
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_CURSO, label: 'Curso (Curso por Instituição)' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_CURSO_GRADE, label: 'Grade (Curso por Instituição)' },
@@ -127,12 +216,27 @@ export const I18N_FIELD_LABELS_CONSTANT = [
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_TURMA_NOME, label: 'Nome (Turma do Curso)' },
 
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_COORDENADOR, label: 'Coordenador (Ocorrência por curso)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO, label: 'Data de início (Ocorrência por Curso)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO, label: 'Data de expiração (Ocorrência por Curso)' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO, label: 'Data de início (Período por Ocorrência do Curso)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO, label: 'Data de expiração (Período por Ocorrência do Curso)' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_ALUNO, label: 'Aluno (Aluno por Período Letivo)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_PERIODO, label: 'Periodo  (Aluno por Período Letivo)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_TURMA, label: 'Turma (Aluno por Período Letivo)' },
+
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_PROFESSOR, label: 'Professor (Professor por Período Letivo)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_PERIODO, label: 'Período (Professor por Período Letivo)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_TURMA, label: 'Turma (Professor por Período Letivo)' },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_CURSO_GRADE_MATERIA, label: 'Matéria da Grade (Professor por Período Letivo)' },
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_NOME, label: 'Nome (Curso)' },
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_DESCRICAO, label: 'Descrição (Curso)' },
 
     { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_GRADE_MATERIA_NOME_EXIBICAO, label: 'Nome de Exibição (Matéria da Grade de Curso)' },
-    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_GRADE_MATERIA_DESCRICAO, label: 'Descrição (Matéria da Grade de Curso)'  },
+    { lang: I18N_LANG.ptBR, i18nMessage: I18N_ERROR_SERVER_FIELD.CURSO_GRADE_MATERIA_DESCRICAO, label: 'Descrição (Matéria da Grade de Curso)' },
 ];
 
 export const I18N_ENUM_LABELS_CONSTANTS = [

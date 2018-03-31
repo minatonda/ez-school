@@ -74,9 +74,9 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
     operation: RouterPathType;
 
     ui: UI = {
-        cursoGradeMaterias: undefined,
-        instituicaoCursoTurmas: undefined,
-        instituicaoCursoPeriodos: undefined,
+        cursoGradeMaterias: null,
+        instituicaoCursoTurmas: null,
+        instituicaoCursoPeriodos: null,
 
         instituicaoCursoOcorrenciaPeriodo: new InstituicaoCursoOcorrenciaPeriodoModel(),
 
@@ -86,12 +86,12 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
         instituicaoCursoOcorrenciaPeriodoProfessor: new InstituicaoCursoOcorrenciaPeriodoProfessorModel(),
         instituicaoCursoOcorrenciaPeriodoProfessorUpdating: new InstituicaoCursoOcorrenciaPeriodoProfessorModel(),
 
-        instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula: undefined,
+        instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula: null,
 
         instituicaoCursoOcorrenciaPeriodoCollapse: new Array(),
         instituicaoCursoOcorrenciaPeriodoTab: new Array(),
 
-        dayOfWeek: undefined,
+        dayOfWeek: null,
         dayOfWeeks: DayOfWeekEnumLabel,
 
         queryAluno: async (term) => {
@@ -196,9 +196,9 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
     }
 
     onChangeProfessorAndCursoGradeMateria() {
-        this.ui.dayOfWeek = undefined;
+        this.ui.dayOfWeek = null;
         this.ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas = new Array<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel>();
-        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = undefined;
+        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = null;
 
         this.$forceUpdate();
     }
@@ -243,6 +243,10 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
         this.model.instituicaoCursoOcorrenciaPeriodos.splice(this.model.instituicaoCursoOcorrenciaPeriodos.indexOf(instituicaoCursoOcorrenciaPeriodo), 1);
     }
 
+    isAddInstituicaoCursoOcorrenciaPeriodoEnabled(instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodoModel) {
+        return instituicaoCursoOcorrenciaPeriodo.dataInicio && instituicaoCursoOcorrenciaPeriodo.dataExpiracao;
+    }
+
 
     addInstituicaoCursoOcorrenciaPeriodoAluno(instituicaoCursoOcorrenciaPeriodoAluno: InstituicaoCursoOcorrenciaPeriodoAlunoModel) {
         this.ui.instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodoAlunoModel(), instituicaoCursoOcorrenciaPeriodoAluno));
@@ -251,6 +255,10 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
 
     removeInstituicaoCursoOcorrenciaPeriodoAluno(instituicaoCursoOcorrenciaPeriodoAluno: InstituicaoCursoOcorrenciaPeriodoAlunoModel, instituicaoCursoOcorrenciaPeriodo: InstituicaoCursoOcorrenciaPeriodoModel) {
         instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.splice(instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoAlunos.indexOf(instituicaoCursoOcorrenciaPeriodoAluno), 1);
+    }
+
+    isAddInstituicaoCursoOcorrenciaPeriodoAlunoEnabled(instituicaoCursoOcorrenciaPeriodoAluno: InstituicaoCursoOcorrenciaPeriodoAlunoModel) {
+        return instituicaoCursoOcorrenciaPeriodoAluno.aluno && instituicaoCursoOcorrenciaPeriodoAluno.instituicaoCursoPeriodo && instituicaoCursoOcorrenciaPeriodoAluno.instituicaoCursoTurma;
     }
 
 
@@ -263,10 +271,13 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
         instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.splice(instituicaoCursoOcorrenciaPeriodo.instituicaoCursoOcorrenciaPeriodoProfessores.indexOf(instituicaoCursoOcorrenciaPeriodoProfessor), 1);
     }
 
+    isAddInstituicaoCursoOcorrenciaPeriodoProfessorEnabled(instituicaoCursoOcorrenciaPeriodoProfessor: InstituicaoCursoOcorrenciaPeriodoProfessorModel) {
+        return instituicaoCursoOcorrenciaPeriodoProfessor.professor && instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoPeriodo && instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoTurma && instituicaoCursoOcorrenciaPeriodoProfessor.cursoGradeMateria && instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.length;
+    }
 
     addInstituicaoCursoOcorenciaPeriodoProfessorPeriodoAula(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula: InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel) {
         this.ui.instituicaoCursoOcorrenciaPeriodoProfessor.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.push(Object.assign(new InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel(), instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula));
-        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = undefined;
+        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = null;
     }
 
     removerInstituicaoCursoOcorenciaPeriodoProfessorPeriodoAula(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula: InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel) {
@@ -340,7 +351,7 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
     closeDialogInstituicaoCursoOcorrenciaPeriodoAluno() {
         this.ui.instituicaoCursoOcorrenciaPeriodo = new InstituicaoCursoOcorrenciaPeriodoModel();
         this.ui.instituicaoCUrsoOcorrenciaPeriodoAluno = new InstituicaoCursoOcorrenciaPeriodoAlunoModel();
-        this.ui.instituicaoCUrsoOcorrenciaPeriodoAlunoUpdating = undefined;
+        this.ui.instituicaoCUrsoOcorrenciaPeriodoAlunoUpdating = null;
         (this.$refs['modal-ocorrencia-periodo-aluno'] as any).hide();
     }
 
@@ -366,7 +377,7 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
     closeDialogInstituicaoCursoOcorrenciaPeriodoProfessor() {
         this.ui.instituicaoCursoOcorrenciaPeriodo = new InstituicaoCursoOcorrenciaPeriodoModel();
         this.ui.instituicaoCursoOcorrenciaPeriodoProfessor = new InstituicaoCursoOcorrenciaPeriodoProfessorModel();
-        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorUpdating = undefined;
+        this.ui.instituicaoCursoOcorrenciaPeriodoProfessorUpdating = null;
         (this.$refs['modal-ocorrencia-periodo-professor'] as any).hide();
     }
 
@@ -483,7 +494,7 @@ export class PageInstituicaoCursoOcorrenciaComponent extends Vue {
 
         let columns = [
             new CardTableColumn({
-                value: (item: InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel) => item.dia.toString(),
+                value: (item: InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel) => this.getDayWeekLabel(item.dia).label,
                 label: () => 'Dia'
             }),
             new CardTableColumn({

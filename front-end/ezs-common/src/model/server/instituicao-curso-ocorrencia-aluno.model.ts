@@ -6,6 +6,6 @@ import { UsuarioModel } from './usuario.model';
 
 export class InstituicaoCursoOcorrenciaAlunoModel extends BaseModel < number > {
 
-    aluno: UsuarioModel;
+    aluno: UsuarioModel = null;
 
 }

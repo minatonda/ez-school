@@ -24,6 +24,11 @@ namespace Api.Common.Base {
         public static readonly string INSTITUICAO_NOME = "instituicao.nome";
         public static readonly string INSTITUICAO_CNPJ = "instituicao.cnpj";
 
+        public static readonly string INSTITUICAO_COLABORADOR_PERFIL_NOME = "instituicaoColaboradorPerfil.nome";
+        public static readonly string INSTITUICAO_COLABORADOR_PERFIL_ROLES = "instituicaoColaboradorPerfil.roles";
+
+        public static readonly string INSTITUICAO_COLABORADOR_USUARIO = "instituicaoColaboradorPerfil.usuario";
+        public static readonly string INSTITUICAO_COLABORADOR_PERFIS = "instituicaoColaboradorPerfil.perfis";
 
         public static readonly string INSTITUICAO_CURSO_CURSO = "instituicaoCurso.curso";
         public static readonly string INSTITUICAO_CURSO_CURSO_GRADE = "instituicaoCurso.cursoGrade";
@@ -36,6 +41,22 @@ namespace Api.Common.Base {
         public static readonly string INSTITUICAO_CURSO_PERIODO_FIM = "instituicaoCursoPeriodo.fim";
 
         public static readonly string INSTITUICAO_CURSO_TURMA_NOME = "instituicaoCursoTurma.nome";
+
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_COORDENADOR = "instituicaoCursoOcorrencia.coordenador";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO = "instituicaoCursoOcorrencia.dataInicio";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO = "instituicaoCursoOcorrencia.dataExpiracao";
+
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO = "instituicaoCursoOcorrenciaPeriodo.dataInicio";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO = "instituicaoCursoOcorrenciaPeriodo.dataExpiracao";
+
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_ALUNO = "instituicaoCursoOcorrenciaPeriodoAluno.aluno";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_PERIODO = "instituicaoCursoOcorrenciaPeriodoAluno.cursoPeriodo";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_TURMA = "instituicaoCursoOcorrenciaPeriodoAluno.cursoTurma";
+
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_PROFESSOR = "instituicaoCursoOcorrenciaPeriodoProfessor.professor";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_PERIODO = "instituicaoCursoOcorrenciaPeriodoProfessor.cursoPeriodo";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_TURMA = "instituicaoCursoOcorrenciaPeriodoProfessor.cursoTurma";
+        public static readonly string INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_CURSO_GRADE_MATERIA = "instituicaoCursoOcorrenciaPeriodoProfessor.cursoGradeMateria";
 
         public static readonly string CURSO_GRADE_MATERIA_NOME_EXIBICAO = "cursoGradeMateria.nomeExibicao";
         public static readonly string CURSO_GRADE_MATERIA_DESCRICAO = "cursoGradeMateria.Descricao";

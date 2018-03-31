@@ -8,8 +8,8 @@ export class MateriaModel  extends BaseModel < number > {
         this.materiasRelacionadas = new Array<MateriaRelacionamentoModel>();
     }
 
-    nome: string;
-    descricao: string;
-    materiasRelacionadas: Array<MateriaRelacionamentoModel>;
+    nome: string = null;
+    descricao: string = null;
+    materiasRelacionadas: Array<MateriaRelacionamentoModel> = null;
 
 }

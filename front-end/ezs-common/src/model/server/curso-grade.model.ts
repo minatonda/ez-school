@@ -9,8 +9,8 @@ export class CursoGradeModel extends BaseModel<number> {
         this.materias = new Array<CursoGradeMateriaModel>();
     }
 
-    descricao: string;
-    instituicao: InstituicaoModel;
-    materias: Array<CursoGradeMateriaModel>;
+    descricao: string = null;
+    instituicao: InstituicaoModel = null;
+    materias: Array<CursoGradeMateriaModel> = null;
 
 }

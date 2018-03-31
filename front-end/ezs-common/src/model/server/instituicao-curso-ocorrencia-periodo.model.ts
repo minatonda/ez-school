@@ -11,9 +11,9 @@ export class InstituicaoCursoOcorrenciaPeriodoModel extends BaseModel < number >
         this.instituicaoCursoOcorrenciaPeriodoProfessores = new Array < InstituicaoCursoOcorrenciaPeriodoProfessorModel > ();
     }
 
-    instituicaoCursoOcorrenciaPeriodoProfessores: Array < InstituicaoCursoOcorrenciaPeriodoProfessorModel > ;
-    instituicaoCursoOcorrenciaPeriodoAlunos: Array < InstituicaoCursoOcorrenciaPeriodoAlunoModel > ;
-    dataInicio: Date;
-    dataExpiracao: Date;
+    instituicaoCursoOcorrenciaPeriodoProfessores: Array < InstituicaoCursoOcorrenciaPeriodoProfessorModel >  = null;
+    instituicaoCursoOcorrenciaPeriodoAlunos: Array < InstituicaoCursoOcorrenciaPeriodoAlunoModel >  = null;
+    dataInicio: Date = null;
+    dataExpiracao: Date = null;
 
 }

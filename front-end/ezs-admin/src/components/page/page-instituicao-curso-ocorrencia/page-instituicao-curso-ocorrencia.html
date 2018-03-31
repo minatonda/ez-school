@@ -23,11 +23,6 @@
                                 <date-catcher v-model="model.dataExpiracao" placeholder="Data de expiração" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4 form-group">
-                                <button class="btn btn-primary" v-on:click="openDialogInstituicaoCursoOcorrenciaPeriodo()">Novo Período Escolar</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -42,17 +37,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-2 form-group">
+                            <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Data de Ínicio</label>
-                                <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataInicio" placeholder="Data de início" v-bind:model-as-date="true"></date-catcher>
+                                <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataInicio" placeholder="Data de início" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
-                            <div class="col-12 col-md-2 form-group">
+                            <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Data de Expiração</label>
-                                <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataExpiracao" placeholder="Data de Finalização" v-bind:model-as-date="true"></date-catcher>
+                                <date-catcher v-model="ui.instituicaoCursoOcorrenciaPeriodo.dataExpiracao" placeholder="Data de Finalização" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
                             <div class="col-12 col-md-2 form-group">
                                 <label class="control-label invisible">Ocupar</label>
-                                <button class="btn btn-primary btn-block" v-on:click="saveInstituicaoCursoOcorrenciaPeriodo(ui.instituicaoCursoOcorrenciaPeriodo)">Salvar</button>
+                                <button class="btn btn-primary btn-block" v-on:click="saveInstituicaoCursoOcorrenciaPeriodo(ui.instituicaoCursoOcorrenciaPeriodo)" v-bind:disabled="!isAddInstituicaoCursoOcorrenciaPeriodoEnabled(ui.instituicaoCursoOcorrenciaPeriodo)">Salvar</button>
                             </div>
                         </div>
                     </div>
@@ -64,10 +59,10 @@
                 <div class="card w-100 mt-2 mb-2" v-for="(instituicaoCursoOcorrenciaPeriodo,index) in model.instituicaoCursoOcorrenciaPeriodos">
                     <div class="card-header pt-2 pb-2">
                         <div class="row">
-                            <div class="col-12 col-md-4 align-self-center">
+                            <div class="col-12 col-md-3 align-self-center">
                                 <b>Data de Início: </b><span>{{getDateTimeLabel(instituicaoCursoOcorrenciaPeriodo.dataInicio)}}</span>
                             </div>
-                            <div class="col-12 col-md-4 align-self-center">
+                            <div class="col-12 col-md-3 align-self-center">
                                 <b>Data de Finalização: </b><span>{{getDateTimeLabel(instituicaoCursoOcorrenciaPeriodo.dataExpiracao)}}</span>
                             </div>
                             <div class="col-12 d-md-none">
@@ -90,11 +85,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-4 form-group">
+                            <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Data de ínicio</label>
                                 <date-catcher v-model="instituicaoCursoOcorrenciaPeriodo.dataInicio" placeholder="Data de início" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
-                            <div class="col-12 col-md-4 form-group">
+                            <div class="col-12 col-md-3 form-group">
                                 <label class="control-label">Data de Finalização</label>
                                 <date-catcher v-model="instituicaoCursoOcorrenciaPeriodo.dataExpiracao" placeholder="Data de Finalização" label="DD/MM/YYYY" v-bind:model-as-date="true"></date-catcher>
                             </div>
@@ -191,7 +186,7 @@
                 <button class="btn btn-primary" v-on:click="closeDialogInstituicaoCursoOcorrenciaPeriodoProfessor()">Sair</button>
             </div>
             <div class="col-6 text-right">
-                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoProfessor(ui.instituicaoCursoOcorrenciaPeriodoProfessor)">Salvar</button>
+                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoProfessor(ui.instituicaoCursoOcorrenciaPeriodoProfessor)" v-bind:disabled="!isAddInstituicaoCursoOcorrenciaPeriodoProfessorEnabled(ui.instituicaoCursoOcorrenciaPeriodoProfessor)">Salvar</button>
             </div>
         </div>
     </b-modal>
@@ -220,7 +215,7 @@
                 <button class="btn btn-primary" v-on:click="closeDialogInstituicaoCursoOcorrenciaPeriodoAluno()">Sair</button>
             </div>
             <div class="col-6 text-right">
-                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoAluno(ui.instituicaoCUrsoOcorrenciaPeriodoAluno)">Salvar</button>
+                <button class="btn btn-primary" v-on:click="saveInstituicaoCursoOcorrenciaPeriodoAluno(ui.instituicaoCUrsoOcorrenciaPeriodoAluno)" v-bind:disabled="!isAddInstituicaoCursoOcorrenciaPeriodoAlunoEnabled(ui.instituicaoCUrsoOcorrenciaPeriodoAluno)">Salvar</button>
             </div>
         </div>
     </b-modal>

@@ -8,7 +8,7 @@ export class InstituicaoColaboradorModel extends BaseModel<number> {
         this.perfis = new Array<string>();
     }
 
-    usuario: UsuarioInfoModel;
-    perfis: Array<string>;
+    usuario: UsuarioInfoModel = null;
+    perfis: Array<string> = null;
 
 }

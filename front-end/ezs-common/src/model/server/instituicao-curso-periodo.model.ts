@@ -8,11 +8,11 @@ export class InstituicaoCursoPeriodoModel extends BaseModel < number > {
         this.diaSemana = new Array < DayOfWeekModel > ();
     }
 
-    inicio: string;
-    fim: string;
-    pausaInicio: string;
-    pausaFim: string;
-    quebras: number;
-    diaSemana: Array < DayOfWeekModel > ;
+    inicio: string = null;
+    fim: string = null;
+    pausaInicio: string = null;
+    pausaFim: string = null;
+    quebras: number = null;
+    diaSemana: Array < DayOfWeekModel >  = null;
 
 }

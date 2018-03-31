@@ -2,10 +2,10 @@ import { BaseModel } from './base.model';
 
 export class InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel extends BaseModel < number > {
 
-    inicio: string;
-    fim: string;
-    dia: DayOfWeekModel;
-    label: string;
+    inicio: string = null;
+    fim: string = null;
+    dia: DayOfWeekModel = null;
+    label: string = null;
 
 }
 

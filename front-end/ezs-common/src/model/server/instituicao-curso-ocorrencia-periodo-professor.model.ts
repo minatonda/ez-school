@@ -12,10 +12,10 @@ export class InstituicaoCursoOcorrenciaPeriodoProfessorModel extends BaseModel <
         this.instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas = new Array < InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel > ();
     }
 
-    professor: UsuarioInfoModel;
-    cursoGradeMateria: CursoGradeMateriaModel;
-    instituicaoCursoTurma: InstituicaoCursoTurmaModel;
-    instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel;
-    instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas: Array < InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel > ;
+    professor: UsuarioInfoModel = null;
+    cursoGradeMateria: CursoGradeMateriaModel = null;
+    instituicaoCursoTurma: InstituicaoCursoTurmaModel = null;
+    instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel = null;
+    instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas: Array < InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaModel >  = null;
 
 }

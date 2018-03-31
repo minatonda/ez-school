@@ -10,9 +10,9 @@ export class InstituicaoCursoOcorrenciaModel  extends BaseModel < number > {
         this.instituicaoCursoOcorrenciaPeriodos = new Array < InstituicaoCursoOcorrenciaPeriodoModel > ();
     }
 
-    coordenador: ProfessorModel;
-    dataInicio: string;
-    dataExpiracao: string;
-    instituicaoCursoOcorrenciaPeriodos: Array < InstituicaoCursoOcorrenciaPeriodoModel > ;
+    coordenador: ProfessorModel = null;
+    dataInicio: string = null;
+    dataExpiracao: string = null;
+    instituicaoCursoOcorrenciaPeriodos: Array < InstituicaoCursoOcorrenciaPeriodoModel >  = null;
 
 }

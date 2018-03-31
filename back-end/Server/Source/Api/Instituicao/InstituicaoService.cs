@@ -648,7 +648,7 @@ namespace Api.InstituicaoApi {
                         (periodo.Fim != null && periodo.Fim.Trim() != "" && this.isValidHour(periodo.Fim))) {
 
                         var baseExceptionFieldInfoInicio = new BaseExceptionFieldInfo() {
-                            Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                            Code = BaseExceptionCode.FIELD_HOUR_LESS_THAN,
                             Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_INICIO,
                             Value = periodo.Inicio,
                             References = new List<BaseExceptionFieldInfo>()
@@ -681,7 +681,7 @@ namespace Api.InstituicaoApi {
                                 (TimeSpan.Parse(periodo.PausaInicio) >= TimeSpan.Parse(periodo.Fim))) {
 
                                 var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
-                                    Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                                    Code = BaseExceptionCode.FIELD_HOUR_LESS_THAN,
                                     Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_INICIO,
                                     Value = periodo.PausaInicio,
                                     References = new List<BaseExceptionFieldInfo>()
@@ -708,7 +708,7 @@ namespace Api.InstituicaoApi {
                             if (TimeSpan.Parse(periodo.PausaFim) >= TimeSpan.Parse(periodo.Fim)) {
 
                                 var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
-                                    Code = BaseExceptionCode.FIELD_HOUR_MINOR_THAN,
+                                    Code = BaseExceptionCode.FIELD_HOUR_LESS_THAN,
                                     Field = BaseExceptionField.INSTITUICAO_CURSO_PERIODO_PAUSA_FIM,
                                     Value = periodo.PausaFim,
                                     References = new List<BaseExceptionFieldInfo>(){
@@ -753,6 +753,293 @@ namespace Api.InstituicaoApi {
                         });
                     }
 
+                });
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
+        }
+
+        public void ValidateInstituicaoCursoOcorrencia(InstituicaoCursoOcorrenciaVM instituicaoCursoOcorrencia) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (instituicaoCursoOcorrencia.Coordenador == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_COORDENADOR,
+                });
+            }
+
+            if (instituicaoCursoOcorrencia.DataInicio == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO,
+                });
+            }
+
+            if (instituicaoCursoOcorrencia.DataExpiracao == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO,
+                });
+            }
+
+            if (instituicaoCursoOcorrencia.InstituicaoCursoOcorrenciaPeriodos != null && instituicaoCursoOcorrencia.InstituicaoCursoOcorrenciaPeriodos.Count > 0) {
+                instituicaoCursoOcorrencia.InstituicaoCursoOcorrenciaPeriodos.ForEach(instituicaoCursoOcorrenciaPeriodo => {
+
+                    if (instituicaoCursoOcorrenciaPeriodo.DataInicio == null) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO,
+                        });
+                    } else {
+
+                        if (instituicaoCursoOcorrencia.DataInicio != null && (instituicaoCursoOcorrenciaPeriodo.DataInicio < instituicaoCursoOcorrencia.DataInicio)) {
+                            exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_LESS_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO,
+                                Value = instituicaoCursoOcorrenciaPeriodo.DataInicio.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                                References = new List<BaseExceptionFieldInfo>(){
+                                    new BaseExceptionFieldInfo() {
+                                        Code = BaseExceptionCode.FIELD_DATE_LESS_THAN,
+                                        Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO,
+                                        Value = instituicaoCursoOcorrencia.DataInicio.Value.Date.ToString("o"),
+                                        ValueType = BaseExceptionFieldInfoValueType.DATE,
+                                    }
+                                }
+                            });
+                        }
+
+                        var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_DATE_GREATER_THAN,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO,
+                            Value = instituicaoCursoOcorrenciaPeriodo.DataInicio.Value.Date.ToString("o"),
+                            ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            References = new List<BaseExceptionFieldInfo>()
+                        };
+
+                        if (instituicaoCursoOcorrenciaPeriodo.DataExpiracao != null && (instituicaoCursoOcorrenciaPeriodo.DataInicio > instituicaoCursoOcorrenciaPeriodo.DataExpiracao)) {
+                            baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_GREATER_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO,
+                                Value = instituicaoCursoOcorrenciaPeriodo.DataExpiracao.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            });
+
+                            if (!exception.Infos.Contains(baseExceptionFieldInfo)) {
+                                exception.Infos.Add(baseExceptionFieldInfo);
+                            }
+                        }
+
+                        if (instituicaoCursoOcorrencia.DataExpiracao != null && (instituicaoCursoOcorrenciaPeriodo.DataInicio > instituicaoCursoOcorrencia.DataExpiracao)) {
+                            baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_GREATER_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO,
+                                Value = instituicaoCursoOcorrencia.DataExpiracao.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            });
+
+                            if (!exception.Infos.Contains(baseExceptionFieldInfo)) {
+                                exception.Infos.Add(baseExceptionFieldInfo);
+                            }
+                        }
+
+                    }
+
+                    if (instituicaoCursoOcorrenciaPeriodo.DataExpiracao == null) {
+                        exception.Infos.Add(new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_REQUIRED,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO,
+                        });
+                    } else {
+
+                        if (instituicaoCursoOcorrencia.DataExpiracao != null && (instituicaoCursoOcorrenciaPeriodo.DataExpiracao > instituicaoCursoOcorrencia.DataExpiracao)) {
+                            exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_GREATER_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO,
+                                Value = instituicaoCursoOcorrenciaPeriodo.DataExpiracao.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                                References = new List<BaseExceptionFieldInfo>(){
+                                    new BaseExceptionFieldInfo() {
+                                        Code = BaseExceptionCode.FIELD_DATE_GREATER_THAN,
+                                        Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_EXPIRACAO,
+                                        Value = instituicaoCursoOcorrencia.DataExpiracao.Value.Date.ToString("o"),
+                                        ValueType = BaseExceptionFieldInfoValueType.DATE,
+                                    }
+                                }
+                            });
+                        }
+
+                        var baseExceptionFieldInfo = new BaseExceptionFieldInfo() {
+                            Code = BaseExceptionCode.FIELD_DATE_LESS_THAN,
+                            Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_EXPIRACAO,
+                            Value = instituicaoCursoOcorrenciaPeriodo.DataExpiracao.Value.Date.ToString("o"),
+                            ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            References = new List<BaseExceptionFieldInfo>()
+                        };
+
+                        if (instituicaoCursoOcorrenciaPeriodo.DataInicio != null && (instituicaoCursoOcorrenciaPeriodo.DataExpiracao < instituicaoCursoOcorrenciaPeriodo.DataInicio)) {
+                            baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_LESS_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_DATA_INICIO,
+                                Value = instituicaoCursoOcorrenciaPeriodo.DataInicio.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            });
+
+                            if (!exception.Infos.Contains(baseExceptionFieldInfo)) {
+                                exception.Infos.Add(baseExceptionFieldInfo);
+                            }
+                        }
+
+                        if (instituicaoCursoOcorrencia.DataInicio != null && (instituicaoCursoOcorrenciaPeriodo.DataExpiracao < instituicaoCursoOcorrencia.DataInicio)) {
+                            baseExceptionFieldInfo.References.Add(new BaseExceptionFieldInfo() {
+                                Code = BaseExceptionCode.FIELD_DATE_LESS_THAN,
+                                Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_DATA_INICIO,
+                                Value = instituicaoCursoOcorrencia.DataInicio.Value.Date.ToString("o"),
+                                ValueType = BaseExceptionFieldInfoValueType.DATE,
+                            });
+
+                            if (!exception.Infos.Contains(baseExceptionFieldInfo)) {
+                                exception.Infos.Add(baseExceptionFieldInfo);
+                            }
+                        }
+
+                    }
+
+                    if (instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoAlunos != null && instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoAlunos.Count > 0) {
+                        instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoAlunos.ForEach(instituicaoCursoOcorrenciaPeriodoAluno => {
+
+                            if (instituicaoCursoOcorrenciaPeriodoAluno.Aluno == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_ALUNO,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_PERIODO,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_ALUNO_INSTITUICAO_CURSO_TURMA,
+                                });
+                            }
+
+                        });
+                    }
+
+                    if (instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoProfessores != null && instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoProfessores.Count > 0) {
+                        instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrenciaPeriodoProfessores.ForEach(instituicaoCursoOcorrenciaPeriodoProfessor => {
+
+                            if (instituicaoCursoOcorrenciaPeriodoProfessor.Professor == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_PROFESSOR,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_PERIODO,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_INSTITUICAO_CURSO_TURMA,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoProfessor.CursoGradeMateria == null) {
+                                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                                    Field = BaseExceptionField.INSTITUICAO_CURSO_OCORRENCIA_PERIODO_PROFESSOR_CURSO_GRADE_MATERIA,
+                                });
+                            }
+
+                            if (instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas == null || instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.Count > 0) {
+
+                                instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas.ForEach(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula => {
+
+                                });
+
+                            }
+
+                        });
+                    }
+
+                });
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
+        }
+
+        public void ValidateInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfilVM instituicaoColaboradorPerfil) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (instituicaoColaboradorPerfil.Nome == null || instituicaoColaboradorPerfil.Nome.Trim() == "") {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_COLABORADOR_PERFIL_NOME,
+                });
+            }
+
+            if (instituicaoColaboradorPerfil.Roles == null || instituicaoColaboradorPerfil.Roles.Count == 0) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_LIST_LESS_THAN,
+                    Field = BaseExceptionField.INSTITUICAO_COLABORADOR_PERFIL_ROLES,
+                    References = new List<BaseExceptionFieldInfo>(){
+                        new BaseExceptionFieldInfo(){
+                            Value="1"
+                        }
+                    }
+                });
+            }
+
+            if (exception.Infos.Count > 0) {
+                throw exception;
+            }
+        }
+
+        public void ValidateInstituicaoColaborador(InstituicaoColaboradorVM instituicaoColaborador) {
+            var exception = new BaseException();
+            exception.Code = BaseExceptionCode.RESOURCE_REFUSED;
+            exception.HttpStatusCode = HttpStatusCode.NotAcceptable;
+            exception.Infos = new List<BaseExceptionFieldInfo>();
+
+            if (instituicaoColaborador.Usuario == null) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_REQUIRED,
+                    Field = BaseExceptionField.INSTITUICAO_COLABORADOR_USUARIO,
+                });
+            }
+
+            if (instituicaoColaborador.Perfis == null || instituicaoColaborador.Perfis.Count == 0) {
+                exception.Infos.Add(new BaseExceptionFieldInfo() {
+                    Code = BaseExceptionCode.FIELD_LIST_LESS_THAN,
+                    Field = BaseExceptionField.INSTITUICAO_COLABORADOR_PERFIS,
+                    References = new List<BaseExceptionFieldInfo>(){
+                        new BaseExceptionFieldInfo(){
+                            Value="1"
+                        }
+                    }
                 });
             }
 

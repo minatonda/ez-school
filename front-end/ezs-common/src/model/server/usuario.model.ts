@@ -3,8 +3,8 @@ import { BaseModel } from './base.model';
 
 export class UsuarioModel extends BaseModel < string > {
 
-    username: string;
-    password: string;
-    usuarioInfo: UsuarioInfoModel;
+    username: string = null;
+    password: string = null;
+    usuarioInfo: UsuarioInfoModel = null;
 
 }

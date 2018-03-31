@@ -4,10 +4,10 @@ import { InstituicaoCursoOcorrenciaAlunoModel } from './instituicao-curso-ocorre
 import { BaseModel } from './base.model';
 import { UsuarioInfoModel } from './usuario-info.model';
 
-export class InstituicaoCursoOcorrenciaPeriodoAlunoModel extends BaseModel < number > {
+export class InstituicaoCursoOcorrenciaPeriodoAlunoModel extends BaseModel<number> {
 
-    aluno: UsuarioInfoModel;
-    instituicaoCursoTurma: InstituicaoCursoTurmaModel;
-    instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel;
+    aluno: UsuarioInfoModel = null;
+    instituicaoCursoTurma: InstituicaoCursoTurmaModel = null;
+    instituicaoCursoPeriodo: InstituicaoCursoPeriodoModel = null;
 
 }

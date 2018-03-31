@@ -1,6 +1,6 @@
 export class AutenticacaoModel {
-    access_token: string;
-    created: Date;
-    expires: Date;
-    time_zone: string;
+    access_token: string = null;
+    created: Date = null;
+    expires: Date = null;
+    time_zone: string = null;
 }

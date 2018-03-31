@@ -3,6 +3,6 @@ import { BaseModel } from './base.model';
 
 export class MateriaRelacionamentoModel extends BaseModel < number > {
 
-    materiaPai: MateriaModel;
+    materiaPai: MateriaModel = null;
 
 }

@@ -2,7 +2,7 @@ import { BaseModel } from './base.model';
 
 export class InstituicaoCursoTurmaModel extends BaseModel < number > {
 
-    nome: string;
-    descricao: string;
+    nome: string = null;
+    descricao: string = null;
 
 }

@@ -12,16 +12,16 @@ export class UsuarioInfoModel extends BaseModel<string> {
         this.endereco = new EnderecoModel();
     }
 
-    nome: string;
-    email: string;
-    telefone: string;
-    dataNascimento: string;
-    rg: string;
-    cpf: string;
-    endereco: EnderecoModel;
-    genero: string;
-    estadoCivil: string;
-    areaInteresses: Array<AreaInteresseModel>;
-    roles: Array<string>;
+    nome: string = null;
+    email: string = null;
+    telefone: string = null;
+    dataNascimento: string = null;
+    rg: string = null;
+    cpf: string = null;
+    endereco: EnderecoModel = null;
+    genero: string = null;
+    estadoCivil: string = null;
+    areaInteresses: Array<AreaInteresseModel> = null;
+    roles: Array<string> = null;
 
 }

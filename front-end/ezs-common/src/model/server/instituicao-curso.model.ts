@@ -13,11 +13,11 @@ export class InstituicaoCursoModel extends BaseModel < number > {
         this.turmas = new Array < InstituicaoCursoTurmaModel > ();
     }
 
-    curso: CursoModel;
-    cursoGrade: CursoGradeModel;
-    periodos: Array < InstituicaoCursoPeriodoModel > ;
-    turmas: Array < InstituicaoCursoTurmaModel > ;
-    dataInicio: Date;
-    dataFim: Date;
+    curso: CursoModel = null;
+    cursoGrade: CursoGradeModel = null;
+    periodos: Array < InstituicaoCursoPeriodoModel >  = null;
+    turmas: Array < InstituicaoCursoTurmaModel >  = null;
+    dataInicio: Date = null;
+    dataFim: Date = null;
 
 }

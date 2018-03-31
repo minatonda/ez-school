@@ -8,8 +8,8 @@ export class CursoModel extends BaseModel < number > {
         this.grades = new Array<CursoGradeModel>();
     }
 
-    nome: string;
-    descricao: string;
-    grades: Array<CursoGradeModel>;
+    nome: string = null;
+    descricao: string = null;
+    grades: Array<CursoGradeModel> = null;
 
 }

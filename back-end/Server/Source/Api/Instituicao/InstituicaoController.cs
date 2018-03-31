@@ -34,6 +34,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_COLABORADOR);
             }
+            this._instituicaoService.ValidateInstituicaoColaborador(viewModel);
             this._instituicaoService.AddInstituicaoColaborador(id, viewModel);
         }
 
@@ -44,6 +45,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_COLABORADOR_PERFIL);
             }
+            this._instituicaoService.ValidateInstituicaoColaboradorPerfil(viewModel);
             this._instituicaoService.AddInstituicaoColaboradorPerfil(id, viewModel);
         }
 
@@ -65,6 +67,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.ADD_INSTITUICAO_CURSO_OCORRENCIA);
             }
+            this._instituicaoService.ValidateInstituicaoCursoOcorrencia(viewModel);
             this._instituicaoService.AddInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
@@ -86,6 +89,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR);
             }
+            this._instituicaoService.ValidateInstituicaoColaborador(viewModel);
             this._instituicaoService.UpdateInstituicaoColaborador(id, viewModel);
         }
 
@@ -96,6 +100,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_COLABORADOR_PERFIL);
             }
+            this._instituicaoService.ValidateInstituicaoColaboradorPerfil(viewModel);
             this._instituicaoService.UpdateInstituicaoColaboradorPerfil(id, viewModel);
         }
 
@@ -117,6 +122,7 @@ namespace Api.InstituicaoApi {
             } catch (BaseException) {
                 this.IsAuthorizedInstituicao(id, InstituicaoRole.EDIT_INSTITUICAO_CURSO_OCORRENCIA);
             }
+            this._instituicaoService.ValidateInstituicaoCursoOcorrencia(viewModel);
             this._instituicaoService.UpdateInstituicaoCursoOcorrencia(idInstituicaoCurso, viewModel);
         }
 
