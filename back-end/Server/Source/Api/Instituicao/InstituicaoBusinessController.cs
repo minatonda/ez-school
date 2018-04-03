@@ -71,6 +71,11 @@ namespace Api.InstituicaoApi {
             this._instituicaoService.SaveFormulaNotaFinal(String.Join(',', formulaNotaFinal), idInstituicaoCursoOcorrenciaPeriodoProfessor);
         }
 
+        [HttpPost("instituicao-curso-ocorrencia-anexos-professor/{idInstituicaoCursoOcorrenciaPeriodoProfessor}//save")]
+        public void SaveInstituicaoCursoOcorrenciaAnexoProfessor(long idInstituicaoCursoOcorrenciaPeriodoProfessor){
+
+        }
+
         [HttpGet("formula-nota-final/{idInstituicaoCursoOcorrenciaPeriodoProfessor}")]
         public string[] GetFormulaNotaFinal(long idInstituicaoCursoOcorrenciaPeriodoProfessor) {
             var notaFinal = this._instituicaoService.GetFormulaNotaFinal(idInstituicaoCursoOcorrenciaPeriodoProfessor);

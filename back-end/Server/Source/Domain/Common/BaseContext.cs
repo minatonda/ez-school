@@ -1,3 +1,4 @@
+using Domain.AnexoDomain;
 using Domain.AreaInteresseDomain;
 using Domain.CategoriaProfissionalDomain;
 using Domain.CursoDomain;
@@ -21,6 +22,7 @@ namespace Domain.Common {
 
         public DbSet<Usuario> Usr { get; set; }
         public DbSet<UsuarioInfo> UsrInf { get; set; }
+        public DbSet<Anexo> Anx { get; set; }
         public DbSet<Materia> Mtr { get; set; }
         public DbSet<Professor> Prf { get; set; }
         public DbSet<Aluno> Aln { get; set; }
