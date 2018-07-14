@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 using Domain.UsuarioDomain;
 
 namespace Domain.InstituicaoDomain {
+
+    [Table("ICOcorrencia")]
     public class InstituicaoCursoOcorrencia : IBaseModel {
 
         public InstituicaoCursoOcorrencia () {

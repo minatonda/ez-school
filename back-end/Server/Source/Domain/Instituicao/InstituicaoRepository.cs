@@ -22,41 +22,41 @@ namespace Domain.InstituicaoDomain {
         }
 
         public void Add(Instituicao instituicao) {
-            this.db.Ittc.Add(instituicao);
+            this.db.Instituicoes.Add(instituicao);
         }
 
         public void AddInstituicaoCurso(InstituicaoCurso model) {
-            model.Instituicao = this.db.Ittc.Find(model.Instituicao.ID);
-            model.Curso = this.db.Crs.Find(model.Curso.ID);
-            model.CursoGrade = this.db.CrsGrd.Find(model.CursoGrade.ID);
-            this.db.IttcCrs.Add(model);
+            model.Instituicao = this.db.Instituicoes.Find(model.Instituicao.ID);
+            model.Curso = this.db.Cursos.Find(model.Curso.ID);
+            model.CursoGrade = this.db.CursoGrades.Find(model.CursoGrade.ID);
+            this.db.InstituicoesCursos.Add(model);
         }
 
         public void AddInstituicaoCursoPeriodo(InstituicaoCursoPeriodo instituicaoCursoPeriodo) {
-            instituicaoCursoPeriodo.InstituicaoCurso = this.db.IttcCrs.Find(instituicaoCursoPeriodo.InstituicaoCurso.ID);
-            this.db.IttcCrsPrd.Add(instituicaoCursoPeriodo);
+            instituicaoCursoPeriodo.InstituicaoCurso = this.db.InstituicoesCursos.Find(instituicaoCursoPeriodo.InstituicaoCurso.ID);
+            this.db.InstituicoesCursosPeriodos.Add(instituicaoCursoPeriodo);
         }
 
         public void AddInstituicaoCursoTurma(InstituicaoCursoTurma instituicaoCursoTurma) {
-            instituicaoCursoTurma.InstituicaoCurso = this.db.IttcCrs.Find(instituicaoCursoTurma.InstituicaoCurso.ID);
-            this.db.IttcCrsTrm.Add(instituicaoCursoTurma);
+            instituicaoCursoTurma.InstituicaoCurso = this.db.InstituicoesCursos.Find(instituicaoCursoTurma.InstituicaoCurso.ID);
+            this.db.InstituicoesCursosTurmas.Add(instituicaoCursoTurma);
         }
 
         public void AddInstituicaoCursoOcorrencia(InstituicaoCursoOcorrencia instituicaoCursoOcorrencia) {
-            instituicaoCursoOcorrencia.InstituicaoCurso = this.db.IttcCrs.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
-            instituicaoCursoOcorrencia.Coordenador = this.db.UsrInf.Find(instituicaoCursoOcorrencia.Coordenador.ID);
-            this.db.IttcCrsOcrnc.Add(instituicaoCursoOcorrencia);
+            instituicaoCursoOcorrencia.InstituicaoCurso = this.db.InstituicoesCursos.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
+            instituicaoCursoOcorrencia.Coordenador = this.db.UsuarioInfos.Find(instituicaoCursoOcorrencia.Coordenador.ID);
+            this.db.InstituicoesCursosOcorrencias.Add(instituicaoCursoOcorrencia);
         }
 
         public void AddInstituicaoCursoOcorrenciaAluno(InstituicaoCursoOcorrenciaAluno instituicaoCursoOcorrenciaAluno) {
-            instituicaoCursoOcorrenciaAluno.Aluno = this.db.UsrInf.Find(instituicaoCursoOcorrenciaAluno.Aluno.ID);
-            instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia = this.db.IttcCrsOcrnc.Find(instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia.ID);
-            this.db.IttcCrsOcrncAln.Add(instituicaoCursoOcorrenciaAluno);
+            instituicaoCursoOcorrenciaAluno.Aluno = this.db.UsuarioInfos.Find(instituicaoCursoOcorrenciaAluno.Aluno.ID);
+            instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia = this.db.InstituicoesCursosOcorrencias.Find(instituicaoCursoOcorrenciaAluno.InstituicaoCursoOcorrencia.ID);
+            this.db.InstituicoesCursosOcorrenciasAlunos.Add(instituicaoCursoOcorrenciaAluno);
         }
 
         public void AddInstituicaoCursoOcorrenciaPeriodo(InstituicaoCursoOcorrenciaPeriodo instituicaoCursoOcorrenciaPeriodo) {
-            instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia = this.db.IttcCrsOcrnc.Find(instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia.ID);
-            this.db.IttcCrsOcrncPrd.Add(instituicaoCursoOcorrenciaPeriodo);
+            instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia = this.db.InstituicoesCursosOcorrencias.Find(instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia.ID);
+            this.db.InstituicoesCursosOcorrenciasPeriodos.Add(instituicaoCursoOcorrenciaPeriodo);
         }
 
         public void AddInstituicaoCursoOcorrenciaPeriodoAluno(InstituicaoCursoOcorrenciaPeriodoAluno instituicaoCursoOcorrenciaPeriodoAluno) {
@@ -69,49 +69,49 @@ namespace Domain.InstituicaoDomain {
                 this.AddInstituicaoCursoOcorrenciaAluno(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaAluno);
             }
 
-            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo = this.db.IttcCrsOcrncPrd.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo.ID);
-            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo = this.db.IttcCrsPrd.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo.ID);
-            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma = this.db.IttcCrsTrm.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma.ID);
+            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo = this.db.InstituicoesCursosOcorrenciasPeriodos.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoOcorrenciaPeriodo.ID);
+            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo = this.db.InstituicoesCursosPeriodos.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo.ID);
+            instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma = this.db.InstituicoesCursosTurmas.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma.ID);
 
-            this.db.IttcCrsOcrncPrdAln.Add(instituicaoCursoOcorrenciaPeriodoAluno);
+            this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Add(instituicaoCursoOcorrenciaPeriodoAluno);
         }
 
         public void AddInstituicaoCursoOcorrenciaPeriodoProfessor(InstituicaoCursoOcorrenciaPeriodoProfessor instituicaoCursoOcorrenciaPeriodoProfessor) {
-            instituicaoCursoOcorrenciaPeriodoProfessor.CursoGradeMateria = this.db.CrsGrdMtr.Find(instituicaoCursoOcorrenciaPeriodoProfessor.CursoGradeMateria.ID);
-            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo = this.db.IttcCrsOcrncPrd.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo.ID);
-            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo = this.db.IttcCrsPrd.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
-            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma = this.db.IttcCrsTrm.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
-            instituicaoCursoOcorrenciaPeriodoProfessor.Professor = this.db.UsrInf.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.CursoGradeMateria = this.db.CursoGradeMaterias.Find(instituicaoCursoOcorrenciaPeriodoProfessor.CursoGradeMateria.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo = this.db.InstituicoesCursosOcorrenciasPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoOcorrenciaPeriodo.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo = this.db.InstituicoesCursosPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma = this.db.InstituicoesCursosTurmas.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
+            instituicaoCursoOcorrenciaPeriodoProfessor.Professor = this.db.UsuarioInfos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
 
-            this.db.IttcCrsOcrncPrdPrf.Add(instituicaoCursoOcorrenciaPeriodoProfessor);
+            this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Add(instituicaoCursoOcorrenciaPeriodoProfessor);
         }
 
         public void AddInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula) {
-            instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.IttcCrsOcrncPrdPrf.Find(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
-            this.db.IttcCrsOcrncPrdPrfPrdAul.Add(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
+            instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Find(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
+            this.db.InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas.Add(instituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
         }
 
         public void AddInstituicaoCursoOcorrenciaNota(InstituicaoCursoOcorrenciaNota instituicaoCursoOcorrenciaNota) {
-            instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.IttcCrsOcrncPrdAln.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
-            instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.IttcCrsOcrncPrdPrf.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
-            this.db.IttcCrsOcrncNt.Add(instituicaoCursoOcorrenciaNota);
+            instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
+            instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
+            this.db.InstituicoesCursosOcorrenciasNotas.Add(instituicaoCursoOcorrenciaNota);
         }
 
         public void AddInstituicaoCursoOcorrenciaAusencia(InstituicaoCursoOcorrenciaAusencia instituicaoCursoOcorrenciaAusencia) {
-            instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.IttcCrsOcrncPrdAln.Find(instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
-            instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.IttcCrsOcrncPrdPrf.Find(instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
-            this.db.IttcCrsOcrncAsnc.Add(instituicaoCursoOcorrenciaAusencia);
+            instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Find(instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
+            instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Find(instituicaoCursoOcorrenciaAusencia.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
+            this.db.InstituicoesCursosOcorrenciasAusencias.Add(instituicaoCursoOcorrenciaAusencia);
         }
 
         public void AddInstituicaoColaborador(InstituicaoColaborador instituicaoColaborador) {
-            instituicaoColaborador.Instituicao = this.db.Ittc.Find(instituicaoColaborador.Instituicao.ID);
-            instituicaoColaborador.Usuario = this.db.UsrInf.Find(instituicaoColaborador.Usuario.ID);
-            this.db.IttcClbd.Add(instituicaoColaborador);
+            instituicaoColaborador.Instituicao = this.db.Instituicoes.Find(instituicaoColaborador.Instituicao.ID);
+            instituicaoColaborador.Usuario = this.db.UsuarioInfos.Find(instituicaoColaborador.Usuario.ID);
+            this.db.InstituicoesColaboradores.Add(instituicaoColaborador);
         }
 
         public void AddInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfil instituicaoColaboradorPerfil) {
-            instituicaoColaboradorPerfil.Instituicao = this.db.Ittc.Find(instituicaoColaboradorPerfil.Instituicao.ID);
-            this.db.IttcClbdPrf.Add(instituicaoColaboradorPerfil);
+            instituicaoColaboradorPerfil.Instituicao = this.db.Instituicoes.Find(instituicaoColaboradorPerfil.Instituicao.ID);
+            this.db.InstituicoesColaboradoresPerfis.Add(instituicaoColaboradorPerfil);
         }
 
         public void AddHistoryInstituicao(long id) {
@@ -138,51 +138,51 @@ namespace Domain.InstituicaoDomain {
         public void Update(Instituicao instituicao) {
             //this.AddHistoryInstituicao(instituicao.ID);
 
-            var model = this.db.Ittc.Find(instituicao.ID);
+            var model = this.db.Instituicoes.Find(instituicao.ID);
 
             model.Nome = instituicao.Nome;
             model.CNPJ = instituicao.CNPJ;
 
-            this.db.Ittc.Update(model);
+            this.db.Instituicoes.Update(model);
         }
 
         public void UpdateInstituicaoCurso(InstituicaoCurso instituicaoCurso) {
             //this.AddHistoryInstituicaoCurso(instituicaoCurso.ID);
 
-            var model = this.db.IttcCrs.Find(instituicaoCurso.ID);
-            model.Curso = this.db.Crs.Find(instituicaoCurso.Curso.ID);
-            model.CursoGrade = this.db.CrsGrd.Find(instituicaoCurso.CursoGrade.ID);
+            var model = this.db.InstituicoesCursos.Find(instituicaoCurso.ID);
+            model.Curso = this.db.Cursos.Find(instituicaoCurso.Curso.ID);
+            model.CursoGrade = this.db.CursoGrades.Find(instituicaoCurso.CursoGrade.ID);
 
-            this.db.IttcCrs.Update(model);
+            this.db.InstituicoesCursos.Update(model);
         }
 
         public void UpdateInstituicaoCursoOcorrencia(InstituicaoCursoOcorrencia instituicaoCursoOcorrencia) {
             //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
 
-            var model = this.db.IttcCrsOcrnc.Find(instituicaoCursoOcorrencia.ID);
-            model.InstituicaoCurso = this.db.IttcCrs.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
+            var model = this.db.InstituicoesCursosOcorrencias.Find(instituicaoCursoOcorrencia.ID);
+            model.InstituicaoCurso = this.db.InstituicoesCursos.Find(instituicaoCursoOcorrencia.InstituicaoCurso.ID);
             model.DataInicio = instituicaoCursoOcorrencia.DataInicio;
             model.DataExpiracao = instituicaoCursoOcorrencia.DataExpiracao;
-            model.Coordenador = this.db.UsrInf.Find(instituicaoCursoOcorrencia.Coordenador.ID);
+            model.Coordenador = this.db.UsuarioInfos.Find(instituicaoCursoOcorrencia.Coordenador.ID);
 
-            this.db.IttcCrsOcrnc.Update(model);
+            this.db.InstituicoesCursosOcorrencias.Update(model);
         }
 
         public void UpdateInstituicaoCursoOcorrenciaPeriodo(InstituicaoCursoOcorrenciaPeriodo instituicaoCursoOcorrenciaPeriodo) {
             //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
 
-            var model = this.db.IttcCrsOcrncPrd.Find(instituicaoCursoOcorrenciaPeriodo.ID);
-            model.InstituicaoCursoOcorrencia = this.db.IttcCrsOcrnc.Find(instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia.ID);
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodos.Find(instituicaoCursoOcorrenciaPeriodo.ID);
+            model.InstituicaoCursoOcorrencia = this.db.InstituicoesCursosOcorrencias.Find(instituicaoCursoOcorrenciaPeriodo.InstituicaoCursoOcorrencia.ID);
             model.DataInicio = instituicaoCursoOcorrenciaPeriodo.DataInicio;
             model.DataExpiracao = instituicaoCursoOcorrenciaPeriodo.DataExpiracao;
 
-            this.db.IttcCrsOcrncPrd.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodos.Update(model);
         }
 
         public void UpdateInstituicaoCursoOcorrenciaPeriodoAluno(InstituicaoCursoOcorrenciaPeriodoAluno instituicaoCursoOcorrenciaPeriodoAluno) {
             //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
 
-            var model = this.db.IttcCrsOcrncPrdAln
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
@@ -197,149 +197,149 @@ namespace Domain.InstituicaoDomain {
                 this.AddInstituicaoCursoOcorrenciaAluno(model.InstituicaoCursoOcorrenciaAluno);
             }
 
-            model.InstituicaoCursoPeriodo = this.db.IttcCrsPrd.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo.ID);
-            model.InstituicaoCursoTurma = this.db.IttcCrsTrm.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma.ID);
-            this.db.IttcCrsOcrncPrdAln.Update(model);
+            model.InstituicaoCursoPeriodo = this.db.InstituicoesCursosPeriodos.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoPeriodo.ID);
+            model.InstituicaoCursoTurma = this.db.InstituicoesCursosTurmas.Find(instituicaoCursoOcorrenciaPeriodoAluno.InstituicaoCursoTurma.ID);
+            this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Update(model);
         }
 
         public InstituicaoCursoOcorrenciaAluno GetInstituicaoCursoOcorrenciaAlunoByAlunoAndInstituicaoCursoOcorrencia(string idAluno, long idInstituicaoCursoOcorrencia) {
-            return this.db.IttcCrsOcrncAln.SingleOrDefault(x => x.Aluno.ID == idAluno && x.InstituicaoCursoOcorrencia.ID == idInstituicaoCursoOcorrencia);
+            return this.db.InstituicoesCursosOcorrenciasAlunos.SingleOrDefault(x => x.Aluno.ID == idAluno && x.InstituicaoCursoOcorrencia.ID == idInstituicaoCursoOcorrencia);
         }
 
         public void UpdateInstituicaoCursoOcorrenciaPeriodoProfessor(InstituicaoCursoOcorrenciaPeriodoProfessor instituicaoCursoOcorrenciaPeriodoProfessor) {
             //this.AddHistoryInstituicaoCursoOcorrencia(instituicaoCursoOcorrencia.ID);
 
-            var model = this.db.IttcCrsOcrncPrdPrf
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
                         .Include(i => i.Professor)
                         .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
                         .Include(i => i.InstituicaoCursoTurma)
                         .SingleOrDefault(x => x.ID == instituicaoCursoOcorrenciaPeriodoProfessor.ID);
 
-            model.Professor = this.db.UsrInf.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
-            model.InstituicaoCursoPeriodo = this.db.IttcCrsPrd.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
-            model.InstituicaoCursoTurma = this.db.IttcCrsTrm.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
+            model.Professor = this.db.UsuarioInfos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.Professor.ID);
+            model.InstituicaoCursoPeriodo = this.db.InstituicoesCursosPeriodos.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoPeriodo.ID);
+            model.InstituicaoCursoTurma = this.db.InstituicoesCursosTurmas.Find(instituicaoCursoOcorrenciaPeriodoProfessor.InstituicaoCursoTurma.ID);
             model.FormulaNotaFinal = instituicaoCursoOcorrenciaPeriodoProfessor.FormulaNotaFinal;
-            this.db.IttcCrsOcrncPrdPrf.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Update(model);
         }
 
         public void UpdateInstituicaoCursoOcorrenciaNota(InstituicaoCursoOcorrenciaNota instituicaoCursoOcorrenciaNota) {
-            var model = this.db.IttcCrsOcrncNt.Include(i => i.InstituicaoCursoOcorrenciaPeriodoAluno).Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor).SingleOrDefault(x => x.ID == instituicaoCursoOcorrenciaNota.ID);
-            model.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.IttcCrsOcrncPrdAln.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
-            model.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.IttcCrsOcrncPrdPrf.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
+            var model = this.db.InstituicoesCursosOcorrenciasNotas.Include(i => i.InstituicaoCursoOcorrenciaPeriodoAluno).Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor).SingleOrDefault(x => x.ID == instituicaoCursoOcorrenciaNota.ID);
+            model.InstituicaoCursoOcorrenciaPeriodoAluno = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoAluno.ID);
+            model.InstituicaoCursoOcorrenciaPeriodoProfessor = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Find(instituicaoCursoOcorrenciaNota.InstituicaoCursoOcorrenciaPeriodoProfessor.ID);
             model.Valor = instituicaoCursoOcorrenciaNota.Valor;
             model.DataLancamento = instituicaoCursoOcorrenciaNota.DataLancamento;
-            this.db.IttcCrsOcrncNt.Update(model);
+            this.db.InstituicoesCursosOcorrenciasNotas.Update(model);
         }
 
         public void UpdateInstituicaoColaborador(InstituicaoColaborador instituicaoColaborador) {
-            var model = this.db.IttcClbd.Include(x => x.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaborador.ID);
+            var model = this.db.InstituicoesColaboradores.Include(x => x.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaborador.ID);
             model.Perfis = instituicaoColaborador.Perfis;
-            model.Instituicao = this.db.Ittc.Find(instituicaoColaborador.Instituicao.ID);
-            model.Usuario = this.db.UsrInf.Find(instituicaoColaborador.Usuario.ID);
-            this.db.IttcClbd.Update(model);
+            model.Instituicao = this.db.Instituicoes.Find(instituicaoColaborador.Instituicao.ID);
+            model.Usuario = this.db.UsuarioInfos.Find(instituicaoColaborador.Usuario.ID);
+            this.db.InstituicoesColaboradores.Update(model);
         }
 
         public void UpdateInstituicaoColaboradorPerfil(InstituicaoColaboradorPerfil instituicaoColaboradorPerfil) {
-            var model = this.db.IttcClbdPrf.Include(i => i.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaboradorPerfil.ID);
-            model.Instituicao = this.db.Ittc.Find(instituicaoColaboradorPerfil.Instituicao.ID);
+            var model = this.db.InstituicoesColaboradoresPerfis.Include(i => i.Instituicao).SingleOrDefault(x => x.ID == instituicaoColaboradorPerfil.ID);
+            model.Instituicao = this.db.Instituicoes.Find(instituicaoColaboradorPerfil.Instituicao.ID);
             model.Nome = instituicaoColaboradorPerfil.Nome;
             model.Roles = instituicaoColaboradorPerfil.Roles;
-            this.db.IttcClbdPrf.Update(model);
+            this.db.InstituicoesColaboradoresPerfis.Update(model);
         }
 
         public void Disable(long id) {
-            var model = this.db.Ittc.Find(id);
+            var model = this.db.Instituicoes.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.Ittc.Update(model);
+            this.db.Instituicoes.Update(model);
         }
 
         public void DisableInstituicaoColaborador(long id) {
-            var model = this.db.IttcClbd.Find(id);
+            var model = this.db.InstituicoesColaboradores.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcClbd.Update(model);
+            this.db.InstituicoesColaboradores.Update(model);
         }
 
         public void DisableInstituicaoColaboradorPerfil(long id) {
-            var model = this.db.IttcClbdPrf.Find(id);
+            var model = this.db.InstituicoesColaboradores.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcClbdPrf.Update(model);
+            this.db.InstituicoesColaboradores.Update(model);
         }
 
         public void DisableInstituicaoCurso(long id) {
-            var model = this.db.IttcCrs.Find(id);
+            var model = this.db.InstituicoesCursos.Find(id);
             model.Ativo = DateTime.Now;
             model.DataExpiracao = DateTime.Now;
-            this.db.IttcCrs.Update(model);
+            this.db.InstituicoesCursos.Update(model);
         }
 
         public void DisableInstituicaoCursoPeriodo(long id) {
-            var model = this.db.IttcCrsPrd.Find(id);
+            var model = this.db.InstituicoesCursosPeriodos.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsPrd.Update(model);
+            this.db.InstituicoesCursosPeriodos.Update(model);
         }
 
         public void DisableInstituicaoCursoTurma(long id) {
-            var model = this.db.IttcCrsTrm.Find(id);
+            var model = this.db.InstituicoesCursosTurmas.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsTrm.Update(model);
+            this.db.InstituicoesCursosTurmas.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrencia(long id) {
-            var model = this.db.IttcCrsOcrnc.Find(id);
+            var model = this.db.InstituicoesCursosOcorrencias.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrnc.Update(model);
+            this.db.InstituicoesCursosOcorrencias.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaAusencia(long id) {
-            var model = this.db.IttcCrsOcrncAsnc.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasAusencias.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncAsnc.Update(model);
+            this.db.InstituicoesCursosOcorrenciasAusencias.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaNota(long id) {
-            var model = this.db.IttcCrsOcrncNt.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasNotas.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncNt.Update(model);
+            this.db.InstituicoesCursosOcorrenciasNotas.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaPeriodo(long id) {
-            var model = this.db.IttcCrsOcrncPrd.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodos.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncPrd.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodos.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaPeriodoAluno(long id) {
-            var model = this.db.IttcCrsOcrncPrdAln.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncPrdAln.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodosAlunos.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaPeriodoProfessor(long id) {
-            var model = this.db.IttcCrsOcrncPrdPrf.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncPrdPrf.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.Update(model);
         }
 
         public void DisableInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula(long id) {
-            var model = this.db.IttcCrsOcrncPrdPrfPrdAul.Find(id);
+            var model = this.db.InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.IttcCrsOcrncPrdPrfPrdAul.Update(model);
+            this.db.InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas.Update(model);
         }
 
         public Instituicao Get(long id) {
-            return this.db.Ittc
+            return this.db.Instituicoes
             .AsNoTracking()
             .SingleOrDefault(x => x.ID == id);
         }
 
         public Instituicao GetByCNPJ(string CNPJ) {
-            return this.db.Ittc
+            return this.db.Instituicoes
             .AsNoTracking()
             .FirstOrDefault(x => x.CNPJ.ToLower() == CNPJ.ToLower() && !x.Ativo.HasValue);
         }
 
         public InstituicaoCurso GetInstituicaoCurso(long id) {
-            return this.db.IttcCrs
+            return this.db.InstituicoesCursos
             .AsNoTracking()
             .Include(i => i.Curso)
             .Include(i => i.Instituicao)
@@ -348,7 +348,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoCursoOcorrencia GetInstituicaoCursoOcorrencia(long id) {
-            return this.db.IttcCrsOcrnc
+            return this.db.InstituicoesCursosOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
             .Include(i => i.Coordenador)
@@ -356,15 +356,15 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoCursoOcorrenciaPeriodo GetInstituicaoCursoOcorrenciaPeriodo(long id) {
-            return this.db.IttcCrsOcrncPrd
+            return this.db.InstituicoesCursosOcorrenciasPeriodos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrencia)
             .SingleOrDefault(x => x.ID == id);
         }
 
         public long GetInstituicaoCursoOcorrenciaPeriodoSequence(long id) {
-            var instituicaoCursoOcorrencia = this.db.IttcCrsOcrncPrd.Include(i => i.InstituicaoCursoOcorrencia).SingleOrDefault(y => y.ID == id).InstituicaoCursoOcorrencia;
-            var ocorrencias = this.db.IttcCrsOcrncPrd
+            var instituicaoCursoOcorrencia = this.db.InstituicoesCursosOcorrenciasPeriodos.Include(i => i.InstituicaoCursoOcorrencia).SingleOrDefault(y => y.ID == id).InstituicaoCursoOcorrencia;
+            var ocorrencias = this.db.InstituicoesCursosOcorrenciasPeriodos
             .Where(x => x.InstituicaoCursoOcorrencia.ID == instituicaoCursoOcorrencia.ID)
             .OrderBy(x => x.DataInicio)
             .ToList();
@@ -373,7 +373,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoCursoOcorrenciaPeriodoAluno GetInstituicaoCursoOcorrenciaPeriodoAlunoByAlunoIdAndInstituicaoCursoOcorrenciaPeriodoId(string alunoId, long instituicaoCursoOcorrenciaPeriodoId) {
-            return this.db.IttcCrsOcrncPrdAln
+            return this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
@@ -382,7 +382,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoCursoOcorrenciaPeriodoProfessor GetInstituicaoCursoOcorrenciaPeriodoProfessor(long id) {
-            return this.db.IttcCrsOcrncPrdPrf
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
             .Include(i => i.InstituicaoCursoTurma)
@@ -392,7 +392,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoColaborador GetInstituicaoColaborador(long id) {
-            return this.db.IttcClbd
+            return this.db.InstituicoesColaboradores
             .AsNoTracking()
             .Include(i => i.Instituicao)
             .Include(i => i.Usuario)
@@ -400,18 +400,18 @@ namespace Domain.InstituicaoDomain {
         }
 
         public InstituicaoColaboradorPerfil GetInstituicaoColaboradorPerfil(long id) {
-            return this.db.IttcClbdPrf
+            return this.db.InstituicoesColaboradoresPerfis
             .AsNoTracking()
             .Include(i => i.Instituicao)
             .SingleOrDefault(x => x.Instituicao.ID == id);
         }
 
         public List<Instituicao> GetAll(bool ativo) {
-            return this.db.Ittc.Where(x => x.Ativo.HasValue == !ativo).ToList();
+            return this.db.Instituicoes.Where(x => x.Ativo.HasValue == !ativo).ToList();
         }
 
         public List<InstituicaoCurso> GetAllInstituicaoCursoByInstituicao(long id, bool ativo) {
-            return this.db.IttcCrs
+            return this.db.InstituicoesCursos
             .AsNoTracking()
             .Include(i => i.Curso)
             .Include(i => i.Instituicao)
@@ -421,7 +421,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoTurma> GetAllInstituicaoCursoTurmaByInstituicaoCurso(long id, bool ativo) {
-            return this.db.IttcCrsTrm
+            return this.db.InstituicoesCursosTurmas
             .AsNoTracking()
              .Include(i => i.InstituicaoCurso)
              .Where(x => x.InstituicaoCurso.ID == id && x.Ativo.HasValue == !ativo)
@@ -429,7 +429,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoPeriodo> GetAllInstituicaoCursoPeriodoByInstituicaoCurso(long id, bool ativo) {
-            return this.db.IttcCrsPrd
+            return this.db.InstituicoesCursosPeriodos
             .AsNoTracking()
              .Include(i => i.InstituicaoCurso)
              .Where(x => x.InstituicaoCurso.ID == id && x.Ativo.HasValue == !ativo)
@@ -437,12 +437,12 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<CursoGradeMateria> GetAllInstituicaoCursoGradeMateriaByInstituicaoCurso(long id, bool ativo) {
-            var cursoGrade = this.db.IttcCrs
+            var cursoGrade = this.db.InstituicoesCursos
             .AsNoTracking()
             .Include(x => x.CursoGrade)
             .SingleOrDefault(y => y.ID == id).CursoGrade;
 
-            return this.db.CrsGrdMtr
+            return this.db.CursoGradeMaterias
              .Include(i => i.CursoGrade)
              .Include(i => i.Materia)
              .Where(x => x.CursoGrade.ID == cursoGrade.ID)
@@ -450,7 +450,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCategoria> GetAllInstituicaoCategoria(long id, bool ativo) {
-            return this.db.IttcIttcCtgr
+            return this.db.InstituicoesInstituicoesCategorias
             .AsNoTracking()
             .Include(i => i.InstituicaoCategoria)
             .Include(i => i.Instituicao)
@@ -460,7 +460,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrencia> GetAllInstituicaoCursoOcorrenciaByInstituicaoCurso(long id, bool ativo) {
-            return this.db.IttcCrsOcrnc
+            return this.db.InstituicoesCursosOcorrencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCurso)
             .Where(x => x.InstituicaoCurso.ID == id && x.Ativo.HasValue == !ativo)
@@ -468,7 +468,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaNota> GetAllInstituicaoCursoOcorrenciaNotaByInstituicaoCursoOcorrenciaProfessorPeriodo(long idInstituicaoCursoOcorrenciaProfessorPeriodo) {
-            return this.db.IttcCrsOcrncNt
+            return this.db.InstituicoesCursosOcorrenciasNotas
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoAluno)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor)
@@ -477,7 +477,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaAusencia> GetAllInstituicaoCursoOcorrenciaAusenciaByInstituicaoCursoOcorrenciaProfessorPeriodo(long idInstituicaoCursoOcorrenciaProfessorPeriodo) {
-            return this.db.IttcCrsOcrncAsnc
+            return this.db.InstituicoesCursosOcorrenciasAusencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoAluno)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor)
@@ -486,7 +486,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaAusencia> GetAllInstituicaoCursoOcorrenciaAusenciaByInstituicaoCursoOcorrenciaProfessorPeriodoAndDataAusencia(long idInstituicaoCursoOcorrenciaProfessorPeriodo, DateTime DataAusencia) {
-            return this.db.IttcCrsOcrncAsnc
+            return this.db.InstituicoesCursosOcorrenciasAusencias
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoAluno)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor)
@@ -495,7 +495,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaAluno> GetAllInstituicaoCursoOcorrenciaAlunoByInstituicaoCursoOcorrencia(long id, bool ativo) {
-            return this.db.IttcCrsOcrncAln
+            return this.db.InstituicoesCursosOcorrenciasAlunos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrencia)
             .Include(i => i.Aluno)
@@ -504,7 +504,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodo> GetAllInstituicaoCursoOcorrenciaPeriodoByInstituicaoCursoOcorrencia(long id, bool ativo) {
-            return this.db.IttcCrsOcrncPrd
+            return this.db.InstituicoesCursosOcorrenciasPeriodos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrencia)
             .Where(x => x.InstituicaoCursoOcorrencia.ID == id && x.Ativo.HasValue == !ativo)
@@ -512,7 +512,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoProfessor> GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByProfessor(string id, bool ativo) {
-            return this.db.IttcCrsOcrncPrdPrf
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
             .AsNoTracking()
             .Include(i => i.CursoGradeMateria)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
@@ -529,7 +529,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoProfessor> GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByAluno(string id, bool emCurso, bool ativo) {
-            var query = this.db.IttcCrsOcrncPrdAln
+            var query = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .AsNoTracking()
             .Where(x => x.InstituicaoCursoOcorrenciaAluno.Aluno.ID == id);
 
@@ -541,7 +541,7 @@ namespace Domain.InstituicaoDomain {
             .Select(x => x.InstituicaoCursoOcorrenciaPeriodo.ID)
             .ToList();
 
-            return this.db.IttcCrsOcrncPrdPrf
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
             .AsNoTracking()
             .Include(i => i.CursoGradeMateria)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
@@ -558,7 +558,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoProfessor> GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByAlunoAndInstituicaoCursoOcorrencia(string idAluno, long idInstituicaoCursoOcorrencia, bool ativo) {
-            var idsInstituicaoCursoOcorrenciaPeriodo = this.db.IttcCrsOcrncPrdAln
+            var idsInstituicaoCursoOcorrenciaPeriodo = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
                         .AsNoTracking()
                         .Include(x => x.InstituicaoCursoOcorrenciaAluno)
                         .ThenInclude(x => x.InstituicaoCursoOcorrencia)
@@ -566,7 +566,7 @@ namespace Domain.InstituicaoDomain {
                         .Select(x => x.InstituicaoCursoOcorrenciaPeriodo.ID)
                         .ToList();
 
-            return this.db.IttcCrsOcrncPrdPrf
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
             .AsNoTracking()
             .Include(i => i.CursoGradeMateria)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
@@ -583,7 +583,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoAluno> GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByAluno(string id, bool ativo) {
-            return this.db.IttcCrsOcrncPrdAln
+            return this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
@@ -595,7 +595,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoAluno> GetAllInstituicaoCursoOcorrenciaPeriodoAlunoByInstituicaoCursoOcorrenciaPeriodo(long id, bool ativo) {
-            return this.db.IttcCrsOcrncPrdAln
+            return this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
@@ -607,7 +607,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoProfessor> GetAllInstituicaoCursoOcorrenciaPeriodoProfessorByInstituicaoCursoOcorrenciaPeriodo(long id, bool ativo) {
-            return this.db.IttcCrsOcrncPrdPrf
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessores
             .AsNoTracking()
             .Include(i => i.Professor)
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodo)
@@ -620,7 +620,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> GetAllInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulaByInstituicaoCursoOcorrenciaPeriodoProfessor(long id, bool ativo) {
-            return this.db.IttcCrsOcrncPrdPrfPrdAul
+            return this.db.InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas
             .AsNoTracking()
             .Include(i => i.InstituicaoCursoOcorrenciaPeriodoProfessor)
             .Where(x => x.InstituicaoCursoOcorrenciaPeriodoProfessor.ID == id && x.Ativo.HasValue == !ativo)
@@ -628,7 +628,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoColaborador> GetAllInstituicaoColaboradorByInstituicao(long id, bool ativo) {
-            return this.db.IttcClbd
+            return this.db.InstituicoesColaboradores
             .AsNoTracking()
             .Include(i => i.Instituicao)
             .Include(i => i.Usuario)
@@ -637,7 +637,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByInstituicao(long id, bool ativo) {
-            return this.db.IttcClbdPrf
+            return this.db.InstituicoesColaboradoresPerfis
             .AsNoTracking()
             .Include(i => i.Instituicao)
             .Where(x => x.Instituicao.ID == id && x.Ativo.HasValue == !ativo)
@@ -645,33 +645,33 @@ namespace Domain.InstituicaoDomain {
         }
 
         public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByUsuario(string id, long idInstituicao, bool ativo) {
-            var colaboradores = this.db.IttcClbd
+            var colaboradores = this.db.InstituicoesColaboradores
             .AsNoTracking()
             .Include(i => i.Usuario)
             .Include(i => i.Instituicao)
             .Where(x => x.Usuario.ID == id && x.Instituicao.ID == idInstituicao && x.Ativo.HasValue == !ativo)
             .ToList();
 
-            return this.db.IttcClbdPrf.AsNoTracking()
+            return this.db.InstituicoesColaboradoresPerfis.AsNoTracking()
             .Where(x => colaboradores.Any(i => i.Perfis.Contains(x.ID.ToString())) && x.Ativo.HasValue == !ativo)
             .ToList();
         }
 
         public List<InstituicaoColaboradorPerfil> GetAllInstituicaoColaboradorPerfilByUsuario(string id, bool ativo) {
-            var colaboradores = this.db.IttcClbd
+            var colaboradores = this.db.InstituicoesColaboradores
             .AsNoTracking()
             .Include(i => i.Usuario)
             .Include(i => i.Instituicao)
             .Where(x => x.Usuario.ID == id && x.Ativo.HasValue == !ativo)
             .ToList();
 
-            return this.db.IttcClbdPrf.AsNoTracking()
+            return this.db.InstituicoesColaboradoresPerfis.AsNoTracking()
             .Where(x => colaboradores.Any(i => i.Perfis.Contains(x.ID.ToString())) && x.Ativo.HasValue == !ativo)
             .ToList();
         }
 
         public List<Instituicao> AllInstituicaoByUsuario(string id, bool ativo) {
-            var instituicoes = this.db.IttcClbd
+            var instituicoes = this.db.InstituicoesColaboradores
             .AsNoTracking()
             .Include(i => i.Usuario)
             .Include(i => i.Instituicao)
@@ -685,7 +685,7 @@ namespace Domain.InstituicaoDomain {
 
         public string GetFormulaNotaFinalWithValuesByAluno(long idInstituicaoCursoOcorrenciaPeriodoProfessor, string idAluno) {
             var instituicaoCursoOcorrenciaPeriodoProfessor = this.GetInstituicaoCursoOcorrenciaPeriodoProfessor(idInstituicaoCursoOcorrenciaPeriodoProfessor);
-            var instituicaoCursoOcorrenciaPeriodoAluno = this.db.IttcCrsOcrncPrdAln
+            var instituicaoCursoOcorrenciaPeriodoAluno = this.db.InstituicoesCursosOcorrenciasPeriodosAlunos
             .Include(x => x.InstituicaoCursoOcorrenciaPeriodo)
             .Include(i => i.InstituicaoCursoOcorrenciaAluno)
             .ThenInclude(i => i.Aluno)
@@ -694,8 +694,8 @@ namespace Domain.InstituicaoDomain {
         }
 
         public string GetFormulaNotaFinalWithValuesByInstituicaoCursoOcorrenciaPeriodoAluno(long idInstituicaoCursoOcorrenciaPeriodoProfessor, long idInstituicaoCursoOcorrenciaPeriodoAluno) {
-            var formulaNotaFinal = this.db.IttcCrsOcrncPrdPrf.SingleOrDefault(x => x.ID == idInstituicaoCursoOcorrenciaPeriodoProfessor).FormulaNotaFinal;
-            var notas = this.db.IttcCrsOcrncNt
+            var formulaNotaFinal = this.db.InstituicoesCursosOcorrenciasPeriodosProfessores.SingleOrDefault(x => x.ID == idInstituicaoCursoOcorrenciaPeriodoProfessor).FormulaNotaFinal;
+            var notas = this.db.InstituicoesCursosOcorrenciasNotas
                 .AsNoTracking()
                 .Where(x => x.InstituicaoCursoOcorrenciaPeriodoAluno.ID == idInstituicaoCursoOcorrenciaPeriodoAluno && x.InstituicaoCursoOcorrenciaPeriodoProfessor.ID == idInstituicaoCursoOcorrenciaPeriodoProfessor && !x.Ativo.HasValue)
                 .ToList();
@@ -718,7 +718,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public IEnumerable<Instituicao> Query(Expression<Func<Instituicao, bool>> predicate, params Expression<Func<Instituicao, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Instituicao, object>>, IQueryable<Instituicao>>(db.Ittc, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<Instituicao, object>>, IQueryable<Instituicao>>(db.Instituicoes, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

@@ -1,10 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 using Domain.CursoDomain;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("ICurso")]
     public class InstituicaoCurso : IBaseModel {
 
         public InstituicaoCurso() {

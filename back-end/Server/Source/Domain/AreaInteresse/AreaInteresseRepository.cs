@@ -21,33 +21,33 @@ namespace Domain.UsuarioDomain {
         public void Add(AreaInteresse model) {
 
             if (model.UsuarioInfo != null) {
-                model.UsuarioInfo = this.db.UsrInf.Find(model.UsuarioInfo.ID);
+                model.UsuarioInfo = this.db.UsuarioInfos.Find(model.UsuarioInfo.ID);
             }
             if (model.UsuarioInfo != null) {
-                model.CategoriaProfissional = this.db.CtgPrfsn.Find(model.CategoriaProfissional.ID);
+                model.CategoriaProfissional = this.db.CategoriasProfissionais.Find(model.CategoriaProfissional.ID);
             }
 
-            this.db.ArItrs.Add(model);
+            this.db.AreasInteresses.Add(model);
         }
 
         public void Update(AreaInteresse model) {
-            var attachedAreaInteresse = this.db.ArItrs.Find(model.ID);
+            var attachedAreaInteresse = this.db.AreasInteresses.Find(model.ID);
 
             attachedAreaInteresse.UsuarioInfo = model.UsuarioInfo;
             attachedAreaInteresse.CategoriaProfissional = model.CategoriaProfissional;
             attachedAreaInteresse.Descricao = model.Descricao;
 
-            this.db.ArItrs.Update(attachedAreaInteresse);
+            this.db.AreasInteresses.Update(attachedAreaInteresse);
         }
 
         public void Disable(long ID) {
-            var areaInteresse = this.db.ArItrs.Find(ID);
+            var areaInteresse = this.db.AreasInteresses.Find(ID);
             areaInteresse.Ativo = DateTime.Now;
-            this.db.ArItrs.Update(areaInteresse);
+            this.db.AreasInteresses.Update(areaInteresse);
         }
 
         public AreaInteresse Get(long ID) {
-            return this.db.ArItrs
+            return this.db.AreasInteresses
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .Include(i => i.CategoriaProfissional)
@@ -55,7 +55,7 @@ namespace Domain.UsuarioDomain {
         }
 
         public List<AreaInteresse> GetAll(bool ativo) {
-            return this.db.ArItrs
+            return this.db.AreasInteresses
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .Include(i => i.CategoriaProfissional)
@@ -64,7 +64,7 @@ namespace Domain.UsuarioDomain {
         }
 
         public List<AreaInteresse> GetAllByUsuario(string usuarioId, bool ativo) {
-            return this.db.ArItrs
+            return this.db.AreasInteresses
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .Include(i => i.CategoriaProfissional)
@@ -73,7 +73,7 @@ namespace Domain.UsuarioDomain {
         }
 
         public IEnumerable<AreaInteresse> Query(Expression<Func<AreaInteresse, bool>> predicate, params Expression<Func<AreaInteresse, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<AreaInteresse, object>>, IQueryable<AreaInteresse>>(db.ArItrs, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<AreaInteresse, object>>, IQueryable<AreaInteresse>>(db.AreasInteresses, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

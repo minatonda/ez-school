@@ -7,6 +7,7 @@ using Domain.EnderecoDomain;
 
 namespace Domain.UsuarioDomain {
 
+    [Table("UInfo")]
     public class UsuarioInfo : IBaseModel {
 
         public UsuarioInfo() {

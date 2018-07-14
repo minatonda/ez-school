@@ -6,6 +6,7 @@ using Domain.Common;
 
 namespace Domain.MateriaDomain {
 
+    [Table("Materia")]
     public class Materia : IBaseModel {
 
         public Materia() {

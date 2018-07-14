@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("IInstituicaoCategoria")]
     public class InstituicaoInstituicaoCategoria {
 
         public InstituicaoInstituicaoCategoria() {

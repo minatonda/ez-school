@@ -1,9 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("ICOAusencia")]
     public class InstituicaoCursoOcorrenciaAusencia : IBaseModel {
 
         [Key]

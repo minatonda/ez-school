@@ -20,7 +20,7 @@ namespace Domain.CategoriaProfissionalDomain  {
         }
 
         public void Add(CategoriaProfissional categoriaProfissional) {
-            this.db.CtgPrfsn.Add(categoriaProfissional);
+            this.db.CategoriasProfissionais.Add(categoriaProfissional);
         }
 
         public void AddHistoryCategoriaProfissional(long id) {
@@ -31,32 +31,32 @@ namespace Domain.CategoriaProfissionalDomain  {
         }
 
         public void Update(CategoriaProfissional categoriaProfissional) {
-            var model = this.db.CtgPrfsn.Find(categoriaProfissional.ID);
+            var model = this.db.CategoriasProfissionais.Find(categoriaProfissional.ID);
 
             model.Nome = categoriaProfissional.Nome;
             model.Descricao = categoriaProfissional.Descricao;
 
-            this.db.CtgPrfsn.Update(model);
+            this.db.CategoriasProfissionais.Update(model);
         }
         public void Disable(long ID) {
-            var model = this.db.CtgPrfsn.Find(ID);
+            var model = this.db.CategoriasProfissionais.Find(ID);
 
             model.Ativo = DateTime.Now;
-            this.db.CtgPrfsn.Update(model);
+            this.db.CategoriasProfissionais.Update(model);
         }
 
-        public CategoriaProfissional Get(long ID) => this.db.CtgPrfsn.Find(ID);
+        public CategoriaProfissional Get(long ID) => this.db.CategoriasProfissionais.Find(ID);
 
         public List<CategoriaProfissional> GetAll(bool ativo) {
             if (ativo) {
-                return this.db.CtgPrfsn.Where(x => !x.Ativo.HasValue).ToList();
+                return this.db.CategoriasProfissionais.Where(x => !x.Ativo.HasValue).ToList();
             } else {
-                return this.db.CtgPrfsn.ToList();
+                return this.db.CategoriasProfissionais.ToList();
             }
         }
 
         public IEnumerable<CategoriaProfissional> Query(Expression<Func<CategoriaProfissional, bool>> predicate, params Expression<Func<CategoriaProfissional, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<CategoriaProfissional, object>>, IQueryable<CategoriaProfissional>>(db.CtgPrfsn, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<CategoriaProfissional, object>>, IQueryable<CategoriaProfissional>>(db.CategoriasProfissionais, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

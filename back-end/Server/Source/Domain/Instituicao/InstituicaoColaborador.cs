@@ -7,6 +7,7 @@ using Domain.UsuarioDomain;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("IColaborador")]
     public class InstituicaoColaborador : IBaseModel {
 
         public InstituicaoColaborador() {

@@ -19,34 +19,34 @@ namespace Domain.Common {
             optionsBuilder.EnableSensitiveDataLogging();
         }
 
-        public DbSet<Usuario> Usr { get; set; }
-        public DbSet<UsuarioInfo> UsrInf { get; set; }
-        public DbSet<Materia> Mtr { get; set; }
-        public DbSet<Professor> Prf { get; set; }
-        public DbSet<Aluno> Aln { get; set; }
-        public DbSet<Curso> Crs { get; set; }
-        public DbSet<CursoGrade> CrsGrd { get; set; }
-        public DbSet<CursoGradeMateria> CrsGrdMtr { get; set; }
-        public DbSet<Instituicao> Ittc { get; set; }
-        public DbSet<InstituicaoColaborador> IttcClbd { get; set; }
-        public DbSet<InstituicaoColaboradorPerfil> IttcClbdPrf { get; set; }
-        public DbSet<InstituicaoCategoria> IttcCtgr { get; set; }
-        public DbSet<InstituicaoCurso> IttcCrs { get; set; }
-        public DbSet<InstituicaoCursoOcorrencia> IttcCrsOcrnc { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaNota> IttcCrsOcrncNt { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaAusencia> IttcCrsOcrncAsnc { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaPeriodo> IttcCrsOcrncPrd { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaAluno> IttcCrsOcrncAln { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessor> IttcCrsOcrncPrdPrf { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaPeriodoAluno> IttcCrsOcrncPrdAln { get; set; }
-        public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> IttcCrsOcrncPrdPrfPrdAul { get; set; }
-        public DbSet<InstituicaoCursoPeriodo> IttcCrsPrd { get; set; }
-        public DbSet<InstituicaoCursoTurma> IttcCrsTrm { get; set; }
-        public DbSet<InstituicaoInstituicaoCategoria> IttcIttcCtgr { get; set; }
-        public DbSet<CategoriaProfissional> CtgPrfsn { get; set; }
-        public DbSet<AreaInteresse> ArItrs { get; set; }
-        public DbSet<MateriaRelacionamento> MtrRlc { get; set; }
-        public DbSet<Endereco> Endrc { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<UsuarioInfo> UsuarioInfos { get; set; }
+        public DbSet<Materia> Materias { get; set; }
+        public DbSet<Professor> Professores { get; set; }
+        public DbSet<Aluno> Alunos { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
+        public DbSet<CursoGrade> CursoGrades { get; set; }
+        public DbSet<CursoGradeMateria> CursoGradeMaterias { get; set; }
+        public DbSet<Instituicao> Instituicoes { get; set; }
+        public DbSet<InstituicaoColaborador> InstituicoesColaboradores { get; set; }
+        public DbSet<InstituicaoColaboradorPerfil> InstituicoesColaboradoresPerfis { get; set; }
+        public DbSet<InstituicaoCategoria> InstituicoesCategorias { get; set; }
+        public DbSet<InstituicaoCurso> InstituicoesCursos { get; set; }
+        public DbSet<InstituicaoCursoOcorrencia> InstituicoesCursosOcorrencias { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaNota> InstituicoesCursosOcorrenciasNotas { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaAusencia> InstituicoesCursosOcorrenciasAusencias { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaPeriodo> InstituicoesCursosOcorrenciasPeriodos { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaAluno> InstituicoesCursosOcorrenciasAlunos { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessor> InstituicoesCursosOcorrenciasPeriodosProfessores { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaPeriodoAluno> InstituicoesCursosOcorrenciasPeriodosAlunos { get; set; }
+        public DbSet<InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula> InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas { get; set; }
+        public DbSet<InstituicaoCursoPeriodo> InstituicoesCursosPeriodos { get; set; }
+        public DbSet<InstituicaoCursoTurma> InstituicoesCursosTurmas { get; set; }
+        public DbSet<InstituicaoInstituicaoCategoria> InstituicoesInstituicoesCategorias { get; set; }
+        public DbSet<CategoriaProfissional> CategoriasProfissionais { get; set; }
+        public DbSet<AreaInteresse> AreasInteresses { get; set; }
+        public DbSet<MateriaRelacionamento> MateriasRelacionamentos { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
 
     }
 }

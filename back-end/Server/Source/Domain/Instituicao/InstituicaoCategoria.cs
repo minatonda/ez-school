@@ -5,6 +5,7 @@ using Domain.Common;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("ICategoria")]
     public class InstituicaoCategoria : IBaseModel {
     
         public InstituicaoCategoria () {

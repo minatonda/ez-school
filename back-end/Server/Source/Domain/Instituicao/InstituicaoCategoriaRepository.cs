@@ -17,7 +17,7 @@ namespace Domain.InstituicaoDomain {
         }
 
         public void Add(InstituicaoCategoria instituicaoCategoria) {
-            this.db.IttcCtgr.Add(instituicaoCategoria);
+            this.db.InstituicoesCategorias.Add(instituicaoCategoria);
         }
 
         public void AddHistoryInstituicaoCategoria(long id) {
@@ -28,32 +28,32 @@ namespace Domain.InstituicaoDomain {
         }
 
         public void Update(InstituicaoCategoria instituicaoCategoria) {
-            var model = this.db.IttcCtgr.Find(instituicaoCategoria.ID);
+            var model = this.db.InstituicoesCategorias.Find(instituicaoCategoria.ID);
 
             model.Nome = instituicaoCategoria.Nome;
             model.Descricao = instituicaoCategoria.Descricao;
 
-            this.db.IttcCtgr.Update(model);
+            this.db.InstituicoesCategorias.Update(model);
         }
 
         public void Disable(long ID) {
-            var model = this.db.IttcCtgr.Find(ID);
+            var model = this.db.InstituicoesCategorias.Find(ID);
             model.Ativo = DateTime.Now;
-            this.db.IttcCtgr.Update(model);
+            this.db.InstituicoesCategorias.Update(model);
         }
 
-        public InstituicaoCategoria Get(long ID) => this.db.IttcCtgr.Find(ID);
+        public InstituicaoCategoria Get(long ID) => this.db.InstituicoesCategorias.Find(ID);
 
         public List<InstituicaoCategoria> GetAll(bool ativo) {
             if (ativo) {
-                return this.db.IttcCtgr.Where(x => !x.Ativo.HasValue).ToList();
+                return this.db.InstituicoesCategorias.Where(x => !x.Ativo.HasValue).ToList();
             } else {
-                return this.db.IttcCtgr.ToList();
+                return this.db.InstituicoesCategorias.ToList();
             }
         }
 
         public IEnumerable<InstituicaoCategoria> Query(Expression<Func<InstituicaoCategoria, bool>> predicate, params Expression<Func<InstituicaoCategoria, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<InstituicaoCategoria, object>>, IQueryable<InstituicaoCategoria>>(db.IttcCtgr, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<InstituicaoCategoria, object>>, IQueryable<InstituicaoCategoria>>(db.InstituicoesCategorias, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

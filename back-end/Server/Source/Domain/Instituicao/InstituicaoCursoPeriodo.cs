@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 
 namespace Domain.InstituicaoDomain {
+
+    [Table("ICPeriodo")]
     public class InstituicaoCursoPeriodo : IBaseModel {
 
         public InstituicaoCursoPeriodo() {

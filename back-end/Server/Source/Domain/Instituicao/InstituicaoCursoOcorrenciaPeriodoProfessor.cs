@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 using Domain.CursoDomain;
 using Domain.UsuarioDomain;
 
 namespace Domain.InstituicaoDomain {
 
+    [Table("ICOPProfessor")]
     public class InstituicaoCursoOcorrenciaPeriodoProfessor : IBaseModel {
 
         public InstituicaoCursoOcorrenciaPeriodoProfessor() {

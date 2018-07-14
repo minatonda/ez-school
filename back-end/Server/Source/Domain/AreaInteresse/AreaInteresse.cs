@@ -7,6 +7,7 @@ using Domain.UsuarioDomain;
 
 namespace Domain.AreaInteresseDomain {
 
+    [Table("AreaInteresse")]
     public class AreaInteresse {
 
         public AreaInteresse() {

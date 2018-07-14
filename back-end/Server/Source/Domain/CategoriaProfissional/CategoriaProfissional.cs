@@ -5,6 +5,7 @@ using Domain.Common;
 
 namespace Domain.CategoriaProfissionalDomain {
 
+    [Table("CategoriaProfissional")]
     public class CategoriaProfissional : IBaseModel {
 
         public CategoriaProfissional() {

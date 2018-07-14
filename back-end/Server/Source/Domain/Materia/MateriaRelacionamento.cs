@@ -6,6 +6,7 @@ using Domain.Common;
 
 namespace Domain.MateriaDomain {
 
+    [Table("MateriaRelacionamento")]
     public class MateriaRelacionamento : IBaseModel {
         
         public MateriaRelacionamento() {

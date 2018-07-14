@@ -16,78 +16,78 @@ namespace Domain.Common {
 
             context.Database.EnsureCreated();
 
-            if (context.Usr.ToList().Count == 0) {
+            if (context.Usuarios.ToList().Count == 0) {
 
                 var listUsuario = getBaseUsuarios();
-                context.Usr.AddRange(listUsuario);
+                context.Usuarios.AddRange(listUsuario);
                 context.SaveChanges();
 
                 var listCurso = BaseContextInitializer.getBaseCursos();
-                context.Crs.AddRange(listCurso);
+                context.Cursos.AddRange(listCurso);
                 context.SaveChanges();
 
                 var listMateria = BaseContextInitializer.getBaseMaterias();
-                context.Mtr.AddRange(listMateria);
+                context.Materias.AddRange(listMateria);
                 context.SaveChanges();
 
                 var listInstituicoes = BaseContextInitializer.getBaseInstituicoes();
-                context.Ittc.AddRange(listInstituicoes);
+                context.Instituicoes.AddRange(listInstituicoes);
                 context.SaveChanges();
 
                 var listCursoGrade = BaseContextInitializer.getBaseCursoGrades(listCurso,listInstituicoes);
-                context.CrsGrd.AddRange(listCursoGrade);
+                context.CursoGrades.AddRange(listCursoGrade);
                 context.SaveChanges();
 
                 var listCursoGradeMateria = BaseContextInitializer.getBaseCursoGradeMaterias(listCursoGrade, listMateria);
-                context.CrsGrdMtr.AddRange(listCursoGradeMateria);
+                context.CursoGradeMaterias.AddRange(listCursoGradeMateria);
                 context.SaveChanges();
 
                 var listAlunos = BaseContextInitializer.getBaseAlunos(listUsuario);
-                context.Aln.AddRange(listAlunos);
+                context.Alunos.AddRange(listAlunos);
                 context.SaveChanges();
 
                 var listProfessores = BaseContextInitializer.getBaseProfessores(listUsuario);
-                context.Prf.AddRange(listProfessores);
+                context.Professores.AddRange(listProfessores);
                 context.SaveChanges();
 
                 var listInstituicaoCurso = BaseContextInitializer.getBaseInstituicaoCursos(listCursoGrade, listInstituicoes);
-                context.IttcCrs.AddRange(listInstituicaoCurso);
+                context.InstituicoesCursos.AddRange(listInstituicaoCurso);
                 context.SaveChanges();
 
                 var listInstituicaoCursoPeriodo = BaseContextInitializer.getBaseInstituicaoCursoPeriodos(listInstituicaoCurso);
-                context.IttcCrsPrd.AddRange(listInstituicaoCursoPeriodo);
+                context.InstituicoesCursosPeriodos.AddRange(listInstituicaoCursoPeriodo);
                 context.SaveChanges();
 
                 var listInstituicaoCursoTurma = BaseContextInitializer.getBaseInstituicaoCursoTurma(listInstituicaoCurso);
-                context.IttcCrsTrm.AddRange(listInstituicaoCursoTurma);
+                context.InstituicoesCursosTurmas.AddRange(listInstituicaoCursoTurma);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrencia = BaseContextInitializer.getBaseInstituicaoCursoOcorrencias(listInstituicaoCurso, listUsuario);
-                context.IttcCrsOcrnc.AddRange(listInstituicaoCursoOcorrencia);
+                context.InstituicoesCursosOcorrencias.AddRange(listInstituicaoCursoOcorrencia);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrenciaAluno = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaAlunos(listUsuario, listInstituicaoCursoOcorrencia);
-                context.IttcCrsOcrncAln.AddRange(listInstituicaoCursoOcorrenciaAluno);
+                context.InstituicoesCursosOcorrenciasAlunos.AddRange(listInstituicaoCursoOcorrenciaAluno);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrenciaPeriodo = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodos(listInstituicaoCursoOcorrencia);
-                context.IttcCrsOcrncPrd.AddRange(listInstituicaoCursoOcorrenciaPeriodo);
+                context.InstituicoesCursosOcorrenciasPeriodos.AddRange(listInstituicaoCursoOcorrenciaPeriodo);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrenciaPeriodoAluno = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoAlunos(listInstituicaoCursoOcorrenciaAluno, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
-                context.IttcCrsOcrncPrdAln.AddRange(listInstituicaoCursoOcorrenciaPeriodoAluno);
+                context.InstituicoesCursosOcorrenciasPeriodosAlunos.AddRange(listInstituicaoCursoOcorrenciaPeriodoAluno);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrenciaPeriodoProfessor = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoProfessores(listUsuario, listCursoGradeMateria, listInstituicaoCursoOcorrenciaPeriodo, listInstituicaoCursoPeriodo, listInstituicaoCursoTurma);
-                context.IttcCrsOcrncPrdPrf.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessor);
+                context.InstituicoesCursosOcorrenciasPeriodosProfessores.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessor);
                 context.SaveChanges();
 
                 var listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula = BaseContextInitializer.getBaseInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAulas(listInstituicaoCursoOcorrenciaPeriodoProfessor);
-                context.IttcCrsOcrncPrdPrfPrdAul.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
+                context.InstituicoesCursosOcorrenciasPeriodosProfessoresPeriodoAulas.AddRange(listInstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula);
                 context.SaveChanges();
 
                 var listCategoriaProfissional = BaseContextInitializer.getBaseCategoriaProfissionais();
-                context.CtgPrfsn.AddRange(listCategoriaProfissional);
+                context.CategoriasProfissionais.AddRange(listCategoriaProfissional);
 
                 context.SaveChanges();
 

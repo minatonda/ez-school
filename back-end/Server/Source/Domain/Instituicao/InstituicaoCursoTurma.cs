@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 
 namespace Domain.InstituicaoDomain {
     
+    [Table("ICTurma")]
     public class InstituicaoCursoTurma : IBaseModel {
 
         [Key]

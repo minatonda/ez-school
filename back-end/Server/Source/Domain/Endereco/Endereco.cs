@@ -6,6 +6,7 @@ using Domain.Common;
 
 namespace Domain.EnderecoDomain {
 
+    [Table("Endereco")]
     public class Endereco : IBaseModel {
 
         public Endereco() {

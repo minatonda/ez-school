@@ -16,98 +16,98 @@ namespace Domain.CursoDomain {
         }
 
         public void Add(Curso curso) {
-            this.db.Crs.Add(curso);
+            this.db.Cursos.Add(curso);
         }
 
         public void AddCursoGrade(CursoGrade cursoGrade) {
-            cursoGrade.Curso = this.db.Crs.Find(cursoGrade.Curso.ID);
+            cursoGrade.Curso = this.db.Cursos.Find(cursoGrade.Curso.ID);
 
             if (cursoGrade.Instituicao != null) {
-                cursoGrade.Instituicao = this.db.Ittc.Find(cursoGrade.Instituicao.ID);
+                cursoGrade.Instituicao = this.db.Instituicoes.Find(cursoGrade.Instituicao.ID);
             }
 
-            this.db.CrsGrd.Add(cursoGrade);
+            this.db.CursoGrades.Add(cursoGrade);
         }
 
         public void AddCursoGradeMateria(CursoGradeMateria cursoGradeMateria) {
-            cursoGradeMateria.CursoGrade = this.db.CrsGrd.Find(cursoGradeMateria.CursoGrade.ID);
-            cursoGradeMateria.Materia = this.db.Mtr.Find(cursoGradeMateria.Materia.ID);
-            this.db.CrsGrdMtr.Add(cursoGradeMateria);
+            cursoGradeMateria.CursoGrade = this.db.CursoGrades.Find(cursoGradeMateria.CursoGrade.ID);
+            cursoGradeMateria.Materia = this.db.Materias.Find(cursoGradeMateria.Materia.ID);
+            this.db.CursoGradeMaterias.Add(cursoGradeMateria);
         }
 
         public void Update(Curso curso) {
-            var model = this.db.Crs.Find(curso.ID);
+            var model = this.db.Cursos.Find(curso.ID);
             model.Nome = curso.Nome;
             model.Descricao = curso.Descricao;
-            this.db.Crs.Update(model);
+            this.db.Cursos.Update(model);
         }
 
         public void UpdateCursoGrade(CursoGrade cursoGrade) {
-            var model = this.db.CrsGrd.Find(cursoGrade.ID);
-            model.Curso = this.db.Crs.Find(cursoGrade.Curso.ID);
+            var model = this.db.CursoGrades.Find(cursoGrade.ID);
+            model.Curso = this.db.Cursos.Find(cursoGrade.Curso.ID);
             model.Descricao = cursoGrade.Descricao;
             model.DataCriacao = cursoGrade.DataCriacao;
 
             if (cursoGrade.Instituicao != null) {
-                model.Instituicao = this.db.Ittc.Find(cursoGrade.Instituicao.ID);
+                model.Instituicao = this.db.Instituicoes.Find(cursoGrade.Instituicao.ID);
             } else {
                 model.Instituicao = null;
             }
 
-            this.db.CrsGrd.Update(model);
+            this.db.CursoGrades.Update(model);
         }
 
         public void UpdateCursoGradeMateria(CursoGradeMateria cursoGradeMateria) {
-            var model = this.db.CrsGrdMtr.Find(cursoGradeMateria.ID);
-            model.CursoGrade = this.db.CrsGrd.Find(cursoGradeMateria.CursoGrade.ID);
-            model.Materia = this.db.Mtr.Find(cursoGradeMateria.Materia.ID);
+            var model = this.db.CursoGradeMaterias.Find(cursoGradeMateria.ID);
+            model.CursoGrade = this.db.CursoGrades.Find(cursoGradeMateria.CursoGrade.ID);
+            model.Materia = this.db.Materias.Find(cursoGradeMateria.Materia.ID);
             model.Descricao = cursoGradeMateria.Descricao;
             model.Tags = cursoGradeMateria.Tags;
             model.NomeExibicao = cursoGradeMateria.NomeExibicao;
             model.NumeroAulas = cursoGradeMateria.NumeroAulas;
             model.Grupo = cursoGradeMateria.Grupo;
-            this.db.CrsGrdMtr.Update(model);
+            this.db.CursoGradeMaterias.Update(model);
         }
 
         public void Disable(long id) {
-            var model = this.db.Crs.Find(id);
+            var model = this.db.Cursos.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.Crs.Update(model);
+            this.db.Cursos.Update(model);
         }
 
         public void DisableCursoGrade(long id) {
-            var model = this.db.CrsGrd.Find(id);
+            var model = this.db.CursoGrades.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.CrsGrd.Update(model);
+            this.db.CursoGrades.Update(model);
         }
 
         public void DisableCursoGradeMateria(long id) {
-            var model = this.db.CrsGrdMtr.Find(id);
+            var model = this.db.CursoGradeMaterias.Find(id);
             model.Ativo = DateTime.Now;
-            this.db.CrsGrdMtr.Update(model);
+            this.db.CursoGradeMaterias.Update(model);
         }
 
         public Curso Get(long ID) {
-            return this.db.Crs
+            return this.db.Cursos
             .AsNoTracking()
             .SingleOrDefault(x => x.ID == ID);
         }
 
          public Curso GetByNome(string nome) {
-            return this.db.Crs
+            return this.db.Cursos
             .AsNoTracking()
             .FirstOrDefault(x => x.Nome.ToLower() == nome.ToLower() && !x.Ativo.HasValue);
         }
 
         public CursoGrade GetCursoGrade(long id) {
-            return this.db.CrsGrd
+            return this.db.CursoGrades
             .AsNoTracking()
             .Include(i => i.Curso)
             .SingleOrDefault(x => x.ID == id);
         }
 
         public CursoGradeMateria GetCursoGradeMateria(long id) {
-            return this.db.CrsGrdMtr
+            return this.db.CursoGradeMaterias
             .AsNoTracking()
             .Include(i => i.CursoGrade)
             .Include(i => i.Materia)
@@ -115,14 +115,14 @@ namespace Domain.CursoDomain {
         }
 
         public List<Curso> GetAll(bool ativo) {
-            return this.db.Crs
+            return this.db.Cursos
             .AsNoTracking()
             .Where(x => x.Ativo.HasValue == !ativo)
             .ToList();
         }
 
         public List<CursoGrade> GetAllCursoGradesByCurso(long id, bool ativo) {
-            return this.db.CrsGrd
+            return this.db.CursoGrades
             .AsNoTracking()
             .Include(i => i.Curso)
             .Include(i => i.Instituicao)
@@ -131,7 +131,7 @@ namespace Domain.CursoDomain {
         }
 
         public List<CursoGradeMateria> GetAllCursoGradeMateriasByCursoGrade(long id, bool ativo) {
-            return this.db.CrsGrdMtr
+            return this.db.CursoGradeMaterias
             .AsNoTracking()
             .Include(i => i.CursoGrade)
             .Include(i => i.Materia)
@@ -140,7 +140,7 @@ namespace Domain.CursoDomain {
         }
 
         public IEnumerable<Curso> Query(Expression<Func<Curso, bool>> predicate, params Expression<Func<Curso, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Curso, object>>, IQueryable<Curso>>(db.Crs, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<Curso, object>>, IQueryable<Curso>>(db.Cursos, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

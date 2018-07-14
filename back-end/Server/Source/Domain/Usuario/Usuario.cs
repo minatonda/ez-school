@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Common;
 
 namespace Domain.UsuarioDomain {
+
+    [Table("Usuario")]
     public class Usuario : IBaseModel {
         public Usuario () {
             this.ID = Guid.NewGuid ().ToString ();

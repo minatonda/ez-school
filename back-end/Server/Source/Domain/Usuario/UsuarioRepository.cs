@@ -22,34 +22,34 @@ namespace Domain.UsuarioDomain {
         public void Add(Usuario model) {
             model.UsuarioInfo.ID = model.ID;
 
-            this.db.Endrc.Add(model.UsuarioInfo.Endereco);
+            this.db.Enderecos.Add(model.UsuarioInfo.Endereco);
 
             if (model.UsuarioInfo.Pai != null) {
-                model.UsuarioInfo.Pai = this.db.UsrInf.SingleOrDefault(x => x.ID == model.UsuarioInfo.Pai.ID);
+                model.UsuarioInfo.Pai = this.db.UsuarioInfos.SingleOrDefault(x => x.ID == model.UsuarioInfo.Pai.ID);
             }
 
             if (model.UsuarioInfo.Mae != null) {
-                model.UsuarioInfo.Mae = this.db.UsrInf.SingleOrDefault(x => x.ID == model.UsuarioInfo.Mae.ID);
+                model.UsuarioInfo.Mae = this.db.UsuarioInfos.SingleOrDefault(x => x.ID == model.UsuarioInfo.Mae.ID);
             }
 
-            this.db.UsrInf.Add(model.UsuarioInfo);
+            this.db.UsuarioInfos.Add(model.UsuarioInfo);
 
             var aluno = new Aluno();
             aluno.ID = model.ID;
             aluno.UsuarioInfo = model.UsuarioInfo;
-            this.db.Aln.Add(aluno);
+            this.db.Alunos.Add(aluno);
 
             var professor = new Professor();
             professor.ID = model.ID;
             aluno.UsuarioInfo = model.UsuarioInfo;
-            this.db.Prf.Add(professor);
+            this.db.Professores.Add(professor);
 
 
-            this.db.Usr.Add(model);
+            this.db.Usuarios.Add(model);
         }
 
         public void Update(Usuario model) {
-            var attachedUsuario = this.db.Usr.SingleOrDefault(x => x.ID == model.ID);
+            var attachedUsuario = this.db.Usuarios.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuario.Username = model.Username;
             if (model.Password != null && model.Password.Trim() != "" && model.Password.Trim() != "********") {
                 attachedUsuario.Password = model.Password;
@@ -57,11 +57,11 @@ namespace Domain.UsuarioDomain {
             this.UpdateEndereco(model.UsuarioInfo.Endereco);
             this.UpdateUsuarioInfo(model.UsuarioInfo);
 
-            this.db.Usr.Update(attachedUsuario);
+            this.db.Usuarios.Update(attachedUsuario);
         }
 
         public void UpdateUsuarioInfo(UsuarioInfo model) {
-            var attachedUsuarioInfo = this.db.UsrInf.SingleOrDefault(x => x.ID == model.ID);
+            var attachedUsuarioInfo = this.db.UsuarioInfos.SingleOrDefault(x => x.ID == model.ID);
             attachedUsuarioInfo.Nome = model.Nome;
             attachedUsuarioInfo.DataNascimento = model.DataNascimento;
             attachedUsuarioInfo.Email = model.Email;
@@ -73,22 +73,22 @@ namespace Domain.UsuarioDomain {
             attachedUsuarioInfo.EstadoCivil = model.EstadoCivil;
 
             if (model.Pai != null) {
-                attachedUsuarioInfo.Pai = this.db.UsrInf.SingleOrDefault(x => x.ID == model.Pai.ID);
+                attachedUsuarioInfo.Pai = this.db.UsuarioInfos.SingleOrDefault(x => x.ID == model.Pai.ID);
             } else {
                 attachedUsuarioInfo.Pai = null;
             }
 
             if (model.Mae != null) {
-                attachedUsuarioInfo.Mae = this.db.UsrInf.SingleOrDefault(x => x.ID == model.Mae.ID);
+                attachedUsuarioInfo.Mae = this.db.UsuarioInfos.SingleOrDefault(x => x.ID == model.Mae.ID);
             } else {
                 attachedUsuarioInfo.Mae = null;
             }
 
-            this.db.UsrInf.Update(attachedUsuarioInfo);
+            this.db.UsuarioInfos.Update(attachedUsuarioInfo);
         }
 
         public void UpdateEndereco(Endereco model) {
-            var attachedEndereco = this.db.Endrc.SingleOrDefault(x => x.ID == model.ID);
+            var attachedEndereco = this.db.Enderecos.SingleOrDefault(x => x.ID == model.ID);
             attachedEndereco.Rua = model.Rua;
             attachedEndereco.Complemento = model.Complemento;
             attachedEndereco.Numero = model.Numero;
@@ -98,27 +98,27 @@ namespace Domain.UsuarioDomain {
             attachedEndereco.Lat = model.Lat;
             attachedEndereco.Lon = model.Lon;
 
-            this.db.Endrc.Update(attachedEndereco);
+            this.db.Enderecos.Update(attachedEndereco);
         }
 
         public void UpdateAluno(Aluno model) {
-            var aluno = this.db.Aln.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
-            this.db.Aln.Update(aluno);
+            var aluno = this.db.Alunos.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
+            this.db.Alunos.Update(aluno);
         }
 
         public void UpdateProfessor(Professor model) {
-            var professor = this.db.Prf.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
-            this.db.Prf.Update(professor);
+            var professor = this.db.Professores.Include(x => x.UsuarioInfo).SingleOrDefault(x => x.UsuarioInfo.ID == model.ID);
+            this.db.Professores.Update(professor);
         }
 
         public void Disable(string id) {
-            var usuario = this.db.Usr.Find(id);
+            var usuario = this.db.Usuarios.Find(id);
             usuario.Ativo = DateTime.Now;
-            this.db.Usr.Update(usuario);
+            this.db.Usuarios.Update(usuario);
         }
 
         public Usuario Get(string ID) {
-            return this.db.Usr
+            return this.db.Usuarios
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .ThenInclude(i => i.Endereco)
@@ -130,7 +130,7 @@ namespace Domain.UsuarioDomain {
         }
 
         public Usuario GetByUsernameOrRgOrCPForEmail(string username, string rg, string cpf, string email) {
-            return this.db.Usr
+            return this.db.Usuarios
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .ThenInclude(i => i.Endereco)
@@ -142,7 +142,7 @@ namespace Domain.UsuarioDomain {
         }
 
         public UsuarioInfo GetUsuarioInfo(string id) {
-            return this.db.UsrInf
+            return this.db.UsuarioInfos
             .AsNoTracking()
             .Include(i => i.Endereco)
             .Include(i => i.Pai)
@@ -151,21 +151,21 @@ namespace Domain.UsuarioDomain {
         }
 
         public Usuario GetByRG(string rg) {
-            return this.db.Usr
+            return this.db.Usuarios
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.UsuarioInfo.RG == rg);
         }
 
         public UsuarioInfo GetInfoByRG(string rg) {
-            return this.db.UsrInf
+            return this.db.UsuarioInfos
             .AsNoTracking()
             .Include(i => i.Endereco)
             .SingleOrDefault(x => x.RG == rg);
         }
 
         public List<Usuario> GetAll(bool ativo) {
-            return this.db.Usr
+            return this.db.Usuarios
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .Where(x => x.Ativo.HasValue == !ativo)
@@ -173,17 +173,17 @@ namespace Domain.UsuarioDomain {
         }
 
         public List<UsuarioInfo> GetAllByTermo(string termo, bool onlyAluno, bool onlyProfessor) {
-            var query = this.db.UsrInf
+            var query = this.db.UsuarioInfos
             .AsNoTracking()
             .Where(x => x.Nome.ToLower().Contains(termo.ToLower()) || x.RG.ToLower().Contains(termo.ToLower()) || x.CPF.ToLower().Contains(termo.ToLower()));
 
             if (onlyAluno) {
-                var idAlunosAtivos = this.db.Aln.Where(x => !x.Ativo.HasValue).Select(x => x.UsuarioInfo.ID);
+                var idAlunosAtivos = this.db.Alunos.Where(x => !x.Ativo.HasValue).Select(x => x.UsuarioInfo.ID);
                 query = query.Where(x => idAlunosAtivos.Contains(x.ID));
             }
 
             if (onlyProfessor) {
-                var idProfessoresAtivos = this.db.Prf.Where(x => !x.Ativo.HasValue).Select(x => x.UsuarioInfo.ID);
+                var idProfessoresAtivos = this.db.Professores.Where(x => !x.Ativo.HasValue).Select(x => x.UsuarioInfo.ID);
                 query = query.Where(x => idProfessoresAtivos.Contains(x.ID));
             }
 
@@ -191,21 +191,21 @@ namespace Domain.UsuarioDomain {
         }
 
         public Aluno GetAluno(string ID) {
-            return this.db.Aln
+            return this.db.Alunos
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
         }
 
         public Professor GetProfessor(string ID) {
-            return this.db.Prf
+            return this.db.Professores
             .AsNoTracking()
             .Include(i => i.UsuarioInfo)
             .SingleOrDefault(x => x.UsuarioInfo.ID == ID);
         }
 
         public IEnumerable<Usuario> Query(Expression<Func<Usuario, bool>> predicate, params Expression<Func<Usuario, object>>[] includeExpressions) {
-            return includeExpressions.Aggregate<Expression<Func<Usuario, object>>, IQueryable<Usuario>>(db.Usr, (current, expression) => current.Include(expression)).Where(predicate.Compile());
+            return includeExpressions.Aggregate<Expression<Func<Usuario, object>>, IQueryable<Usuario>>(db.Usuarios, (current, expression) => current.Include(expression)).Where(predicate.Compile());
         }
 
         public IDbContextTransaction BeginTransaction() {

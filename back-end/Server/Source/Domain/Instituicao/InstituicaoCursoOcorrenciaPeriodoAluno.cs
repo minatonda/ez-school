@@ -5,6 +5,7 @@ using Domain.Common;
 
 namespace Domain.InstituicaoDomain {
     
+    [Table("ICOPAluno")]
     public class InstituicaoCursoOcorrenciaPeriodoAluno : IBaseModel {
 
         [Key]

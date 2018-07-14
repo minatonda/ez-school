@@ -6,6 +6,7 @@ using Domain.MateriaDomain;
 
 namespace Domain.CursoDomain {
 
+    [Table("CGMateria")]
     public class CursoGradeMateria {
 
         [Key]
