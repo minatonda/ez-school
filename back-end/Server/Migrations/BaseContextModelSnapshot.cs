@@ -41,7 +41,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsuarioInfoID");
 
-                    b.ToTable("ArItrs");
+                    b.ToTable("AreaInteresse");
                 });
 
             modelBuilder.Entity("Domain.CategoriaProfissionalDomain.CategoriaProfissional", b =>
@@ -58,7 +58,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CtgPrfsn");
+                    b.ToTable("CategoriaProfissional");
                 });
 
             modelBuilder.Entity("Domain.CursoDomain.Curso", b =>
@@ -75,7 +75,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Crs");
+                    b.ToTable("Curso");
                 });
 
             modelBuilder.Entity("Domain.CursoDomain.CursoGrade", b =>
@@ -92,11 +92,15 @@ namespace Server.Migrations
 
                     b.Property<string>("Descricao");
 
+                    b.Property<long?>("InstituicaoID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("CursoID");
 
-                    b.ToTable("CrsGrd");
+                    b.HasIndex("InstituicaoID");
+
+                    b.ToTable("CGrade");
                 });
 
             modelBuilder.Entity("Domain.CursoDomain.CursoGradeMateria", b =>
@@ -111,7 +115,15 @@ namespace Server.Migrations
 
                     b.Property<string>("Descricao");
 
+                    b.Property<string>("Grupo");
+
                     b.Property<long?>("MateriaID");
+
+                    b.Property<string>("NomeExibicao");
+
+                    b.Property<long>("NumeroAulas");
+
+                    b.Property<string>("Tags");
 
                     b.HasKey("ID");
 
@@ -119,7 +131,7 @@ namespace Server.Migrations
 
                     b.HasIndex("MateriaID");
 
-                    b.ToTable("CrsGrdMtr");
+                    b.ToTable("CGMateria");
                 });
 
             modelBuilder.Entity("Domain.EnderecoDomain.Endereco", b =>
@@ -148,7 +160,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Endrc");
+                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.Instituicao", b =>
@@ -165,7 +177,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Ittc");
+                    b.ToTable("Instituicao");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCategoria", b =>
@@ -182,7 +194,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("IttcCtgr");
+                    b.ToTable("ICategoria");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoColaborador", b =>
@@ -205,7 +217,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsuarioID");
 
-                    b.ToTable("IttcClbd");
+                    b.ToTable("IColaborador");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoColaboradorPerfil", b =>
@@ -226,7 +238,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoID");
 
-                    b.ToTable("IttcClbdPrf");
+                    b.ToTable("ICPerfil");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCurso", b =>
@@ -242,7 +254,7 @@ namespace Server.Migrations
 
                     b.Property<DateTime?>("DataExpiracao");
 
-                    b.Property<DateTime>("DataInicio");
+                    b.Property<DateTime?>("DataInicio");
 
                     b.Property<long?>("InstituicaoID");
 
@@ -254,7 +266,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoID");
 
-                    b.ToTable("IttcCrs");
+                    b.ToTable("ICurso");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrencia", b =>
@@ -278,7 +290,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoID");
 
-                    b.ToTable("IttcCrsOcrnc");
+                    b.ToTable("ICOcorrencia");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaAluno", b =>
@@ -289,8 +301,6 @@ namespace Server.Migrations
                     b.Property<string>("AlunoID");
 
                     b.Property<DateTime?>("Ativo");
-
-                    b.Property<bool>("Confirmado");
 
                     b.Property<DateTime?>("DataExpiracao");
 
@@ -306,7 +316,29 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoOcorrenciaID");
 
-                    b.ToTable("IttcCrsOcrncAln");
+                    b.ToTable("ICOAluno");
+                });
+
+            modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaAusencia", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("Ativo");
+
+                    b.Property<DateTime>("DataAusencia");
+
+                    b.Property<long?>("InstituicaoCursoOcorrenciaPeriodoAlunoID");
+
+                    b.Property<long?>("InstituicaoCursoOcorrenciaPeriodoProfessorID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("InstituicaoCursoOcorrenciaPeriodoAlunoID");
+
+                    b.HasIndex("InstituicaoCursoOcorrenciaPeriodoProfessorID");
+
+                    b.ToTable("ICOAusencia");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaNota", b =>
@@ -332,7 +364,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoOcorrenciaPeriodoProfessorID");
 
-                    b.ToTable("IttcCrsOcrncNt");
+                    b.ToTable("ICONota");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodo", b =>
@@ -352,7 +384,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoOcorrenciaID");
 
-                    b.ToTable("IttcCrsOcrncPrd");
+                    b.ToTable("ICOPeriodo");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodoAluno", b =>
@@ -362,7 +394,7 @@ namespace Server.Migrations
 
                     b.Property<DateTime?>("Ativo");
 
-                    b.Property<bool>("Confirmado");
+                    b.Property<DateTime?>("DataConfirmacao");
 
                     b.Property<long?>("InstituicaoCursoOcorrenciaAlunoID");
 
@@ -382,7 +414,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoTurmaID");
 
-                    b.ToTable("IttcCrsOcrncPrdAln");
+                    b.ToTable("ICOPAluno");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodoProfessor", b =>
@@ -422,7 +454,7 @@ namespace Server.Migrations
 
                     b.HasIndex("ProfessorID");
 
-                    b.ToTable("IttcCrsOcrncPrdPrf");
+                    b.ToTable("ICOPProfessor");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodoProfessorPeriodoAula", b =>
@@ -444,7 +476,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoOcorrenciaPeriodoProfessorID");
 
-                    b.ToTable("IttcCrsOcrncPrdPrfPrdAul");
+                    b.ToTable("ICOPPPeriodoAula");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoPeriodo", b =>
@@ -484,7 +516,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoID");
 
-                    b.ToTable("IttcCrsPrd");
+                    b.ToTable("ICPeriodo");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoTurma", b =>
@@ -508,7 +540,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoCursoID");
 
-                    b.ToTable("IttcCrsTrm");
+                    b.ToTable("ICTurma");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoInstituicaoCategoria", b =>
@@ -529,7 +561,7 @@ namespace Server.Migrations
 
                     b.HasIndex("InstituicaoID");
 
-                    b.ToTable("IttcIttcCtgr");
+                    b.ToTable("IInstituicaoCategoria");
                 });
 
             modelBuilder.Entity("Domain.MateriaDomain.Materia", b =>
@@ -546,7 +578,7 @@ namespace Server.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Mtr");
+                    b.ToTable("Materia");
                 });
 
             modelBuilder.Entity("Domain.MateriaDomain.MateriaRelacionamento", b =>
@@ -567,7 +599,7 @@ namespace Server.Migrations
 
                     b.HasIndex("MateriaPrincipalID");
 
-                    b.ToTable("MtrRlc");
+                    b.ToTable("MateriaRelacionamento");
                 });
 
             modelBuilder.Entity("Domain.UsuarioDomain.Aluno", b =>
@@ -583,7 +615,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsuarioInfoID");
 
-                    b.ToTable("Aln");
+                    b.ToTable("Aluno");
                 });
 
             modelBuilder.Entity("Domain.UsuarioDomain.Professor", b =>
@@ -599,7 +631,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsuarioInfoID");
 
-                    b.ToTable("Prf");
+                    b.ToTable("Professor");
                 });
 
             modelBuilder.Entity("Domain.UsuarioDomain.Usuario", b =>
@@ -608,8 +640,6 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("Ativo");
-
-                    b.Property<string>("Email");
 
                     b.Property<string>("Password");
 
@@ -621,7 +651,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsuarioInfoID");
 
-                    b.ToTable("Usr");
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("Domain.UsuarioDomain.UsuarioInfo", b =>
@@ -635,6 +665,8 @@ namespace Server.Migrations
 
                     b.Property<DateTime?>("DataNascimento");
 
+                    b.Property<string>("Email");
+
                     b.Property<long?>("EnderecoID");
 
                     b.Property<string>("EstadoCivil");
@@ -646,6 +678,8 @@ namespace Server.Migrations
                     b.Property<string>("RG");
 
                     b.Property<string>("Roles");
+
+                    b.Property<string>("Telefone");
 
                     b.Property<string>("idMae");
 
@@ -659,7 +693,7 @@ namespace Server.Migrations
 
                     b.HasIndex("idPai");
 
-                    b.ToTable("UsrInf");
+                    b.ToTable("UInfo");
                 });
 
             modelBuilder.Entity("Domain.AreaInteresseDomain.AreaInteresse", b =>
@@ -678,6 +712,10 @@ namespace Server.Migrations
                     b.HasOne("Domain.CursoDomain.Curso", "Curso")
                         .WithMany()
                         .HasForeignKey("CursoID");
+
+                    b.HasOne("Domain.InstituicaoDomain.Instituicao", "Instituicao")
+                        .WithMany()
+                        .HasForeignKey("InstituicaoID");
                 });
 
             modelBuilder.Entity("Domain.CursoDomain.CursoGradeMateria", b =>
@@ -744,6 +782,17 @@ namespace Server.Migrations
                     b.HasOne("Domain.InstituicaoDomain.InstituicaoCursoOcorrencia", "InstituicaoCursoOcorrencia")
                         .WithMany()
                         .HasForeignKey("InstituicaoCursoOcorrenciaID");
+                });
+
+            modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaAusencia", b =>
+                {
+                    b.HasOne("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodoAluno", "InstituicaoCursoOcorrenciaPeriodoAluno")
+                        .WithMany()
+                        .HasForeignKey("InstituicaoCursoOcorrenciaPeriodoAlunoID");
+
+                    b.HasOne("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaPeriodoProfessor", "InstituicaoCursoOcorrenciaPeriodoProfessor")
+                        .WithMany()
+                        .HasForeignKey("InstituicaoCursoOcorrenciaPeriodoProfessorID");
                 });
 
             modelBuilder.Entity("Domain.InstituicaoDomain.InstituicaoCursoOcorrenciaNota", b =>

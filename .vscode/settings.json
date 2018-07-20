@@ -13,5 +13,7 @@
         "html": ["htm", "html"]
         // ^^ providing just an array sets the VS Code file type
     },
-    "keyboard.dispatch": "keyCode"
+    "keyboard.dispatch": "keyCode",
+    "appService.defaultWebAppToDeploy": "/subscriptions/925e9924-7876-465a-a411-2a13cd7b1990/resourceGroups/4cademy/providers/Microsoft.Web/sites/4cademy-app",
+    "appService.deploySubpath": ""
 }
